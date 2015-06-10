@@ -1,0 +1,9 @@
+{
+  "name": "fba-webapp",
+  "version": "0.0.0",
+  "authors": [
+    "Julian Mazzitelli <mazzitelli.julian@gmail.com>"
+  ],
+  "description": "Web tool for performing FBA on a user custmozied metabolic model.",
+  "license": "MIT"
+}
