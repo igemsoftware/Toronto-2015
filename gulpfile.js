@@ -22,6 +22,11 @@ gulp.task('inject-css', function() {
     gulp.src(index).pipe(inject(sources, {relative: true})).pipe(gulp.dest(indexDest));
 });
 
+gulp.task('inject-js', function() {
+    var sources = gulp.src('./src/app/**/*.js', {read: false});
+    gulp.src(index).pipe(inject(sources, {relative: true})).pipe(gulp.dest(indexDest))
+});
+
 gulp.task('sass', function() {
     gulp.src(sassDir)
     .pipe(sass().on('error', sass.logError))
@@ -41,6 +46,7 @@ gulp.task('serve', function() {
 
     gulp.watch(sassDir, ['sass']);
     gulp.watch('./src/**/*.html').on('change', browserSync.reload);
+    gulp.watch('./src/app/**/*.js').on('change', browserSync.reload);
 });
 
 gulp.task('default', ['sass', 'serve']);
