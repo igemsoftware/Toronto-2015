@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var wiredep = require('wiredep').stream;
 var inject = require('gulp-inject');
 var sass = require('gulp-sass');
+var browserSync = require('browser-sync').create();
 
 // ==== src and dest for index.html ====
 var index = './src/index.html';
@@ -38,18 +39,29 @@ gulp.task('inject-css', function() {
  * Compile styles.scss into style.css with node-sass (libsass).
  */
 gulp.task('sass', function() {
-    gulp.src(sassDir).pipe(sass().on('error', sass.logError)).pipe(gulp.dest(cssDir));
+    gulp.src(sassDir)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(cssDir))
+    .pipe(browserSync.stream());
 });
 
-/**
-* ==== watch:sass ====
-*
-* Calls sass task on filechange in sassDir.
-*/
-gulp.task('watch:sass', function() {
-   gulp.watch(sassDir, ['sass']);    
+
+
+gulp.task('serve', function() {
+    browserSync.init({
+        server: {
+            baseDir: './src',
+            routes: {
+                '/bower_components': 'bower_components'
+            }
+        }
+    });
+
+    gulp.watch(sassDir, ['sass']);
+    gulp.watch('./src/**/*.html').on('change', browserSync.reload);
 });
 
+gulp.task('default', ['serve']);
 
 /**
 * ==== inject ====
