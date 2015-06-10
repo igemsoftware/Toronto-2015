@@ -7,6 +7,7 @@
   "description": "Web tool for performing FBA on a user custmozied metabolic model.",
   "license": "MIT",
   "dependencies": {
-    "lumx": "~0.3.35"
+    "lumx": "~0.3.35",
+    "compass-mixins": "~1.0.2"
   }
 }
