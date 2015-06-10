@@ -5,5 +5,8 @@
     "Julian Mazzitelli <mazzitelli.julian@gmail.com>"
   ],
   "description": "Web tool for performing FBA on a user custmozied metabolic model.",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "lumx": "~0.3.35"
+  }
 }
