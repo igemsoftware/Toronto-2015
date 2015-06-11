@@ -10,6 +10,11 @@ angular.module('fbaApp', ['ui.router'])
             url: '/',
             templateUrl: 'app/pages/home/home.html',
             controller: 'HomeCtrl'
+        })
+        .state('species', {
+            url: '/species',
+            templateUrl: 'app/pages/species/species.html',
+            controller: 'SpeciesCtrl'
         });
 })
 
