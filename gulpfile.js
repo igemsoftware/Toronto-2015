@@ -1,5 +1,6 @@
 // ==== node_modules ====
 var gulp = require('gulp');
+var watch = require('gulp-watch');
 var wiredep = require('wiredep').stream;
 var inject = require('gulp-inject');
 var sass = require('gulp-sass');
@@ -58,8 +59,12 @@ gulp.task('serve', function() {
     gulp.watch('./src/**/*.html').on('change', browserSync.reload);
     gulp.watch(jsGlob).on('change', browserSync.reload);
     gulp.watch(jsGlob, ['jshint']);
+
+    /*watch(jsGlob, function() {
+        gulp.src(jsGlob).pipe(jshint()).pipe(jshint.reporter('jshint-stylish'));
+    });*/
 });
 
 gulp.task('default', ['sass', 'jshint', 'serve']);
 
-gulp.task('inject', ['wiredep', 'inject-css']);
+gulp.task('inject', ['wiredep', 'inject-js', 'inject-css']);
