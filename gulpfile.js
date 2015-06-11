@@ -4,6 +4,8 @@ var wiredep = require('wiredep').stream;
 var inject = require('gulp-inject');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
+var jshint = require('gulp-jshint');
+
 
 // ==== src and dest for index.html ====
 var index = './src/index.html';
@@ -11,6 +13,8 @@ var indexDest = './src';
 // ==== scss and css dirs ====
 var sassDir = './src/styles/sass/*.scss';
 var cssDir = './src/styles';
+// === js files within ./src/app ====
+var jsGlob = './src/app/**/*.js';
 
 // runs on bower postinstall hook
 gulp.task('wiredep', function() {
@@ -23,7 +27,7 @@ gulp.task('inject-css', function() {
 });
 
 gulp.task('inject-js', function() {
-    var sources = gulp.src('./src/app/**/*.js', {read: false});
+    var sources = gulp.src(jsGlob, {read: false});
     gulp.src(index).pipe(inject(sources, {relative: true})).pipe(gulp.dest(indexDest))
 });
 
@@ -32,6 +36,12 @@ gulp.task('sass', function() {
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(cssDir))
     .pipe(browserSync.stream());
+});
+
+gulp.task('jshint', function() {
+    gulp.src(jsGlob)
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('serve', function() {
@@ -46,9 +56,10 @@ gulp.task('serve', function() {
 
     gulp.watch(sassDir, ['sass']);
     gulp.watch('./src/**/*.html').on('change', browserSync.reload);
-    gulp.watch('./src/app/**/*.js').on('change', browserSync.reload);
+    gulp.watch(jsGlob).on('change', browserSync.reload);
+    gulp.watch(jsGlob, ['jshint']);
 });
 
-gulp.task('default', ['sass', 'serve']);
+gulp.task('default', ['sass', 'jshint', 'serve']);
 
 gulp.task('inject', ['wiredep', 'inject-css']);
