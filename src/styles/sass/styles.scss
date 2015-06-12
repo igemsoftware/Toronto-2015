@@ -1,7 +1,38 @@
-@import '../../../bower_components/compass-mixins/lib/compass';
+@import 'compass';
+@import 'lumxcolors';
+
+// Colours
+$header-bg: $purple-A700;
+
+// Dimensions
+$headerHeight: 60px;
+
+// Mixins
+@function compact($var-1, $var-2: false,
+$var-3: false, $var-4: false,
+$var-5: false, $var-6: false,
+$var-7: false, $var-8: false,
+$var-9: false, $var-10: false) {
+    $full: $var-1;
+    $vars: $var-2, $var-3, $var-4, $var-5,
+    $var-6, $var-7, $var-8, $var-9, $var-10;
+
+    @each $var in $vars {
+        @if $var {
+            $full: $full, $var;
+        }
+    }
+    @return $full;
+}
 
 h1 {
     color: red;
     background: blue;
-    @include border-radius(5px);
+    //@include border-radius(5px);
+}
+
+#header {
+    height: $headerHeight;
+    background-color: $header-bg; 
+    @include box-shadow(0px 1px 2px rgba(0,0,0,0.3));
 }

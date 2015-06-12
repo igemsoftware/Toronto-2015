@@ -6,7 +6,7 @@ var inject = require('gulp-inject');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
 var jshint = require('gulp-jshint');
-
+var compass = require('compass-importer');
 
 // ==== src and dest for index.html ====
 var index = './src/index.html';
@@ -33,8 +33,16 @@ gulp.task('inject-js', function() {
 });
 
 gulp.task('sass', function() {
-    gulp.src(sassDir)
+    /*gulp.src(sassDir)
     .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(cssDir))
+    .pipe(browserSync.stream());*/
+
+    gulp.src(sassDir)
+    .pipe(sass({
+        includePaths: ['./bower_components/compass-mixins/lib']//,
+        //importer: compass
+    }).on('error', sass.logError))
     .pipe(gulp.dest(cssDir))
     .pipe(browserSync.stream());
 });
