@@ -2,7 +2,8 @@
 @import 'lumxcolors';
 
 // Colours
-$header-bg: $purple-A700;
+$header-bg: $teal-500;
+$nav-col: $grey-400;
 
 // Dimensions
 $headerHeight: 60px;
@@ -25,14 +26,39 @@ $var-9: false, $var-10: false) {
     @return $full;
 }
 
-h1 {
-    color: red;
-    background: blue;
-    //@include border-radius(5px);
-}
 
 #header {
     height: $headerHeight;
     background-color: $header-bg; 
     @include box-shadow(0px 1px 2px rgba(0,0,0,0.3));
+
+    #navbar {
+        float: right;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin: 0;
+                padding: 0;
+                float: left;
+            
+                a {
+                    display: block;
+                    height: $headerHeight;
+                    line-height: $headerHeight;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    color: $nav-col;
+                    @include transition(all 500ms ease);
+
+                    &:hover {
+                        background-color: $blue-grey-800;
+                    }
+                } 
+            }
+        }
+    }
 }

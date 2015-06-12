@@ -1,6 +1,10 @@
 <header id="header" ng-controller="HeaderCtrl">
-    <div class="container">
-        <a ui-sref="home">home</a>
-        <a ui-sref="species">species</a>
+    <div class="row">
+        <nav id="navbar">
+            <ul>
+                <li><a ui-sref="main.home" lx-ripple="{{rippleColour}}">home</a></li>
+                <li><a ui-sref="main.species" lx-ripple="{{rippleColour}}">species</a></li>
+            </ul>
+        </nav>
     </div>
 </header>
