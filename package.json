@@ -11,10 +11,19 @@
     "url": "git+https://github.com/igemuoftATG/fba-api.git"
   },
   "author": "Julian Mazzitelli <julian.mazzitelli@mail.utoronto.ca> (http://jmazz.me)",
-  "contributors" : ["Albert Calzaretto <albert.calzaretto@mail.utoronto.ca>"],
+  "contributors": [
+    "Albert Calzaretto <albert.calzaretto@mail.utoronto.ca>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/igemuoftATG/fba-api/issues"
   },
-  "homepage": "https://github.com/igemuoftATG/fba-api#readme"
+  "homepage": "https://github.com/igemuoftATG/fba-api#readme",
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "colors": "^1.1.2",
+    "express": "^4.12.4",
+    "mongoose": "^4.0.5",
+    "morgan": "^1.6.0"
+  }
 }
