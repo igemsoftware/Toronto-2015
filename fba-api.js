@@ -1,12 +1,23 @@
+// ==== Node Modules ====
 var express = require('express');
-var colors  = require('colors');
-var config  = require('./config');
+var colors = require('colors');
 
+// ==== App ====
+var App = global.App = require('./lib/App');
+var port = App.config().port;
+
+// ==== Express ====
 var app = express();
 
+
+// ==== test route ====
 app.get('/', function(req, res) {
-    res.send('GET request at `/`');
+    res.send('GET request at root');
 });
 
-app.listen(config.port);
-console.log('Express server listening on port ' + config.port.toString().blue);
+
+// ==== Listen ====
+app.listen(port);
+console.log('Express server listening on port ' + port.toString().blue);
+
+//module.exports = App;

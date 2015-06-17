@@ -1,3 +1,15 @@
+/**
+ * The main configuration file.
+ * 'prod' and 'dev' must both follow this schema:
+ * {
+ *      port: Number
+ * }
+ */
 module.exports = {
-    port: 9001
+    prod: {
+        port: 6740
+    },
+    dev: {
+        port: 9001
+    }
 };
