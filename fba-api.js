@@ -9,6 +9,8 @@ var port = App.config().port;
 // ==== Express ====
 var app = express();
 
+// ==== Apply global middleware ====
+App.MW('global-middleware')(app);
 
 // ==== test route ====
 app.get('/', function(req, res) {
