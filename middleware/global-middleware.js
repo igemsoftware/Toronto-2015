@@ -12,31 +12,32 @@
  * within that route.
  */
 var bodyParser = require('body-parser');
-var morgan = require('morgan');
+var morgan     = require('morgan');
 
-module.exports = function(app) {
-         
-    // ==== CORS: cross-origin resource sharing ====
-    app.all('*', function(req, res, next) {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        next();
-    });
+module.exports = {
+    apply: function(app) { 
+        // ==== CORS: cross-origin resource sharing ====
+        app.all('*', function(req, res, next) {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            next();
+        });
 
-    // ==== Pre-Flight/Promise Request ====
-    app.options('*', function(req, res) {
-        res.sendStatus(200);
-    });
+        // ==== Pre-Flight/Promise Request ====
+        app.options('*', function(req, res) {
+            res.sendStatus(200);
+        });
 
-    // ==== Morgan ====
-    app.use(morgan(
-       ':method '.magenta + 
-       ':url '.green + 
-       ':status '.blue +
-       ':res[content-length] '.italic.grey + 'characters '.italic.grey + 'sent in ' + ':response-time ms'.grey
-    ));
+        // ==== Morgan ====
+        app.use(morgan(
+           ':method '.magenta + 
+           ':url '.green + 
+           ':status '.blue +
+           ':res[content-length] '.italic.grey + 'characters '.italic.grey + 'sent in ' + ':response-time ms'.grey
+        ));
 
-    // ==== Body Parser ====
-    app.use(bodyParser.urlencoded({extended:true}));
-    app.use(bodyParser.json());
+        // ==== Body Parser ====
+        app.use(bodyParser.urlencoded({extended:true}));
+        app.use(bodyParser.json());
+    }    
 };

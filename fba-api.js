@@ -10,12 +10,10 @@ var port = App.config().port;
 var app = express();
 
 // ==== Apply global middleware ====
-App.MW('global-middleware')(app);
+App.MW('global-middleware').apply(app);
 
-// ==== test route ====
-app.get('/', function(req, res) {
-    res.send('GET request at root');
-});
+// ==== Initialize Routes  ====
+App.Lib('router').init(app);
 
 
 // ==== Listen ====
