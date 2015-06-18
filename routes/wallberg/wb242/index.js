@@ -8,4 +8,17 @@ router.get('/chair', function(req, res) {
     res.send('a chair within wb242\n');
 })
 
-module.exports = router;
+var foo = function(req, res) {
+    res.send('foo\n');
+}
+
+module.exports = {
+    routes: [{
+        route: '/',
+        method: 'GET'
+    }, {
+        route: '/chair',
+        method: 'GET'
+    }],
+    router: router
+};
