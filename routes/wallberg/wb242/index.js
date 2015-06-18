@@ -2,9 +2,17 @@ var router = require('express').Router();
 
 var Chair = App.Model('chair');
 
-router.get('/', function(req, res) {
+
+var foo = function(req, res, next) {
+    console.log('foo');
+    next();
+}
+
+var welcome = function(req, res) {
     res.send('welcome to wb242\n');
-});
+}
+
+router.get('/', foo, welcome);
 
 router.get('/chair', function(req, res) {
     var chair = new Chair({
@@ -22,17 +30,10 @@ router.get('/chair', function(req, res) {
     })
 })
 
-var foo = function(req, res) {
-    res.send('foo\n');
-}
+router.put('/chair', function(req, res) {
+    res.send('doing some puts on chairs\n');
+});
 
-module.exports = {
-    routes: [{
-        route: '/',
-        method: 'GET'
-    }, {
-        route: '/chair',
-        method: 'GET'
-    }],
-    router: router
-};
+
+
+module.exports = router; 

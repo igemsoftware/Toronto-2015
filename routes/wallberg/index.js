@@ -13,7 +13,4 @@ function another(req, res, next) {
 
 router.use(inside, another);
 
-module.exports = {
-    middleware: ['inside', 'another'],
-    router: router
-}
+module.exports = router;
