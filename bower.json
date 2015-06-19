@@ -10,6 +10,7 @@
     "lumx": "~0.3.35",
     "compass-mixins": "~1.0.2",
     "angular-ui-router": "~0.2.15",
-    "foundation": "~5.5.2"
+    "foundation": "~5.5.2",
+    "d3": "~3.5.5"
   }
 }
