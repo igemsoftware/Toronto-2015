@@ -11,7 +11,11 @@ var port = App.config().port;
 var app = express();
 
 // ==== Connect to MongoDB ====
-mongoose.connect('mongodb://localhost/fba')
+//mongoose.connect('mongodb://localhost/fba');
+var dbUrl = 'mongodb://albert:ass@ds041432.mongolab.com:41432/heroku_app37313258';
+// localdb better for testing imo
+//var dbUrl = 'mongodb://localhost/modelspecies';
+mongoose.connect(dbUrl);
 
 // ==== Apply global middleware ====
 App.MW('global-middleware').apply(app);
