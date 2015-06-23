@@ -1,17 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var SpeciesSchema = new Schema({
-	cname: {
-		type:String,
-		default: "species"
-	},
 	ename:{
 		type:String,
 		required: true
 	},
 	cparent:{
 		type: Schema.Types.ObjectId,
-		ref: 'Genus'
+		ref: 'genus'
 		//required:true
 	},
 	strain: {
@@ -28,4 +24,4 @@ var SpeciesSchema = new Schema({
 	}
 });
 
-module.exports = mongoose.model('Species', SpeciesSchema);
+module.exports = mongoose.model('species', SpeciesSchema);

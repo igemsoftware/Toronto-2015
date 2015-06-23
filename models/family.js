@@ -1,20 +1,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var FamilySchema = new Schema({
-	cname:{
-		type:String,
-		default: 'family'
-	},
 	ename:{
 		type:String,
 		required: true
 	},
 	cparent:{
 		type: Schema.Types.ObjectId,
-   	 	ref: 'Order'
+   	 	ref: 'order'
 	},
 	members: {
-		type: [Schema.Types.Mixed]
+		type: [Schema.Types.ObjectId],
+		ref: 'genus'
 	}
 });
-module.exports = mongoose.model('Family', FamilySchema);
+module.exports = mongoose.model('family', FamilySchema);

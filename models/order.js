@@ -7,10 +7,11 @@ var OrderSchema = new Schema({
 	},
 	cparent:{
 		type: Schema.Types.ObjectId,
-   	 	ref: 'Class'
+   	 	ref: 'class'
 	},
 	members: {
-		type: [Schema.Types.Mixed]
+		type: [Schema.Types.ObjectId],
+		ref:'family'
 	}
 });
-module.exports = mongoose.model('Order', OrderSchema)
+module.exports = mongoose.model('order', OrderSchema)

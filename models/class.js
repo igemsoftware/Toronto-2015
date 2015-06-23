@@ -7,10 +7,11 @@ var ClassSchema = new Schema({
 	},
 	cparent: {
 		type: Schema.Types.ObjectId,
-   	 	ref: 'Phylum'
+   	 	ref: 'phylum'
 	},
 	members: {
-		type: [Schema.Types.Mixed]
+		type: [Schema.Types.ObjectId],
+		ref: 'order'
 	}
 });
-module.exports = mongoose.model('Class', ClassSchema);
+module.exports = mongoose.model('class', ClassSchema);

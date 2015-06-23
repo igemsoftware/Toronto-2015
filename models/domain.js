@@ -6,7 +6,8 @@ var DomainSchema = new Schema({
 		required: true
 	},
 	members: {
-		type: [Schema.Types.ObjectId]
+		type: [Schema.Types.ObjectId],
+		ref: "phylum"
 	}
 });
-module.exports = mongoose.model('Domain', DomainSchema);
+module.exports = mongoose.model('domain', DomainSchema);

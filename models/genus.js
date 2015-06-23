@@ -7,10 +7,11 @@ var GenusSchema = new Schema({
 	},
 	cparent:{
 		type: Schema.Types.ObjectId,
-		ref: 'Family'
+		ref: 'family'
 	},
 	members: {
-		type: [Schema.Types.ObjectId]
+		type: [Schema.Types.ObjectId],
+		ref: 'species'
 	}
 });
-module.exports = mongoose.model('Genus', GenusSchema);
+module.exports = mongoose.model('genus', GenusSchema);

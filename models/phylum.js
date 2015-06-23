@@ -1,20 +1,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var PhylumSchema = new Schema({
-	cname:{
-		type:String,
-		default: 'domain'
-	},
 	ename: {
 		type: String,
-		required: true,
-   	 	ref: 'Domain'
+		required: true
 	},
 	cparent: {
 		type: Schema.Types.ObjectId,
+		ref:'domain'
 	},
 	members: {
-		type: [Schema.Types.ObjectId]
+		type: [Schema.Types.ObjectId],
+		ref: 'class'
 	}
 });
-module.exports = mongoose.model('Phylum', PhylumSchema);
+module.exports = mongoose.model('phylum', PhylumSchema);
