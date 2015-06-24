@@ -30,7 +30,9 @@ var retrieveElement = function(req, res, next) {
 	if(!columnName){
 		response.send404(res);
 	}else{
-		Species.find(req.query, function(err, data){
+		var query = {};
+		query[columnName] = req.query[columnName].toLowerCase();
+		Species.find(query, function(err, data){
 			if(err)
 				response.send500(err.toString(), res);
 			else if(data === [])
