@@ -1,31 +1,48 @@
 var express  = require('express');
 var mongoose = require('mongoose');
 var router   = express.Router();
-var speciesCreate = App.Lib('speciesCreate')
+
+var Species = App.Model('species');
+
+var columns = ["DOMAIN", "PHYLUM", "CLASS", "ORDER", "FAMILY", 
+				"GENUS", "SPECIES", "STRAIN", "MISC", "GENOME"];
 
 var addSpecie = function(req, res, next) {
     var row = {};
-    row.species = req.body.species;
-    row.strain = req.body.strain;
-    row.genome = req.body.genome;
-    row.JSONCreate = req.body.JSONCreate;
-    row.domain = req.body.domain;
-    row.phylum = req.body.phylum;
-    row.class = req.body.class;
-    row.order = req.body.order;
-    row.family = req.body.family;
-    row.genus = req.body.genus;    
-	speciesCreate(row, function(err, row){
-		if(err)
-			res.send(err);
-		else
-			res.send("done\n");
-	});
+	for(var i = 0; i < columns.length; i++){
+		row[columns[i]] = req.body[columns[i]].toLowerCase();
+	}
+	var specie = new Species(row);
+	specie.save(row, function(err, savedSpecie){
+		if(err){
+			return res.send(err + '\n');
+		}
+		res.send("Added\n");
+	});	    
+}
 
-    
+var retrieveElement = function(req, res, next) {
+	var columnName;
+	for(var i = 0; i < columns.length; i++){
+		if(req.query[columns[i]])
+			columnName = columns[i];
+	}
+	if(!columnName){
+		return res.send("Invalid search request");
+	}
+	Species.find(req.query, function(err, data){
+		if(err)
+			res.send(err)
+		else if(data === [])
+			res.send("Could not find item");
+		else
+			res.send(data);
+	})
+	
 }
 
 
+router.get('/retrieve', retrieveElement);
 router.post('/create', addSpecie)
 
 

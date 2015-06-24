@@ -9,16 +9,16 @@ fs.readFile('modelspecies.csv', 'utf8', function(err, data) {
         line = line.split(',');
 
         var specie = {
-            domain : line[0],
-            phylum : line[1],
-            class  : line[2],
-            order  : line[3],
-            family : line[4],
-            genus  : line[5],
+            DOMAIN : line[0],
+            PHYLUM : line[1],
+            CLASS  : line[2],
+            ORDER  : line[3],
+            FAMILY : line[4],
+            GENUS  : line[5],
         };
 
         for (var j = headers.length - 5; j < headers.length; j++) {
-            specie[headers[j]] = line[j];
+            specie[headers[j].toUpperCase()] = line[j].toLowerCase();
         }
  
         var fileName = './species/specie' + index + '.json';
