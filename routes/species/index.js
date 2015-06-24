@@ -1,7 +1,7 @@
 var express  = require('express');
 var mongoose = require('mongoose');
 var router   = express.Router();
-
+var response = App.Lib('responseGenerator');
 var Species = App.Model('species');
 
 var columns = ["DOMAIN", "PHYLUM", "CLASS", "ORDER", "FAMILY", 
@@ -14,10 +14,10 @@ var addSpecie = function(req, res, next) {
 	}
 	var specie = new Species(row);
 	specie.save(row, function(err, savedSpecie){
-		if(err){
-			return res.send(err + '\n');
-		}
-		res.send("Added\n");
+		if(err)
+			response.send500(err.toString(), res);
+		else
+			res.send("Added\n")
 	});	    
 }
 
@@ -28,16 +28,17 @@ var retrieveElement = function(req, res, next) {
 			columnName = columns[i];
 	}
 	if(!columnName){
-		return res.send("Invalid search request");
+		response.send404(res);
+	}else{
+		Species.find(req.query, function(err, data){
+			if(err)
+				response.send500(err.toString(), res);
+			else if(data === [])
+				response.send404(res);
+			else
+				res.send(data);
+		});
 	}
-	Species.find(req.query, function(err, data){
-		if(err)
-			res.send(err)
-		else if(data === [])
-			res.send("Could not find item");
-		else
-			res.send(data);
-	})
 	
 }
 
