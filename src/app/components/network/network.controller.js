@@ -20,10 +20,12 @@ angular.module('fbaApp')
 
         console.log(data);
 
-        var w = $('#network').width();
-        var h = $('#network').height();
+        var view = '#network';
 
-        var svg = d3.select('#network').append('svg').attr('width', w).attr('height', h);
+        var w = $(view).width();
+        var h = $(view).height();
+
+        var svg = d3.select(view).append('svg').attr('width', w).attr('height', h);
 
         var force = d3.layout.force()
             .size([w, h])
