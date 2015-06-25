@@ -16,6 +16,7 @@
     "gulp-jshint": "^1.11.0",
     "gulp-sass": "^2.0.1",
     "gulp-watch": "^4.2.4",
-    "jshint-stylish": "^2.0.0"
+    "jshint-stylish": "^2.0.0",
+    "stream-series": "^0.1.1"
   }
 }

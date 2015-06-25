@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
 var jshint = require('gulp-jshint');
 var compass = require('compass-importer');
+var series = require('stream-series');
 
 // ==== src and dest for index.html ====
 var index = './src/index.html';
@@ -16,6 +17,7 @@ var sassDir = './src/styles/sass/*.scss';
 var cssDir = './src/styles';
 // === js files within ./src/app ====
 var jsGlob = './src/app/**/*.js';
+var jsAssetsGlob = './src/assets/js/**.js';
 
 // runs on bower postinstall hook
 gulp.task('wiredep', function() {
@@ -28,8 +30,13 @@ gulp.task('inject-css', function() {
 });
 
 gulp.task('inject-js', function() {
-    var sources = gulp.src(jsGlob, {read: false});
-    gulp.src(index).pipe(inject(sources, {relative: true})).pipe(gulp.dest(indexDest))
+    var jsGlobSrc = gulp.src(jsGlob, {read: false});
+    var jsAssetsGlobSrc = gulp.src(jsAssetsGlob, {read: false});
+
+    gulp.src(index).pipe(inject(series(jsAssetsGlobSrc, jsGlobSrc), {relative: true})).pipe(gulp.dest(indexDest));
+
+    //var sources = gulp.src(jsGlob, {read: false});
+    //gulp.src(index).pipe(inject(sources, {relative: true})).pipe(gulp.dest(indexDest))
 });
 
 gulp.task('sass', function() {

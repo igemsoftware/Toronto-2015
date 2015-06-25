@@ -10,6 +10,8 @@ angular.module('fbaApp')
     dataRequest.success(function(data) {
         var data = data.data; 
 
+        doShit();
+
         var nodes = [
             {id: "a", name: "A", selflink: false},
             {id: "b", name: "B", selflink: true},

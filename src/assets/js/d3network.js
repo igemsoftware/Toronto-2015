@@ -1,0 +1,3 @@
+function doShit() {
+    alert('sweg');
+}
