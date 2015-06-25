@@ -1,57 +1,60 @@
 var Network = (function() {
-    var instance = null;
+    // The instance
+    var inst = null;
     
     function Network() {
-        this.view = '';
-        this.w = null;
-        this.h = null;
-        this.svg = null;
-        this.node = null;
-        this.nodes = [
-             {id: "a", name: "A", selflink: false},
-             {id: "b", name: "B", selflink: true},
-             {id: "c", name: "C", selflink: false},
-             {id: "d", name: "D", selflink: false},
-             {id: "e", name: "E", selflink: false}
-        ];
-        this.force = null;
+        this.traits = {
+            view  : '',
+            w     : null,
+            h     : null,
+            svg   : null,
+            node  : null,
+            force : null,
+            nodes : [
+                {id: 'a', name: 'A', selflink: false},
+                {id: 'b', name: 'B', selflink: true},
+                {id: 'c', name: 'C', selflink: false},
+                {id: "d", name: 'D', selflink: false},
+                {id: 'e', name: 'E', selflink: false}
+           ] 
+        } 
     }
 
 
     function getInstance(divName) {
-        if (!instance) {
-            instance = new Network();
-            instance.view = divName;
-            instance.w = $(instance.view).width();
-            instance.h = $(instance.view).height(); 
+        if (!inst) {
+            inst = new Network();
+            inst.traits.view = divName;
+            inst.traits.w = $(inst.traits.view).width();
+            inst.traits.h = $(inst.traits.view).height(); 
         }
 
-        return instance;
+        return inst;
     }
 
     function createSvg() {
-        instance.svg = d3
-            .select(instance.view)
+        inst.traits.svg = d3
+            .select(inst.traits.view)
             .append('svg')
-            .attr('width', instance.w)
-            .attr('height', instance.h);
+            .attr('width', inst.traits.w)
+            .attr('height', inst.traits.h);
 
-        instance.force = d3.layout.force()
-             .size([instance.w, instance.h])
-             .nodes(instance.nodes)
+        inst.traits.force = d3.layout.force()
+             .size([inst.traits.w, inst.traits.h])
+             .nodes(inst.traits.nodes)
              .charge(-100)
              .start();
 
-        instance.node = instance.svg.selectAll('.node')
-             .data(instance.nodes)
+        inst.traits.node = inst.traits.svg.selectAll('.node')
+             .data(inst.traits.nodes)
              .enter().append('circle')
              .attr('class', 'node')
              .attr('r', 20)
              .style('fill', 'red')
-             .call(instance.force.drag);
+             .call(inst.traits.force.drag);
 
-        instance.force.on('tick', function() {
-             instance.node
+        inst.traits.force.on('tick', function() {
+             inst.traits.node
                 .attr('cx', function(d) { return d.x; })
                 .attr('cy', function(d) { return d.y; })
         })
