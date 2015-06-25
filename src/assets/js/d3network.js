@@ -10,23 +10,18 @@ var Network = (function() {
             svg   : null,
             node  : null,
             force : null,
-            nodes : [
-                {id: 'a', name: 'A', selflink: false},
-                {id: 'b', name: 'B', selflink: true},
-                {id: 'c', name: 'C', selflink: false},
-                {id: "d", name: 'D', selflink: false},
-                {id: 'e', name: 'E', selflink: false}
-           ] 
+            nodes : null 
         } 
     }
 
 
-    function getInstance(divName) {
+    function getInstance(divName, nodesData) {
         if (!inst) {
             inst = new Network();
             inst.traits.view = divName;
             inst.traits.w = $(inst.traits.view).width();
-            inst.traits.h = $(inst.traits.view).height(); 
+            inst.traits.h = $(inst.traits.view).height();
+            inst.traits.nodes = nodesData; 
         }
 
         return inst;
@@ -62,8 +57,8 @@ var Network = (function() {
 
 
     return {
-        getInstance: function(divName) {
-            getInstance(divName);
+        getInstance: function(divName, nodesData) {
+            getInstance(divName, nodesData);
             createSvg();
         }
     };
