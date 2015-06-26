@@ -15,12 +15,12 @@ var Network = (function() {
     }
 
 
-    function getInstance(divName, nodesData) {
+    function getInstance(divName, width, height,  nodesData) { 
         if (!inst) {
             inst = new Network();
             inst.traits.view = divName;
-            inst.traits.w = $(inst.traits.view).width();
-            inst.traits.h = $(inst.traits.view).height();
+            inst.traits.w = width;
+            inst.traits.h = height;
             inst.traits.nodes = nodesData; 
         }
 
@@ -57,8 +57,8 @@ var Network = (function() {
 
 
     return {
-        getInstance: function(divName, nodesData) {
-            getInstance(divName, nodesData);
+        getInstance: function(divName, width, height,  nodesData) {
+            getInstance(divName, width, height, nodesData);
             createSvg();
         }
     };

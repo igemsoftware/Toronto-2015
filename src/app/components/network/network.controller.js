@@ -2,10 +2,10 @@
 
 angular.module('fbaApp')
 
-.controller('NetworkCtrl', ['$scope', '$http', function($scope, $http) { 
+
+.controller('NetworkCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) { 
     
-    // ==== Network Class ====
-    
+    var network = '#network'; 
 
     var nodes = [
         {id: 'a', name: 'A', selflink: false},
@@ -15,7 +15,10 @@ angular.module('fbaApp')
         {id: 'e', name: 'E', selflink: false}
     ];
 
-    Network.getInstance('#network', nodes); 
+  
+    // ==== Network Class ====
+    var network = '#network';
+    Network.getInstance(network, $(network).width(), $(network).height(), nodes);
         
     // for later 
     var dataRequest = $http.get('http://45.55.193.224/toydata.json');

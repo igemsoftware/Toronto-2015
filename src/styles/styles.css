@@ -10,6 +10,12 @@
  * A partial implementation of the Ruby display functions from Compass:
  * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
  */
+.view {
+  height: 100%; }
+
+.view-header {
+  height: calc(100% - 60px); }
+
 #header {
   height: 60px;
   background-color: #009688;
@@ -42,4 +48,8 @@
 
 #network {
   width: 100%;
-  height: 600px; }
+  height: 100%;
+  overflow: hidden; }
+  #network svg {
+    width: 100%;
+    height: 100%; }
