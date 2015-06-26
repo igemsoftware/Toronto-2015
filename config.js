@@ -14,7 +14,7 @@
  */
 module.exports = {
     prod: {
-        port: 6740
+        port: 6740 // do not change this
     },
     dev: {
         port: 9001,

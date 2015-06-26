@@ -43,11 +43,23 @@ var retrieveElement = function(req, res, next) {
                 res.send(data);
         });
     }
+}
 
+var retrieveAll = function(req, res, next) {
+    Species.find(function(err, species) {
+        if (err) {
+            res.status(500).send('500 Internal Server Error');
+            return;
+        }
+
+        res.send(species);
+    });
 }
 
 // GET /species/retrieve
 router.get('/retrieve', retrieveElement);
+// GET /species/retrieve/all
+router.get('/retrieve/all', retrieveAll);
 // POST /species/create
 router.post('/create', addSpecie)
 
