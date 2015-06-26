@@ -1,36 +1,22 @@
-// ==== Node Modules ====
+require('colors');
+
+// ==== Express ====
 var express = require('express');
-var colors = require('colors');
-var mongoose = require('mongoose');
+var app = express();
 
 // ==== App ====
 var App = global.App = require('./lib/App');
-var port = App.config().port;
 
-// ==== Express ====
-var app = express();
-
-// ==== Connect to MongoDB ====
-//mongoose.connect('mongodb://localhost/fba');
-var dbUrl = 'mongodb://albert:ass@ds041432.mongolab.com:41432/heroku_app37313258';
-
-
-// localdb better for testing imo
-//var dbUrl = 'mongodb://localhost/modelspecies';
-mongoose.connect(dbUrl);
-//error event handler
-mongoose.connection.on('error', function(err) {
-    console.error('MongoDB error: %s', err);
-});
+// ==== DB Connection ====
+App.Lib('connection').init();
 
 // ==== Apply global middleware ====
 App.MW('global-middleware').apply(app);
 
-// ==== Initialize Routes  ====
+// ==== Initialize Routes (and middlewares)  ====
 App.Lib('router').init(app);
 
 // ==== Listen ====
+var port = App.config().port;
 app.listen(port);
 console.log('Express server listening on port ' + port.toString().blue);
-
-//module.exports = App;
