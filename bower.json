@@ -11,6 +11,7 @@
     "compass-mixins": "~1.0.2",
     "angular-ui-router": "~0.2.15",
     "foundation": "~5.5.2",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "fontawesome": "~4.3.0"
   }
 }
