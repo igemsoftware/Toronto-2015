@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fbaApp', ['ui.router', 'lumx'])
+angular.module('fbaApp', ['ui.router', 'lumx', 'ngTable'])
 
 .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
