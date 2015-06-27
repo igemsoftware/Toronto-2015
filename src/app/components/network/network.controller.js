@@ -4,20 +4,13 @@ angular.module('fbaApp')
 
 
 .controller('NetworkCtrl', ['$scope', '$http', '$filter', 'UrlProvider', 'ngTableParams',
-        function($scope, $http, $filter, UrlProvider, ngTableParams) {  
+        function($scope, $http, $filter, UrlProvider, ngTableParams) {
     var network = '#network';
 
-    var nodes = [
-        {id: 'a', name: 'A', selflink: false},
-        {id: 'b', name: 'B', selflink: true},
-        {id: 'c', name: 'C', selflink: false},
-        {id: "d", name: 'D', selflink: false},
-        {id: 'e', name: 'E', selflink: false}
-    ];
 
 
     // ==== Network Class ====
-    Network.getInstance(network, $(network).width(), $(network).height(), nodes);
+
 
     // ==== Sidebar ====
     var sidebar = '#sidebar';
@@ -26,8 +19,8 @@ angular.module('fbaApp')
     $scope.rippleColour = 'deep-purple-500';
     $scope.locked = true;
     $scope.deflated = true;
-    $scope.species = {}; 
-    
+    $scope.species = {};
+
     $scope.getLockedClass = function() {
         if ($scope.locked) {
             return 'locked';
@@ -41,7 +34,7 @@ angular.module('fbaApp')
 
         if (!$scope.locked) {
             Network.changeDim($('body').width(), $(network).height());
-        } else { 
+        } else {
             Network.changeDim($('body').width() - sidebarWidth, $(network).height());
         }
     }
@@ -73,18 +66,21 @@ angular.module('fbaApp')
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }).error(function(err) {
                 $defer.reject(err);
-            })     
+            })
          }
-     }); 
+     });
     // ==== End sidebar ====
 
-    
-        
-    // for later 
+
+
+    // for now
     var dataRequest = $http.get('http://45.55.193.224/toydata.json');
     dataRequest.success(function(data) {
-        console.log(data);
+          Network.init(network, {
+                        height: $(network).width(),
+                        width: $(network).height(),
+                      }, data.data);
     }).error(function(err) {
         alert(err);
-    }); 
+    });
 }]);
