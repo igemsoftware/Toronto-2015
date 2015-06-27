@@ -1,45 +1,26 @@
-var Network = (function() {
+var Network = function(divName, attributes) {
   // The instance
   var that = this;
+  init(divName, attributes);
 
-  function init(divName, attributes, nodes){
-    that.attributes = attributes;
-    that.svg = d3.select(divName).append('svg');
-    that.data = nodes;
+  function init(divName, attributes){
+      that.svg = d3.select(divName).append('svg');
+      that.svg.attr("class", "body");
+      that.attributes = attributes;
+      var keys = Object.keys(attributes);
+      for(var i = 0; i < keys.length; i++)
+        that.svg.attr(keys[i], attributes[keys[i]]);
 
-    var keys = Object.keys(attributes);
-    for(var i = 0; i < keys.length; i++)
-      that.svg.attr(keys[i], attributes[keys[i]]);
-    //Finally add force
-    that.network = that.svg.append("g")
-    .attr("class", "network");
+      that.network = that.svg.append("g").attr("class", "network");
+  }
 
-    var zoom = d3.behavior.zoom()
-    .scaleExtent([0.2, 40])
-    .on("zoom", zoom);
-
-    that.svg
-    .call(zoom)
-    .on("dblclick.zoom", null)
-    .on("contextmenu", function(d, i){d3.event.preventDefault();}) //prevents default right click pop-up
-    .on("mousedown", function(d){
-      d3.select(".popup").remove();
-      contextMenuShowing = false;
-    });
-    //doubt we need this
-    that.svg.append("rect")
-    .attr("width", that.attributes.width)
-    .attr("height",that.attributes.height)
-    .style("fill","transparent")
-    .style("pointer-events", "all");
-
-    that.pathways = new Pathway(that);
-
+  function addSpecie(specie){
+    that.species = specie;
+    that.pathways = [];
+    that.pathways.push(new Pathway(that.network, specie));
     //initalize pathways for the first time
-    that.pathways.init(data);
-
     //doit();
-    return this;
+    return that;
   }
 
   function changeDimensions(width, height) {
@@ -95,6 +76,7 @@ var Network = (function() {
       d3.select(".popup").remove();
       contextMenuShowing = false;
     });
+    //dont need yet....
     that.svg.append("rect")
     .attr("width", that.attributes.width)
     .attr("height", that.attributes.height)
@@ -511,11 +493,11 @@ var Network = (function() {
         }
       }
       return {
-        init: function(divName, attributes,  nodesData) {
-          init(divName, attributes, nodesData);
+        addSpecie: function(specie){
+            addSpecie(specie);
         },
-        changeDim: function(width, height) {
-          //changeDimensions(width, height);
+        changeDimensions: function(width, height) {
+            changeDimensions(width, height);
         }
       }
-    })();
+    }

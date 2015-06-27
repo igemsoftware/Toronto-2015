@@ -5,12 +5,15 @@ angular.module('fbaApp')
 
 .controller('NetworkCtrl', ['$scope', '$http', '$filter', 'UrlProvider', 'ngTableParams',
         function($scope, $http, $filter, UrlProvider, ngTableParams) {
-    var network = '#network';
+    var divName = '#network';
 
 
 
     // ==== Network Class ====
-
+    var network = new Network(divName,  {
+                  height: $(divName).width(),
+                  width: $(divName).height(),
+                });
 
     // ==== Sidebar ====
     var sidebar = '#sidebar';
@@ -29,16 +32,16 @@ angular.module('fbaApp')
         }
     }
 
-    $scope.lockControl = function() {
+    /*$scope.lockControl = function() {
         $scope.locked = !$scope.locked;
 
         if (!$scope.locked) {
-            Network.changeDim($('body').width(), $(network).height());
+           network.changeDimensions($('body').width(), $(network).height());
         } else {
-            Network.changeDim($('body').width() - sidebarWidth, $(network).height());
+          network.changeDimensions($('body').width() - sidebarWidth, $(network).height());
         }
-    }
-    $scope.lockControl();
+    }*/
+  //  $scope.lockControl();
 
     $scope.expandSidebar = function() {
         $(sidebar).width($('body').width() - sidebarOffset);
@@ -76,10 +79,7 @@ angular.module('fbaApp')
     // for now
     var dataRequest = $http.get('http://45.55.193.224/toydata.json');
     dataRequest.success(function(data) {
-          Network.init(network, {
-                        height: $(network).width(),
-                        width: $(network).height(),
-                      }, data.data);
+          network.addSpecie(data.data[0]);
     }).error(function(err) {
         alert(err);
     });
