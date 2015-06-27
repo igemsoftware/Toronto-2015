@@ -27,6 +27,13 @@ var Network = (function() {
         return inst;
     }
 
+    function changeDimensions(width, height) {
+        inst.traits.w = width;
+        inst.traits.h = height;
+        inst.traits.force
+           .size([inst.traits.w, inst.traits.h]).start(); 
+    }
+
     function createSvg() {
         inst.traits.svg = d3
             .select(inst.traits.view)
@@ -60,6 +67,9 @@ var Network = (function() {
         getInstance: function(divName, width, height,  nodesData) {
             getInstance(divName, width, height, nodesData);
             createSvg();
+        },
+        changeDim: function(width, height) {
+            changeDimensions(width, height);
         }
     };
 })();

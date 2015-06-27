@@ -69,6 +69,11 @@
     top: $headerHeight;
     right:0;
     background-color: $sidebar-bg;
+    @include transition(all 500ms ease); 
+
+    &.unlocked {
+        background-color: rgba($sidebar-bg, 0.5);
+    }
 
     #sidebar-controls {
         padding-top: 10px;

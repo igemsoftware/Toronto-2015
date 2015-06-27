@@ -1,10 +1,11 @@
 <div ng-controller="NetworkCtrl" class="view">
     <div id="network"></div>
-    <div id="sidebar">
+    <div id="sidebar" class="{{getLockedClass()}}">
         <div id="sidebar-controls" class="center">
-            <i class="fa fa-chevron-left fa-2x"></i>
-            <i class="fa fa-lock fa-2x"></i>
-            <i class="fa fa-chevron-right fa-2x"></i>
+            <i ng-click="expandSidebar()"class="fa fa-chevron-left fa-2x" lx-ripple="{{rippleColour}}"></i>
+            <i ng-show="locked" ng-click="lockControl()" class="fa fa-lock fa-2x" lx-ripple="{{rippleColour}}"></i>
+            <i ng-show="!locked" ng-click="lockControl()" class="fa fa-unlock fa-2x" lx-ripple="{{rippleColour}}"></i>
+            <i ng-click="deflateSidebar()" class="fa fa-chevron-right fa-2x" lx-ripple="{{rippleColour}}"></i>
         </div>
     </div>
 </div>

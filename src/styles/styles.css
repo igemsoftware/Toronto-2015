@@ -149,7 +149,13 @@ input, select {
   height: calc(100% - 60px);
   top: 60px;
   right: 0;
-  background-color: #00BCD4; }
+  background-color: #00BCD4;
+  -webkit-transition: all false false, 500ms false false, ease false false;
+  -moz-transition: all false false false, 500ms false false false, ease false false false;
+  -o-transition: all false false false, 500ms false false false, ease false false false;
+  transition: all 500ms ease; }
+  #sidebar.unlocked {
+    background-color: rgba(0, 188, 212, 0.5); }
   #sidebar #sidebar-controls {
     padding-top: 10px; }
     #sidebar #sidebar-controls i.fa {
