@@ -1,5 +1,5 @@
 var Reaction = function(network){
-  var private{
+  var private = {
     network: network
   }
 }
