@@ -96,6 +96,15 @@ hr {
 input, select {
   vertical-align: middle; }
 
+#sidebar::-webkit-scrollbar {
+  width: 12px; }
+
+#sidebar::-webkit-scrollbar-track-piece {
+  background: #00c9b6; }
+
+#sidebar::-webkit-scrollbar-thumb {
+  background: #009688; }
+
 .center {
   text-align: center; }
 
@@ -153,7 +162,9 @@ input, select {
   -webkit-transition: all false false, 500ms false false, ease false false;
   -moz-transition: all false false false, 500ms false false false, ease false false false;
   -o-transition: all false false false, 500ms false false false, ease false false false;
-  transition: all 500ms ease; }
+  transition: all 500ms ease;
+  overflow-y: scroll;
+  overflow-x: hidden; }
   #sidebar.unlocked {
     background-color: rgba(0, 188, 212, 0.5); }
   #sidebar #sidebar-controls {
@@ -167,3 +178,18 @@ input, select {
       #sidebar #sidebar-controls i.fa:hover {
         cursor: pointer;
         color: #673AB7; }
+  #sidebar #species-list li {
+    list-style: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    -webkit-transition: all false false, 500ms false false, ease false false;
+    -moz-transition: all false false false, 500ms false false false, ease false false false;
+    -o-transition: all false false false, 500ms false false false, ease false false false;
+    transition: all 500ms ease; }
+    #sidebar #species-list li:hover {
+      background-color: #F5F5F5;
+      cursor: pointer; }
+    #sidebar #species-list li:nth-child(odd) {
+      background-color: rgba(245, 245, 245, 0.5); }
+      #sidebar #species-list li:nth-child(odd):hover {
+        background-color: #F5F5F5; }

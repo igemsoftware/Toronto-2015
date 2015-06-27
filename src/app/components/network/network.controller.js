@@ -3,7 +3,7 @@
 angular.module('fbaApp')
 
 
-.controller('NetworkCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {  
+.controller('NetworkCtrl', ['$scope', '$http', 'UrlProvider', function($scope, $http, UrlProvider) {  
     var network = '#network';
 
     var nodes = [
@@ -24,6 +24,14 @@ angular.module('fbaApp')
     var sidebarOffset = 100;
     $scope.rippleColour = 'deep-purple-500';
     $scope.locked = true;
+    $scope.species = {};
+
+    $http.get(UrlProvider.baseUrl + '/species/retrieve/all').success(function(data) {
+        console.log(data);
+        $scope.species = data;
+    }).error(function(err) {
+        console.log(err);
+    })
     
     $scope.getLockedClass = function() {
         if ($scope.locked) {
