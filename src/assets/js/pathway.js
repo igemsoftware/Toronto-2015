@@ -3,7 +3,9 @@ var Pathway = function(network, specie){
     network: network,
     reactions: [], //bio shit
     metabolites: [],
-    links: [], //D3 shit
+    connections: [],
+    nodesJSON: [],
+    links: null, //D3 shit
     nodes: null,
     force: null
   }
@@ -23,11 +25,17 @@ var Pathway = function(network, specie){
     buildMetabolites(specie);
     //Create reaction objects
     buildReactions(specie);
+    //add forces
+    addForces();
+  }
+  function tick(){
+
   }
   function buildMetabolites(specie){
     for (var i = 0; i<specie.metabolites.length; i++){
       private.metabolites.push(new Metabolite(private.network, specie.metabolites[i].name,
                                                 specie.metabolites[i].id));
+      private.nodesJSON.push(private.metabolites[i].getJSON());
     }
   }
   function buildReactions(specie){
@@ -36,6 +44,7 @@ var Pathway = function(network, specie){
     for (var i = 0; i<specie.reactions.length; i++){
       private.reactions.push(new Reaction(private.network,  specie.reactions[i].name,
                                           specie.reactions[i].id));
+      private.nodesJSON.push(private.reactions[i].getJSON());
       var m = Object.keys(specie.reactions[i].metabolites);
       for (var k = 0; k<m.length; k++){
         if(specie.reactions[i].metabolites[m[k]]>0){
@@ -54,7 +63,7 @@ var Pathway = function(network, specie){
     for (var j=0; j<tempLinks.length;j++){
       var s = private.metabolites[nodesMap[tempLinks[j].source]] || private.reactions[nodesMap[tempLinks[j].source]];
       var t =  private.metabolites[nodesMap[tempLinks[j].target]] || private.reactions[nodesMap[tempLinks[j].target]];
-      private.links.push({id: s.getID()+"-"+t.getID(), source: s.getJSON(), target: t.getJSON()});
+      private.connections.push({id: s.getID()+"-"+t.getID(), source: s.getJSON(), target: t.getJSON()});
     }
 
   }
@@ -74,12 +83,12 @@ var Pathway = function(network, specie){
   }
   function addForces(){
     private.force = d3.layout.force()
-    .nodes()
-    .links(links)
+    .nodes(private.nodesJSON)
+    .links(private.connections)
     .charge(function(d){if(d.type == "m"){return -1000}else{return -500}})
     .linkStrength(2)
     .linkDistance(50)
-    .size([w, h])
+    .size([private.network.width, private.network.height])
     .on("tick", tick);
   }
 

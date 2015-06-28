@@ -16,7 +16,8 @@ var Reaction = function(network, name, id){
      return{
        name: private.name,
        id: private.id,
-       type: private.type
+       type: private.type,
+       selflink: false
      }
    }
  }
