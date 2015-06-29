@@ -1,6 +1,6 @@
-var Reaction = function(network, name, id){
+var Reaction = function(that, name, id){
   var private = {
-    network: network,
+    that: that,
     id: id,
     name: name,
     type: "r"

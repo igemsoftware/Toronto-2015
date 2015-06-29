@@ -1,8 +1,7 @@
-var Pathway = function(that, specie){
-
+var Pathway = function(network, attributes, specie){
   var private = {
-    that: that,
-    network: that.network,
+    network: network,
+    attributes: attributes,
     reactions: [], //bio shit
     metabolites: [],
     linkSet: [],
@@ -29,7 +28,8 @@ var Pathway = function(that, specie){
                         .charge(function(d){if(d.type == "m"){return -1000}else{return -500}})
                         .linkStrength(2)
                         .linkDistance(50)
-                        .size([that.attributes.width, that.attributes.height]);
+                        .size([private.attributes.width, private.attributes.height])
+                        .on("tick", tick);
 
     //Create metabolite objects
     buildMetabolites(specie);
@@ -38,13 +38,20 @@ var Pathway = function(that, specie){
     private.nodes.each(function(d) {
         d.fixed = false;
     });
+    draw();
     private.force.start();
   }
-
+  function tick(){
+    private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    private.links.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+  };
   function buildMetabolites(specie){
     for (var i = 0; i<specie.metabolites.length; i++){
-      private.metabolites.push(new Metabolite(private.network, specie.metabolites[i].name,
-                                                specie.metabolites[i].id));
+      private.metabolites.push(new Metabolite(private.nodes, specie.metabolites[i].name,
+                                                specie.metabolites[i].id, private.force));
       private.nodesSet.push(private.metabolites[i].getJSON());
     }
   }
@@ -52,8 +59,8 @@ var Pathway = function(that, specie){
     //Reaction -> r Metabolite -> m
     var tempLinks = [];
     for (var i = 0; i<specie.reactions.length; i++){
-      private.reactions.push(new Reaction(private.network,  specie.reactions[i].name,
-                                          specie.reactions[i].id));
+      private.reactions.push(new Reaction(private.nodes,  specie.reactions[i].name,
+                                          specie.reactions[i].id, private.force));
       private.nodesSet.push(private.reactions[i].getJSON());
       var m = Object.keys(specie.reactions[i].metabolites);
       for (var k = 0; k<m.length; k++){
@@ -65,7 +72,6 @@ var Pathway = function(that, specie){
           var t = specie.reactions[i].id;
         }
         tempLinks.push({id: s+"-"+t, source: s, target: t});
-
       }
     }
     var nodesMap = map(private.nodesSet);
@@ -76,14 +82,45 @@ var Pathway = function(that, specie){
       private.linkSet.push({id: s.id+"-"+t.id, source: s, target: t});
     }
   }
+  function draw(){
+    //Deal with links
+    private.links = private.links.data(private.force.links(), function(d){ return d.source.id + "-" + d.target.id; })
+    private.links.enter().insert("line")
+                .attr("class", "link")
+                .attr("id", function(d){return "id-"+d.id})
+                .attr("stroke", palette.linktest)
+                .attr("fill", "none")
+                .attr("opacity", 1)
+                .attr("stroke-width", 2)
+                .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
+    private.links.exit().remove();
+
+    private.nodes = private.nodes.data(private.force.nodes(), function(d) { return d.id;});
+  //  for(var i = 0; i < private.metabolites.length; i++)
+    //  private.metabolites[i].draw();
+    private.nodes.enter().append("g")
+                .attr("class", "node")
+                .attr("id", function(d){return "id-"+d.id})
+
+
+    //Create circle shape for node
+    private.nodes.append("circle")
+        .attr("class", "node-circle")
+        //.attr("class", function(d){if(d.type == 'm'){return "node-m";}else{return "node-r"}})
+        .attr("r", function(d){if(d.type == 'm'){return 10;}else{return 4}})
+        .attr("stroke", palette.nodestroketest)
+        .attr("stroke-width", function(d){if(d.type == 'm'){return 1;}else{return 35}})
+        .attr("stroke-opacity", function(d){if(d.type == 'm'){return 1;}else{return "0"}} )
+        .style("opacity", 1)
+        .attr("fill", function(d){if(d.type =="m"){return palette.themedarkblue}else{return palette.themeyellow}});
+
+  }
   //utilities function
   function map(nodesSet){
     var ret = {};
     for (var j=0; j<nodesSet.length;j++){
       ret[nodesSet[j].id] = j;
     }
-
-
     return ret;
   }
 
