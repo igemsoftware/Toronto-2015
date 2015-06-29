@@ -1,7 +1,7 @@
 var Network = function(divName, attributes) {
   //private variables
   var private = {
-      that: this, //probably dont need this, jsut in case though....
+      that: this, //probably dont need this, just in case though....
       svg: null,
       attributes: attributes,
       pathways: [],

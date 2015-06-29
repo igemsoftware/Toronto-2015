@@ -50,8 +50,8 @@ var Pathway = function(network, attributes, specie){
   };
   function buildMetabolites(specie){
     for (var i = 0; i<specie.metabolites.length; i++){
-      private.metabolites.push(new Metabolite(private.nodes, specie.metabolites[i].name,
-                                                specie.metabolites[i].id, private.force));
+      private.metabolites.push(new Metabolite(specie.metabolites[i].name,
+                                                specie.metabolites[i].id));
       private.nodesSet.push(private.metabolites[i].getJSON());
     }
   }
@@ -59,8 +59,8 @@ var Pathway = function(network, attributes, specie){
     //Reaction -> r Metabolite -> m
     var tempLinks = [];
     for (var i = 0; i<specie.reactions.length; i++){
-      private.reactions.push(new Reaction(private.nodes,  specie.reactions[i].name,
-                                          specie.reactions[i].id, private.force));
+      private.reactions.push(new Reaction(specie.reactions[i].name,
+                                          specie.reactions[i].id));
       private.nodesSet.push(private.reactions[i].getJSON());
       var m = Object.keys(specie.reactions[i].metabolites);
       for (var k = 0; k<m.length; k++){
