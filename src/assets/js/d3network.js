@@ -17,7 +17,7 @@ var Network = function(divName, attributes) {
   function addSpecie(specie){
     that.species = specie;
     that.pathways = [];
-    that.pathways.push(new Pathway(that.network, specie));
+    that.pathways.push(new Pathway(that, specie));
     return that;
   }
   function draw(){
