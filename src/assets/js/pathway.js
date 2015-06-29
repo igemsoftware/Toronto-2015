@@ -2,9 +2,9 @@ var Pathway = function(network, attributes, specie){
   var private = {
     network: network,
     attributes: attributes,
-    reactions: [], //bio shit
-    metabolites: [],
-    linkSet: [],
+    reactions: [], //Reactions and mataboites, each element is a metabolite/reaction element
+    metabolites: [], //And we can for loop it maybe later in the draw function and draw each element indepently?
+    linkSet: [],//to be fed to D3
     nodesSet: [],
     links: null, //D3 shit
     nodes: null,
@@ -82,8 +82,9 @@ var Pathway = function(network, attributes, specie){
       private.linkSet.push({id: s.id+"-"+t.id, source: s, target: t});
     }
   }
+  //Honestly, just fuck around with it, you dont have to use this.
   function draw(){
-    //Deal with links
+    //Pretty ghetto, you cant take out the left side assignment.....
     private.links = private.links.data(private.force.links(), function(d){ return d.source.id + "-" + d.target.id; })
     private.links.enter().insert("line")
                 .attr("class", "link")
