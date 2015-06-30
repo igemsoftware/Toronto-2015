@@ -1,6 +1,6 @@
-var Pathway = function(network, attributes, specie){
+var Pathway = function(attributes, specie){
   var private = {
-    network: network,
+    network: null,
     attributes: attributes,
     reactions: [], //Reactions and mataboites, each element is a metabolite/reaction element
     metabolites: [], //And we can for loop it maybe later in the draw function and draw each element indepently?
@@ -15,13 +15,15 @@ var Pathway = function(network, attributes, specie){
   //init
   function init(specie){
     //links selected
-    private.links = private.network.append("g")
-    .attr("class", "links")
-    .selectAll("link");
+    private.network = d3.select(private.attributes.divName).select("svg").select(".network");
+    private.links = private.network
+    .select(".links").selectAll("link");
+
     //nodes selected
-    private.nodes = private.network.append("g")
-    .attr("class", "nodes")
-    .selectAll("node");
+    private.nodes = private.network
+    .select(".nodes").selectAll("node")
+
+
     private.force = d3.layout.force()
                         .nodes(private.nodesSet)
                         .links(private.linkSet)
@@ -35,11 +37,11 @@ var Pathway = function(network, attributes, specie){
     buildMetabolites(specie);
     //Create reaction objects
     buildReactions(specie);
-    private.nodes.each(function(d) {
+  private.nodes.each(function(d) {
         d.fixed = false;
     });
-    draw();
-    private.force.start();
+  draw();
+  private.force.start();
   }
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -94,20 +96,21 @@ var Pathway = function(network, attributes, specie){
                 .attr("opacity", 1)
                 .attr("stroke-width", 2)
                 .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
-    private.links.exit().remove();
+    //private.links.exit().remove();
 
     private.nodes = private.nodes.data(private.force.nodes(), function(d) { return d.id;});
   //  for(var i = 0; i < private.metabolites.length; i++)
     //  private.metabolites[i].draw();
-    private.nodes.enter().append("g")
+  private.nodes.enter().append("g")
                 .attr("class", "node")
                 .attr("id", function(d){return "id-"+d.id})
 
-
     //Create circle shape for node
-    private.nodes.append("circle")
-        .attr("class", "node-circle")
-        //.attr("class", function(d){if(d.type == 'm'){return "node-m";}else{return "node-r"}})
+
+    private.nodes.enter().append("g")
+                 .attr("class", "node")
+                 .attr("id", function(d){return "id-"+d.id}).append("circle")
+        .attr("class", function(d){if(d.type == 'm'){return "node-m";}else{return "node-r"}})
         .attr("r", function(d){if(d.type == 'm'){return 10;}else{return 4}})
         .attr("stroke", palette.nodestroketest)
         .attr("stroke-width", function(d){if(d.type == 'm'){return 1;}else{return 35}})

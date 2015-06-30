@@ -19,10 +19,15 @@ var Network = function(divName, attributes) {
         private.svg.attr(keys[i], attributes[keys[i]]);
 
       private.network = private.svg.append("g").attr("class", "network");
+      //Create node and link HTML
+      private.network.append("g").attr("class", "nodes").selectAll("node");
+      private.network.append("g").attr("class", "links").selectAll("link");
   }
 
   function addSpecie(specie){
-    private.pathways.push(new Pathway(private.network, private.attributes, specie));
+    private.pathways.push(new Pathway({height: private.attributes.height,
+                                        width: private.attributes.width,
+                                        divName: divName}, specie));
     return private.pathway;
   }
   function changeDimensions(width, height) {
