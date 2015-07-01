@@ -21,7 +21,7 @@ var Pathway = function(attributes, specie){
 
     //nodes selected
     private.nodes = private.network
-    .select(".nodes").selectAll("node")
+    .select(".nodes").selectAll("node");
 
 
     private.force = d3.layout.force()
@@ -43,13 +43,24 @@ var Pathway = function(attributes, specie){
   draw();
   private.force.start();
   }
+  function addPathway(specie){
+    //Create metabolite objects
+    buildMetabolites(specie);
+    //Create reaction objects
+    buildReactions(specie);
+  private.nodes.each(function(d) {
+        d.fixed = false;
+    })
+  draw();
+  }
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     private.links.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
-  };
+  }
+
   function buildMetabolites(specie){
     for (var i = 0; i<specie.metabolites.length; i++){
       private.metabolites.push(new Metabolite(specie.metabolites[i].name,
@@ -81,6 +92,8 @@ var Pathway = function(attributes, specie){
     for (var j=0; j<tempLinks.length;j++){
       var s = private.nodesSet[nodesMap[tempLinks[j].source]];
       var t =  private.nodesSet[nodesMap[tempLinks[j].target]];
+      if(!t || !s) //temp
+        continue
       private.linkSet.push({id: s.id+"-"+t.id, source: s, target: t});
     }
   }
@@ -132,8 +145,8 @@ var Pathway = function(attributes, specie){
     init: function(data){
       init(data)
     },
-    test: function(){
-      alert("test");
+    addPathway: function(specie){
+      addPathway(specie);
     }
   }
 }

@@ -25,10 +25,9 @@ var Network = function(divName, attributes) {
   }
 
   function addSpecie(specie){
-    private.pathways.push(new Pathway({height: private.attributes.height,
+      private.pathways.push(new Pathway({height: private.attributes.height,
                                         width: private.attributes.width,
                                         divName: divName}, specie));
-    return private.pathway;
   }
   function changeDimensions(width, height) {
     private.attributes.width = width;
