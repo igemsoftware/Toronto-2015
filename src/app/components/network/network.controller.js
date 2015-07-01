@@ -294,10 +294,13 @@ angular.module('fbaApp')
 
     // for now
     var dataRequest = $http.get('http://45.55.193.224/toydata.json');
+    
     network.addSpecie(data.data[0]);
     network.addSpecie(data.data[1]);
+    
     dataRequest.success(function(data) {
-
+        // data was here all along...
+        console.log(data);
     }).error(function(err) {
         alert(err);
     });
