@@ -17,29 +17,47 @@ var Pathway = function(attributes, specie){
     //links selected
     private.network = d3.select(private.attributes.divName).select("svg").select(".network");
     private.links = private.network
-    .select(".links")//.selectAll("link");
+    .select(".links").selectAll("link");
 
     //nodes selected
     private.nodes = private.network
-    .select(".nodes")//.selectAll("node");
-    private.force = d3.layout.force()
-                        .nodes(private.nodesSet)
-                        .links(private.linkSet)
-                        .charge(function(d){if(d.type == "m"){return -1000}else{return -500}})
-                        .linkStrength(2)
-                        .linkDistance(50)
-                        .size([private.attributes.width, private.attributes.height])
-                        .on("tick", tick);
+    .select(".nodes").selectAll("node");
 
+    var temp = []
+
+    // Get centroid(this.d)
     //Create metabolite objects
     buildMetabolites(specie);
     //Create reaction objects
     buildReactions(specie);
-/*  private.nodes.each(function(d) {
-        d.fixed = false;
-    });*/
+    private.nodes.each(function(d) {
+         d.fixed = false;
+     });
+
+
+
+//  private.t = private.network.select(".nodes").selectAll("node")
+    //console.log(d.parentNode)
+
+  //  private.nodesSet = [];
+
+  //  for(var j = 0; j < private.t[0].parentNode.childNodes.length; j++){
+    //   private.nodesSet.push({id: private.t[0].parentNode.childNodes[j].id});
+      //  var id = private.t[0].parentNode.childNodes[j].id.toString()
+      //  console.log(id);
+
+      //private.t[0].parentNode.childNodes[j].attr("class", "test");
+    //  private.network.select(".nodes").selectAll("node").select("#" + id).append("p")
+        //private.t.select("#" + id.toString()).append("p").enter().attr("class", "test");
+//    }
+//  console.log(private.force.nodes())
   draw();
-//s  private.force.start();
+  return {
+    nodesSet: private.nodesSet,
+    linkSet: private.linkSet
+  }
+  //console.log(test);
+   //private.force.start();
   }
 
   function tick(){
@@ -88,21 +106,21 @@ var Pathway = function(attributes, specie){
   //Honestly, just fuck around with it, you dont have to use this.
   function draw(){
     //Pretty ghetto, you cant take out the left side assignment.....
-/*    private.links = private.links.data(private.force.links(), function(d){ return d.source.id + "-" + d.target.id; })
-    private.links.enter().insert("line")
+//  private.links = private.links.data(private.force.links(), function(d){ return d.source.id + "-" + d.target.id; })
+  /*private.links.enter().insert("line")
                 .attr("class", "link")
                 .attr("id", function(d){return "id-"+d.id})
                 .attr("stroke", palette.linktest)
                 .attr("fill", "none")
                 .attr("opacity", 1)
                 .attr("stroke-width", 2)
-                .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
+                .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})*/
     //private.links.exit().remove();
-
-    private.nodes = private.nodes.data(private.force.nodes(), function(d) { return d.id;});
+    //console.log(private.force.nodes());
+  //  private.nodes = private.nodes.data(private.force.nodes(private.t), function(d) { return d.id;});
   //  for(var i = 0; i < private.metabolites.length; i++)
     //  private.metabolites[i].draw();
-  private.nodes.enter().append("g")
+/*  private.nodes.enter().append("g")
                 .attr("class", "node")
                 .attr("id", function(d){return "id-"+d.id})
 

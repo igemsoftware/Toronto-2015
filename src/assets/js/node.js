@@ -11,6 +11,7 @@ var Node = function(name, id, type, links){
   //it might have to be id- + id
   init();
   function draw(){}
+  function tick(){}
   function init(){
     //hardcoded for now
       private.network = d3.select("#network").select("svg").select(".network");
@@ -27,6 +28,9 @@ var Node = function(name, id, type, links){
     },
     draw: function(){
       draw();
+    },
+    tick: function(){
+      tick()
     },
     getJSON: function(){
       return{

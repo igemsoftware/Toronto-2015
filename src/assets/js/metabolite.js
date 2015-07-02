@@ -4,7 +4,15 @@ var Metabolite = function(name, id){
 
 
   //create a node
-  this.prototype.draw = function draw(){
+  this.prototype.draw = function(){
+    var json = {//temp
+      name: private.name,
+      id: private.id,
+      type: private.type,
+      selflink: false
+    }
+    private.node.data(json)
+  //  var node = private.network.select(".nodes")
 
     private.node.attr("id", private.id)
                   .append("circle")
@@ -14,7 +22,13 @@ var Metabolite = function(name, id){
                   .attr("stroke-width", 1)
                   .attr("stroke-opacity", 1)
                   .style("opacity", 1)
-                  .attr("fill", palette.themedarkblue);
+                  .attr("fill", palette.themedarkblue)
+
+  }
+  this.prototype.tick = function(){
+    function tick(){
+      private.node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    }
   }
   return this.prototype
 
