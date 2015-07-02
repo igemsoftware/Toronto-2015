@@ -17,13 +17,11 @@ var Pathway = function(attributes, specie){
     //links selected
     private.network = d3.select(private.attributes.divName).select("svg").select(".network");
     private.links = private.network
-    .select(".links").selectAll("link");
+    .select(".links")//.selectAll("link");
 
     //nodes selected
     private.nodes = private.network
-    .select(".nodes").selectAll("node");
-
-
+    .select(".nodes")//.selectAll("node");
     private.force = d3.layout.force()
                         .nodes(private.nodesSet)
                         .links(private.linkSet)
@@ -37,22 +35,13 @@ var Pathway = function(attributes, specie){
     buildMetabolites(specie);
     //Create reaction objects
     buildReactions(specie);
-  private.nodes.each(function(d) {
+/*  private.nodes.each(function(d) {
         d.fixed = false;
-    });
+    });*/
   draw();
-  private.force.start();
+//s  private.force.start();
   }
-  function addPathway(specie){
-    //Create metabolite objects
-    buildMetabolites(specie);
-    //Create reaction objects
-    buildReactions(specie);
-  private.nodes.each(function(d) {
-        d.fixed = false;
-    })
-  draw();
-  }
+
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     private.links.attr("x1", function(d) { return d.source.x; })
@@ -74,6 +63,7 @@ var Pathway = function(attributes, specie){
     for (var i = 0; i<specie.reactions.length; i++){
       private.reactions.push(new Reaction(specie.reactions[i].name,
                                           specie.reactions[i].id));
+
       private.nodesSet.push(private.reactions[i].getJSON());
       var m = Object.keys(specie.reactions[i].metabolites);
       for (var k = 0; k<m.length; k++){
@@ -92,15 +82,13 @@ var Pathway = function(attributes, specie){
     for (var j=0; j<tempLinks.length;j++){
       var s = private.nodesSet[nodesMap[tempLinks[j].source]];
       var t =  private.nodesSet[nodesMap[tempLinks[j].target]];
-      if(!t || !s) //temp
-        continue
       private.linkSet.push({id: s.id+"-"+t.id, source: s, target: t});
     }
   }
   //Honestly, just fuck around with it, you dont have to use this.
   function draw(){
     //Pretty ghetto, you cant take out the left side assignment.....
-    private.links = private.links.data(private.force.links(), function(d){ return d.source.id + "-" + d.target.id; })
+/*    private.links = private.links.data(private.force.links(), function(d){ return d.source.id + "-" + d.target.id; })
     private.links.enter().insert("line")
                 .attr("class", "link")
                 .attr("id", function(d){return "id-"+d.id})
@@ -130,7 +118,13 @@ var Pathway = function(attributes, specie){
         .attr("stroke-opacity", function(d){if(d.type == 'm'){return 1;}else{return "0"}} )
         .style("opacity", 1)
         .attr("fill", function(d){if(d.type =="m"){return palette.themedarkblue}else{return palette.themeyellow}});
-
+*/
+  for(var i = 0; i< private.metabolites.length; i++){
+    private.metabolites[i].draw();
+  }
+  for(var i = 0; i< private.reactions.length; i++){
+    private.reactions[i].draw();
+  }
   }
   //utilities function
   function map(nodesSet){
