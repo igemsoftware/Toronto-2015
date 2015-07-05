@@ -10,13 +10,13 @@ var Network = function(divName, attributes) {
       linkSet: [],
       links: null,
       nodes: null
-
   }
 
 
   init(divName, attributes);
 
   function init(divName, attributes){
+
       private.svg = d3.select(divName).append('svg');
       private.svg.attr("class", "body");
       var keys = Object.keys(attributes);
@@ -36,27 +36,25 @@ var Network = function(divName, attributes) {
                           .size([private.attributes.width, private.attributes.height])
                           .on("tick", tick);
 
+
       private.links = private.network.select(".links").selectAll("link");
       private.nodes = private.network
       .select(".nodes").selectAll("node");
   }
-  function draw(){
-    console.log(private.links);
+  function draw(path){
+    path.draw()
     private.links.enter().insert("line")
                 .attr("class", "link")
-                .attr("id", function(d){return "id-"+d.id})
+                .attr("id", function(d){return d.id})
                 .attr("stroke", palette.linktest)
                 .attr("fill", "none")
                 .attr("opacity", 1)
                 .attr("stroke-width", 2)
                 .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
-    //Draw paths
-    /*
-    for(var i = 0; i< private.pathways.length; i++){
-      private.pathways[i].draw();
-    }*/
+
   }
   function addSpecie(specie){
+
       var path = new Pathway({height: private.attributes.height,
                                         width: private.attributes.width,
                                         divName: divName}, specie);
@@ -83,11 +81,12 @@ var Network = function(divName, attributes) {
 
       private.nodes = private.nodes.data(private.nodesSet);
       private.links = private.links.data(private.linkSet);
-      draw();
-      path.draw()
-    //  private.links.data(private.linksSet);
+
+
+      draw(path);
+      //console.log(private.linkSet)
       private.force.start();
-      //private.nodes.attr("transform", "translate(30, 30)")
+
     }
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });

@@ -23,8 +23,17 @@ var Metabolite = function(name, id){
                   .attr("stroke-opacity", 1)
                   .style("opacity", 1)
                   .attr("fill", palette.themedarkblue)
-            
 
+      private.node.append("text")
+                      .attr("class", "node-text")
+                      .text(function(d, i) { return d.name; })
+                      .attr("x", 0)
+                      .attr("y", function(d){if(d.type == 'm'){return -18;}else{return -5}})
+                      .attr("font-family",  "Arial")
+                      .attr("fill", palette.texttest)
+                      .style("opacity", function(d){if(d.type == 'm'){return 0.8;}else{return 0}})
+                      .attr("font-size", function(d){if(d.type == 'm'){return "1.1em";}else{return "0em"}})
+                      .attr("text-anchor", "middle");
   }
 
   return this.prototype

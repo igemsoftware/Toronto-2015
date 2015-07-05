@@ -11,8 +11,8 @@ angular.module('fbaApp')
 
     // ==== Network Class ====
     var network = new Network(divName,  {
-                  height: $(divName).width(),
-                  width: $(divName).height(),
+                  height: 500,
+                  width: 500,
                 });
 
     // ==== Sidebar ====
