@@ -23,13 +23,10 @@ var Metabolite = function(name, id){
                   .attr("stroke-opacity", 1)
                   .style("opacity", 1)
                   .attr("fill", palette.themedarkblue)
+            
 
   }
-  this.prototype.tick = function(){
-    function tick(){
-      private.node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-    }
-  }
+
   return this.prototype
 
 }

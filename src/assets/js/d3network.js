@@ -9,6 +9,7 @@ var Network = function(divName, attributes) {
       nodesSet: [],
       linkSet: [],
       links: null,
+      nodes: null
 
   }
 
@@ -35,12 +36,13 @@ var Network = function(divName, attributes) {
                           .size([private.attributes.width, private.attributes.height])
                           .on("tick", tick);
 
-
+      private.links = private.network.select(".links").selectAll("link");
+      private.nodes = private.network
+      .select(".nodes").selectAll("node");
   }
   function draw(){
-    //Pretty ghetto, you cant take out the left side assignment.....
-//  private.links = private.links.data(private.force.links(), function(d){ return d.source.id + "-" + d.target.id; })
-  private.links.enter().insert("line")
+    console.log(private.links);
+    private.links.enter().insert("line")
                 .attr("class", "link")
                 .attr("id", function(d){return "id-"+d.id})
                 .attr("stroke", palette.linktest)
@@ -48,48 +50,45 @@ var Network = function(divName, attributes) {
                 .attr("opacity", 1)
                 .attr("stroke-width", 2)
                 .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
-    //private.links.exit().remove();
-    //console.log(private.force.nodes());
-  private.nodes = private.nodes.data(private.force.nodes(), function(d) { return d.id;});
-  //  for(var i = 0; i < private.metabolites.length; i++)
-  //  private.metabolites[i].draw();
-  private.nodes.enter().append("g")
-                .attr("class", "node")
-                .attr("id", function(d){return "id-"+d.id})
-
-    //Create circle shape for node
-
-    private.nodes.enter().append("g")
-                 .attr("class", "node")
-                 .attr("id", function(d){return "id-"+d.id}).append("circle")
-        .attr("class", function(d){if(d.type == 'm'){return "node-m";}else{return "node-r"}})
-        .attr("r", function(d){if(d.type == 'm'){return 10;}else{return 4}})
-        .attr("stroke", palette.nodestroketest)
-        .attr("stroke-width", function(d){if(d.type == 'm'){return 1;}else{return 35}})
-        .attr("stroke-opacity", function(d){if(d.type == 'm'){return 1;}else{return "0"}} )
-        .style("opacity", 1)
-        .attr("fill", function(d){if(d.type =="m"){return palette.themedarkblue}else{return palette.themeyellow}});
-
-
-/*  for(var i = 0; i< private.metabolites.length; i++){
-    private.metabolites[i].draw();
-  }
-  for(var i = 0; i< private.reactions.length; i++){
-    private.reactions[i].draw();
-  }*/
+    //Draw paths
+    /*
+    for(var i = 0; i< private.pathways.length; i++){
+      private.pathways[i].draw();
+    }*/
   }
   function addSpecie(specie){
       var path = new Pathway({height: private.attributes.height,
                                         width: private.attributes.width,
                                         divName: divName}, specie);
+
       private.pathways.push(path);
       private.nodesSet = private.nodesSet.concat(path.nodesSet);
       private.linkSet = private.linkSet.concat(path.linkSet);
-      private.force.start();
-      private.links = private.links.data(private.force.links(private.linkSet), function(d){ return d.source.id + "-" + d.target.id; })
-      private.nodes = private.nodes.data(private.force.nodes(private.nodesSet), function(d) { return d.id;});
+      //Shit below is temporary.
+      private.links = private.network
+      .select(".links").selectAll(".link");
+
+      //nodes selected
+     private.nodes = private.network
+      .select(".nodes").selectAll(".node")
+
+      private.force = d3.layout.force()
+                    .nodes(private.nodesSet)
+                    .links(private.linkSet)
+                    .charge(function(d){if(d.type == "m"){return -1000}else{return -500}})
+                    .linkStrength(2)
+                    .linkDistance(50)
+                    .size([private.attributes.width, private.attributes.height])
+                    .on("tick", tick);
+
+      private.nodes = private.nodes.data(private.nodesSet);
+      private.links = private.links.data(private.linkSet);
       draw();
-  }
+      path.draw()
+    //  private.links.data(private.linksSet);
+      private.force.start();
+      //private.nodes.attr("transform", "translate(30, 30)")
+    }
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     private.links.attr("x1", function(d) { return d.source.x; })
