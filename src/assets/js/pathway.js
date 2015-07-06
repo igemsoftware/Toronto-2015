@@ -6,6 +6,7 @@ var Pathway = function(attributes, specie){
     metabolites: [], //And we can for loop it maybe later in the draw function and draw each element indepently?
     linkSet: [],//to be fed to D3
     nodesSet: [],
+    currentNodeSet: {},
     links: null, //D3 shit
     nodes: null,
     force: null
@@ -16,6 +17,12 @@ var Pathway = function(attributes, specie){
   function init(specie){
     //links selected
     private.network = d3.select(private.attributes.divName).select("svg").select(".network");
+    private.nodes = (private.network.select('.nodes').selectAll("node"))
+
+    var current = private.nodes[0].parentNode.childNodes;
+    for(var i = 0; i < current.length; i++){
+      private.currentNodeSet[current[i].id] = true;
+    }
     //Create metabolite objects
     buildMetabolites(specie);
     //Create reaction objects
@@ -28,6 +35,15 @@ var Pathway = function(attributes, specie){
 
   function buildMetabolites(specie){
     for (var i = 0; i<specie.metabolites.length; i++){
+      if(private.currentNodeSet[specie.metabolites[i].id]){
+
+        private.nodesSet.push({name: specie.metabolites[i].name,
+                                id: specie.metabolites[i].id,
+                                type: "m",
+                                selflink:false})
+        continue;
+      }
+
       private.metabolites.push(new Metabolite(specie.metabolites[i].name,
                                                 specie.metabolites[i].id));
       private.nodesSet.push(private.metabolites[i].getJSON());
@@ -37,10 +53,16 @@ var Pathway = function(attributes, specie){
     //Reaction -> r Metabolite -> m
     var tempLinks = [];
     for (var i = 0; i<specie.reactions.length; i++){
-      private.reactions.push(new Reaction(specie.reactions[i].name,
-                                          specie.reactions[i].id));
+      if(private.currentNodeSet[specie.reactions[i].id]){
 
-      private.nodesSet.push(private.reactions[i].getJSON());
+        private.nodesSet.push({name: specie.reactions[i].name,
+                                id: specie.reactions[i].id,
+                                type: "r"})
+      }else{
+        private.reactions.push(new Reaction(specie.reactions[i].name,
+                                          specie.reactions[i].id));
+        private.nodesSet.push(private.reactions[i].getJSON());
+      }
       var m = Object.keys(specie.reactions[i].metabolites);
       for (var k = 0; k<m.length; k++){
         if(specie.reactions[i].metabolites[m[k]]>0){
@@ -56,9 +78,10 @@ var Pathway = function(attributes, specie){
     var nodesMap = map(private.nodesSet);
 
     for (var j=0; j<tempLinks.length;j++){
+      //ineffiecient, but will do for now
       var s = private.nodesSet[nodesMap[tempLinks[j].source]];
       var t =  private.nodesSet[nodesMap[tempLinks[j].target]];
-      private.linkSet.push({id: s.id+"-"+t.id, source: s, target: t});
+        private.linkSet.push({id: s.id+"-"+t.id, source: s, target: t});
     }
 
   }
