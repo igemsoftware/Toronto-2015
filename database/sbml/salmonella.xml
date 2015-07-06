@@ -12,7 +12,7 @@
     </listOfUnitDefinitions>
     <listOfCompartments>
       <compartment id="p" name="Periplasm" size="1"/>
-      <compartment id="c" name="Cytoplasm" size="1"/>
+      <compartment id="c" name="Cytosol" size="1"/>
       <compartment id="e" name="Extracellular" size="1"/>
     </listOfCompartments>
     <listOfSpecies>

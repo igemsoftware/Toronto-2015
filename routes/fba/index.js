@@ -2,7 +2,7 @@ var router   = require('express').Router();
 var cp = require('child_process');
 
 var getSBML = function(req, res){
-  var catcher = cp.spawn('python3', ['fba/main.py', 'iJO1366.json']);
+  var catcher = cp.spawn('python3', ['fba/mainprogram.py', 'iJO1366.json']);
   var results = {
       output: null,
       errorlog:  null,
@@ -17,14 +17,15 @@ var getSBML = function(req, res){
   catcher.on('close', function(code){
       results.exitcode = code;
           if(code == 0){
-              res.send(results.output);
+              console.log(results.output)
+              //res.send(results.output);
           }
   });
 
 };
 
 var conversion = function(req, res){
-    var catcher = cp.exec('python3', ['fba/main.py', 'convert_all'], function(error, stdout, stderr){
+    var catcher = cp.exec('python3', ['fba/mainprogram.py', 'convert_all'], function(error, stdout, stderr){
       console.log('stdout: ', stdout);
       console.log('stderr: ', stderr);
       if (error !== null) {
@@ -34,7 +35,7 @@ var conversion = function(req, res){
 
 };
 var calculate_insert = function(req, res){
-    var catcher = cp.exec('python3', ['fba/main.py', 'insert_all'], function(error, stdout, stderr){
+    var catcher = cp.exec('python3', ['fba/mainprogram.py', 'insert_all'], function(error, stdout, stderr){
       console.log('stdout: ', stdout);
       console.log('stderr: ', stderr);
       if (error !== null) {

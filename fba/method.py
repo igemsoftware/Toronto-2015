@@ -9,8 +9,8 @@ import cobra
 # <=== calculate fba and insert all to database/fina_json ===>
 def calculate_flux(input_file):
     # after installing cobrapy, optimize json in database directory with following:
-    model = cobra.io.load_json_model(input_file);
-    model.optimize();
+    model = cobra.io.load_json_model(input_file)
+    model.optimize()
     flux_dict = model.solution.x_dict
     return flux_dict
 
@@ -25,18 +25,17 @@ def insert(json_n):
     # json_n stands for file name of model including extensions i.e. 'iJO1366.json'
 
     f_path = os.path.join(datap['json'], json_n)
-    print(f_path)
-#    flux = calculate_flux(f_path)    use this instead after settig up cobrapy
-
+    flux = calculate_flux(f_path)
     model = load_json(f_path)
-    flux_solutions = load_json(os.path.join(datap['fba'], 'flux_dict.json'))
-    model = add_flux(model, flux_solutions)
+
+#    flux_solutions = load_json(os.path.join(datap['fba'], 'flux_dict.json'))
+    model = add_flux(model, flux) # flux_solutions)
     json_out(model, datap['final_json'])
-    print(model)
 
 def add_flux(model, flux):
     for reaction in model['reactions']:
         for key in flux:
+            print(key, reaction['id'])
             if reaction['id'] == key:
                 reaction['flux_value'] = flux[key]
                 break
@@ -187,5 +186,5 @@ def convert_reactions(modelT):
     return reaction_list
 
 def json_out(output, destination):
-    fp = open(os.path.join(destination + '/' + output['id'] + '.json'), 'w')
+    fp = open(os.path.join(destination + '\\' + output['id'] + '.json'), 'w')
     json.dump(output, fp)
