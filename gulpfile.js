@@ -43,7 +43,7 @@ gulp.task('minify-scripts', ['build-clean'], function(){
         .pipe(gulp.dest('build/js'));
     return stream;
 });
-// minify and copy css 
+// minify and copy css
 gulp.task('minify-css', ['build-clean'], function(){
     var stream = gulp.src(paths.sass, { base: 'src' })
         .pipe(sourcemaps.init({loadMaps: true}))
@@ -56,7 +56,7 @@ gulp.task('minify-css', ['build-clean'], function(){
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
-        }))        
+        }))
         .pipe(gulp.dest('build/css'));
     return stream;
 });
@@ -85,7 +85,7 @@ gulp.task('inject-js', function() {
         .pipe(inject(series(jsAssetsGlobSrc, jsGlobSrc), {relative: true}))
         .pipe(gulp.dest('./src'));
 });
-gulp.task('wire', function(){
+gulp.task('inject', function(){
     runSequence('wiredep', 'inject-js', 'inject-css');
 });
 

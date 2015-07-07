@@ -17,7 +17,12 @@ angular.module('fbaApp', ['ui.router', 'lumx', 'ngTable'])
     .state('main.species', {
         url: '/species',
         templateUrl: 'app/pages/species/species.html',
-        controller: 'SpeciesCtrl'  
+        controller: 'SpeciesCtrl'
+    })
+    .state('main.getData', {
+        url: '/fba',
+        templateUrl: 'app/pages/data/data.html',
+        controller: 'DataCtrl'
     });
 })
 

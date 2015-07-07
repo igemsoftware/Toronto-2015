@@ -40,6 +40,7 @@ var markers = [{
     path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z',
     viewbox: '-5 -5 10 10'
 }];
+// why include lowercase m
 
 // Zooming
 var zoom = d3.behavior.zoom()
@@ -61,16 +62,19 @@ var svg = d3.select("body")
         d3.select(".popup").remove();
         contextMenuShowing = false;
     });
+//why listen to mousedown
 
 svg.append("rect")
     .attr("width", w)
     .attr("height", h)
     .style("fill", "transparent")
     .style("pointer-events", "all");
+// why append rect to svg
 
 var network = svg
     .append("g")
     .attr("class", "network");
+//what is relationship between g and rect
 
 var nodes = [];
 var links = [];
@@ -96,7 +100,7 @@ var drag = force.drag().on("dragstart", dragstart);
 var link = network.append("g")
     .attr("class", "links")
     .selectAll("link");
-
+// link is a tag?? where is it declared?
 var node = network.append("g")
     .attr("class", "nodes")
     .selectAll("node");
@@ -106,7 +110,7 @@ var marker = network.append("g")
     .selectAll(".marker")
     .data(markers)
     .enter()
-    .append('svg:marker')
+  .append('svg:marker')
     .attr('id', function(d) {
         return d.id
     })
@@ -121,12 +125,12 @@ var marker = network.append("g")
     .attr('viewBox', function(d) {
         return d.viewbox
     })
-    .append('svg:path')
+  .append('svg:path')
     .attr('d', function(d) {
         return d.path
     });
 
-window.addEventListener("keydown", function(event) {
+  window.addEventListener("keydown", function(event) {
 
     switch (event.keyCode) {
         case 77:
@@ -173,7 +177,7 @@ window.addEventListener("keydown", function(event) {
 
 // Adding nodes and links
 /*var a = {id: "a", name: "A", selflink: false};
-var b = {id: "b", name: "B", selflink: true}; 
+var b = {id: "b", name: "B", selflink: true};
 var c = {id: "c", name: "C", selflink: false};
 var d = {id: "d", name: "D", selflink: false};
 var e = {id: "e", name: "E", selflink: false};*/
@@ -270,8 +274,8 @@ draw(); //After changing your nodes and links arrays, redraw the network
 var contextMenuShowing = false;
 d3.select("body").on("contextmenu", function(d, i){
       var target = d3.select(d3.event.target);
-  
-      if (contextMenuShowing) { 
+
+      if (contextMenuShowing) {
           d3.event.preventDefault();
           d3.select(".popup").remove();
           contextMenuShowing = false;
@@ -299,7 +303,7 @@ d3.select("body").on("contextmenu", function(d, i){
                .on("click", function(d){
                   alert("Delete function")
                });
-          
+
       }else if(target.classed("node-r")){
           d3.event.preventDefault();
           contextMenuShowing = true;
@@ -324,7 +328,7 @@ d3.select("body").on("contextmenu", function(d, i){
                .on("click", function(d){
                   alert("Delete function")
                });
-         
+
       }else if(target.classed("link")){
           d3.event.preventDefault();
           contextMenuShowing = true;
@@ -353,11 +357,11 @@ d3.select("body").on("contextmenu", function(d, i){
       }else{
         d3.event.preventDefault();
       }
-  
+
       d3.select("body").on("mousedown", function(d){
           d3.select(".popup").remove();
           contextMenuShowing = false;
-      });   
+      });
 });
 
 */
@@ -506,9 +510,10 @@ function draw() {
                 .attr("value", "Rename")
                 .on("click", function() {
                     alert("Rename this" + d.id)
+                    force.start();
                 });
             //Delete BUTTON
-            popup.append("input")
+              popup.append("input")
                 .attr("type", "button")
                 .attr("value", "Delete")
                 .on("click", function() {
@@ -611,6 +616,7 @@ function draw() {
     force.start();
 };
 
+// why use transform traslate on tick. what is default value of d.x d.y
 function tick() {
     node.attr("transform", function(d) {
         return "translate(" + d.x + "," + d.y + ")";
