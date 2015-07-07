@@ -7,13 +7,13 @@ var Species  = App.Model('species');
 var columns = ['DOMAIN', 'PHYLUM', 'CLASS', 'ORDER', 'FAMILY', 'GENUS', 'SPECIES', 'STRAIN', 'MISC', 'GENOME'];
 
 var addSpecie = function(req, res, next) {
-    var row = {}; 
+    var row = {};
     columns.forEach(function(col) {
         row[col] = req.body[col].toLowerCase();
     })
-    
+
     var specie = new Species(row);
-    
+
     specie.save(row, function(err, savedSpecie) {
         if (err)
             response.send500(err.toString(), res);

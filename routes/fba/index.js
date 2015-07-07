@@ -2,14 +2,14 @@ var router   = require('express').Router();
 var cp = require('child_process');
 
 var getSBML = function(req, res){
-  var catcher = cp.spawn('python3', ['fba/mainprogram.py', 'iJO1366.json']);
+  var catcher = cp.spawn('python3', ['fba/readJSON.py']);
   var results = {
-      output: null,
+      output: "",
       errorlog:  null,
       exitcode:  null
   }
   catcher.stdout.on('data', function(data){
-      results.output = JSON.stringify(data);
+      results.output += data;
   });
   catcher.stderr.on('data', function(data){
       results.errorlog = data.toString();
@@ -17,11 +17,9 @@ var getSBML = function(req, res){
   catcher.on('close', function(code){
       results.exitcode = code;
           if(code == 0){
-              console.log(results.output)
-              //res.send(results.output);
+              res.send(results.output);
           }
   });
-
 };
 
 var conversion = function(req, res){
