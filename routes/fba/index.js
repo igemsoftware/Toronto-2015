@@ -1,18 +1,20 @@
 var router   = require('express').Router();
 var cp = require('child_process');
 
-var getSBML = function(req, res){
-  var catcher = cp.spawn('python3', ['fba/readJSON.py']);
+var getJSON = function(req, res){
+  var catcher = cp.spawn('python3', ['fba/dos.py', 'get_json']);
   var results = {
       output: "",
       errorlog:  null,
       exitcode:  null
   }
+
   catcher.stdout.on('data', function(data){
       results.output += data;
   });
   catcher.stderr.on('data', function(data){
       results.errorlog = data.toString();
+      console.log(results.errorlog);
   });
   catcher.on('close', function(code){
       results.exitcode = code;
@@ -23,29 +25,51 @@ var getSBML = function(req, res){
 };
 
 var conversion = function(req, res){
-    var catcher = cp.exec('python3', ['fba/mainprogram.py', 'convert_all'], function(error, stdout, stderr){
-      console.log('stdout: ', stdout);
-      console.log('stderr: ', stderr);
-      if (error !== null) {
-          console.log('exec error: ', error);
-      }
+    var catcher = cp.spawn('python3', ['fba/dos.py', 'convert_all']);
+    var results = {
+        output: "",
+        errorlog:  null,
+        exitcode:  null
+    }
+    catcher.stdout.on('data', function(data){
+        results.output += data;
+    });
+    catcher.stderr.on('data', function(data){
+        results.errorlog = data.toString();
+        console.log(results.errorlog);
+    });
+    catcher.on('close', function(code){
+        results.exitcode = code;
+            if(code == 0){
+                res.send(results.output);
+            }
     });
 
 };
 var calculate_insert = function(req, res){
-    var catcher = cp.exec('python3', ['fba/mainprogram.py', 'insert_all'], function(error, stdout, stderr){
-      console.log('stdout: ', stdout);
-      console.log('stderr: ', stderr);
-      if (error !== null) {
-          console.log('exec error: ', error);
-      }
+    var catcher = cp.exec('python3', ['fba/dos.py', 'insert_all']);
+    var results = {
+        output: "",
+        errorlog:  null,
+        exitcode:  null
+    }
+    catcher.stdout.on('data', function(data){
+        results.output += data;
     });
-
+    catcher.stderr.on('data', function(data){
+        results.errorlog = data.toString();
+        console.log(results.errorlog);
+    });
+    catcher.on('close', function(code){
+        results.exitcode = code;
+            if(code == 0){
+                res.send(results.output);
+            }
+    });
 };
 
-router.get('/getSBML',getSBML);
-router.get('/convert', conversion); // doesnt work at the moment. gotta fix it.
-router.get('/insert', calculate_insert); // doesnt work at the moment. gotta fix it.
-
+router.get('/getJSON', getJSON);
+router.get('/convert', conversion);
+router.get('/insert', calculate_insert);
 
 module.exports = router;

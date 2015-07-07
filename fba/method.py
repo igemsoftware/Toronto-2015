@@ -19,6 +19,7 @@ def insert_all():
     jsons = get_file_name('json')
     for json in jsons:
         insert(json)
+    print('calculated solutions fba and inserted into json model')
 
 def insert(json_n):
     # starts here for subsequent changes in network that require a recalculation
@@ -54,6 +55,7 @@ def conversion():
     sbmls = get_file_name('sbml')
     for sbml in sbmls:
         convert(sbml)
+    print('convert all sbml to json in database')
 
 def convert(sbml_name):
     f_path = os.path.join(datap['sbml'], sbml_name)
@@ -186,5 +188,5 @@ def convert_reactions(modelT):
     return reaction_list
 
 def json_out(output, destination):
-    fp = open(os.path.join(destination + '\\' + output['id'] + '.json'), 'w')
+    fp = open(os.path.join(destination + '/' + output['id'] + '.json'), 'w')
     json.dump(output, fp)

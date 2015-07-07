@@ -9,11 +9,3 @@ flux = method.calculate_flux(f_path)
 
 for item in flux:
     print(item)
-'''
-if input == 'convert_all':
-    method.conversion()
-elif input == 'insert_all':
-    method.insert_all()
-else:
-    method.insert(input)
-'''
