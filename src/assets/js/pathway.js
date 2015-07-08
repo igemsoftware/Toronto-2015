@@ -19,12 +19,6 @@ var Pathway = function(attributes, specie){
       private.network = d3.select(private.attributes['divName']).select("svg").select("g.network");
       private.nodes = private.network.select('.nodes').selectAll(".node");
       private.links = private.network.select(".links").selectAll(".link");
-      // dunno what this is
-      var current = private.nodes[0].parentNode.childNodes;
-      for(var i = 0; i < current.length; i++){
-          private.currentNodeSet[current[i].id] = true;
-      };
-
       //Create metabolite objects
       buildMetabolites(specie);
       //Create reaction objects
@@ -34,36 +28,20 @@ var Pathway = function(attributes, specie){
   function buildMetabolites(specie){
       // loop and bind metabolite data to metabolite node
       for (var i = 0; i<specie.metabolites.length; i++){
-          if(private.currentNodeSet[specie.metabolites[i].id]){
-              var data = {
-                  name: specie.metabolites[i].name,
-                  id: specie.metabolites[i].id,
-                  type: "m" //m for metabolite node
-              };
-              private.nodesSet.push(data);
-              continue;
-          };
         private.metabolites.push(new Metabolite(specie.metabolites[i].name,
                                                   specie.metabolites[i].id));
         private.nodesSet.push(private.metabolites[i].getJSON()); //if if-statement executes, i will be out of index
-      };
-  };
+      }
+  }
   function buildReactions(specie){
       var tempLinks = [];
       // loop and bind reaction data to reaction node
       for (var i = 0; i<specie.reactions.length; i++){
-          if(private.currentNodeSet[specie.reactions[i].id]){
-              var data = {
-                  name: specie.reactions[i].name,
-                  id: specie.reactions[i].id,
-                  type: "r" //r for reaction node
-              };
-              private.nodesSet.push(data);
-          }else{
+
               private.reactions.push(new Reaction(specie.reactions[i].name,
                                                 specie.reactions[i].id));
               private.nodesSet.push(private.reactions[i].getJSON());
-          };
+
           // assign metabolite source and target for each reaction
           var m = Object.keys(specie.reactions[i].metabolites);
           for (var k = 0; k<m.length; k++){
@@ -112,6 +90,7 @@ var Pathway = function(attributes, specie){
   }
   //draw function
   function draw(){
+
       addMarkers();
       for(var i = 0; i< private.metabolites.length; i++){
         private.metabolites[i].draw();

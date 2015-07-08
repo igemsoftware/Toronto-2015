@@ -9,13 +9,8 @@ var Metabolite = function(name, id){
   private.node = private.network.select(".nodes").append("g").attr("class", "node");
   //create a node
   this.prototype.draw = function(){
-      var json = {//temp
-        name: private.name,
-        id: private.id,
-        type: private.type
-      }
       // loading data to node
-      private.node.data(json)
+      private.node.data(this.getJSON)
       private.node.attr("id", private.id)
                     .append("circle")
                     .attr("class", "node-m")
