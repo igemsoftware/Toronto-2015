@@ -31,7 +31,11 @@ var Metabolite = function(name, id){
                       .style("opacity", 0.8)
                       .attr("font-size", "1.1em")
                       .attr("text-anchor", "middle");
+
+
   }
+
+
 
   return this.prototype
 

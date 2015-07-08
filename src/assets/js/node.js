@@ -6,7 +6,8 @@ var Node = function(name, id, type, links){
     network: null,
     node: null,
     links: [],
-    force: null
+    force: null,
+    link: null
   }
   //it might have to be id- + id
   init();
@@ -15,7 +16,6 @@ var Node = function(name, id, type, links){
     //hardcoded for now
       private.network = d3.select("#network").select("svg").select(".network");
       private.node = private.network.select(".nodes").append("g").attr("class", "node")
-      //private.node = private.network.select(".nodes")//.selectAll("node");
 
   }
   return{

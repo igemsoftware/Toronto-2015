@@ -112,16 +112,7 @@ var Pathway = function(attributes, specie){
   }
   //draw function
   function draw(){
-
-/*  private.links.data(private.linkSet).enter().insert("line")
-                .attr("class", "link")
-                .attr("id", function(d){return d.id})
-                .attr("stroke", palette.linktest)
-                .attr("fill", "none")
-                .attr("opacity", 1)
-                .attr("stroke-width", 2)
-                .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
-  addMarkers();*/
+      addMarkers();
       for(var i = 0; i< private.metabolites.length; i++){
         private.metabolites[i].draw();
       }
