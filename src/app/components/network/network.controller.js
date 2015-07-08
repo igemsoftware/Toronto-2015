@@ -17,6 +17,19 @@ angular.module('fbaApp')
 
     // ==== Network Class ====
     var network = new Network(attrs);
+    network.init()
+    var dataRequest = $http.get('http://45.55.193.224/toydata.json');
+    /* for visualizing on ecoli model
+    $http.get(UrlProvider.baseUrl + '/fba/getJSON').success(function(jsondata){
+        console.log('got the data')
+        network.addSpecie(jsondata);
+    });*/
+    dataRequest.success(function(data) {
+        network.addSpecie(data.data[0]);
+        network.addSpecie(data.data[1]);
+    }).error(function(err) {
+        alert(err);
+    });
 
     // ==== Sidebar ====
     var sidebar = '#sidebar';
@@ -77,17 +90,4 @@ angular.module('fbaApp')
      });
     // ==== End sidebar ====
 
-
-    // for now
-    var dataRequest = $http.get('http://45.55.193.224/toydata.json');
-
-
-
-
-    dataRequest.success(function(data) {
-      network.addSpecie(data.data[0]);
-      network.addSpecie(data.data[1]);
-    }).error(function(err) {
-        alert(err);
-    });
 }]);

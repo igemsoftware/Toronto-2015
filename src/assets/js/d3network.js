@@ -5,15 +5,13 @@ var Network = function(attributes) {
       network: null,  //the <g> tag class:network
       nodes: null,     //all node elements class:node under <g> class:nodes
       links: null,    //all link elements class:link under <g> class:nodes
-      attributes: attributes, // User Configurable attributes relating to the network
+      attributes: attributes, // User Configurable attributes related to the network
       pathways: [],
       nodesSet: [], //array of nodes data
       linkSet: [], //array of links data
   }
 
-  init(attributes);
-
-  function init(attributes){
+  function init(){
       // Create necessary tags/containers and initiate force
       //Append svg tag
       private.svg = d3.select(attributes['divName']).append('svg').attr("class", "body")
@@ -55,12 +53,10 @@ var Network = function(attributes) {
                 .attr("stroke-width", 2)
                 .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
 
-  }
+  };
   function addSpecie(specie){
 
-      var path = new Pathway({height: private.attributes['svg']['height'],
-                                        width: private.attributes['svg']['width'],
-                                        divName: private.attributes['divName']}, specie);
+      var path = new Pathway(private.attributes, specie);
 
       private.pathways.push(path);
       private.nodesSet = private.nodesSet.concat(path.nodesSet);
@@ -90,19 +86,14 @@ var Network = function(attributes) {
       //console.log(private.linkSet)
       private.force.start();
 
-    }
+    };
+
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     private.links.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
-  }
-  function changeDimensions(width, height) {
-    private.attributes.width = width;
-    private.attributes.height = height;
-    //  that.force
-    //.size([inst.traits.w, inst.traits.h]).start();
   }
   function dragstart(d) {
       //Drag to fix node's position
@@ -115,11 +106,11 @@ var Network = function(attributes) {
 
 
       return {
+        init: function(){
+            init();
+        },
         addSpecie: function(specie){
             addSpecie(specie);
-        },
-        changeDimensions: function(width, height) {
-            changeDimensions(width, height);
         }
       }
 }
