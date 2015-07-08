@@ -5,14 +5,18 @@ angular.module('fbaApp')
 
 .controller('NetworkCtrl', ['$scope', '$http', '$filter', 'UrlProvider', 'ngTableParams',
         function($scope, $http, $filter, UrlProvider, ngTableParams) {
-    var divName = '#network';
+
+    var attrs = {
+        divName: '#network',
+        svg: {
+            height: window.innerHeight - 60,
+            width: window.innerWidth - 200,
+            top: 60
+        }
+    }
 
     // ==== Network Class ====
-    var network = new Network(divName,  {
-                  height: window.innerHeight - 60,
-                  width: window.innerWidth - 200,
-                  top: 60
-                });
+    var network = new Network(attrs);
 
     // ==== Sidebar ====
     var sidebar = '#sidebar';

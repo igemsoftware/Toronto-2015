@@ -16,7 +16,7 @@ var Pathway = function(attributes, specie){
   //init
   function init(specie){
     //links selected
-    private.network = d3.select(private.attributes.divName).select("svg").select(".network");
+    private.network = d3.select(private.attributes['divName']).select("svg").select(".network");
     private.nodes = (private.network.select('.nodes').selectAll("node"))
 
     var current = private.nodes[0].parentNode.childNodes;

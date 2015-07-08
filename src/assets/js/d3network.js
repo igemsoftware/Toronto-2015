@@ -1,28 +1,28 @@
-var Network = function(divName, attributes) {
-  // divName indicates tag for insertion of network. attributes goes into svg tag.
+var Network = function(attributes) {
   //private variables
   var private = {
       svg: null,    //the <svg> tag class:body
       network: null,  //the <g> tag class:network
       nodes: null,     //all node elements class:node under <g> class:nodes
       links: null,    //all link elements class:link under <g> class:nodes
-      attributes: attributes,
+      attributes: attributes, // User Configurable attributes relating to the network
       pathways: [],
       nodesSet: [], //array of nodes data
       linkSet: [], //array of links data
 
   }
 
-  init(divName, attributes);
+  init(attributes);
 
-  function init(divName, attributes){
+  function init(attributes){
       // Create necessary tags/containers and initiate force
       //Append svg tag
-      private.svg = d3.select(divName).append('svg').attr("class", "body");
+      private.svg = d3.select(attributes['divName']).append('svg').attr("class", "body");
+      private.svg.append("rect").attr("width", attributes['svg']['width']).attr("height", attributes['svg']['height']).style("fill", "transparent").style("pointer-events", "all");
       //Assign attributes to svg tag
-      var keys = Object.keys(attributes);
+      var keys = Object.keys(attributes.svg);
       for(var i = 0; i < keys.length; i++)
-        private.svg.attr(keys[i], attributes[keys[i]]);
+          private.svg.attr(keys[i], attributes.svg[keys[i]]);
       //Create 2 <g> containers for nodes and links in the network <g> container
       private.network = private.svg.append("g").attr("class", "network");
       private.network.append("g").attr("class", "nodes").selectAll("node");
@@ -36,8 +36,11 @@ var Network = function(divName, attributes) {
                           .charge(function(d){if(d.type == "m"){return -1000}else{return -500}})
                           .linkStrength(2)
                           .linkDistance(50)
-                          .size([private.attributes.width, private.attributes.height])
+                          .size([private.attributes['svg']['width'], private.attributes['svg']['height']])
                           .on("tick", tick);
+      //zoom eventlistener
+      var zoom = d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom);
+      var drag = private.force.drag().on("dragstart", dragstart);
   };
   function draw(path){
     path.draw()
@@ -53,9 +56,9 @@ var Network = function(divName, attributes) {
   }
   function addSpecie(specie){
 
-      var path = new Pathway({height: private.attributes.height,
-                                        width: private.attributes.width,
-                                        divName: divName}, specie);
+      var path = new Pathway({height: private.attributes['svg']['height'],
+                                        width: private.attributes['svg']['width'],
+                                        divName: private.attributes['divName']}, specie);
 
       private.pathways.push(path);
       private.nodesSet = private.nodesSet.concat(path.nodesSet);
@@ -74,7 +77,7 @@ var Network = function(divName, attributes) {
                     .charge(function(d){if(d.type == "m"){return -1000}else{return -500}})
                     .linkStrength(2)
                     .linkDistance(50)
-                    .size([private.attributes.width, private.attributes.height])
+                    .size([private.attributes['svg']['width'], private.attributes['svg']['height']])
                     .on("tick", tick);
 
       private.nodes = private.nodes.data(private.nodesSet);
@@ -99,6 +102,16 @@ var Network = function(divName, attributes) {
     //  that.force
     //.size([inst.traits.w, inst.traits.h]).start();
   }
+  function dragstart(d) {
+      //Drag to fix node's position
+      d3.event.sourceEvent.stopPropagation();
+      d3.select(this).classed("fixed", d.fixed = true);
+  };
+  function zoom() {
+      private.network.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  };
+
+
       return {
         addSpecie: function(specie){
             addSpecie(specie);
