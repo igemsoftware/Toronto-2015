@@ -7,12 +7,11 @@ angular.module('fbaApp')
         function($scope, $http, $filter, UrlProvider, ngTableParams) {
     var divName = '#network';
 
-
-
     // ==== Network Class ====
     var network = new Network(divName,  {
-                  height: 500,
-                  width: 500,
+                  height: window.innerHeight - 60,
+                  width: window.innerWidth - 200,
+                  top: 60
                 });
 
     // ==== Sidebar ====

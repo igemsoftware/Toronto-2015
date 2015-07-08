@@ -12,10 +12,10 @@ var Network = function(divName, attributes) {
       nodes: null
   }
 
+
   init(divName, attributes);
 
   function init(divName, attributes){
-
       private.svg = d3.select(divName).append('svg');
       private.svg.attr("class", "body");
       var keys = Object.keys(attributes);
@@ -29,14 +29,14 @@ var Network = function(divName, attributes) {
       private.force = d3.layout.force()
                           .nodes(private.nodesSet)
                           .links(private.linkSet)
-                          .charge(function(d){if(d.type === "m"){return -1000}else{return -500}})
+                          .charge(function(d){if(d.type == "m"){return -1000}else{return -500}})
                           .linkStrength(2)
                           .linkDistance(50)
                           .size([private.attributes.width, private.attributes.height])
                           .on("tick", tick);
 
 
-      private.links = private.network.select(".links").selectAll("link");
+      private.links = private.network.select(".links").selectAll(".link");
       private.nodes = private.network
       .select(".nodes").selectAll("node");
   }
@@ -80,7 +80,10 @@ var Network = function(divName, attributes) {
 
       private.nodes = private.nodes.data(private.nodesSet);
       private.links = private.links.data(private.linkSet);
+
+
       draw(path);
+      //console.log(private.linkSet)
       private.force.start();
 
     }

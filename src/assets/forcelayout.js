@@ -49,7 +49,7 @@ var forcelayout = function(data){
 
   // Zooming
   var zoom = d3.behavior.zoom()
-      .scaleExtent([0.2, 40])
+      .scaleExtent([0.01, 100])
       .on("zoom", zoom);
 
   // Init svg canvas
@@ -411,6 +411,7 @@ var forcelayout = function(data){
           .on("mouseout", nodeMouseout)
           .on('mouseover', nodeMouseover)
           .on("dblclick", dblclick)
+          .on("click", nodeClick)
           .on("contextmenu", nodeRightClick)
           .on("mousedown", function(d) {
               d3.select(".popup").remove();
@@ -452,7 +453,7 @@ var forcelayout = function(data){
                   return palette.themeyellow
               }
           });
-
+      /*
       //Create text for node
       node.append("text")
           .attr("class", "node-text")
@@ -484,6 +485,7 @@ var forcelayout = function(data){
               }
           })
           .attr("text-anchor", "middle");
+      */
       node.exit().remove();
 
       function linkRightClick(d, i) {
@@ -632,6 +634,11 @@ var forcelayout = function(data){
               return d.target.y;
           });
   };
+  function nodeClick(d){
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].fixed = true;
+    }
+  }
 
   function zoom() {
       network.attr("transform", "translate(" + d3.event.translate + ")scale(" +

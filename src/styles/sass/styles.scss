@@ -39,6 +39,7 @@
     height: calc(100% - #{$headerHeight});
 }
 
+
 #header {
     height: $headerHeight;
     background-color: $header-bg;
@@ -76,15 +77,17 @@
 }
 
 #network {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    width: calc(100% - #{$sidebarWidth});
+    height: calc(100% - #{$headerHeight});
+    top: $headerHeight;
     overflow: hidden;
-
     svg {
         width: 100%;
         height: 100%;
     }
 }
+
 
 #sidebar {
     position: absolute;
