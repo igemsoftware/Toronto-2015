@@ -9,7 +9,6 @@ var Network = function(attributes) {
       pathways: [],
       nodesSet: [], //array of nodes data
       linkSet: [], //array of links data
-
   }
 
   init(attributes);
@@ -17,8 +16,11 @@ var Network = function(attributes) {
   function init(attributes){
       // Create necessary tags/containers and initiate force
       //Append svg tag
-      private.svg = d3.select(attributes['divName']).append('svg').attr("class", "body");
-      private.svg.append("rect").attr("width", attributes['svg']['width']).attr("height", attributes['svg']['height']).style("fill", "transparent").style("pointer-events", "all");
+      private.svg = d3.select(attributes['divName']).append('svg').attr("class", "body")
+      private.svg.append("rect").attr("width", attributes['svg']['width'])
+                                .attr("height", attributes['svg']['height'])
+                                .style("fill", "transparent")
+                                .style("pointer-events", "all");
       //Assign attributes to svg tag
       var keys = Object.keys(attributes.svg);
       for(var i = 0; i < keys.length; i++)
@@ -38,9 +40,9 @@ var Network = function(attributes) {
                           .linkDistance(50)
                           .size([private.attributes['svg']['width'], private.attributes['svg']['height']])
                           .on("tick", tick);
-      //zoom eventlistener
-      var zoom = d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom);
-      var drag = private.force.drag().on("dragstart", dragstart);
+      // drag behavior and zoom behavior
+      private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom));
+      private.force.drag().on("dragstart", dragstart);
   };
   function draw(path){
     path.draw()
@@ -68,7 +70,7 @@ var Network = function(attributes) {
       .select(".links").selectAll(".link");
 
       //nodes selected
-     private.nodes = private.network
+      private.nodes = private.network
       .select(".nodes").selectAll(".node")
 
       private.force = d3.layout.force()

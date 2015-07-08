@@ -2,9 +2,9 @@
 
 angular.module('fbaApp')
 
-.controller('HeaderCtrl', ['$rootScope', '$scope', '$timeout', '$state', '$urlRouter', 
+.controller('HeaderCtrl', ['$rootScope', '$scope', '$timeout', '$state', '$urlRouter',
         function($rootScope, $scope, $timeout, $state, $urlRouter) {
-    $scope.title = 'sdssd';
+    $scope.title = 'header component';
 
-    $scope.rippleColour = 'teal-500'; 
+    $scope.rippleColour = 'teal-500';
 }]);
