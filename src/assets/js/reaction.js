@@ -1,6 +1,12 @@
 var Reaction = function(name, id){
     this.prototype = new Node(name, id, "r");
-    var private = this.prototype.private
+    var private = {
+      name: name.toString(),
+      id: id.toString(),
+      network: d3.select("#network").select("svg").select(".network"),
+      node: null
+    }
+    private.node = private.network.select(".nodes").append("g").attr("class", "node")
     this.prototype.draw = function draw(){
         private.node.attr("id", private.id)
                       .append("circle")
@@ -21,11 +27,11 @@ var Reaction = function(name, id){
                       .attr("font-size",  "0em")
                       .attr("text-anchor", "middle");
       //event listener
-      private.node.on("mouseover", mouseover)
-                 .on("mouseout", mouseout)
+      private.node.on("mouseover", this.mouseover)
+                 .on("mouseout", this.mouseout)
 
     }
-    function mouseover(d) {
+    this.prototype.mouseover =  function(d) {
       //hardcoded for now
       //console.log(this);
         d3.select(this)
@@ -49,7 +55,7 @@ var Reaction = function(name, id){
 
     }
 
-    function mouseout(d) {
+    this.prototype.mouseout = function(d) {
         //hard coded for now
         d3.select(this)
             .select("circle")

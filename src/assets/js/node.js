@@ -10,14 +10,10 @@ var Node = function(name, id, type, links){
     link: null
   }
   //it might have to be id- + id
-  init();
   function draw(){}
-  function init(){
-    //hardcoded for now
-      private.network = d3.select("#network").select("svg").select(".network");
-      private.node = private.network.select(".nodes").append("g").attr("class", "node")
+  function mouseover(d){}
+  function mouseout(d){}
 
-  }
   return{
     toString: function(){
       console.log(name.type+": " + private.name + " id: " + private.id + "\n");
@@ -38,7 +34,6 @@ var Node = function(name, id, type, links){
         type: private.type,
         selflink: false
       }
-    },
-    private: private
+    }
   }
 }
