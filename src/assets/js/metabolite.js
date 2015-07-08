@@ -28,13 +28,45 @@ var Metabolite = function(name, id){
                       .attr("y", -18)
                       .attr("font-family",  "Arial")
                       .attr("fill", palette.texttest)
-                      .style("opacity", 0.8)
+                      .style("opacity", 0)
                       .attr("font-size", "1.1em")
                       .attr("text-anchor", "middle");
-
+      private.node.on("mouseover", mouseover)
+                  .on("mouseout", mouseout)
 
   }
+  function mouseover(d) {
 
+      d3.select(this).selectAll("circle").transition()
+          .duration(100)
+          .attr("r",  14)
+          .attr("stroke", palette.nodestroketest)
+          .attr("stroke-opacity", 1)
+          .attr("stroke-width", 2)
+          .attr("opacity", 1);
+
+      d3.select(this).selectAll(".node-text").transition()
+          .duration(100)
+          .style("opacity", 1)
+          .attr("font-size", "1.4em")
+          .attr("text-anchor", "middle");
+  };
+
+  function mouseout(d) {
+      d3.select(this).selectAll(".node-circle").transition()
+          .duration(100)
+          .attr("r", 10)
+          .attr("stroke", palette.nodestroketest)
+          .attr("stroke-opacity", 1)
+          .attr("stroke-width", 1)
+          .attr("opacity", 1);
+      d3.select(this).selectAll(".node-text")
+          .transition()
+          .duration(100)
+          .style("opacity", 0)
+          .attr("font-size",  "1.1em")
+          .attr("text-anchor", "middle");
+  }
 
 
   return this.prototype

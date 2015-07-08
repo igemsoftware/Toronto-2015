@@ -22,13 +22,14 @@ var Reaction = function(name, id){
                       .attr("text-anchor", "middle");
       //event listener
       private.node.on("mouseover", mouseover)
-                //  .on("mouseout", mouseout)
+                 .on("mouseout", mouseout)
 
     }
     function mouseover(d) {
       //hardcoded for now
       //console.log(this);
         d3.select(this)
+            .select("circle")
             .transition()
             .duration(100)
             .attr("r", 6)
@@ -40,8 +41,7 @@ var Reaction = function(name, id){
 
         d3.select(this)
             .select(".node-text")
-            .style("fill", "black")
-           .transition()
+            .transition()
             .duration(100)
             .style("opacity", 1)
             .attr("font-size", "1.0em")
@@ -52,6 +52,7 @@ var Reaction = function(name, id){
     function mouseout(d) {
         //hard coded for now
         d3.select(this)
+            .select("circle")
             .transition()
             .duration(800)
             .attr("r", 4)
@@ -60,10 +61,9 @@ var Reaction = function(name, id){
             .attr("stroke-width", 35)
             .attr("opacity", 1);
         d3.select(this)
+            .select(".node-text")
             .transition()
             .duration(800)
-            .attr("x", 0)
-            .attr("y", -5)
             .style("opacity", 0)
             .attr("font-size", "0em")
             .attr("text-anchor", "middle");
