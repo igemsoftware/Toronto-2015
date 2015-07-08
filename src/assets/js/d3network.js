@@ -1,31 +1,35 @@
 var Network = function(divName, attributes) {
+  // divName indicates tag for insertion of network. attributes goes into svg tag.
   //private variables
   var private = {
-      that: this, //probably dont need this, just in case though....
-      svg: null,
+      svg: null,    //the <svg> tag class:body
+      network: null,  //the <g> tag class:network
+      nodes: null,     //all node elements class:node under <g> class:nodes
+      links: null,    //all link elements class:link under <g> class:nodes
       attributes: attributes,
       pathways: [],
-      network: null,
-      nodesSet: [],
-      linkSet: [],
-      links: null,
-      nodes: null
-  }
+      nodesSet: [], //array of nodes data
+      linkSet: [], //array of links data
 
+  }
 
   init(divName, attributes);
 
   function init(divName, attributes){
-      private.svg = d3.select(divName).append('svg');
-      private.svg.attr("class", "body");
+      // Create necessary tags/containers and initiate force
+      //Append svg tag
+      private.svg = d3.select(divName).append('svg').attr("class", "body");
+      //Assign attributes to svg tag
       var keys = Object.keys(attributes);
       for(var i = 0; i < keys.length; i++)
         private.svg.attr(keys[i], attributes[keys[i]]);
-
+      //Create 2 <g> containers for nodes and links in the network <g> container
       private.network = private.svg.append("g").attr("class", "network");
-      //Create node and link HTML
       private.network.append("g").attr("class", "nodes").selectAll("node");
       private.network.append("g").attr("class", "links").selectAll("link");
+      private.links = private.network.select(".links").selectAll(".link");
+      private.nodes = private.network.select(".nodes").selectAll(".node");
+      // initiate force: thinking of assigning assign value to variables and move them to a variables.js
       private.force = d3.layout.force()
                           .nodes(private.nodesSet)
                           .links(private.linkSet)
@@ -34,12 +38,7 @@ var Network = function(divName, attributes) {
                           .linkDistance(50)
                           .size([private.attributes.width, private.attributes.height])
                           .on("tick", tick);
-
-
-      private.links = private.network.select(".links").selectAll(".link");
-      private.nodes = private.network
-      .select(".nodes").selectAll("node");
-  }
+  };
   function draw(path){
     path.draw()
     private.links.enter().insert("line")
