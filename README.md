@@ -47,7 +47,7 @@ $ sudo pip install python-libsbml-experimental
 $ sudo pip install cobra
 ```
 
-**Actual Web App**
+**Actual App**
 ```bash
 $ git clone https://github.com/igemuoftATG/fba-api
 $ cd fba-api
