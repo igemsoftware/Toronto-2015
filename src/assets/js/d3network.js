@@ -28,7 +28,7 @@ var Network = function(attributes) {
       private.network.append("g").attr("class", "nodes").selectAll("node");
       private.network.append("g").attr("class", "links").selectAll("link");
       private.links = private.network.select(".links").selectAll(".link");
-      private.nodes = private.network.select(".nodes").selectAll(".node");
+      private.nodes = private.network.select(".nodes").selectAll(".node")
       // initiate force: thinking of assigning assign value to variables and move them to a variables.js
       private.force = d3.layout.force()
                           .nodes(private.nodesSet)
@@ -40,9 +40,10 @@ var Network = function(attributes) {
                           .on("tick", tick);
       // drag behavior and zoom behavior
       private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom));
-      private.force.drag().on("dragstart", dragstart);
   }
+
   function draw(path){
+
     path.draw()
     private.links.enter().insert("line")
                 .attr("class", "link")
@@ -88,6 +89,7 @@ var Network = function(attributes) {
 
     }
 
+
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     private.links.attr("x1", function(d) { return d.source.x; })
@@ -95,11 +97,7 @@ var Network = function(attributes) {
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
   }
-  function dragstart(d) {
-      //Drag to fix node's position
-      d3.event.sourceEvent.stopPropagation();
-      d3.select(this).classed("fixed", d.fixed = true);
-  }
+
   function zoom() {
       private.network.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   }

@@ -4,7 +4,8 @@ var Metabolite = function(name, id){
     name: name.toString(),
     id: id.toString(),
     network: d3.select("#network").select("svg").select(".network"),
-    node: null
+    node: null,
+    force: d3.layout.force() //temp
   }
   private.node = private.network.select(".nodes").append("g").attr("class", "node");
   //create a node
@@ -20,9 +21,15 @@ var Metabolite = function(name, id){
                     .attr("stroke-opacity", 1)
                     .style("opacity", 1)
                     .attr("fill", palette.themedarkblue)
+                    .call(private.force.drag().on("dragstart", function(d){
+                      d3.event.sourceEvent.stopPropagation();
+
+                    }))
 
       private.node.on("mouseover", this.mouseover)
                   .on("mouseout", this.mouseout)
+
+
 
   }
   this.prototype.mouseover = function(d) {
@@ -36,7 +43,7 @@ var Metabolite = function(name, id){
                     .style("opacity", 1)
                     .attr("font-size", "1.1em")
                     .attr("text-anchor", "middle");
-      d3.select(this).selectAll("circle")
+      d3.select(this).select("circle")
           .transition()
           .duration(100)
           .attr("r",  14)
@@ -45,10 +52,11 @@ var Metabolite = function(name, id){
           .attr("stroke-width", 2)
           .attr("opacity", 1);
 
-  };
+  }
+
 
   this.prototype.mouseout = function(d) {
-      d3.select(this).selectAll(".node-circle").transition()
+      d3.select(this).select("circle").transition()
           .duration(100)
           .attr("r", 10)
           .attr("stroke", palette.nodestroketest)

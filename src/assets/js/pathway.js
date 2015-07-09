@@ -23,8 +23,21 @@ var Pathway = function(attributes, specie){
       buildMetabolites(specie);
       //Create reaction objects
       buildReactions(specie);
-  }
 
+      var dragCircle = d3.behavior.drag()
+                .on('dragstart', dragstart);
+      private.nodes.call(dragCircle);
+
+  }
+  function dragstart(d) {
+        //move specific node
+        console.log(this);
+        d3.event.sourceEvent.stopPropagation();
+      //  console.log(d3.select(this))
+        d3.select(this).attr("transform", "translate(" + d.x+ "," + d.y + ")");
+
+        //.transform("transform", "translate(100, 100)")
+    }
   function buildMetabolites(specie){
       // loop and bind metabolite data to metabolite node
       for (var i = 0; i<specie.metabolites.length; i++){
