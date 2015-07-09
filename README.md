@@ -8,7 +8,7 @@ A web based application used to visualise flux balance analysis.
 University of Toronto iGEM (international Genetically Engineered Machine) is a student association dedicated to the practice of synthetic biology and dissemination of its scientific foundations. The culmination of each year's efforts is a submission to the iGEM conferences as the University of Toronto team
 
 ##Usage
-Straightforward drag and drop UI, D3 guys please add more info
+Straightforward drag and drop UI, ability to add species, and analazye their reactions and metabolites, along side calculating their flux.
 
 ##API References
   Name | Reference | Version
@@ -16,6 +16,7 @@ Straightforward drag and drop UI, D3 guys please add more info
   Node | https://nodejs.org/ | 0.12.6
   Angular | https://angularjs.org/ | 1.4.2
   Bower | http://bower.io/ | 1.4.1
+D3 | http://d3js.org | 3.5.5
 
   
 ##Installation
@@ -27,6 +28,7 @@ $ git clone https://github.com/igemuoftATG/fba-webapp
 $ cd fba-webapp
 $ npm install
 $ bower install
+$ gulp
 ```
 
 ##License

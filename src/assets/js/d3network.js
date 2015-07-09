@@ -10,7 +10,7 @@ var Network = function(attributes) {
       nodesSet: [], //array of nodes data
       linkSet: [], //array of links data
   }
-
+  init()
   function init(){
       // Create necessary tags/containers and initiate force
       //Append svg tag
@@ -41,7 +41,7 @@ var Network = function(attributes) {
       // drag behavior and zoom behavior
       private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom));
       private.force.drag().on("dragstart", dragstart);
-  };
+  }
   function draw(path){
     path.draw()
     private.links.enter().insert("line")
@@ -53,7 +53,7 @@ var Network = function(attributes) {
                 .attr("stroke-width", 2)
                 .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
 
-  };
+  }
   function addSpecie(specie){
 
       var path = new Pathway(private.attributes, specie);
@@ -86,7 +86,7 @@ var Network = function(attributes) {
       //console.log(private.linkSet)
       private.force.start();
 
-    };
+    }
 
   function tick(){
     private.nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -99,18 +99,13 @@ var Network = function(attributes) {
       //Drag to fix node's position
       d3.event.sourceEvent.stopPropagation();
       d3.select(this).classed("fixed", d.fixed = true);
-  };
+  }
   function zoom() {
       private.network.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-  };
-
-
-      return {
-        init: function(){
-            init();
-        },
-        addSpecie: function(specie){
-            addSpecie(specie);
-        }
-      }
+  }
+  return {
+    addSpecie: function(specie){
+        addSpecie(specie);
+    }
+  }
 }
