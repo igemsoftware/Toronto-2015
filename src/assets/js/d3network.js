@@ -24,7 +24,7 @@ var Network = function(attributes) {
       for(var i = 0; i < keys.length; i++)
           private.svg.attr(keys[i], attributes.svg[keys[i]]);
       //Create 2 <g> containers for nodes and links in the network <g> container
-      private.network = private.svg.append("g").attr("class", "network");
+    /*  private.network = private.svg.append("g").attr("class", "network");
       private.network.append("g").attr("class", "nodes").selectAll("node");
       private.network.append("g").attr("class", "links").selectAll("link");
       private.links = private.network.select(".links").selectAll(".link");
@@ -39,27 +39,27 @@ var Network = function(attributes) {
                           .size([private.attributes['svg']['width'], private.attributes['svg']['height']])
                           .on("tick", tick);
       // drag behavior and zoom behavior
-      private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom));
+      private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom));*/
   }
 
   function draw(path){
 
     path.draw()
-    private.links.enter().insert("line")
+    /*private.links.enter().insert("line")
                 .attr("class", "link")
                 .attr("id", function(d){return d.id})
                 .attr("stroke", palette.linktest)
                 .attr("fill", "none")
                 .attr("opacity", 1)
                 .attr("stroke-width", 2)
-                .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})
+                .attr("marker-end", function(d){if(d.source.type == "r"){return "url(#triangle)"}})*/
 
   }
-  function addSpecie(specie){
+  function addSubsystem(subsystem){
 
-      var path = new Pathway(private.attributes, specie);
+      var path = new Pathway(private.attributes, subsystem);
 
-      private.pathways.push(path);
+      /*private.pathways.push(path);
       private.nodesSet = private.nodesSet.concat(path.nodesSet);
       private.linkSet = private.linkSet.concat(path.linkSet);
       //Shit below is temporary.
@@ -80,12 +80,8 @@ var Network = function(attributes) {
                     .on("tick", tick);
 
       private.nodes = private.nodes.data(private.nodesSet);
-      private.links = private.links.data(private.linkSet);
-
-
-      draw(path);
+      private.links = private.links.data(private.linkSet);*/
       //console.log(private.linkSet)
-      private.force.start();
 
     }
 
@@ -102,8 +98,8 @@ var Network = function(attributes) {
       private.network.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   }
   return {
-    addSpecie: function(specie){
-        addSpecie(specie);
+    addSubsystem: function(specie){
+        addSubsystem(specie);
     }
   }
 }

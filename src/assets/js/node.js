@@ -16,7 +16,7 @@ var Node = function(name, id, type, links){
 
   return{
     toString: function(){
-      console.log(name.type+": " + private.name + " id: " + private.id + "\n");
+      return (name.type+": " + private.name + " id: " + private.id + "\n");
     },
     getID: function(){
       return private.id;

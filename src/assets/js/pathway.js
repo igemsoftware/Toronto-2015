@@ -1,59 +1,79 @@
 var Pathway = function(attributes, specie){
   var private = {
-    network: null,  //the <g> tag class:network
     nodes: null,     //all node elements class:node under <g> class:nodes
     links: null,    //all link elements class:link under <g> class:nodes
+    force: null,
+    subsystem: null,
     attributes: attributes,
     reactions: [], //Contain reactions and mataboites objects, each element is a metabolite/reaction element
     metabolites: [], //And we can for loop it maybe later in the draw function and draw each element indepently?
     linkSet: [],    //link data
     nodesSet: [],   //node data
-    currentNodeSet: {},
-
   }
   //initalize Pathway
   init(specie);
   //init
   function init(specie){
       //assign selection to private variables
-      private.network = d3.select(private.attributes['divName']).select("svg").select("g.network");
-      private.nodes = private.network.select('.nodes').selectAll(".node");
-      private.links = private.network.select(".links").selectAll(".link");
+
+      //create subsystem tag
+      private.subsystem = d3.select("svg").append("g").attr("class", "subsystem");
+      //create HTML nodes tags and links tags
+      private.nodes = private.subsystem.append("g").attr("class", "nodes");
+      private.links = private.subsystem.append("g").attr("class", "links");
+      //.data(private.linkSet);
       //Create metabolite objects
       buildMetabolites(specie);
       //Create reaction objects
       buildReactions(specie);
+      // initiate force: thinking of assigning assign value to variables and move them to a variables.js
+      private.force = d3.layout.force()
+                          .nodes(private.nodesSet)
+                          .links(private.linkSet)
+                          .charge(-500)
+                          .linkStrength(2)
+                          .linkDistance(50)
+                          .size([private.attributes['svg']['width'], private.attributes['svg']['height']])
+                          .start()
+                          .on("tick", tick);
+      //adds data for links
+      private.links = private.links.selectAll("line").data(private.linkSet);
+      //and binds data for nodes
+      private.nodes = private.nodes.selectAll(".node").data(private.nodesSet);
 
-      var dragCircle = d3.behavior.drag()
-                .on('dragstart', dragstart);
-      private.nodes.call(dragCircle);
+
+  //    private.links.append("line");
+    //  console.log(private.links)
+      draw()
+      //private.subsystem.select(".nodes").selectAll(".node").attr("transform", "translate(50, 50)");
+      console.log(private.nodes);
+      // console.log(private.nodesSet);
+      //console.log(private.linkSet);
+      //private.nodes.attr("transform", "translate(50, 50)");
+      //console.log(private.force.nodes())
+      //console.log(private.force.links())
+      private.force.start()
+
 
   }
-  function dragstart(d) {
-        //move specific node
-        console.log(this);
-        d3.event.sourceEvent.stopPropagation();
-      //  console.log(d3.select(this))
-        d3.select(this).attr("transform", "translate(" + d.x+ "," + d.y + ")");
-
-        //.transform("transform", "translate(100, 100)")
-    }
   function buildMetabolites(specie){
       // loop and bind metabolite data to metabolite node
       for (var i = 0; i<specie.metabolites.length; i++){
-        private.metabolites.push(new Metabolite(specie.metabolites[i].name,
-                                                  specie.metabolites[i].id));
-        private.nodesSet.push(private.metabolites[i].getJSON()); //if if-statement executes, i will be out of index
+        var metabolite = new Metabolite(specie.metabolites[i].name,
+                                                  specie.metabolites[i].id)
+        private.metabolites.push(metabolite);
+        //need to bind the data with the same objectID
+        private.nodesSet.push(metabolite);
       }
   }
   function buildReactions(specie){
       var tempLinks = [];
       // loop and bind reaction data to reaction node
       for (var i = 0; i<specie.reactions.length; i++){
-
-              private.reactions.push(new Reaction(specie.reactions[i].name,
-                                                specie.reactions[i].id));
-              private.nodesSet.push(private.reactions[i].getJSON());
+              var reaction = new Reaction(specie.reactions[i].name,
+                                                specie.reactions[i].id)
+              private.reactions.push(reaction);
+              private.nodesSet.push(reaction);
 
           // assign metabolite source and target for each reaction
           var m = Object.keys(specie.reactions[i].metabolites);
@@ -65,16 +85,19 @@ var Pathway = function(attributes, specie){
                 var s = m[k];
                 var t = specie.reactions[i].id;
               }
+
               tempLinks.push({id: s+"-"+t, source: s, target: t});
           }
       }
-      var nodesMap = map(private.nodesSet);
 
+      var nodesMap = map(private.nodesSet);
+      //console.log(nodesMap);
       for (var j=0; j<tempLinks.length;j++){
           //ineffiecient, but will do for now
           var s = private.nodesSet[nodesMap[tempLinks[j].source]];
           var t =  private.nodesSet[nodesMap[tempLinks[j].target]];
-          private.linkSet.push({id: s.id+"-"+t.id, source: s, target: t});
+
+          private.linkSet.push({id: s.getID()+"-"+t.getID(), source: s, target: t});
       }
 
   }
@@ -104,7 +127,15 @@ var Pathway = function(attributes, specie){
   //draw function
   function draw(){
 
-      addMarkers();
+    private.links = private.links
+      .enter()
+      .append("g")
+      .attr("class", "link")
+      .append("line")
+      .style("stroke", "#ccc")
+      .style("stroke-width", 1);
+
+    //  addMarkers();
       for(var i = 0; i< private.metabolites.length; i++){
         private.metabolites[i].draw();
       }
@@ -116,9 +147,17 @@ var Pathway = function(attributes, specie){
   function map(nodesSet){
       var ret = {};
       for (var j=0; j<nodesSet.length;j++){
-        ret[nodesSet[j].id] = j;
+        ret[nodesSet[j].getID()] = j;
       }
       return ret;
+  }
+  function tick(){
+    private.nodes.attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")"; });
+    private.links.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
   }
 
   return{

@@ -27,7 +27,7 @@ angular.module('fbaApp')
     dataRequest.success(function(data) {
         //add one specie at a time, otherwise there will be duplicates,
         //and we will not have to worry about that
-        network.addSpecie(data.data[0]);
+        network.addSubsystem(data.data[0]);
     }).error(function(err) {
         alert(err);
     });

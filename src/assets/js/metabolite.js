@@ -3,17 +3,18 @@ var Metabolite = function(name, id){
   var private = {
     name: name.toString(),
     id: id.toString(),
-    network: d3.select("#network").select("svg").select(".network"),
+    network: d3.select("svg").select(".subsystem"),
     node: null,
     force: d3.layout.force() //temp
   }
-  private.node = private.network.select(".nodes").append("g").attr("class", "node");
+  //init
+  private.node = private.network.select(".nodes").append("g").attr("class", "node")
+                .attr("id", private.id)
+              //  .append("circle");
+
   //create a node
   this.prototype.draw = function(){
-      // loading data to node
-      private.node.data(this.getJSON)
-      private.node.attr("id", private.id)
-                    .append("circle")
+      private.node.append("circle")
                     .attr("class", "node-m")
                     .attr("r", 10)
                     .attr("stroke", palette.nodestroketest)
@@ -21,15 +22,11 @@ var Metabolite = function(name, id){
                     .attr("stroke-opacity", 1)
                     .style("opacity", 1)
                     .attr("fill", palette.themedarkblue)
-                    .call(private.force.drag().on("dragstart", function(d){
-                      d3.event.sourceEvent.stopPropagation();
 
-                    }))
-
+/*
       private.node.on("mouseover", this.mouseover)
                   .on("mouseout", this.mouseout)
-
-
+*/
 
   }
   this.prototype.mouseover = function(d) {
