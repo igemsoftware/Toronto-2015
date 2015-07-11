@@ -1,4 +1,4 @@
-var Pathway = function(attributes, specie){
+var Pathway = function(attributes, subsystem){
   var private = {
     nodes: null,     //all node elements class:node under <g> class:nodes
     links: null,    //all link elements class:link under <g> class:nodes
@@ -11,22 +11,21 @@ var Pathway = function(attributes, specie){
     nodesSet: [],   //node data
   }
   //initalize Pathway
-  init(specie);
+  init(subsystem);
   //init
-  function init(specie){
+  function init(subsystem){
       //assign selection to private variables
 
       //create subsystem tag
-      private.subsystem = d3.select("svg").append("g").attr("class", "subsystem");
+      private.subsystem = d3.select("svg").select(".network").append("g").attr("class", "subsystem");
       //create HTML nodes tags and links tags
       private.nodes = private.subsystem.append("g").attr("class", "nodes");
       private.links = private.subsystem.append("g").attr("class", "links");
-      //.data(private.linkSet);
       //Create metabolite objects
-      buildMetabolites(specie);
+      buildMetabolites(subsystem);
       //Create reaction objects
-      buildReactions(specie);
-      // initiate force: thinking of assigning assign value to variables and move them to a variables.js
+      buildReactions(subsystem);
+      // initiate force
       private.force = d3.layout.force()
                           .nodes(private.nodesSet)
                           .links(private.linkSet)
@@ -41,49 +40,36 @@ var Pathway = function(attributes, specie){
       //and binds data for nodes
       private.nodes = private.nodes.selectAll(".node").data(private.nodesSet);
 
-
-  //    private.links.append("line");
-    //  console.log(private.links)
-      draw()
-      //private.subsystem.select(".nodes").selectAll(".node").attr("transform", "translate(50, 50)");
-      console.log(private.nodes);
-      // console.log(private.nodesSet);
-      //console.log(private.linkSet);
-      //private.nodes.attr("transform", "translate(50, 50)");
-      //console.log(private.force.nodes())
-      //console.log(private.force.links())
-      private.force.start()
-
-
+      draw();
   }
-  function buildMetabolites(specie){
+  function buildMetabolites(subsystem){
       // loop and bind metabolite data to metabolite node
-      for (var i = 0; i<specie.metabolites.length; i++){
-        var metabolite = new Metabolite(specie.metabolites[i].name,
-                                                  specie.metabolites[i].id)
+      for (var i = 0; i<subsystem.metabolites.length; i++){
+        var metabolite = new Metabolite(subsystem.metabolites[i].name,
+                                                  subsystem.metabolites[i].id)
         private.metabolites.push(metabolite);
         //need to bind the data with the same objectID
         private.nodesSet.push(metabolite);
       }
   }
-  function buildReactions(specie){
+  function buildReactions(subsystem){
       var tempLinks = [];
       // loop and bind reaction data to reaction node
-      for (var i = 0; i<specie.reactions.length; i++){
-              var reaction = new Reaction(specie.reactions[i].name,
-                                                specie.reactions[i].id)
+      for (var i = 0; i<subsystem.reactions.length; i++){
+              var reaction = new Reaction(subsystem.reactions[i].name,
+                                                subsystem.reactions[i].id)
               private.reactions.push(reaction);
               private.nodesSet.push(reaction);
 
           // assign metabolite source and target for each reaction
-          var m = Object.keys(specie.reactions[i].metabolites);
+          var m = Object.keys(subsystem.reactions[i].metabolites);
           for (var k = 0; k<m.length; k++){
-              if(specie.reactions[i].metabolites[m[k]]>0){
-                var s = specie.reactions[i].id;
+              if(subsystem.reactions[i].metabolites[m[k]]>0){
+                var s = subsystem.reactions[i].id;
                 var t = m[k];
               }else{
                 var s = m[k];
-                var t = specie.reactions[i].id;
+                var t = subsystem.reactions[i].id;
               }
 
               tempLinks.push({id: s+"-"+t, source: s, target: t});
@@ -101,6 +87,7 @@ var Pathway = function(attributes, specie){
       }
 
   }
+  //to be fixed later
   function addMarkers(){
       var markers = [
                       {id: "triangle", path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-5 -5 10 10' }
@@ -164,8 +151,8 @@ var Pathway = function(attributes, specie){
       init: function(data){
         init(data)
       },
-      addPathway: function(specie){
-        addPathway(specie);
+      addPathway: function(subsystem){
+        addPathway(subsystem);
       },
       draw: function(){
         draw()
