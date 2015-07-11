@@ -12,7 +12,6 @@ var Metabolite = function(name, id){
                 .attr("id", private.id)
 
   this.prototype.draw = function(){
-
       private.node.append("circle")
                     .attr("class", "node-m")
                     .attr("r", 10)

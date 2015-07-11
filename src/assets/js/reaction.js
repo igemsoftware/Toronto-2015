@@ -17,10 +17,7 @@ var Reaction = function(name, id){
                       .attr("stroke-opacity", 0)
                       .style("opacity", 1)
                       .attr("fill", palette.themeyellow)
-
-
       //event listener
-
       private.node.on("mouseover", this.mouseover)
                  .on("mouseout", this.mouseout)
 
@@ -57,7 +54,6 @@ var Reaction = function(name, id){
             .attr("stroke-opacity", 0)
             .attr("stroke-width", 35)
             .attr("opacity", 1);
-          console.log(this);
         d3.select(this)
             .selectAll(".node-text")
             .transition()

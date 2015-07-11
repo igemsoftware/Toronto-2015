@@ -39,7 +39,12 @@ var Pathway = function(attributes, subsystem){
       private.links = private.links.selectAll("line").data(private.linkSet);
       //and binds data for nodes
       private.nodes = private.nodes.selectAll(".node").data(private.nodesSet);
-
+      //dragging
+      var drag = private.force.drag().on("dragstart", function(d){
+        d3.event.sourceEvent.stopPropagation();
+        d3.select(this).classed("fixed", d.fixed = true);
+      });
+      private.nodes.call(drag);
       draw();
   }
   function buildMetabolites(subsystem){
@@ -92,7 +97,7 @@ var Pathway = function(attributes, subsystem){
       var markers = [
                       {id: "triangle", path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-5 -5 10 10' }
                     ];
-      var marker = private.network.append("g")
+      var marker = private.subsystem.append("g")
                             .attr("class", "markers")
                             .selectAll(".marker")
                             .data(markers)
@@ -113,7 +118,7 @@ var Pathway = function(attributes, subsystem){
   }
   //draw function
   function draw(){
-
+    addMarkers()
     private.links = private.links
       .enter()
       .append("g")
