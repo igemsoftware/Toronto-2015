@@ -20,19 +20,19 @@ var Reaction = function(name, id){
 
 
       //event listener
-      /*
+
       private.node.on("mouseover", this.mouseover)
                  .on("mouseout", this.mouseout)
-      */
+
     }
     this.prototype.mouseover =  function(d) {
       private.node.append("text")
                       .attr("class", "node-text")
-                      .text(function(d) {  return d.name;})
+                      .text(private.name)
                       .attr("font-family", "Arial")
                       .attr("fill", palette.texttest)
                       .style("opacity", 1)
-                      .attr("font-size",  "0em")
+                      .attr("font-size",  "1.1em")
                       .attr("text-anchor", "middle");
         d3.select(this)
             .select("circle")
@@ -43,15 +43,6 @@ var Reaction = function(name, id){
             .attr("stroke-opacity", 0)
             .attr("stroke-width", 35)
             .style("opacity", 1)
-
-
-        d3.select(this)
-            .select(".node-text")
-            .transition()
-            .duration(1000)
-            .style("opacity", 1)
-            .attr("font-size", "1.0em")
-            .attr("text-anchor", "middle");
 
     }
 
@@ -66,8 +57,9 @@ var Reaction = function(name, id){
             .attr("stroke-opacity", 0)
             .attr("stroke-width", 35)
             .attr("opacity", 1);
+          console.log(this);
         d3.select(this)
-            .select(".node-text")
+            .selectAll(".node-text")
             .transition()
             .duration(1000)
             .remove();

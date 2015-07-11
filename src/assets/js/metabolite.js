@@ -10,10 +10,9 @@ var Metabolite = function(name, id){
   //init
   private.node = private.network.select(".nodes").append("g").attr("class", "node")
                 .attr("id", private.id)
-              //  .append("circle");
 
-  //create a node
   this.prototype.draw = function(){
+
       private.node.append("circle")
                     .attr("class", "node-m")
                     .attr("r", 10)
@@ -23,16 +22,13 @@ var Metabolite = function(name, id){
                     .style("opacity", 1)
                     .attr("fill", palette.themedarkblue)
 
-/*
       private.node.on("mouseover", this.mouseover)
                   .on("mouseout", this.mouseout)
-*/
-
   }
   this.prototype.mouseover = function(d) {
     private.node.append("text")
                     .attr("class", "node-text")
-                    .text(function(d, i) { return d.name; })
+                    .text(name)
                     .attr("x", 0)
                     .attr("y", -18)
                     .attr("font-family",  "Arial")
