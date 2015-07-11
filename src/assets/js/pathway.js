@@ -5,8 +5,6 @@ var Pathway = function(attributes, subsystem){
     force: null,
     subsystem: null,
     attributes: attributes,
-    reactions: [], //Contain reactions and mataboites objects, each element is a metabolite/reaction element
-    metabolites: [], //And we can for loop it maybe later in the draw function and draw each element indepently?
     linkSet: [],    //link data
     nodesSet: [],   //node data
   }
@@ -48,23 +46,18 @@ var Pathway = function(attributes, subsystem){
       draw();
   }
   function buildMetabolites(subsystem){
-      // loop and bind metabolite data to metabolite node
+      // loop and bind metabolite data to metabolite node to nodeset
       for (var i = 0; i<subsystem.metabolites.length; i++){
-        var metabolite = new Metabolite(subsystem.metabolites[i].name,
-                                                  subsystem.metabolites[i].id)
-        private.metabolites.push(metabolite);
-        //need to bind the data with the same objectID
-        private.nodesSet.push(metabolite);
+        private.nodesSet.push(new Metabolite(subsystem.metabolites[i].name,
+                                                  subsystem.metabolites[i].id));
       }
   }
   function buildReactions(subsystem){
       var tempLinks = [];
       // loop and bind reaction data to reaction node
       for (var i = 0; i<subsystem.reactions.length; i++){
-              var reaction = new Reaction(subsystem.reactions[i].name,
-                                                subsystem.reactions[i].id)
-              private.reactions.push(reaction);
-              private.nodesSet.push(reaction);
+              private.nodesSet.push(new Reaction(subsystem.reactions[i].name,
+                                                subsystem.reactions[i].id));
 
           // assign metabolite source and target for each reaction
           var m = Object.keys(subsystem.reactions[i].metabolites);
@@ -118,7 +111,7 @@ var Pathway = function(attributes, subsystem){
   }
   //draw function
   function draw(){
-    addMarkers()
+
     private.links = private.links
       .enter()
       .append("g")
@@ -127,13 +120,12 @@ var Pathway = function(attributes, subsystem){
       .style("stroke", "#ccc")
       .style("stroke-width", 1);
 
-    //  addMarkers();
-      for(var i = 0; i< private.metabolites.length; i++){
-        private.metabolites[i].draw();
+      for(var i = 0; i< private.nodesSet.length; i++){
+        private.nodesSet[i].draw();
       }
-      for(var i = 0; i< private.reactions.length; i++){
-        private.reactions[i].draw();
-      }
+      //not working
+      addMarkers();
+
   }
   //utilities function
   function map(nodesSet){
@@ -151,18 +143,5 @@ var Pathway = function(attributes, subsystem){
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
   }
-
-  return{
-      init: function(data){
-        init(data)
-      },
-      addPathway: function(subsystem){
-        addPathway(subsystem);
-      },
-      draw: function(){
-        draw()
-      },
-      nodesSet: private.nodesSet,
-      linkSet: private.linkSet
-  }
+  //returns nothing as of now, everything done when you create the object
 }
