@@ -1,3 +1,6 @@
+/* global window */
+/* global Network */
+/* global alert */
 'use strict';
 
 angular.module('fbaApp')
@@ -13,7 +16,7 @@ angular.module('fbaApp')
             width: window.innerWidth - 200,
             top: 60
         }
-    }
+    };
 
     // ==== Network Class ====
     //create new network
@@ -49,7 +52,7 @@ angular.module('fbaApp')
         } else {
             return 'unlocked';
         }
-    }
+    };
 
     /*$scope.lockControl = function() {
         $scope.locked = !$scope.locked;
@@ -65,13 +68,14 @@ angular.module('fbaApp')
     $scope.expandSidebar = function() {
         $(sidebar).width($('body').width() - sidebarOffset);
         $scope.deflated = false;
-    }
+    };
 
     $scope.deflateSidebar = function() {
         $(sidebar).width(sidebarWidth);
         $scope.deflated = true;
-    }
+    };
 
+    /* jshint newcap: false */
     $scope.tableParams = new ngTableParams({
          page: 1,            // show first page
          count: 10,          // count per page
@@ -88,7 +92,7 @@ angular.module('fbaApp')
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }).error(function(err) {
                 $defer.reject(err);
-            })
+            });
          }
      });
     // ==== End sidebar ====

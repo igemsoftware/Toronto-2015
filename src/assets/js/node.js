@@ -1,37 +1,41 @@
+/* global d3 */
+/* global palette */
+'use strict';
+
 var Node = function(name, id, type, radius){
-  var private = {
+  var _private = {
     id: id.toString(),
     name: name.toString(),
     type: type.toString(),
     network: d3.select("svg").select(".system"),
-  }
-  var public = {
+  };
+  var _public = {
     radius: radius,
     draw: null,
-    _node: private.network.select(".nodes").append("g").attr("class", "node")
-                  .attr("id", private.id),
+    _node: _private.network.select(".nodes").append("g").attr("class", "node")
+                  .attr("id", _private.id),
     mouseover: function(d){
       mouseover(d);
     },
     setRadius: function(r){
-      public.radius = r;
+      _public.radius = r;
     },
     mouseout: function(d){
       mouseout(d);
     },
     toString: function(){
-      return (name.type+": " + private.name + " id: " + private.id + "\n");
+      return (name.type+": " + _private.name + " id: " + _private.id + "\n");
     },
     getID: function(){
-      return private.id;
+      return _private.id;
     },
     getType: function(){
-      return private.type;
+      return _private.type;
     }
-  }
+  };
 
   function mouseover(d) {
-    public._node.append("text")
+    _public._node.append("text")
                     .attr("class", "node-text")
                     .text(name)
                     .attr("x", 0)
@@ -41,10 +45,10 @@ var Node = function(name, id, type, radius){
                     .style("opacity", 1)
                     .attr("font-size", "1.1em")
                     .attr("text-anchor", "middle");
-      public._node.select("circle")
+      _public._node.select("circle")
           .transition()
           .duration(100)
-          .attr("r",  public.radius + 5)
+          .attr("r",  _public.radius + 5)
           .attr("stroke", palette.nodestroketest)
           .attr("stroke-opacity", 1)
           .attr("stroke-width", 2)
@@ -54,18 +58,18 @@ var Node = function(name, id, type, radius){
 
 
   function mouseout(d) {
-      public._node.select("circle").transition()
+      _public._node.select("circle").transition()
           .duration(100)
-          .attr("r", public.radius)
+          .attr("r", _public.radius)
           .attr("stroke", palette.nodestroketest)
           .attr("stroke-opacity", 1)
           .attr("stroke-width", 1)
           .attr("opacity", 1);
-      public._node
+      _public._node
           .selectAll(".node-text")
           .transition()
           .duration(500)
-          .remove()
+          .remove();
   }
-  return public
-}
+  return _public;
+};

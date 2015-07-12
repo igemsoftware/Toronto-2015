@@ -1,6 +1,7 @@
 {
     "globalstrict": true,
     "globals": {
-        "angular": true
+        "angular" : true,
+        "$"       : true
     }
 }

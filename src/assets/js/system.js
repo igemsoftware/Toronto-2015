@@ -1,5 +1,10 @@
+/* global d3 */
+/* global Metabolite */
+/* global Reaction */
+/* global palette */
+'use strict';
+
 var System = function(attributes, system){
-  "use strict";
   var _private = {
     network: null,
     nodes: null,     //all node elements class:node under <g> class:nodes
