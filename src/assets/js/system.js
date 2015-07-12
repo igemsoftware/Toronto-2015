@@ -1,28 +1,29 @@
-var Pathway = function(attributes, subsystem){
+var System = function(attributes, system){
   var private = {
+    network: null,
     nodes: null,     //all node elements class:node under <g> class:nodes
     links: null,    //all link elements class:link under <g> class:nodes
     force: null,
-    subsystem: null,
+    system: null,
     attributes: attributes,
     linkSet: [],    //link data
     nodesSet: [],   //node data
   }
   //initalize Pathway
-  init(subsystem);
+  init(system);
   //init
-  function init(subsystem){
+  function init(system){
       //assign selection to private variables
-
-      //create subsystem tag
-      private.subsystem = d3.select("svg").select(".network").append("g").attr("class", "subsystem");
+      private.network = d3.select('svg').select('.network') ;
+      //create system tag
+      private.system = d3.select("svg").select(".network").append("g").attr("class", "system");
       //create HTML nodes tags and links tags
-      private.nodes = private.subsystem.append("g").attr("class", "nodes");
-      private.links = private.subsystem.append("g").attr("class", "links");
+      private.nodes = private.system.append("g").attr("class", "nodes");
+      private.links = private.system.append("g").attr("class", "links");
       //Create metabolite objects
-      buildMetabolites(subsystem);
+      buildMetabolites(system);
       //Create reaction objects
-      buildReactions(subsystem);
+      buildReactions(system);
       // initiate force
       private.force = d3.layout.force()
                           .nodes(private.nodesSet)
@@ -45,29 +46,29 @@ var Pathway = function(attributes, subsystem){
       private.nodes.call(drag);
       draw();
   }
-  function buildMetabolites(subsystem){
+  function buildMetabolites(system){
       // loop and bind metabolite data to metabolite node to nodeset
-      for (var i = 0; i<subsystem.metabolites.length; i++){
-        private.nodesSet.push(new Metabolite(subsystem.metabolites[i].name,
-                                                  subsystem.metabolites[i].id));
+      for (var i = 0; i<system.metabolites.length; i++){
+        private.nodesSet.push(new Metabolite(system.metabolites[i].name,
+                                                  system.metabolites[i].id));
       }
   }
-  function buildReactions(subsystem){
+  function buildReactions(system){
       var tempLinks = [];
       // loop and bind reaction data to reaction node
-      for (var i = 0; i<subsystem.reactions.length; i++){
-              private.nodesSet.push(new Reaction(subsystem.reactions[i].name,
-                                                subsystem.reactions[i].id));
+      for (var i = 0; i<system.reactions.length; i++){
+              private.nodesSet.push(new Reaction(system.reactions[i].name,
+                                                system.reactions[i].id));
 
           // assign metabolite source and target for each reaction
-          var m = Object.keys(subsystem.reactions[i].metabolites);
+          var m = Object.keys(system.reactions[i].metabolites);
           for (var k = 0; k<m.length; k++){
-              if(subsystem.reactions[i].metabolites[m[k]]>0){
-                var s = subsystem.reactions[i].id;
+              if(system.reactions[i].metabolites[m[k]]>0){
+                var s = system.reactions[i].id;
                 var t = m[k];
               }else{
                 var s = m[k];
-                var t = subsystem.reactions[i].id;
+                var t = system.reactions[i].id;
               }
 
               tempLinks.push({id: s+"-"+t, source: s, target: t});
@@ -90,7 +91,7 @@ var Pathway = function(attributes, subsystem){
       var markers = [
                       {id: "triangle", path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-5 -5 10 10' }
                     ];
-      var marker = private.subsystem.append("g")
+      var marker = private.network.append("g")
                             .attr("class", "markers")
                             .selectAll(".marker")
                             .data(markers)
@@ -118,13 +119,17 @@ var Pathway = function(attributes, subsystem){
       .attr("class", "link")
       .append("line")
       .style("stroke", "#ccc")
-      .style("stroke-width", 1);
-
+      .style("stroke-width", 1)
+      .attr("marker-end", function(d) {
+          if (d.source.type == "r") {
+              return "url(#triangle)"
+          }
+      })
+      // call draw function in reaction and metabolite node class
       for(var i = 0; i< private.nodesSet.length; i++){
         private.nodesSet[i].draw();
       }
-      //not working
-      addMarkers();
+
 
   }
   //utilities function

@@ -3,7 +3,7 @@ var Metabolite = function(name, id){
   var private = {
     name: name.toString(),
     id: id.toString(),
-    network: d3.select("svg").select(".subsystem"),
+    network: d3.select("svg").select(".system"),
     node: null,
     force: d3.layout.force() //temp
   }

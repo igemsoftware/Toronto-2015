@@ -24,25 +24,22 @@ var Network = function(attributes) {
       for(var i = 0; i < keys.length; i++)
           private.svg.attr(keys[i], attributes.svg[keys[i]]);
       //Create 2 <g> containers for nodes and links in the network <g> container
-     private.network = private.svg.append("g").attr("class", "network");
+      private.network = private.svg.append("g").attr("class", "network");
       private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on("zoom", zoom));
   }
 
   function draw(){
-
   }
-  function addSubsystem(subsystem){
-
-      var path = new Pathway(private.attributes, subsystem);
-
+  function addSystem(model){
+      var path = new System(private.attributes, model);
     }
 
   function zoom() {
       private.network.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   }
   return {
-    addSubsystem: function(specie){
-        addSubsystem(specie);
+    addSystem: function(jsonData){
+        addSystem(jsonData);
     }
   }
 }

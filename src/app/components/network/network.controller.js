@@ -22,12 +22,12 @@ angular.module('fbaApp')
     /* for visualizing on ecoli model
     $http.get(UrlProvider.baseUrl + '/fba/getJSON').success(function(jsondata){
         console.log('got the data')
-        network.addSpecie(jsondata);
+        network.addSubsystem(jsondata);
     });*/
     dataRequest.success(function(data) {
         //add one specie at a time, otherwise there will be duplicates,
         //and we will not have to worry about that
-        network.addSubsystem(data.data[0]);
+        network.addSystem(data.data[0]);
     }).error(function(err) {
         alert(err);
     });
