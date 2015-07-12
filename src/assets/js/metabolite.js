@@ -1,6 +1,6 @@
 var Metabolite = function(name, id, radius){
   var that = new Node(name, id, "m", radius);
-
+  that.radius = radius;
   that.draw = function(){
       that._node.append("circle")
                     .attr("class", "node-m")

@@ -13,6 +13,9 @@ var Node = function(name, id, type, radius){
     mouseover: function(d){
       mouseover(d);
     },
+    setRadius: function(r){
+      public.radius = r;
+    },
     mouseout: function(d){
       mouseout(d);
     },

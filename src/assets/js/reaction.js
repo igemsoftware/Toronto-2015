@@ -1,5 +1,5 @@
-var Reaction = function(name, id, radiusScale, flux_value){
-    var that = new Node(name, id, "r", radiusScale(flux_value));
+var Reaction = function(name, id, radius, flux_value){
+    var that = new Node(name, id, "r", radius);
     that.getFlux = function(){
       return flux_value;
     }
@@ -8,7 +8,7 @@ var Reaction = function(name, id, radiusScale, flux_value){
             that._node.attr("id", that.getID())
                           .append("circle")
                           .attr("class", "node-r")
-                          .attr("r", radiusScale(flux_value))
+                          .attr("r",  radius)
                           .attr("stroke", palette.nodestroketest)
                           .attr("stroke-width", 35)
                           .attr("stroke-opacity", 0)

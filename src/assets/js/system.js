@@ -74,7 +74,7 @@ var System = function(attributes, system){
       for (var i = 0; i<system.reactions.length; i++){
             _private.nodesSet.push(new Reaction(system.reactions[i].name,
                                                 system.reactions[i].id,
-                                                radiusScale,
+                                                radiusScale(system.reactions[i].flux_value),
                                                 system.reactions[i].flux_value
                                                 ));
 
