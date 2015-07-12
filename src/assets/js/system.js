@@ -53,12 +53,26 @@ var System = function(attributes, system){
                                                   system.metabolites[i].id));
       }
   }
+  function scale_radius(system){
+    // find largest flux value and scale radius of reaction node accordingly
+    var flux_array = [];
+    for (var i = 0; i< system.reactions.length; i ++){
+        flux_array.push(system.reactions[i].flux_value);
+    };
+    var largest = Math.max.apply(Math, flux_array);
+    var r = d3.scale.linear().domain([0,largest]).range([0,15]);
+    return r
+  }
   function buildReactions(system){
       var tempLinks = [];
+      // scale_radius
+      radius = scale_radius(system);
       // loop and bind reaction data to reaction node
       for (var i = 0; i<system.reactions.length; i++){
-              private.nodesSet.push(new Reaction(system.reactions[i].name,
-                                                system.reactions[i].id));
+            private.nodesSet.push(new Reaction(system.reactions[i].name,
+                                                system.reactions[i].id,
+                                                system.reactions[i].flux_value,
+                                                radius));
 
           // assign metabolite source and target for each reaction
           var m = Object.keys(system.reactions[i].metabolites);
@@ -132,7 +146,7 @@ var System = function(attributes, system){
       })
       // call draw function in reaction and metabolite node class
       for(var i = 0; i< private.nodesSet.length; i++){
-        private.nodesSet[i].draw();
+          private.nodesSet[i].draw();
       }
 
 

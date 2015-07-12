@@ -18,19 +18,21 @@ angular.module('fbaApp')
     // ==== Network Class ====
     //create new network
     var network = new Network(attrs);
+
     var dataRequest = $http.get('http://45.55.193.224/toydata.json');
-    /* for visualizing on ecoli model
-    $http.get(UrlProvider.baseUrl + '/fba/getJSON').success(function(jsondata){
-        console.log('got the data')
-        network.addSubsystem(jsondata);
-    });*/
     dataRequest.success(function(data) {
-        //add one specie at a time, otherwise there will be duplicates,
-        //and we will not have to worry about that
         network.addSystem(data.data[0]);
     }).error(function(err) {
         alert(err);
     });
+
+    // for visualizing on ecoli model
+    /*
+    $http.get(UrlProvider.baseUrl + '/fba/getJSON').success(function(jsondata){
+        console.log('got the data')
+        network.addSystem(jsondata);
+    });*/
+
 
     // ==== Sidebar ====
     var sidebar = '#sidebar';

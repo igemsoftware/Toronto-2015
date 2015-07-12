@@ -1,4 +1,4 @@
-var Node = function(name, id, type, links){
+var Node = function(name, id, type){
   var private = {
     id: id.toString(),
     name: name.toString(),
@@ -13,7 +13,6 @@ var Node = function(name, id, type, links){
   function draw(){}
   function mouseover(d){}
   function mouseout(d){}
-
   return{
     toString: function(){
       return (name.type+": " + private.name + " id: " + private.id + "\n");
@@ -35,7 +34,6 @@ var Node = function(name, id, type, links){
         name: private.name,
         id: private.id,
         type: private.type,
-        selflink: false
       }
     }
   }
