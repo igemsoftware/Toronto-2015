@@ -1,69 +1,24 @@
-var Reaction = function(name, id, flux_value, radius){
-    this.prototype = new Node(name, id, "r");
-    var private = {
-      name: name.toString(),
-      id: id.toString(),
-      flux_value: flux_value,
-      type: 'r',
-      network: d3.select("svg").select(".system"),
-      node: null
+var Reaction = function(name, id, radiusScale, flux_value){
+    var that = new Node(name, id, "r", radiusScale(flux_value));
+    that.getFlux = function(){
+      return flux_value;
     }
-    private.node = private.network.select(".nodes").append("g").attr("class", "node")
-    this.prototype.draw = function draw(){
+    that.draw = function(){
         if(flux_value != 0){
-            private.node.attr("id", private.id)
+            that.node.attr("id", that.getID())
                           .append("circle")
                           .attr("class", "node-r")
-                          .attr("r", radius(private.flux_value))
+                          .attr("r", radiusScale(flux_value))
                           .attr("stroke", palette.nodestroketest)
                           .attr("stroke-width", 35)
                           .attr("stroke-opacity", 0)
                           .style("opacity", 1)
                           .attr("fill", palette.themeyellow)
-            //event listener
-            private.node.on("mouseover", this.mouseover)
-                     .on("mouseout", this.mouseout)
+                          .on("mouseover", that.mouseover)
+                          .on("mouseout", that.mouseout)
         }
 
 
     }
-    this.prototype.mouseover =  function(d) {
-      private.node.append("text")
-                      .attr("class", "node-text")
-                      .text(private.name)
-                      .attr("font-family", "Arial")
-                      .attr("fill", palette.texttest)
-                      .style("opacity", 1)
-                      .attr("font-size",  "1.1em")
-                      .attr("text-anchor", "middle");
-        d3.select(this)
-            .select("circle")
-            .transition()
-            .duration(100)
-            .attr("r", radius(private.flux_value) + 6)
-            .attr("stroke", palette.nodestroketest)
-            .attr("stroke-opacity", 0)
-            .attr("stroke-width", 35)
-            .style("opacity", 1)
-
-    }
-
-    this.prototype.mouseout = function(d) {
-        //hard coded for now
-        d3.select(this)
-            .select("circle")
-            .transition()
-            .duration(800)
-            .attr("r", radius(private.flux_value))
-            .attr("stroke", palette.nodestroketest)
-            .attr("stroke-opacity", 0)
-            .attr("stroke-width", 35)
-            .attr("opacity", 1);
-        d3.select(this)
-            .selectAll(".node-text")
-            .transition()
-            .duration(1000)
-            .remove();
-    };
-    return this.prototype
+    return that
 }

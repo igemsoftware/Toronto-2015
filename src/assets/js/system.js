@@ -8,6 +8,7 @@ var System = function(attributes, system){
     attributes: attributes,
     linkSet: [],    //link data
     nodesSet: [],   //node data
+    metaboliteRadius: 10
   }
   //initalize Pathway
   init(system);
@@ -50,7 +51,7 @@ var System = function(attributes, system){
       // loop and bind metabolite data to metabolite node to nodeset
       for (var i = 0; i<system.metabolites.length; i++){
         private.nodesSet.push(new Metabolite(system.metabolites[i].name,
-                                                  system.metabolites[i].id));
+                                                  system.metabolites[i].id, private.metaboliteRadius));
       }
   }
   function scale_radius(system){
@@ -66,13 +67,14 @@ var System = function(attributes, system){
   function buildReactions(system){
       var tempLinks = [];
       // scale_radius
-      radius = scale_radius(system);
+      radiusScale = scale_radius(system);
       // loop and bind reaction data to reaction node
       for (var i = 0; i<system.reactions.length; i++){
             private.nodesSet.push(new Reaction(system.reactions[i].name,
                                                 system.reactions[i].id,
-                                                system.reactions[i].flux_value,
-                                                radius));
+                                                radiusScale,
+                                                system.reactions[i].flux_value
+                                                ));
 
           // assign metabolite source and target for each reaction
           var m = Object.keys(system.reactions[i].metabolites);
