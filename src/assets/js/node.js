@@ -8,7 +8,7 @@ var Node = function(name, id, type, radius){
   var public = {
     radius: radius,
     draw: null,
-    node: private.network.select(".nodes").append("g").attr("class", "node")
+    _node: private.network.select(".nodes").append("g").attr("class", "node")
                   .attr("id", private.id),
     mouseover: function(d){
       mouseover(d);
@@ -28,7 +28,7 @@ var Node = function(name, id, type, radius){
   }
 
   function mouseover(d) {
-    public.node.append("text")
+    public._node.append("text")
                     .attr("class", "node-text")
                     .text(name)
                     .attr("x", 0)
@@ -38,7 +38,7 @@ var Node = function(name, id, type, radius){
                     .style("opacity", 1)
                     .attr("font-size", "1.1em")
                     .attr("text-anchor", "middle");
-      public.node.select("circle")
+      public._node.select("circle")
           .transition()
           .duration(100)
           .attr("r",  public.radius + 5)
@@ -51,14 +51,14 @@ var Node = function(name, id, type, radius){
 
 
   function mouseout(d) {
-      public.node.select("circle").transition()
+      public._node.select("circle").transition()
           .duration(100)
           .attr("r", public.radius)
           .attr("stroke", palette.nodestroketest)
           .attr("stroke-opacity", 1)
           .attr("stroke-width", 1)
           .attr("opacity", 1);
-      public.node
+      public._node
           .selectAll(".node-text")
           .transition()
           .duration(500)

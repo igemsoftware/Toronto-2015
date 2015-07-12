@@ -5,7 +5,7 @@ var Reaction = function(name, id, radiusScale, flux_value){
     }
     that.draw = function(){
         if(flux_value != 0){
-            that.node.attr("id", that.getID())
+            that._node.attr("id", that.getID())
                           .append("circle")
                           .attr("class", "node-r")
                           .attr("r", radiusScale(flux_value))

@@ -2,7 +2,7 @@ var Metabolite = function(name, id, radius){
   var that = new Node(name, id, "m", radius);
 
   that.draw = function(){
-      that.node.append("circle")
+      that._node.append("circle")
                     .attr("class", "node-m")
                     .attr("r", 10)
                     .attr("stroke", palette.nodestroketest)
