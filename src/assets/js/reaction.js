@@ -3,6 +3,7 @@ var Reaction = function(name, id){
     var private = {
       name: name.toString(),
       id: id.toString(),
+      type: 'r',
       network: d3.select("svg").select(".system"),
       node: null
     }

@@ -17,9 +17,9 @@ var System = function(attributes, system){
       private.network = d3.select('svg').select('.network') ;
       //create system tag
       private.system = d3.select("svg").select(".network").append("g").attr("class", "system");
-      //create HTML nodes tags and links tags
-      private.nodes = private.system.append("g").attr("class", "nodes");
+      //create HTML nodes tags and
       private.links = private.system.append("g").attr("class", "links");
+      private.nodes = private.system.append("g").attr("class", "nodes");
       //Create metabolite objects
       buildMetabolites(system);
       //Create reaction objects
@@ -80,8 +80,8 @@ var System = function(attributes, system){
       for (var j=0; j<tempLinks.length;j++){
           //ineffiecient, but will do for now
           var s = private.nodesSet[nodesMap[tempLinks[j].source]];
-          var t =  private.nodesSet[nodesMap[tempLinks[j].target]];
 
+          var t =  private.nodesSet[nodesMap[tempLinks[j].target]];
           private.linkSet.push({id: s.getID()+"-"+t.getID(), source: s, target: t});
       }
 
@@ -91,7 +91,7 @@ var System = function(attributes, system){
       var markers = [
                       {id: "triangle", path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-5 -5 10 10' }
                     ];
-      var marker = private.network.append("g")
+      var marker = private.system.insert("g")
                             .attr("class", "markers")
                             .selectAll(".marker")
                             .data(markers)
@@ -112,16 +112,21 @@ var System = function(attributes, system){
   }
   //draw function
   function draw(){
-
+    // draw links
+    addMarkers();
     private.links = private.links
       .enter()
       .append("g")
       .attr("class", "link")
-      .append("line")
+      .attr("id", function(d) {
+          return "id-" + d.id
+      })
+      .insert("line")
       .style("stroke", "#ccc")
-      .style("stroke-width", 1)
+      .style("stroke-width", 2)
+      .style("opacity", 1)
       .attr("marker-end", function(d) {
-          if (d.source.type == "r") {
+          if (d.source.getType() == "r") {
               return "url(#triangle)"
           }
       })
@@ -129,6 +134,7 @@ var System = function(attributes, system){
       for(var i = 0; i< private.nodesSet.length; i++){
         private.nodesSet[i].draw();
       }
+
 
 
   }

@@ -3,13 +3,14 @@ var Metabolite = function(name, id){
   var private = {
     name: name.toString(),
     id: id.toString(),
+    type: 'm',
     network: d3.select("svg").select(".system"),
     node: null,
     force: d3.layout.force() //temp
   }
   //init
   private.node = private.network.select(".nodes").append("g").attr("class", "node")
-                .attr("id", private.id)
+                .attr("id", private.id);
 
   this.prototype.draw = function(){
       private.node.append("circle")

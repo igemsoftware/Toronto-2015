@@ -21,6 +21,9 @@ var Node = function(name, id, type, links){
     getID: function(){
       return private.id;
     },
+    getType: function(){
+      return private.type;
+    },
     draw: function(){
       draw();
     },
