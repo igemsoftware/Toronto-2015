@@ -84,7 +84,7 @@ var Node = function(name, id, type, radius){
   }
 
   function mousedown(d){
-        _public._node.select("circle").classed('down', true).transition()
+        d3.select(this).select("circle").classed('down', true).transition()
         .duration(1000)
   }
   return _public;

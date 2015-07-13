@@ -77,26 +77,28 @@ var System = function(attributes, system){
       // loop and bind reaction data to reaction node
       var s, t;
       for (var i = 0; i<system.reactions.length; i++){
-            _private.nodesSet.push(new Reaction(system.reactions[i].name,
-                                                system.reactions[i].id,
-                                                radiusScale(system.reactions[i].flux_value),
-                                                system.reactions[i].flux_value
-                                                ));
+          if(system.reactions[i].flux_value){
+              _private.nodesSet.push(new Reaction(system.reactions[i].name,
+                                                  system.reactions[i].id,
+                                                  radiusScale(system.reactions[i].flux_value),
+                                                  system.reactions[i].flux_value
+                                                  ));
+              // assign metabolite source and target for each reaction
+              var m = Object.keys(system.reactions[i].metabolites);
 
-          // assign metabolite source and target for each reaction
-          var m = Object.keys(system.reactions[i].metabolites);
+              for (var k = 0; k<m.length; k++){
+                  if(system.reactions[i].metabolites[m[k]]>0){
+                    s = system.reactions[i].id;
+                    t = m[k];
+                  }else{
+                    s = m[k];
+                    t = system.reactions[i].id;
+                  }
 
-          for (var k = 0; k<m.length; k++){
-              if(system.reactions[i].metabolites[m[k]]>0){
-                s = system.reactions[i].id;
-                t = m[k];
-              }else{
-                s = m[k];
-                t = system.reactions[i].id;
+                  tempLinks.push({id: s+"-"+t, source: s, target: t});
               }
-
-              tempLinks.push({id: s+"-"+t, source: s, target: t});
           }
+
       }
       var nodesMap = map(_private.nodesSet);
       for (var j=0; j<tempLinks.length;j++){
