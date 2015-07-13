@@ -67,7 +67,7 @@ var System = function(attributes, system){
         flux_array.push(system.reactions[i].flux_value);
     }
     var largest = Math.max.apply(Math, flux_array);
-    var r = d3.scale.linear().domain([0,largest]).range([0,15]);
+    var r = d3.scale.linear().domain([0,largest]).range([5,15]);
     return r;
   }
   function buildReactions(system){

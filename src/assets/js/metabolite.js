@@ -17,7 +17,8 @@ var Metabolite = function(name, id, radius) {
         that._node
             .on("mouseover", that.mouseover)
             .on("mouseout", that.mouseout)
-            .on("dblclick", that.dblclick);
+            .on("dblclick", that.dblclick)
+            .on("click", that.mousedown);
     };
 
     return that;

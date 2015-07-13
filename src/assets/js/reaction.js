@@ -17,10 +17,12 @@ var Reaction = function(name, id, radius, flux_value) {
                 .attr("stroke-width", 35)
                 .attr("stroke-opacity", 0)
                 .style("opacity", 1)
-                .attr("fill", palette.themeyellow)
+                .attr("fill", palette.theblue)
+            that._node
                 .on("mouseover", that.mouseover)
                 .on("mouseout", that.mouseout)
-                .on("dblclick", that.dblclick);
+                .on("dblclick", that.dblclick)
+                .on("click", that.mousedown);
         }
     };
     return that;

@@ -26,6 +26,9 @@ var Node = function(name, id, type, radius){
     dblclick: function(d){
         dblclick(d);
     },
+    mousedown: function(d){
+        mousedown(d);
+    },
     toString: function(){
         return (name.type+": " + _private.name + " id: " + _private.id + "\n");
     },
@@ -48,7 +51,7 @@ var Node = function(name, id, type, radius){
                     .style("opacity", 1)
                     .attr("font-size", "1.1em")
                     .attr("text-anchor", "middle");
-      _public._node.select("circle")
+      _public._node.select("circle").classed('over', true)
           .transition()
           .duration(100)
           .attr("r",  _public.radius + 5)
@@ -60,7 +63,8 @@ var Node = function(name, id, type, radius){
   }
 
   function mouseout(d) {
-      _public._node.select("circle").transition()
+      _public._node.select("circle").classed('over', false)
+          .transition()
           .duration(100)
           .attr("r", _public.radius)
           .attr("stroke", palette.nodestroketest)
@@ -77,6 +81,11 @@ var Node = function(name, id, type, radius){
   function dblclick(d){
       d3.select(this).classed("fixed", d.fixed = false);
       d3.layout.force().start();
+  }
+
+  function mousedown(d){
+        _public._node.select("circle").classed('down', true).transition()
+        .duration(1000)
   }
   return _public;
 };
