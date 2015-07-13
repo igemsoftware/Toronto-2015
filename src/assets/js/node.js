@@ -15,22 +15,25 @@ var Node = function(name, id, type, radius){
     _node: _private.network.select(".nodes").append("g").attr("class", "node")
                   .attr("id", _private.id),
     mouseover: function(d){
-      mouseover(d);
+        mouseover(d);
     },
     setRadius: function(r){
-      _public.radius = r;
+        _public.radius = r;
     },
     mouseout: function(d){
-      mouseout(d);
+        mouseout(d);
+    },
+    dblclick: function(d){
+        dblclick(d);
     },
     toString: function(){
-      return (name.type+": " + _private.name + " id: " + _private.id + "\n");
+        return (name.type+": " + _private.name + " id: " + _private.id + "\n");
     },
     getID: function(){
-      return _private.id;
+        return _private.id;
     },
     getType: function(){
-      return _private.type;
+        return _private.type;
     }
   };
 
@@ -56,7 +59,6 @@ var Node = function(name, id, type, radius){
 
   }
 
-
   function mouseout(d) {
       _public._node.select("circle").transition()
           .duration(100)
@@ -70,6 +72,11 @@ var Node = function(name, id, type, radius){
           .transition()
           .duration(500)
           .remove();
+  }
+
+  function dblclick(d){
+      d3.select(this).classed("fixed", d.fixed = false);
+      d3.layout.force().start();
   }
   return _public;
 };

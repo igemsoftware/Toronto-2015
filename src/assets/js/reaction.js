@@ -19,7 +19,8 @@ var Reaction = function(name, id, radius, flux_value) {
                 .style("opacity", 1)
                 .attr("fill", palette.themeyellow)
                 .on("mouseover", that.mouseover)
-                .on("mouseout", that.mouseout);
+                .on("mouseout", that.mouseout)
+                .on("dblclick", that.dblclick);
         }
     };
     return that;

@@ -32,7 +32,7 @@ var Network = function(attributes) {
         _private.network = _private.svg.append("g").attr("class",
             "network");
         _private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on(
-            "zoom", zoom));
+            "zoom", zoom)).on("dblclick.zoom", null);
     }
 
     function draw() {}

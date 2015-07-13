@@ -14,8 +14,10 @@ var Metabolite = function(name, id, radius) {
             .attr("stroke-opacity", 1)
             .style("opacity", 1)
             .attr("fill", palette.themedarkblue)
+        that._node
             .on("mouseover", that.mouseover)
-            .on("mouseout", that.mouseout);
+            .on("mouseout", that.mouseout)
+            .on("dblclick", that.dblclick);
     };
 
     return that;
