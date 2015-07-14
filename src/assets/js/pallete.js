@@ -18,7 +18,6 @@ var palette = {
     'salmon': '#eb7260',
     'aqua': '#eb7260',
     'beige': '#e9e0d6',
-    'theblue': '#006699',
     'themedarkblue': '#C4E4E6',
     'themenodestroke': '#3D8D8F',
     'themelightblue': '#BFE1BF',

@@ -119,7 +119,7 @@ gulp.task('serve', ['sass', 'jshint'], function(){
     gulp.watch(paths.scripts, ['jshint']);
     gulp.watch(paths.sass, ['sass']);
     gulp.watch(paths.html).on('change', reload);
-    gulp.watch(paths.scripts).on('change', reload);
+    gulp.watch(paths.scripts).on('chnage', reload);
 })
 
 gulp.task('default', ['serve']);
