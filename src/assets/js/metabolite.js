@@ -12,6 +12,7 @@ var Metabolite = function(network, name, id, radius) {
       "y": Math.random()*1280, //random for now
       "size": radius
     })
+    
   //  that.network.refresh();
 
     return that;
