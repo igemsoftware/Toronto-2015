@@ -14,6 +14,7 @@ var Network = function(attributes) {
   function init(){
       // Create necessary tags/containers and initiate force
       //Append svg tag
+      //test
       private.container = d3.select(attributes.divName);
       /*private.svg.append("rect").attr("width", attributes['svg']['width'])
                                 .attr("height", attributes['svg']['height'])
