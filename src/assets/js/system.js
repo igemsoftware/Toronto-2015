@@ -25,24 +25,7 @@ var System = function(network, system){
       addEdges();
       _private.network.refresh()
       //start force
-      /*_private.network.startForceAtlas2({
-        linLogMode: false,
-        outboundAttractionDistribution: false,
-        adjustSizes: false,
-        edgeWeightInfluence: 0,
-        scalingRatio: 1,
-        strongGravityMode: false,
-        gravity: 1,
-        jitterTolerance: 1,
-        barnesHutOptimize: false,
-        barnesHutTheta: 1.2,
-        speed: 1,
-        outboundAttCompensation: 1,
-        totalSwinging: 0,
-        totalEffectiveTraction: 0,
-        complexIntervals: 500,
-        simpleIntervals: 1000
-      });*/
+    
   }
   function addEdges(){
     for(var i = 0; i < _private.edges.length; i++)

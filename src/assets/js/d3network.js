@@ -9,12 +9,14 @@ var Network = function(attributes) {
       pathways: [],
       nodesSet: [], //array of nodes data
       linkSet: [], //array of links data
+      dragListener: null
   }
   init()
   function init(){
       // Create necessary tags/containers and initiate force
       //Append svg tag
       //test
+
       private.container = d3.select(attributes.divName);
       /*private.svg.append("rect").attr("width", attributes['svg']['width'])
                                 .attr("height", attributes['svg']['height'])
@@ -25,16 +27,14 @@ var Network = function(attributes) {
       var keys = Object.keys(attributes.svg);
       for(var i = 0; i < keys.length; i++)
           private.container.attr(keys[i], attributes.svg[keys[i]]);
-        console.log(private.container);
+      //set renderer to canvas
+      sigma.renderers.def = sigma.renderers.canvas
       private.network = new sigma("network"); //use network id, harded right now
-          /*network.graph.addNode({
-            "id": "n0",
-            "label": "node1",
-            "x": 10,
-            "y": 10,
-            "size": Math.random()*10
-          });*/
-      //Create 2 <g> containers for nodes and links in the network <g> container
+      private.dragListener = new sigma.plugins.dragNodes(private.network, private.network.renderers[0]);
+      private.dragListener.bind('startdrag', function(event) {
+              console.log(event);
+      });
+
 
   }
 
@@ -42,6 +42,8 @@ var Network = function(attributes) {
   }
   function addSystem(model){
       var path = new System(private.network, model);
+
+
       //refresh
 
   }
