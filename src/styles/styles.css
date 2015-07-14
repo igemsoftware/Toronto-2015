@@ -10,10 +10,10 @@
  * A partial implementation of the Ruby display functions from Compass:
  * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
  */
-/*
+/* 
 html5doctor.com Reset Stylesheet v1.6.1
 Last Updated: 2010-09-17
-Author: Richard Clark - http://richclarkdesign.com
+Author: Richard Clark - http://richclarkdesign.com 
 */
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -135,9 +135,6 @@ input, select {
 
 .view-header {
   height: calc(100% - 60px); }
-.over {
-    fill: #009688;
-}
 
 #header {
   height: 60px;
