@@ -23,10 +23,26 @@ var System = function(network, system){
       buildReactions(system);
 
       addEdges();
-      _private.network.refresh()
+      _private.network.refresh();
+      console.log();
       //start force
-    
+      rec();
+    function rec(){
+      setTimeout(function(){
+
+        for(var i = 0; i < _private.nodes.length; i++)
+        {
+          _private.nodes[i].x = Math.random()*1920;
+          _private.nodes[i].y = Math.random()*1080;
+        }
+
+      }, 2000);
+      _private.network.refresh();
+    }
+
+
   }
+
   function addEdges(){
     for(var i = 0; i < _private.edges.length; i++)
       _private.network.graph.addEdge(_private.edges[i])

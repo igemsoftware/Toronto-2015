@@ -4,13 +4,15 @@
 
 var Reaction = function(network, name, id, radius, flux_value) {
     var that = new Node(network, name, id, "r", radius);
+    that.x = Math.random()*1920;
+    that.y = Math.random()*1080;
     that.network.graph.addNode({
       "id": id,
       "label": name,
-      "x": Math.random()*2560,
-      "y": Math.random()*1200, //random for now
+      "x": that.x,
+      "y": that.y, //random for now
       "size": 3
     })
-  //  that.network.refresh();
+    that.network.refresh();
     return that;
 };

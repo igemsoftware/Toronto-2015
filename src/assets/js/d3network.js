@@ -18,12 +18,6 @@ var Network = function(attributes) {
       //test
 
       private.container = d3.select(attributes.divName);
-      /*private.svg.append("rect").attr("width", attributes['svg']['width'])
-                                .attr("height", attributes['svg']['height'])
-                                .style("fill", "transparent")
-                                .style("pointer-events", "all");*/
-      //Assign attributes to svg tag
-
       var keys = Object.keys(attributes.svg);
       for(var i = 0; i < keys.length; i++)
           private.container.attr(keys[i], attributes.svg[keys[i]]);
@@ -34,6 +28,7 @@ var Network = function(attributes) {
       private.dragListener.bind('startdrag', function(event) {
               console.log(event);
       });
+
 
 
   }
