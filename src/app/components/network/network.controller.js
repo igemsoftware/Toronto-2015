@@ -21,14 +21,15 @@ angular.module('fbaApp')
     // ==== Network Class ====
     //create new network
     var network = new Network(attrs);
-
+    network.addSystem('/src/app/components/network/iJO1366.json');
+    /*
     var dataRequest = $http.get('http://45.55.193.224/toydata.json');
     dataRequest.success(function(data) {
         network.addSystem(data.data[0]);
     }).error(function(err) {
         alert(err);
     });
-
+    */
     // for visualizing on ecoli model
     /*
     $http.get(UrlProvider.baseUrl + '/fba/getJSON').success(function(jsondata){
