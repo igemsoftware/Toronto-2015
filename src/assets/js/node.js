@@ -13,6 +13,18 @@ var Node = function(network, name, id, type, radius){
     node: null,
     network: network,
     radius: radius,
+    setX: function(x){
+      _public.node.x = x;
+    },
+    setY: function(y){
+      _public.node.y = y;
+    },
+    updateY: function(dy){
+      _public.node.y+= dy;
+    },
+    updateX: function(dx){
+      _public.node.x += dx;
+    },
     setRadius: function(r){
         _public.radius = r;
     },
