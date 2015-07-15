@@ -14,7 +14,14 @@
  */
 module.exports = {
     prod: {
-        port: 6740 // do not change this
+        port: 10000, // do not change this
+        mongodb: {
+            hostname : 'localhost',
+            username : '',
+            password : '',
+            port     : '',
+            database : 'fba'
+        }
     },
     dev: {
         port: 9001,
