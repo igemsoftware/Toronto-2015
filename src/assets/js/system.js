@@ -24,7 +24,7 @@ var System = function(network, system){
 
       addEdges();
       _private.network.refresh();
-      console.log();
+      network.startForceAtlas2();
       //start force
       rec();
     function rec(){
