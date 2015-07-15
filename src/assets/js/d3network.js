@@ -15,15 +15,42 @@ var Network = function(attributes) {
   function init(){
       // Create necessary tags/containers and initiate force
       //Append svg tag
-      //test
 
       private.container = d3.select(attributes.divName);
       var keys = Object.keys(attributes.svg);
       for(var i = 0; i < keys.length; i++)
           private.container.attr(keys[i], attributes.svg[keys[i]]);
-      //set renderer to canvas
-      sigma.renderers.def = sigma.renderers.canvas
-      private.network = new sigma("network"); //use network id, harded right now
+
+      var settings = {
+          //autoRescale: false, for later
+          defaultLabelColor: palette.darkblue,
+          defaultEdgeColor: palette.darkblue,
+          defaultNodeColor: palette.theblue,
+          edgeColor: "default",
+          minArrowSize: 2,
+          labelColor: "#009688",
+          // for hover events
+          borderSize: 3,
+          defaultNodeBorderColor: palette.theblue,
+          nodeHoverColor: "default",
+          defaultnodeHoverColor: palette.themeyellow,
+          // scaling
+          scalingMode: "outside",
+          //captors
+          doubleClickZoomingRatio: 5, //useful on zooming fast into a place
+          zoomMin: 0.005,
+          zoomMax: 10,
+          mouseInertiaDuration: 0
+      }
+      var renderer = {
+          type: 'canvas',
+          container: "network"
+      }
+      private.network = new sigma({
+          renderer: renderer,
+          settings: settings
+      });
+
       private.dragListener = new sigma.plugins.dragNodes(private.network, private.network.renderers[0]);
       private.dragListener.bind('startdrag', function(event) {
               console.log(event);

@@ -13,6 +13,5 @@ var Reaction = function(network, name, id, radius, flux_value) {
       "y": that.y, //random for now
       "size": 3
     })
-    that.network.refresh();
     return that;
 };
