@@ -42,7 +42,7 @@ var System = function(network, system){
     }*/
 
     //TEMPORARY TEMPORARY TETSTING
-    var FPS = 30;
+  /*  var FPS = 30;
     setInterval(function() {
       update();
       _private.network.refresh();
@@ -51,7 +51,7 @@ var System = function(network, system){
     var vector = new Victor(1, 0);
     console.log(_private.network.graph.nodes())
     console.log(_private.nodes)
-    //screwing around with node 4.
+    //screwing around with node 4.*/
     //_private.network.nodes[4].acceleration = vector;
 
 
@@ -66,6 +66,7 @@ var System = function(network, system){
       _private.nodes[i].node.x += Math.random();
       _private.nodes[i].node.y += Math.random();
     }
+
 
   }
 
@@ -141,6 +142,11 @@ var System = function(network, system){
         ret[nodes[j].getID()] = j;
       }
       return ret;
+  }
+  return {
+    update: function(){
+      update()
+    }
   }
 
 };
