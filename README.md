@@ -1,10 +1,16 @@
 ![logo](http://45.55.193.224/logo_grey.png) 
+
 #Flux Balance Analysis Application
+
 Backend code for our [FBA-Interface Web App](https://github.com/igemuoftATG/fba-webapp)
 
 ##Description
 
-University of Toronto iGEM (international Genetically Engineered Machine) is a student association dedicated to the practice of synthetic biology and dissemination of its scientific foundations. The culmination of each year's efforts is a submission to the iGEM conferences as the University of Toronto team
+University of Toronto iGEM (international Genetically Engineered Machine) is a
+student association dedicated to the practice of synthetic biology and
+dissemination of its scientific foundations. The culmination of each year's
+efforts is a submission to the iGEM conferences as the University of Toronto
+team
 
 ##API References
   Name | Reference | Version
@@ -16,7 +22,9 @@ University of Toronto iGEM (international Genetically Engineered Machine) is a s
   LibSBML | http://sbml.org/Software/libSBML | 5.11.4
 
 ##Installation
-Ubuntu 14.04 or greater is assumed for these installation guides. Python 3.x is assumed for all instances of Python. Python 2.6 or 2.7 is specifically required for Node installation. 
+Ubuntu 14.04 or greater is assumed for these installation guides. Python 3.x is
+assumed for all instances of Python. Python 2.6 or 2.7 is specifically required
+for Node installation. 
 
 **System Wide:**
 ```bash
