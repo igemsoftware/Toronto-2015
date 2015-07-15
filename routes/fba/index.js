@@ -1,8 +1,10 @@
 var router   = require('express').Router();
 var cp = require('child_process');
 
+var python = '/home/igemuoft/venv/cobrapy/bin/python';
+
 var getJSON = function(req, res){
-  var catcher = cp.spawn('python3', ['fba/dos.py', 'get_json']);
+  var catcher = cp.spawn(python, ['fba/dos.py', 'get_json']);
   var results = {
       output: "",
       errorlog:  null,
@@ -25,7 +27,7 @@ var getJSON = function(req, res){
 };
 
 var conversion = function(req, res){
-    var catcher = cp.spawn('python3', ['fba/dos.py', 'convert_all']);
+    var catcher = cp.spawn(python, ['fba/dos.py', 'convert_all']);
     var results = {
         output: "",
         errorlog:  null,
@@ -47,7 +49,7 @@ var conversion = function(req, res){
 
 };
 var calculate_insert = function(req, res){
-    var catcher = cp.exec('python3', ['fba/dos.py', 'insert_all']);
+    var catcher = cp.exec(python, ['fba/dos.py', 'insert_all']);
     var results = {
         output: "",
         errorlog:  null,
