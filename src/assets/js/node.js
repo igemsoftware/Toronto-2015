@@ -10,6 +10,7 @@ var Node = function(network, name, id, type, radius){
 
   };
   var _public = {
+    node: null,
     network: network,
     radius: radius,
     setRadius: function(r){

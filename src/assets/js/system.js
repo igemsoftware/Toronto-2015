@@ -24,22 +24,48 @@ var System = function(network, system){
 
       addEdges();
       _private.network.refresh();
-  //    network.startForceAtlas2();
+
       //start force
-      //rec();
+    /*rec();
     function rec(){
       setTimeout(function(){
-
-        for(var i = 0; i < _private.nodes.length; i++)
-        {
-          _private.nodes[i].x = Math.random()*1920;
-          _private.nodes[i].y = Math.random()*1080;
-        }
+       var nodes = _private.network.graph.nodes()
+       for(var i = 0; i < nodes.length; i++){
+         nodes[i].x = Math.random()*1920;
+         nodes[i].y = Math.random()*1080;
+       }
+       _private.network.refresh();
+       rec()
 
       }, 2000);
       _private.network.refresh();
-    }
+    }*/
 
+    //TEMPORARY TEMPORARY TETSTING
+    var FPS = 30;
+    setInterval(function() {
+      update();
+      _private.network.refresh();
+    }, 1000/FPS);
+    //30 px a second
+    var vector = new Victor(1, 0);
+    console.log(_private.network.graph.nodes())
+    console.log(_private.nodes)
+    //screwing around with node 4.
+    //_private.network.nodes[4].acceleration = vector;
+
+
+
+  }
+  //FFS TEMPORARY
+  //temporary
+  function update(){
+    //_private.network.graph.nodes()[4].x += 1;
+    //console.log(_private.nodes[4]);
+    for(var i = 0; i < _private.nodes.length; i++){
+      _private.nodes[i].node.x += Math.random();
+      _private.nodes[i].node.y += Math.random();
+    }
 
   }
 

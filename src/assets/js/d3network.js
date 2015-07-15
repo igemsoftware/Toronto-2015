@@ -55,6 +55,7 @@ var Network = function(attributes) {
       private.dragListener.bind('startdrag', function(event) {
               console.log(event);
       });
+      
 
 
 

@@ -24,7 +24,6 @@ angular.module('fbaApp')
 
     var dataRequest = $http.get('http://45.55.193.224/toydata.json');
     dataRequest.success(function(data) {
-        console.log(data.data[0])
         network.addSystem(data.data[0]);
     }).error(function(err) {
         alert(err);

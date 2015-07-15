@@ -13,5 +13,6 @@ var Reaction = function(network, name, id, radius, flux_value) {
       "y": that.y, //random for now
       "size": 3
     })
+    that.node = that.network.graph.nodes()[that.network.graph.nodes().length-1];
     return that;
 };

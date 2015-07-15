@@ -14,5 +14,8 @@ var Metabolite = function(network, name, id, radius) {
       "size": radius
     })
 
+    that.node = that.network.graph.nodes()[that.network.graph.nodes().length-1];
+
+
     return that;
 };
