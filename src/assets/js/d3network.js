@@ -48,14 +48,18 @@ var Network = function(attributes) {
     }
     private.network = new sigma({
       renderer: renderer,
-      settings: settings
+      settings: settings,
+      enableCamera: false
     });
 
-    private.dragListener = new sigma.plugins.dragNodes(private.network, private.network.renderers[0]);
-    private.dragListener.bind('startdrag', function(event) {
+    //private.dragListener = new sigma.plugins.dragNodes(private.network, private.network.renderers[0]);
+  /*  private.dragListener.bind('startdrag', function(event) {
       console.log(event);
-    });
-    render()
+      event.data.node.x = event.data.captor.x;
+      event.data.node.y = event.data.captor.y;
+
+    });*/
+
   }
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame ||
@@ -77,11 +81,9 @@ var Network = function(attributes) {
   function update(){
     for(var i = 0; i < private.pathways.length; i++){
       private.pathways[i].update();
-      console.log("here");
     }
   }
   function addSystem(model){
-    //console.log("making a path")
     private.pathways.push(new System(private.network, model));
 
 

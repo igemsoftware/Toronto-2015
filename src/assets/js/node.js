@@ -7,12 +7,25 @@ var Node = function(network, name, id, type, radius){
     id: id.toString(),
     name: name.toString(),
     type: type.toString(),
-
+    network: network
   };
+  var yrand = Math.random()*1080;
+  var xrand = Math.random()*1920;
   var _public = {
     node: null,
-    network: network,
+    acceleration: new Victor(0, 0),
+    position: new Victor(xrand, yrand),
+    velocity: new Victor(0, 0),
     radius: radius,
+    //updates according to velocity and acceleration
+    update: function(){
+
+      _public.position.add(_public.velocity);
+      _public.node.x = _public.position.x;
+      _public.node.y = _public.position.y;
+
+
+    },
     setX: function(x){
       _public.node.x = x;
     },
@@ -23,6 +36,14 @@ var Node = function(network, name, id, type, radius){
       _public.node.y+= dy;
     },
     updateX: function(dx){
+      _public.node.x += dx;
+    },
+    setPosition: function(x, y){
+      _public.node.y = x;
+      _public.node.x = y;
+    },
+    translate: function(dx, dy){
+      _public.node.y+= dy;
       _public.node.x += dx;
     },
     setRadius: function(r){
@@ -38,5 +59,7 @@ var Node = function(network, name, id, type, radius){
         return _private.type;
     }
   };
+
+  
   return _public;
 };

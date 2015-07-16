@@ -23,17 +23,16 @@ var System = function(network, system){
       buildReactions(system);
 
       addEdges();
-      _private.network.refresh();
+
+  //  _private.nodes[4].velocity.add(new Victor(1, 0));
+
   }
 
   function update(){
 
     for(var i = 0; i < _private.nodes.length; i++){
-      _private.nodes[i].updateX(Math.random());
-      _private.nodes[i].updateY(Math.random());
+      _private.nodes[i].update();
     }
-
-
   }
 
   function addEdges(){
