@@ -60,12 +60,12 @@ var System = function(network, system, height, width){
 
       _private.force = d3.layout.force()
                           .nodes(_private.nodes)
-                          .links(_private.edges)
+                          //.links(_private.edges)
                           .charge(-500)
                           .linkStrength(2)
                           .linkDistance(50)
                           .size([width, height])
-                        //  .start()
+                          .start()
                           .on("tick", update);
 
                           console.log(_private.edges)
