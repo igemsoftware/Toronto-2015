@@ -15,13 +15,14 @@ var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
 var runSequence = require('run-sequence');
 var autoprefixer = require('gulp-autoprefixer');
-var reload = browserSync.reload
+var reload = browserSync.reload;
+var mainBowerFiles = require('main-bower-files');
 
 // declare paths
 var paths = {
     html: './src/**/*.html',
     index: './src/index.html',
-    scripts: ['./src/app/**/*.js', './src/assets/**/*.js'],
+    scripts: ['./src/assets/**/*.js', './src/app/**/*.js'],
     glob: './src/app/**/*.js',
     assetsglob: './src/assets/**/*.js',
     sass: './src/styles/sass/*.scss',
@@ -29,39 +30,46 @@ var paths = {
 }
 
 //<======== Clean and Production ========>
+
 // clean build
 gulp.task('build-clean', function(cb){
-    del(['build'], cb);
+    del(['dist'], cb);
 });
+
+gulp.task('bower', function() {
+    return gulp.src(mainBowerFiles(), { base: 'bower_components'})
+        .pipe(gulp.dest('dist/lib')); 
+})
+                                                                          
+
 // minify and copy js with sourcemaps
-gulp.task('minify-scripts', ['build-clean'], function(){
+gulp.task('minify-scripts', function(){
     var stream = gulp.src(paths.scripts, { base: 'src' })
         .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(uglify())
             .pipe(concat('all.min.js'))
         .pipe(sourcemaps.write('../'))
-        .pipe(gulp.dest('build/js'));
+        .pipe(gulp.dest('dist/js'));
     return stream;
 });
+
+// minify html into dist
+gulp.task('minify-html', function() {
+    return gulp.src(paths.html)
+        .pipe(gulp.dest('dist'));
+});
+
 // minify and copy css
-gulp.task('minify-css', ['build-clean'], function(){
-    var stream = gulp.src(paths.sass, { base: 'src' })
+gulp.task('minify-css', ['sass'], function(){ 
+    return gulp.src(paths.css)
         .pipe(sourcemaps.init({loadMaps: true}))
-            .pipe(sass({
-                includePaths: ['./bower_components/compass-mixins/lib']
-                }).on('error', sass.logError))
-            .pipe(minifyCss())
-            .pipe(concat('styles.css'))
+        .pipe(minifyCss())
+        .pipe(concat('styles.css'))
         .pipe(sourcemaps.write('../'))
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
-        .pipe(gulp.dest('build/css'));
-    return stream;
+        .pipe(gulp.dest('dist/css'));
 });
 gulp.task('build', function(){
-    runSequence('build-clean', ['minify-scripts', 'minify-css']);
+    runSequence('build-clean', ['bower', 'minify-html', 'minify-scripts', 'minify-css']);
 });
 
 //<=========== Set Up Index =============>
