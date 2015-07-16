@@ -20,6 +20,7 @@ var Node = function(network, name, id, type, radius){
     //updates according to velocity and acceleration
     update: function(){
 
+      _public.velocity.add(_public.acceleration);
       _public.position.add(_public.velocity);
       _public.node.x = _public.position.x;
       _public.node.y = _public.position.y;
@@ -39,8 +40,7 @@ var Node = function(network, name, id, type, radius){
       _public.node.x += dx;
     },
     setPosition: function(x, y){
-      _public.node.y = x;
-      _public.node.x = y;
+      _public.position = new Victor(x, y);
     },
     translate: function(dx, dy){
       _public.node.y+= dy;
@@ -60,6 +60,6 @@ var Node = function(network, name, id, type, radius){
     }
   };
 
-  
+
   return _public;
 };

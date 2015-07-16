@@ -4,7 +4,7 @@
 /* global palette */
 'use strict';
 
-var System = function(network, system){
+var System = function(network, system, height, width){
   var _private = {
     network: network,
     force: null,
@@ -15,6 +15,40 @@ var System = function(network, system){
   };
   //initalize Pathway
   init(system);
+  /*  function init(system){
+      //assign selection to _private variables
+      _private.network = d3.select('svg').select('.network') ;
+      //create system tag
+      _private.system = d3.select("svg").select(".network").append("g").attr("class", "system");
+      //create HTML nodes tags and
+      _private.links = _private.system.append("g").attr("class", "links");
+      _private.nodes = _private.system.append("g").attr("class", "nodes");
+      //Create metabolite objects
+      buildMetabolites(system);
+      //Create reaction objects
+      buildReactions(system);
+      // initiate force
+      _private.force = d3.layout.force()
+                          .nodes(_private.nodesSet)
+                          .links(_private.linkSet)
+                          .charge(-500)
+                          .linkStrength(2)
+                          .linkDistance(50)
+                          .size([_private.attributes.svg.width, _private.attributes.svg.height])
+                          .start()
+                          .on("tick", tick);
+      //adds data for links
+      _private.links = _private.links.selectAll("line").data(_private.linkSet);
+      //and binds data for nodes
+      _private.nodes = _private.nodes.selectAll(".node").data(_private.nodesSet);
+      //dragging
+      var drag = _private.force.drag().on("dragstart", function(d){
+        d3.event.sourceEvent.stopPropagation();
+        d3.select(this).classed("fixed", d.fixed = true);
+      });
+      _private.nodes.call(drag);
+      draw();
+  }*/
   //init
   function init(system){
 
@@ -24,16 +58,39 @@ var System = function(network, system){
 
       addEdges();
 
-  //  _private.nodes[4].velocity.add(new Victor(1, 0));
+      _private.force = d3.layout.force()
+                          .nodes(_private.nodes)
+                          .links(_private.edges)
+                          .charge(-500)
+                          .linkStrength(2)
+                          .linkDistance(50)
+                          .size([width, height])
+                        //  .start()
+                          .on("tick", update);
+
+                          console.log(_private.edges)
+                          console.log(_private.nodes)
+    console.log(_private.edges);
+    _private.force.start();
+   //_private.nodes[4].velocity.add(new Victor(1, 0));
 
   }
 
   function update(){
+    _private.nodes.forEach(function(d){
 
-    for(var i = 0; i < _private.nodes.length; i++){
-      _private.nodes[i].update();
-    }
-  }
+      d.node.x = d.x;
+      d.node.y = d.y;
+    })
+
+    _private.network.refresh();
+
+}
+  /* _private.links.attr("x1", function(d) { return d.source.x; })
+       .attr("y1", function(d) { return d.source.y; })
+       .attr("x2", function(d) { return d.target.x; })
+       .attr("y2", function(d) { return d.target.y; });*/
+
 
   function addEdges(){
     for(var i = 0; i < _private.edges.length; i++)

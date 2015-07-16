@@ -14,7 +14,6 @@ var Metabolite = function(network, name, id, radius) {
     });
 
     that.node = network.graph.nodes()[network.graph.nodes().length-1];
-
   
     return that;
 };

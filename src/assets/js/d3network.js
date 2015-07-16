@@ -12,6 +12,7 @@ var Network = function(attributes) {
     dragListener: null
   }
   init();
+
   function init(){
     // Create necessary tags/containers and initiate force
     //Append svg tag
@@ -48,20 +49,28 @@ var Network = function(attributes) {
     }
     private.network = new sigma({
       renderer: renderer,
-      settings: settings,
-      enableCamera: false
+      settings: settings
+      //enableCamera: false
     });
 
-    //private.dragListener = new sigma.plugins.dragNodes(private.network, private.network.renderers[0]);
-  /*  private.dragListener.bind('startdrag', function(event) {
+  
+
+   private.dragListener = new sigma.plugins.dragNodes(private.network, private.network.renderers[0]);
+    private.dragListener.bind('startdrag', function(event) {
       console.log(event);
-      event.data.node.x = event.data.captor.x;
-      event.data.node.y = event.data.captor.y;
+
+    });
+  /*  private.dragListener.bind('drag', function(event) {
+    event.data.node.data.setPosition(event.data.captor.x, event.data.captor.y) ;
+
+    });
+    private.dragListener.bind('dragend', function(event) {
+      event.data.node.data.setPosition(event.data.captor.x, event.data.captor.y) ;
 
     });*/
 
   }
-  window.requestAnimFrame = (function(){
+/*  window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame ||
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame    ||
@@ -74,17 +83,17 @@ var Network = function(attributes) {
     requestAnimFrame(animloop);
     update();
     render();
-  })();
+  })();*/
   function render(){
-    private.network.refresh()
+    private.network.refresh();
   }
   function update(){
-    for(var i = 0; i < private.pathways.length; i++){
+  /*  for(var i = 0; i < private.pathways.length; i++){
       private.pathways[i].update();
-    }
+    }*/
   }
   function addSystem(model){
-    private.pathways.push(new System(private.network, model));
+    private.pathways.push(new System(private.network, model, private.attributes.svg.height, private.attributes.svg.width));
 
 
   }
