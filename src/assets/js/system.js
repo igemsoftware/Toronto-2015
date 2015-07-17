@@ -21,9 +21,9 @@ var System = function(attributes, system){
   //init
   function init(system){
       //assign selection to _private variables
-      _private.network = d3.select('svg').select('.network') ;
+      _private.network = d3.select('sketch')
       //create system tag
-      _private.system = d3.select("svg").select(".network").append("g").attr("class", "system");
+      _private.system = _private.network.append("g").attr("class", "system");
       //create HTML nodes tags and
       _private.links = _private.system.append("g").attr("class", "links");
       _private.nodes = _private.system.append("g").attr("class", "nodes");
@@ -169,8 +169,13 @@ var System = function(attributes, system){
       return ret;
   }
   function tick(){
-    _private.nodes.attr("transform", function(d) {
-      return "translate(" + d.x + "," + d.y + ")"; });
+    /*_private.nodes.attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")"; });*/
+      _private.nodes.select("circle").attr("x", function(d){
+        return d.x
+      }).attr("y", function(d){
+        return d.y
+      })
     _private.links.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })

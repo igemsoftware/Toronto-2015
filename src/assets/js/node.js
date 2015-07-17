@@ -7,7 +7,7 @@ var Node = function(name, id, type, radius){
     id: id.toString(),
     name: name.toString(),
     type: type.toString(),
-    network: d3.select("svg").select(".system"),
+    network: d3.select("sketch").select(".system"),
   };
   var _public = {
     radius: radius,
