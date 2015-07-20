@@ -111,7 +111,6 @@ var System = function(attributes, system){
           _private.linkSet.push(new link(s.getID()+"-"+t.getID(), s, t));
 
       }
-      console.log(_private.linkSet);
   }
   //to be fixed later
   function addMarkers(){

@@ -6,7 +6,6 @@ var Network = function(attributes) {
   //_private variables
   var _private = {
     canvas: null, //the <canvas> tag class:body
-    conext: null,
     network: null, //the <g> tag class:network
     nodes: null, //all node elements class:node under <g> class:nodes
     links: null, //all link elements class:link under <g> class:nodes
@@ -16,8 +15,8 @@ var Network = function(attributes) {
     linkSet: [], //array of links data
     width: 0,
     height: 0,
-    canvasX: 0,
-    canvasY: 0
+    CanvasoffSetX: 0,
+    CanvasoffSetY: 0
   };
   init();
 
@@ -27,12 +26,12 @@ var Network = function(attributes) {
     _private.height = attributes.canvas.height;
     _private.width = attributes.canvas.width
     _private.canvas = d3.select(attributes.divName).append('canvas').attr("class", "body")
-    .attr("height", _private.height)
-    .attr("width", _private.width)
-    _private.context = _private.canvas.node().getContext('2d');
-
-
+                        .attr("height", _private.height)
+                        .attr("width", _private.width)
+                        .node().getContext('2d');
   }
+
+
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -49,7 +48,7 @@ var Network = function(attributes) {
   })();
   function update() {
     //refresh
-    _private.context.clearRect(_private.canvasX, _private.canvasY , _private.width, _private.height);
+    _private.canvas.clearRect(_private.CanvasoffSetX, _private.CanvasoffSetY , _private.width, _private.height);
     //and update
     for(var i = 0; i < _private.pathways.length; i++)
       _private.pathways[i].update();
