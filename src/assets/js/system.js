@@ -6,7 +6,6 @@
 
 var System = function(attributes, system){
   var _private = {
-    network: null,
     context: null,
     nodes: null,     //all node elements class:node under <g> class:nodes
     links: null,    //all link elements class:link under <g> class:nodes
@@ -174,7 +173,7 @@ var System = function(attributes, system){
       }
       return ret;
   }
-  function tick(){
+  function update(){
 
     _private.nodesSet.forEach(function(d){
         d.nodeX = d.x;
@@ -188,4 +187,9 @@ var System = function(attributes, system){
         .attr("y2", function(d) { return d.target.y; });*/
   }
   //returns nothing as of now, everything done when you create the object
+  return {
+    update: function(){
+      update();
+    }
+  }
 };

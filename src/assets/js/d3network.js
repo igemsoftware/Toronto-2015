@@ -23,7 +23,7 @@ var Network = function(attributes) {
         _private.canvas = d3.select(attributes.divName).append('canvas').attr("class", "body")
                                                         .attr("height", attributes.canvas.height)
                                                         .attr("width", attributes.canvas.width)
-
+        _private.context = _private.canvas.node().getContext('2d');
         /*_private.canvas.append("rect").attr("width", attributes.canvas.width)
             .attr("height", attributes.canvas.height)
             .style("fill", "transparent")
@@ -39,13 +39,32 @@ var Network = function(attributes) {
             "zoom", zoom));*/
 
     }
+    window.requestAnimFrame = (function(){
+       return  window.requestAnimationFrame ||
+         window.webkitRequestAnimationFrame ||
+         window.mozRequestAnimationFrame    ||
+         function( callback ){
+           window.setTimeout(callback, 1000 / 30);
+         };
+     })();
 
-    function draw() {
-      
+     (function animloop(){
+       requestAnimFrame(animloop);
+       update();
+
+     })();
+     function update() {
+       //refresh
+        _private.context.clearRect(0, 0, _private.attributes.canvas.width, _private.attributes.canvas.height);
+        for(var i = 0; i < _private.pathways.length; i++)
+          _private.pathways[i].update();
+        //refresh (transofmrations later on)
+
+
     }
 
     function addSystem(model) {
-        var path = new System(_private.attributes, model);
+        _private.pathways.push(new System(_private.attributes, model));
     }
 
     return {
