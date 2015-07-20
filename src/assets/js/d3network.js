@@ -5,7 +5,8 @@
 var Network = function(attributes) {
     //_private variables
     var _private = {
-        svg: null, //the <svg> tag class:body
+       canvas: null, //the <canvas> tag class:body
+       conext: null,
         network: null, //the <g> tag class:network
         nodes: null, //all node elements class:node under <g> class:nodes
         links: null, //all link elements class:link under <g> class:nodes
@@ -18,21 +19,25 @@ var Network = function(attributes) {
 
     function init() {
         // Create necessary tags/containers and initiate force
-        //Append svg tag
-        _private.svg = d3.select(attributes.divName).append('svg').attr("class", "body");
-        _private.svg.append("rect").attr("width", attributes.svg.width)
-            .attr("height", attributes.svg.height)
+        //Append canvas tag
+        _private.canvas = d3.select(attributes.divName).append('canvas').attr("class", "body")
+                                                        .attr("height", attributes.canvas.height)
+                                                        .attr("width", attributes.canvas.width)
+
+        /*_private.canvas.append("rect").attr("width", attributes.canvas.width)
+            .attr("height", attributes.canvas.height)
             .style("fill", "transparent")
             .style("pointer-events", "all");
-        //Assign attributes to svg tag
-        var keys = Object.keys(attributes.svg);
+        //Assign attributes to canvas tag
+        var keys = Object.keys(attributes.canvas);
         for (var i = 0; i < keys.length; i++)
-            _private.svg.attr(keys[i], attributes.svg[keys[i]]);
+            _private.canvas.attr(keys[i], attributes.canvas[keys[i]]);
         //Create 2 <g> containers for nodes and links in the network <g> container
-        _private.network = _private.svg.append("g").attr("class",
+        _private.network = _private.canvas.append("g").attr("class",
             "network");
-        _private.svg.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on(
-            "zoom", zoom));
+        _private.canvas.call(d3.behavior.zoom().scaleExtent([0.01, 100]).on(
+            "zoom", zoom));*/
+
     }
 
     function draw() {}
@@ -41,9 +46,6 @@ var Network = function(attributes) {
         var path = new System(_private.attributes, model);
     }
 
-    function zoom() {
-        _private.network.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-    }
     return {
         addSystem: function(jsonData) {
             addSystem(jsonData);

@@ -8,7 +8,13 @@ var Reaction = function(name, id, radius, flux_value) {
         return flux_value;
     };
     that.draw = function() {
-        if (flux_value !== 0) {
+      that.context.beginPath();
+      that.context.arc(Math.random()*800, Math.random()*600, that.radius,0, 2*Math.PI);
+      that.context.fillStyle="blue";
+
+      that.context.fill();
+      that.context.closePath();
+        /*if (flux_value !== 0) {
             that._node.attr("id", that.getID())
                 .append("circle")
                 .attr("class", "node-r")
@@ -20,7 +26,7 @@ var Reaction = function(name, id, radius, flux_value) {
                 .attr("fill", palette.themeyellow)
                 .on("mouseover", that.mouseover)
                 .on("mouseout", that.mouseout);
-        }
+        }*/
     };
     return that;
 };

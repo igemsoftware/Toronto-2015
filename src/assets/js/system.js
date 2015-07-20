@@ -21,18 +21,21 @@ var System = function(attributes, system){
   //init
   function init(system){
       //assign selection to _private variables
-      _private.network = d3.select('svg').select('.network') ;
-      //create system tag
-      _private.system = d3.select("svg").select(".network").append("g").attr("class", "system");
-      //create HTML nodes tags and
-      _private.links = _private.system.append("g").attr("class", "links");
-      _private.nodes = _private.system.append("g").attr("class", "nodes");
-      //Create metabolite objects
+      _private.network = d3.select('canvas');
       buildMetabolites(system);
       //Create reaction objects
       buildReactions(system);
+      draw();
+    //  console.log(_private.network.node().getContext("2d"));
+      //create HTML nodes tags and
+      /*_private.links = _private.system.append("g").attr("class", "links");
+      _private.nodes = _private.system.append("g").attr("class", "nodes");
+      //Create metabolite objects*/
+      //buildMetabolites(system);
+      //Create reaction objects
+      //buildReactions(system);
       // initiate force
-      _private.force = d3.layout.force()
+      /*_private.force = d3.layout.force()
                           .nodes(_private.nodesSet)
                           .links(_private.linkSet)
                           .charge(-500)
@@ -40,18 +43,18 @@ var System = function(attributes, system){
                           .linkDistance(50)
                           .size([_private.attributes.svg.width, _private.attributes.svg.height])
                           .start()
-                          .on("tick", tick);
+                          .on("tick", tick);*/
       //adds data for links
-      _private.links = _private.links.selectAll("line").data(_private.linkSet);
+  //    _private.links = _private.links.selectAll("line").data(_private.linkSet);
       //and binds data for nodes
-      _private.nodes = _private.nodes.selectAll(".node").data(_private.nodesSet);
+    //  _private.nodes = _private.nodes.selectAll(".node").data(_private.nodesSet);
       //dragging
-      var drag = _private.force.drag().on("dragstart", function(d){
+      /*var drag = _private.force.drag().on("dragstart", function(d){
         d3.event.sourceEvent.stopPropagation();
         d3.select(this).classed("fixed", d.fixed = true);
       });
       _private.nodes.call(drag);
-      draw();
+      draw();*/
   }
   function buildMetabolites(system){
       // loop and bind metabolite data to metabolite node to nodeset
@@ -79,8 +82,10 @@ var System = function(attributes, system){
       for (var i = 0; i<system.reactions.length; i++){
             _private.nodesSet.push(new Reaction(system.reactions[i].name,
                                                 system.reactions[i].id,
-                                                radiusScale(system.reactions[i].flux_value),
-                                                system.reactions[i].flux_value
+                                                3,
+                                                3
+                                                /*radiusScale(system.reactions[i].flux_value),
+                                                system.reactions[i].flux_value*/
                                                 ));
 
           // assign metabolite source and target for each reaction
@@ -135,8 +140,8 @@ var System = function(attributes, system){
   //draw function
   function draw(){
     // draw links
-    addMarkers();
-    _private.links = _private.links
+  //  addMarkers();
+  /*  _private.links = _private.links
       .enter()
       .append("g")
       .attr("class", "link")
@@ -151,7 +156,7 @@ var System = function(attributes, system){
           if (d.source.getType() == "r") {
               return "url(#triangle)";
           }
-      });
+      });*/
       // call draw function in reaction and metabolite node class
       for(var i = 0; i< _private.nodesSet.length; i++){
           _private.nodesSet[i].draw();

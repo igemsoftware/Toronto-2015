@@ -7,13 +7,14 @@ var Node = function(name, id, type, radius){
     id: id.toString(),
     name: name.toString(),
     type: type.toString(),
-    network: d3.select("svg").select(".system"),
+    network: d3.select("canvas")
+
   };
   var _public = {
     radius: radius,
     draw: null,
-    _node: _private.network.select(".nodes").append("g").attr("class", "node")
-                  .attr("id", _private.id),
+    _node: null,
+    context: d3.select("canvas").node().getContext("2d"),
     mouseover: function(d){
       mouseover(d);
     },
