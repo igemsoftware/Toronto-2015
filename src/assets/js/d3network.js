@@ -24,7 +24,7 @@ var Network = function(attributes) {
     // Create necessary tags/containers and initiate force
     //Append canvas tag
     _private.height = attributes.canvas.height;
-    _private.width = attributes.canvas.width
+    _private.width = attributes.canvas.width;
     _private.canvas = d3.select(attributes.divName).append('canvas').attr("class", "body")
                         .attr("height", _private.height)
                         .attr("width", _private.width)

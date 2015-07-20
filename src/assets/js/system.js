@@ -81,10 +81,8 @@ var System = function(attributes, system){
       for (var i = 0; i<system.reactions.length; i++){
             _private.nodesSet.push(new Reaction(system.reactions[i].name,
                                                 system.reactions[i].id,
-                                                3,
-                                                3
-                                                /*radiusScale(system.reactions[i].flux_value),
-                                                system.reactions[i].flux_value*/
+                                                  radiusScale(system.reactions[i].flux_value),
+                                                system.reactions[i].flux_value
                                                 ));
 
           // assign metabolite source and target for each reaction
