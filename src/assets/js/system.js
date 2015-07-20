@@ -7,6 +7,7 @@
 var System = function(attributes, system){
   var _private = {
     network: null,
+    context: null,
     nodes: null,     //all node elements class:node under <g> class:nodes
     links: null,    //all link elements class:link under <g> class:nodes
     force: null,
@@ -35,19 +36,19 @@ var System = function(attributes, system){
       //Create reaction objects
       //buildReactions(system);
       // initiate force
-      /*_private.force = d3.layout.force()
+      _private.force = d3.layout.force()
                           .nodes(_private.nodesSet)
-                          .links(_private.linkSet)
+                      //    .links(_private.linkSet)
                           .charge(-500)
                           .linkStrength(2)
                           .linkDistance(50)
-                          .size([_private.attributes.svg.width, _private.attributes.svg.height])
+                          .size([_private.attributes.canvas.width, _private.attributes.canvas.height])
                           .start()
-                          .on("tick", tick);*/
+                          //.on("tick", tick);
       //adds data for links
-  //    _private.links = _private.links.selectAll("line").data(_private.linkSet);
+      //_private.links = _private.canvas.data(_private.linkSet);
       //and binds data for nodes
-    //  _private.nodes = _private.nodes.selectAll(".node").data(_private.nodesSet);
+      //_private.nodes = d3.data(_private.nodesSet);
       //dragging
       /*var drag = _private.force.drag().on("dragstart", function(d){
         d3.event.sourceEvent.stopPropagation();
@@ -174,12 +175,17 @@ var System = function(attributes, system){
       return ret;
   }
   function tick(){
-    _private.nodes.attr("transform", function(d) {
-      return "translate(" + d.x + "," + d.y + ")"; });
-    _private.links.attr("x1", function(d) { return d.source.x; })
+
+    _private.nodesSet.forEach(function(d){
+        d.nodeX = d.x;
+        d.nodeY = d.y;
+        d.draw();
+    })
+
+    /*_private.links.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
+        .attr("y2", function(d) { return d.target.y; });*/
   }
   //returns nothing as of now, everything done when you create the object
 };

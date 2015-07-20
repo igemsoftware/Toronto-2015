@@ -40,7 +40,9 @@ var Network = function(attributes) {
 
     }
 
-    function draw() {}
+    function draw() {
+      
+    }
 
     function addSystem(model) {
         var path = new System(_private.attributes, model);

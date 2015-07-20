@@ -9,7 +9,7 @@ var Reaction = function(name, id, radius, flux_value) {
     };
     that.draw = function() {
       that.context.beginPath();
-      that.context.arc(Math.random()*800, Math.random()*600, that.radius,0, 2*Math.PI);
+      that.context.arc(that.x, that.y, that.radius,0, 2*Math.PI);
       that.context.fillStyle="blue";
 
       that.context.fill();
@@ -28,5 +28,6 @@ var Reaction = function(name, id, radius, flux_value) {
                 .on("mouseout", that.mouseout);
         }*/
     };
+  
     return that;
 };

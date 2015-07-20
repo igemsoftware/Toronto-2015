@@ -9,8 +9,10 @@ var Node = function(name, id, type, radius){
     type: type.toString(),
     network: d3.select("canvas")
 
-  };
+  }
   var _public = {
+    nodeX: -18,
+    nodeY: -18,
     radius: radius,
     draw: null,
     _node: null,
