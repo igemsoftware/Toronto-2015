@@ -37,13 +37,12 @@ var System = function(attributes, system){
       // initiate force
       _private.force = d3.layout.force()
                           .nodes(_private.nodesSet)
-                      //    .links(_private.linkSet)
+                          .links(_private.linkSet)
                           .charge(-500)
                           .linkStrength(2)
                           .linkDistance(50)
                           .size([_private.attributes.canvas.width, _private.attributes.canvas.height])
                           .start()
-                          //.on("tick", tick);
       //adds data for links
       //_private.links = _private.canvas.data(_private.linkSet);
       //and binds data for nodes
@@ -109,9 +108,10 @@ var System = function(attributes, system){
           s = _private.nodesSet[nodesMap[tempLinks[j].source]];
 
           t =  _private.nodesSet[nodesMap[tempLinks[j].target]];
-          _private.linkSet.push({id: s.getID()+"-"+t.getID(), source: s, target: t});
-      }
+          _private.linkSet.push(new link(s.getID()+"-"+t.getID(), s, t));
 
+      }
+      console.log(_private.linkSet);
   }
   //to be fixed later
   function addMarkers(){
@@ -180,6 +180,14 @@ var System = function(attributes, system){
         d.nodeY = d.y;
         d.draw();
     })
+
+    _private.linkSet.forEach(function(d){
+      d.linkX1 = d.source.x;
+      d.linkY1 = d.source.y;
+      d.linkX2 = d.target.x;
+      d.linkY2 = d.target.y;
+      d.draw();
+    });
 
     /*_private.links.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })

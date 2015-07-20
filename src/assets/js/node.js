@@ -8,7 +8,6 @@ var Node = function(name, id, type, radius){
     name: name.toString(),
     type: type.toString(),
     network: d3.select("canvas")
-
   }
   var _public = {
     nodeX: -18,
