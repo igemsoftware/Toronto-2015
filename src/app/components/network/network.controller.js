@@ -22,9 +22,9 @@ angular.module('fbaApp')
     //create new network
     var network = new Network(attrs);
 
-    var dataRequest = $http.get('http://45.55.193.224/iJO1366.json');
+    var dataRequest = $http.get('http://45.55.193.224/toydata.json');
     dataRequest.success(function(data) {
-        network.addSystem(data);
+        network.addSystem(data.data[0]);
     }).error(function(err) {
         alert(err);
     });
