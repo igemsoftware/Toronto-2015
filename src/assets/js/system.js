@@ -25,16 +25,6 @@ var System = function(attributes, system){
       buildMetabolites(system);
       //Create reaction objects
       buildReactions(system);
-      draw();
-    //  console.log(_private.network.node().getContext("2d"));
-      //create HTML nodes tags and
-      /*_private.links = _private.system.append("g").attr("class", "links");
-      _private.nodes = _private.system.append("g").attr("class", "nodes");
-      //Create metabolite objects*/
-      //buildMetabolites(system);
-      //Create reaction objects
-      //buildReactions(system);
-      // initiate force
       _private.force = d3.layout.force()
                           .nodes(_private.nodesSet)
                           .links(_private.linkSet)
@@ -43,17 +33,7 @@ var System = function(attributes, system){
                           .linkDistance(50)
                           .size([_private.attributes.canvas.width, _private.attributes.canvas.height])
                           .start()
-      //adds data for links
-      //_private.links = _private.canvas.data(_private.linkSet);
-      //and binds data for nodes
-      //_private.nodes = d3.data(_private.nodesSet);
-      //dragging
-      /*var drag = _private.force.drag().on("dragstart", function(d){
-        d3.event.sourceEvent.stopPropagation();
-        d3.select(this).classed("fixed", d.fixed = true);
-      });
-      _private.nodes.call(drag);
-      draw();*/
+
   }
   function buildMetabolites(system){
       // loop and bind metabolite data to metabolite node to nodeset
@@ -110,58 +90,8 @@ var System = function(attributes, system){
 
       }
   }
-  //to be fixed later
-  function addMarkers(){
-      var markers = [
-                      {id: "triangle", path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-5 -5 10 10' }
-                    ];
-      var marker = _private.system.insert("g")
-                            .attr("class", "markers")
-                            .selectAll(".marker")
-                            .data(markers)
-                            .enter()
-                              .append('svg:marker')
-                              .attr('id', function(d){ return d.id;})
-                              .attr('markerHeight', 5)
-                              .attr('markerWidth', 5)
-                              .attr('markerUnits', 'strokeWidth')
-                              .attr('orient', 'auto')
-                              .attr('refX', 13)
-                              .attr('refY', 0)
-                              .attr('fill', palette.linktest)
-                              .attr('opacity', 1)
-                              .attr('viewBox', function(d){ return d.viewbox; })
-                              .append('svg:path')
-                              .attr('d', function(d){ return d.path; });
-  }
-  //draw function
-  function draw(){
-    // draw links
-  //  addMarkers();
-  /*  _private.links = _private.links
-      .enter()
-      .append("g")
-      .attr("class", "link")
-      .attr("id", function(d) {
-          return "id-" + d.id;
-      })
-      .insert("line")
-      .style("stroke", "#ccc")
-      .style("stroke-width", 2)
-      .style("opacity", 1)
-      .attr("marker-end", function(d) {
-          if (d.source.getType() == "r") {
-              return "url(#triangle)";
-          }
-      });*/
-      // call draw function in reaction and metabolite node class
-      for(var i = 0; i< _private.nodesSet.length; i++){
-          _private.nodesSet[i].draw();
-      }
 
 
-
-  }
   //utilities function
   function map(nodesSet){
       var ret = {};
