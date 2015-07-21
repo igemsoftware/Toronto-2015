@@ -30,7 +30,7 @@ var Network = function(attributes) {
                         .attr("width", _private.width)
                         .node().getContext('2d');
   }
-
+/*
 
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame ||
@@ -45,7 +45,7 @@ var Network = function(attributes) {
     requestAnimFrame(animloop);
     update();
 
-  })();
+  })();*/
   function update() {
     //refresh
     _private.canvas.clearRect(_private.CanvasoffSetX, _private.CanvasoffSetY , _private.width, _private.height);

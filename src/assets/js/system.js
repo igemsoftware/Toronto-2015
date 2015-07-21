@@ -6,7 +6,7 @@
 
 var System = function(attributes, system){
   var _private = {
-    context: null,
+    canvas: null,
     nodes: null,     //all node elements class:node under <g> class:nodes
     links: null,    //all link elements class:link under <g> class:nodes
     force: null,
@@ -14,14 +14,25 @@ var System = function(attributes, system){
     attributes: attributes,
     linkSet: [],    //link data
     nodesSet: [],   //node data
-    metaboliteRadius: 10
+    metaboliteRadius: 10,
+    CanvasoffSetX: 0,
+    CanvasoffSetY: 0,
+    width: 0,
+    height: 0
   };
   //initalize Pathway
   init(system);
   //init
   function init(system){
       //assign selection to _private variables
+
       _private.network = d3.select('canvas');
+      _private.canvas = d3.select('canvas')
+                      //  .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+                        .node()
+                        .getContext("2d");
+      _private.width = _private.attributes.canvas.width;
+      _private.height = _private.attributes.canvas.height;
       buildMetabolites(system);
       //Create reaction objects
       buildReactions(system);
@@ -33,8 +44,17 @@ var System = function(attributes, system){
                           .linkDistance(50)
                           .size([_private.attributes.canvas.width, _private.attributes.canvas.height])
                           .start()
+                          .on("tick", update)
 
   }
+  function zoom() {
+    _private.canvas.save();
+    _private.canvas.clearRect(0, 0,   _private.width,   _private.height);
+
+    _private.canvas.translate(d3.event.translate[0], d3.event.translate[1]);
+    _private.canvas.scale(d3.event.scale, d3.event.scale);
+    _private.canvas.restore();
+}
   function buildMetabolites(system){
       // loop and bind metabolite data to metabolite node to nodeset
       for (var i = 0; i<system.metabolites.length; i++){
@@ -101,7 +121,8 @@ var System = function(attributes, system){
       return ret;
   }
   function update(){
-
+    //refresh
+    _private.canvas.clearRect(_private.CanvasoffSetX, _private.CanvasoffSetY , _private.width, _private.height);
     _private.nodesSet.forEach(function(d){
         d.nodeX = d.x;
         d.nodeY = d.y;
