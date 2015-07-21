@@ -18,6 +18,9 @@ var System = function(attributes, system){
     width: 0,
     height: 0
   };
+  var originx = 0;
+  var originy = 0;
+  var scale = 1;
   //initalize Pathway
   init(system);
   //init
@@ -26,7 +29,7 @@ var System = function(attributes, system){
 
       _private.network = d3.select('canvas');
       _private.canvas = d3.select('canvas')
-                        .call(d3.behavior.zoom().scaleExtent([0.5, 8]).on("zoom", zoom))
+                      //  .call(d3.behavior.zoom().scaleExtent([0.5, 8]).on("zoom", zoom))
                         .node()
                         .getContext("2d");
       _private.width = _private.attributes.canvas.width;
@@ -44,7 +47,7 @@ var System = function(attributes, system){
                           .start()
                           .on("tick", update)
 
-    //  _private.network.node().addEventListener('mousewheel', zoom);
+    //_private.network.node().addEventListener('mousewheel', zoom);
     //  _private.network.node().addEventListener('drag', drag);
     /*_private.canvas.canvas.onDrag = function(e){
       console.log(e);
@@ -55,11 +58,34 @@ var System = function(attributes, system){
   function drag(e){
     console.log(e);
   }
-  function zoom(e) {
-    //e.preventDefault()
-    _private.canvas.scale(d3.event.scale, d3.event.scale);
+
+  _private.canvas.canvas.onmousewheel = function(event) {
+    event.preventDefault()
+    //console.log(e);
+    var mousex = event.clientX - _private.canvas.canvas.offsetLeft;
+   var mousey = event.clientY - _private.canvas.canvas.offsetTop;
+   var wheel = event.wheelDelta/120;//n or -n
+
+   var zoom = 1 + wheel/2;
+
+   _private.canvas.translate(
+       originx,
+       originy
+   );
+   _private.canvas.scale(zoom,zoom);
+   _private.canvas.translate(
+       -( mousex / scale + originx - mousex / ( scale * zoom ) ),
+       -( mousey / scale + originy - mousey / ( scale * zoom ) )
+   );
+
+   originx = ( mousex / scale + originx - mousex / ( scale * zoom ) );
+   originy = ( mousey / scale + originy - mousey / ( scale * zoom ) );
+   scale *= zoom;
+   _private.force.start();
+  //  console.log(scale(e.deltaY));
+    //_private.canvas.scale(scale(e.deltaY), scale(e.deltaY));
     //moving
-    _private.canvas.translate(d3.event.translate[0], d3.event.translate[1]);
+    //_private.canvas.translate(d3.event.translate[0], d3.event.translate[1]);
 
 //  console.log(_private.canvas.canvas.)
   //  console.log(e);
@@ -145,6 +171,7 @@ var System = function(attributes, system){
     //refresh
     _private.canvas.clearRect(0, 0 , _private.width, _private.height);
     _private.nodesSet.forEach(function(d){
+    
         d.nodeX = d.x;
         d.nodeY = d.y;
         d.draw();
