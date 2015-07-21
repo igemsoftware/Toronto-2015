@@ -7,6 +7,8 @@ var Reaction = function(name, id, radius, flux_value) {
     that.getFlux = function() {
         return flux_value;
     };
+    if(that.radius <= 0)
+      that.radius = 0;
     that.draw = function() {
       that.context.beginPath();
       that.context.arc(that.x, that.y, that.radius,0, 2*Math.PI);
@@ -28,6 +30,6 @@ var Reaction = function(name, id, radius, flux_value) {
                 .on("mouseout", that.mouseout);
         }*/
     };
-  
+
     return that;
 };

@@ -14,9 +14,7 @@ var Network = function(attributes) {
     nodesSet: [], //array of nodes data
     linkSet: [], //array of links data
     width: 0,
-    height: 0,
-    CanvasoffSetX: 0,
-    CanvasoffSetY: 0
+    height: 0
   };
   init();
 
@@ -29,7 +27,9 @@ var Network = function(attributes) {
                         .attr("height", _private.height)
                         .attr("width", _private.width)
                         .node().getContext('2d');
+  //  d3.select('canvas').node().addEventListener("click", onClick);
   }
+
 /*
 
   window.requestAnimFrame = (function(){
@@ -48,7 +48,7 @@ var Network = function(attributes) {
   })();*/
   function update() {
     //refresh
-    _private.canvas.clearRect(_private.CanvasoffSetX, _private.CanvasoffSetY , _private.width, _private.height);
+    _private.canvas.clearRect(0, 0 , _private.width, _private.height);
     //and update
     for(var i = 0; i < _private.pathways.length; i++)
       _private.pathways[i].update();
