@@ -10,8 +10,8 @@ var System = function(attributes, system) {
 
   var _private = {
     canvas           : null,
-    nodes            : null, // all node elements class : node under <g> class : nodes
-    links            : null, // all link elements class : link under <g> class : nodes
+    nodes            : null, // tbr
+    links            : null, // tbr
     force            : null,
     system           : null,
     attributes       : attributes,
@@ -32,7 +32,6 @@ var System = function(attributes, system) {
     // Assign selection to _private variables
     _private.network      = d3.select('canvas');
     _private.canvas       = d3.select('canvas')
-      //.call(d3.behavior.zoom().scaleExtent([0.5, 8]).on("zoom", zoom))
       .node()
       .getContext('2d');
     _private.canvasWidth  = _private.attributes.canvas.width;
@@ -40,6 +39,7 @@ var System = function(attributes, system) {
     _private.cameraWidth  = _private.attributes.canvas.width;
     _private.cameraHeight = _private.attributes.canvas.height;
 
+    // Build metabolites
     buildMetabolites(system);
 
     // Create reaction objects
@@ -52,13 +52,10 @@ var System = function(attributes, system) {
       .charge(-500)
       .linkStrength(2)
       .linkDistance(50)
+      // variablize w/ cameraWidth,H
       .size([_private.attributes.canvas.width, _private.attributes.canvas.height])
       .start()
       .on('tick', update);
-  }
-
-  function drag(e) {
-    console.log(e);
   }
 
   _private.canvas.canvas.onmousewheel = function(event) {
@@ -85,6 +82,8 @@ var System = function(attributes, system) {
     _private.scale *= zoom;
     _private.cameraWidth = _private.canvasWidth * 1 / _private.scale;
     _private.cameraHeight = _private.canvasHeight * 1 / _private.scale;
+    // or resume()
+    // shit gets fucked up w/o this
     _private.force.start();
   };
 
@@ -93,8 +92,9 @@ var System = function(attributes, system) {
     for (var i = 0; i < system.metabolites.length; i++) {
       _private.nodesSet.push(new Metabolite(
         system.metabolites[i].name,
-        system.metabolites[i].id, _private.metaboliteRadius)
-      );
+        system.metabolites[i].id,
+        _private.metaboliteRadius
+      ));
     }
   }
 
@@ -106,7 +106,9 @@ var System = function(attributes, system) {
     }
 
     var largest = Math.max.apply(Math, flux_array);
-    var r = d3.scale.linear().domain([0, largest]).range([0, 15]);
+    var r = d3.scale.linear()
+      .domain([0, largest])
+      .range([0, 15]);
 
     return r;
   }
@@ -151,7 +153,11 @@ var System = function(attributes, system) {
       s = _private.nodesSet[nodesMap[tempLinks[j].source]];
 
       t = _private.nodesSet[nodesMap[tempLinks[j].target]];
-      _private.linkSet.push(new Link(s.getID() + "-" + t.getID(), s, t));
+      _private.linkSet.push(new Link(
+        s.getID() + "-" + t.getID(),
+        s,
+        t
+      ));
     }
   }
 
@@ -181,16 +187,5 @@ var System = function(attributes, system) {
       d.linkY2 = d.target.y;
       d.draw();
     });
-
-    /*_private.links.attr("x1", function(d) { return d.source.x; })
-    .attr("y1", function(d) { return d.source.y; })
-    .attr("x2", function(d) { return d.target.x; })
-    .attr("y2", function(d) { return d.target.y; });*/
   }
-  //returns nothing as of now, everything done when you create the object
-  return {
-    update: function() {
-      update();
-    }
-  };
 };
