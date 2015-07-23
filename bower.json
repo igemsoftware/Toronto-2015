@@ -13,6 +13,8 @@
     "foundation": "~5.5.2",
     "d3": "~3.5.5",
     "fontawesome": "~4.3.0",
-    "ng-table": "~0.5.4"
+    "ng-table": "~0.5.4",
+    "stats.js": "*",
+    "animation-frame": "~0.2.4"
   }
 }

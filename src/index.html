@@ -1,58 +1,87 @@
 <!DOCTYPE html>
 <html ng-app="fbaApp" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>iGEM UofT FBA App</title>
+  <meta charset="UTF-8">
+  <title>iGEM UofT FBA App</title>
 
-    <!-- bower:css -->
-    <link rel="stylesheet" href="../bower_components/mdi/css/materialdesignicons.css" />
-    <link rel="stylesheet" href="../bower_components/mdi/css/materialdesignicons.min.css" />
-    <link rel="stylesheet" href="../bower_components/lumx/dist/lumx.css" />
-    <link rel="stylesheet" href="../bower_components/foundation/css/foundation.css" />
-    <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="../bower_components/ng-table/dist/ng-table.min.css" />
-    <!-- endbower -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="../bower_components/mdi/css/materialdesignicons.css" />
+  <link rel="stylesheet" href="../bower_components/mdi/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="../bower_components/lumx/dist/lumx.css" />
+  <link rel="stylesheet" href="../bower_components/foundation/css/foundation.css" />
+  <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="../bower_components/ng-table/dist/ng-table.min.css" />
+  <!-- endbower -->
 
-    <!-- inject:css -->
-    <link rel="stylesheet" href="styles/styles.css">
-    <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="styles/styles.css">
+  <!-- endinject -->
 </head>
+
 <body ng-controller="BodyCtrl">
-    <div ui-view class="view"></div>
+  <div ui-view class="view"></div>
 
-    <!-- bower:js -->
-    <script src="../bower_components/modernizr/modernizr.js"></script>
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/velocity/velocity.js"></script>
-    <script src="../bower_components/velocity/velocity.ui.js"></script>
-    <script src="../bower_components/moment/moment.js"></script>
-    <script src="../bower_components/lumx/dist/lumx.js"></script>
-    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="../bower_components/fastclick/lib/fastclick.js"></script>
-    <script src="../bower_components/jquery.cookie/jquery.cookie.js"></script>
-    <script src="../bower_components/jquery-placeholder/jquery.placeholder.js"></script>
-    <script src="../bower_components/foundation/js/foundation.js"></script>
-    <script src="../bower_components/d3/d3.js"></script>
-    <script src="../bower_components/ng-table/dist/ng-table.min.js"></script>
-    <!-- endbower -->
+  <!-- bower:js -->
+  <script src="../bower_components/modernizr/modernizr.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/velocity/velocity.js"></script>
+  <script src="../bower_components/velocity/velocity.ui.js"></script>
+  <script src="../bower_components/moment/moment.js"></script>
+  <script src="../bower_components/lumx/dist/lumx.js"></script>
+  <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="../bower_components/fastclick/lib/fastclick.js"></script>
+  <script src="../bower_components/jquery.cookie/jquery.cookie.js"></script>
+  <script src="../bower_components/jquery-placeholder/jquery.placeholder.js"></script>
+  <script src="../bower_components/foundation/js/foundation.js"></script>
+  <script src="../bower_components/d3/d3.js"></script>
+  <script src="../bower_components/ng-table/dist/ng-table.min.js"></script>
+  <script src="../bower_components/stats.js/build/stats.min.js"></script>
+  <script src="../bower_components/animation-frame/AnimationFrame.js"></script>
+  <!-- endbower -->
 
-    <!-- inject:js -->
-    <script src="assets/js/link.js"></script>
-    <script src="assets/js/pallete.js"></script>
-    <script src="assets/js/metabolite.js"></script>
-    <script src="assets/js/node.js"></script>
-    <script src="assets/js/reaction.js"></script>
-    <script src="assets/js/system.js"></script>
-    <script src="assets/js/d3network.js"></script>
-    <script src="app/app.js"></script>
-    <script src="app/services/UrlProvider.js"></script>
-    <script src="app/components/forcelayout/layout.controller.js"></script>
-    <script src="app/components/header/header.controller.js"></script>
-    <script src="app/components/network/network.controller.js"></script>
-    <script src="app/pages/data/data.controller.js"></script>
-    <script src="app/pages/home/home.controller.js"></script>
-    <script src="app/pages/species/species.controlller.js"></script>
-    <!-- endinject -->
+  <!-- inject:js -->
+  <script src="assets/js/d3network.js"></script>
+  <script src="assets/js/link.js"></script>
+  <script src="assets/js/metabolite.js"></script>
+  <script src="assets/js/node.js"></script>
+  <script src="assets/js/pallete.js"></script>
+  <script src="assets/js/reaction.js"></script>
+  <script src="assets/js/system.js"></script>
+  <script src="app/app.js"></script>
+  <script src="app/services/UrlProvider.js"></script>
+  <script src="app/components/forcelayout/layout.controller.js"></script>
+  <script src="app/components/header/header.controller.js"></script>
+  <script src="app/pages/data/data.controller.js"></script>
+  <script src="app/components/network/network.controller.js"></script>
+  <script src="app/pages/home/home.controller.js"></script>
+  <script src="app/pages/species/species.controlller.js"></script>
+  <!-- endinject -->
+
+  <!-- activate AnimationFrame shim -->
+  <script>
+    AnimationFrame.shim();
+  </script>
+
+  <!-- stats -->
+  <script>
+    var stats = new Stats();
+    stats.setMode(0) // 0: fps, 1: ms, 2: mb
+    stats.domElement.style.cssText = 'position:fixed;left:0;top:60px;z-index:10000';
+    var statsMem = new Stats();
+    statsMem.setMode(2);
+    statsMem.domElement.style.cssText = 'position:fixed;left:78px;top:60px;z-index:10000';
+
+    document.body.appendChild(stats.domElement);
+    document.body.appendChild(statsMem.domElement);
+
+    requestAnimationFrame(function loop() {
+      stats.update();
+      statsMem.update();
+      requestAnimationFrame(loop)
+    });
+  </script>
 </body>
+
 </html>
