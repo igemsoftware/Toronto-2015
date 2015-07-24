@@ -4,7 +4,8 @@
 
 var Reaction = function(attr) {
 
-    var that = new Node(attr.name, attr._id, attr.type, attr.radius);
+    //var that = new Node(attr.name, attr._id, attr.type, attr.radius);
+    var that = new Node(attr);
 
     that.getFlux = function() {
         return attr.fluxValue;

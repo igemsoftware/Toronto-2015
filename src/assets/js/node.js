@@ -2,19 +2,19 @@
 /* global palette */
 'use strict';
 
-var Node = function(name, id, type, radius) {
+var Node = function(attr) {
 
     var _private = {
-        id: id.toString(),
-        name: name.toString(),
-        type: type.toString(),
-        network: d3.select('canvas')
+        id      : attr.id.toString(),
+        name    : attr.name.toString(),
+        type    : attr.type.toString(),
+        network : d3.select('canvas')
     };
 
     var _public = {
         nodeX: -18,
         nodeY: -18,
-        radius: radius,
+        radius: attr.radius,
         draw: null,
         _node: null,
         context: d3.select('canvas').node().getContext('2d'),

@@ -4,7 +4,8 @@
 
 var Metabolite = function(attr) {
 
-    var that = new Node(attr.name, attr._id, attr.type, attr.radius);
+    //var that = new Node(attr.name, attr._id, attr.type, attr.radius);
+    var that = new Node(attr);
     that.radius = attr.radius;
 
     that.draw = function() {

@@ -60,30 +60,30 @@ var System = function(attributes, system) {
 
     _private.canvas.canvas.onmousewheel = function(event) {
         event.preventDefault();
-        //console.log(e);
+        
         var mousex = event.clientX - _private.canvas.canvas.offsetLeft;
         var mousey = event.clientY - _private.canvas.canvas.offsetTop;
-        var wheel = event.wheelDelta / 120; //n or -n
-
-        var zoom = 1 + wheel / 2;
+        var wheel  = event.wheelDelta / 120; //n or -n
+        var zoom   = 1 + wheel / 2;
 
         _private.canvas.translate(
             _private.cameraX,
             _private.cameraY
         );
 
+        var xOffset = mousex / _private.scale + _private.cameraX - mousex / (_private.scale * zoom); 
+        var yOffset = mousey / _private.scale + _private.cameraY -mousey / (_private.scale * zoom); 
+        
         _private.canvas.scale(zoom, zoom);
-        // this line is too long; makes no sense
-        // variabilize this, split variable assignment into meaningful lines
-        _private.canvas.translate(-(mousex / _private.scale + _private.cameraX - mousex / (_private.scale * zoom)), -(mousey / _private.scale + _private.cameraY - mousey / (_private.scale * zoom)));
-        // also, isnt this the same? -> variabilize
-        _private.cameraX = (mousex / _private.scale + _private.cameraX - mousex / (_private.scale * zoom));
-        _private.cameraY = (mousey / _private.scale + _private.cameraY -mousey / (_private.scale * zoom));
         _private.scale *= zoom;
-        _private.cameraWidth = _private.canvasWidth * 1 / _private.scale;
+        _private.canvas.translate(-xOffset, -yOffset);
+        
+        _private.cameraX      = (xOffset);
+        _private.cameraY      = (yOffset);
+        _private.cameraWidth  = _private.canvasWidth * 1 / _private.scale;
         _private.cameraHeight = _private.canvasHeight * 1 / _private.scale;
+        
         // or resume()
-        // shit gets fucked up w/o this
         _private.force.start();
     };
 
@@ -99,7 +99,7 @@ var System = function(attributes, system) {
         for (var i = 0; i < system.metabolites.length; i++) {
             _private.nodesSet.push(new Metabolite({
                 name   : system.metabolites[i].name,
-                _id    : system.metabolites[i].id,
+                id     : system.metabolites[i].id,
                 type   : 'm',
                 radius : _private.metaboliteRadius
             }));
@@ -144,7 +144,7 @@ var System = function(attributes, system) {
             if (reaction.flux_value > 0) { 
                 _private.nodesSet.push(new Reaction({
                     name      : reaction.name,
-                    _id       : reaction.id,
+                    id        : reaction.id,
                     type      : 'r',
                     radius    : radiusScale(reaction.flux_value),
                     fluxValue : reaction.flux_value
