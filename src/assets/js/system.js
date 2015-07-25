@@ -3,6 +3,7 @@
 /* global Reaction */
 /* global Link */
 /* global palette */
+/* global document */
 /* global console */
 'use strict';
 
@@ -102,7 +103,6 @@ var System = function(attributes, system) {
         lastX = event.clientX - _private.canvas.canvas.offsetLeft;
         lastY = event.clientY - _private.canvas.canvas.offsetTop;
         dragStart = transformedPoint(lastX, lastY);
-        dragging = false;
     };
     _private.canvas.canvas.onmousemove = function(event) {
         lastX = event.clientX - _private.canvas.canvas.offsetLeft;
@@ -112,7 +112,7 @@ var System = function(attributes, system) {
             var tPt = transformedPoint(lastX, lastY);
             var dX = (tPt.x - dragStart.x) * dragScaleFactor;
             var dY = (tPt.y - dragStart.y) * dragScaleFactor;
-            xform = xform.translate(dX, dY)
+            xform = xform.translate(dX, dY);
             _private.canvas.translate(dX, dY);
             _private.cameraX -= dX;
             _private.cameraY -= dY;
@@ -121,33 +121,7 @@ var System = function(attributes, system) {
     };
     _private.canvas.canvas.onmouseup = function(event) {
         dragStart = false;
-    }
-
-    // var lastX = _private.canvasWidth / 2;
-    // var lastY = _private.canvasHeight / 2;
-    // var dragStart, dragged;
-    // _private.canvas.canvas.onmousedown = function(evt) {
-    //     document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
-    //     lastX = evt.offsetX || (evt.pageX - _private.canvas.canvas.offsetLeft);
-    //     lastY = evt.offsetY || (evt.pageY - _private.canvas.canvas.offsetTop);
-    //     dragStart = _private.canvas.transformedPoint(lastX, lastY);
-    //     dragged = false;
-    // };
-    // _private.canvas.canvas.onmousemove = function(evt) {
-    //     lastX = evt.offsetX || (evt.pageX - _private.canvas.canvas.offsetLeft);
-    //     lastY = evt.offsetY || (evt.pageY - _private.canvas.canvas.offsetTop);
-    //     dragged = true;
-    //     if (dragStart) {
-    //         var pt = _private.canvas.transformedPoint(lastX, lastY);
-    //         _private.canvas.translate(pt.x - dragStart.x, pt.y - dragStart.y);
-    //         redraw();
-    //     }
-    //
-    // };
-    // _private.canvas.canvas.onmouseup = function(evt) {
-    //     dragStart = null;
-    //     //if (!dragged) zoom(evt.shiftKey ? -1 : 1);
-    // };
+    }; 
 
     /**
      * Loop and bind metabolite data to metabolite node to nodeset.
