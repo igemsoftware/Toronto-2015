@@ -74,6 +74,7 @@ var System = function(attributes, system) {
         var yOffset = mousey / _private.scale + _private.cameraY - mousey / (_private.scale * zoom);
 
         _private.canvas.scale(zoom, zoom);
+        xform = xform.scaleNonUniform(zoom,zoom);
         _private.scale *= zoom;
         _private.canvas.translate(-xOffset, -yOffset);
 
@@ -86,7 +87,7 @@ var System = function(attributes, system) {
     };
 
     // ## Dragging
-    var dragStart, dragging, lastX, lastY;
+    var dragStart, lastX, lastY;
     var dragScaleFactor = 1.5;
     var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
     var xform = svg.createSVGMatrix(); 
@@ -106,7 +107,6 @@ var System = function(attributes, system) {
     _private.canvas.canvas.onmousemove = function(event) {
         lastX = event.clientX - _private.canvas.canvas.offsetLeft;
         lastY = event.clientY - _private.canvas.canvas.offsetTop;
-        dragging = true;
 
         if (dragStart) {
             var tPt = transformedPoint(lastX, lastY);
