@@ -109,6 +109,8 @@ var System = function(attributes, system) {
         if (dragStart) {
             var pt = transformedPoint(lastX, lastY);
             _private.canvas.translate(pt.x - dragStart.x, pt.y - dragStart.y);
+            _private.cameraX -= pt.x - dragStart.x;
+            _private.cameraY -= pt.y - dragStart.y;
             update();
         }    
     };
