@@ -116,7 +116,7 @@ var System = function(attributes, system) {
             _private.canvas.translate(dX, dY);
             _private.cameraX -= dX;
             _private.cameraY -= dY;
-      
+
         }
     };
     _private.canvas.canvas.onmouseup = function(event) {
@@ -246,9 +246,13 @@ var System = function(attributes, system) {
 
         // Draw nodes
         _private.nodesSet.forEach(function(d) {
-            d.nodeX = d.x;
-            d.nodeY = d.y;
-            d.draw();
+            //Check if inside view
+            if(_private.cameraX <= d.x && d.x <= _private.cameraX + _private.cameraWidth  && _private.cameraY <= d.y && d.y <= _private.cameraY + _private.cameraHeight) {
+                console.log(d);
+                d.nodeX = d.x;
+                d.nodeY = d.y;
+                d.draw();
+            }
         });
     }
 };
