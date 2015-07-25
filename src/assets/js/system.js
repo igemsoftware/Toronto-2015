@@ -91,7 +91,7 @@ var System = function(attributes, system) {
     var dragStart, lastX, lastY;
     var dragScaleFactor = 1.5;
     var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    var xform = svg.createSVGMatrix(); 
+    var xform = svg.createSVGMatrix();
     function transformedPoint(x,y) {
         var pt = svg.createSVGPoint();
         pt.x = x;
@@ -116,17 +116,18 @@ var System = function(attributes, system) {
             _private.canvas.translate(dX, dY);
             _private.cameraX -= dX;
             _private.cameraY -= dY;
-            update();
-        }    
+      
+        }
     };
     _private.canvas.canvas.onmouseup = function(event) {
         dragStart = false;
-    }; 
+        _private.force.resume();
+    };
 
     /**
      * Loop and bind metabolite data to metabolite node to nodeset.
      *
-     * @param system object The json metabolic model. 
+     * @param system object The json metabolic model.
      *
      * @return none
      */
