@@ -85,10 +85,12 @@ var System = function(attributes, system) {
         _private.force.resume();
     };
 
+    // ## Dragging
     var dragStart, dragging, lastX, lastY;
+    var dragScaleFactor = 1.5;
+    var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    var xform = svg.createSVGMatrix(); 
     function transformedPoint(x,y) {
-        var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-        var xform = svg.createSVGMatrix();
         var pt = svg.createSVGPoint();
         pt.x = x;
         pt.y = y;
@@ -107,10 +109,13 @@ var System = function(attributes, system) {
         dragging = true;
 
         if (dragStart) {
-            var pt = transformedPoint(lastX, lastY);
-            _private.canvas.translate(pt.x - dragStart.x, pt.y - dragStart.y);
-            _private.cameraX -= pt.x - dragStart.x;
-            _private.cameraY -= pt.y - dragStart.y;
+            var tPt = transformedPoint(lastX, lastY);
+            var dX = (tPt.x - dragStart.x) * dragScaleFactor;
+            var dY = (tPt.y - dragStart.y) * dragScaleFactor;
+            xform = xform.translate(dX, dY)
+            _private.canvas.translate(dX, dY);
+            _private.cameraX -= dX;
+            _private.cameraY -= dY;
             update();
         }    
     };
