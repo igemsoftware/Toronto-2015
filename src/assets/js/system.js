@@ -34,10 +34,8 @@ var System = function(attributes, system) {
         // Assign selection to _private variables
         _private.network      = d3.select('canvas');
         _private.canvas       = d3.select('canvas').node().getContext('2d');
-        _private.canvasWidth  = _private.attributes.canvas.width;
-        _private.canvasHeight = _private.attributes.canvas.height;
-        _private.cameraWidth  = _private.attributes.canvas.width;
-        _private.cameraHeight = _private.attributes.canvas.height;
+        _private.canvasWidth  = _private.cameraWidth  = _private.attributes.canvas.width;
+        _private.canvasHeight = _private.cameraHeight = _private.attributes.canvas.height;
 
         // Build metabolites
         buildMetabolites(system);
@@ -53,39 +51,96 @@ var System = function(attributes, system) {
             .linkStrength(2)
             .linkDistance(50)
             // variablize w/ cameraWidth,H
-            .size([_private.attributes.canvas.width, _private.attributes.canvas.height])
+            .size([_private.canvasWidth, _private.canvasHeight])
             .start()
             .on('tick', update);
     }
 
     _private.canvas.canvas.onmousewheel = function(event) {
+        // Prevent normal scroll effect
         event.preventDefault();
-        
+
         var mousex = event.clientX - _private.canvas.canvas.offsetLeft;
         var mousey = event.clientY - _private.canvas.canvas.offsetTop;
-        var wheel  = event.wheelDelta / 120; //n or -n
-        var zoom   = 1 + wheel / 2;
+        var wheel = event.wheelDelta / 120; //n or -n
+        var zoom = 1 + wheel / 2;
 
         _private.canvas.translate(
             _private.cameraX,
             _private.cameraY
         );
 
-        var xOffset = mousex / _private.scale + _private.cameraX - mousex / (_private.scale * zoom); 
-        var yOffset = mousey / _private.scale + _private.cameraY -mousey / (_private.scale * zoom); 
-        
+        var xOffset = mousex / _private.scale + _private.cameraX - mousex / (_private.scale * zoom);
+        var yOffset = mousey / _private.scale + _private.cameraY - mousey / (_private.scale * zoom);
+
         _private.canvas.scale(zoom, zoom);
         _private.scale *= zoom;
         _private.canvas.translate(-xOffset, -yOffset);
-        
-        _private.cameraX      = (xOffset);
-        _private.cameraY      = (yOffset);
-        _private.cameraWidth  = _private.canvasWidth * 1 / _private.scale;
+
+        _private.cameraX = (xOffset);
+        _private.cameraY = (yOffset);
+        _private.cameraWidth = _private.canvasWidth * 1 / _private.scale;
         _private.cameraHeight = _private.canvasHeight * 1 / _private.scale;
-        
-        // or resume()
-        _private.force.start();
+
+        _private.force.resume();
     };
+
+    var dragStart, dragging, lastX, lastY;
+    function transformedPoint(x,y) {
+        var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+        var xform = svg.createSVGMatrix();
+        var pt = svg.createSVGPoint();
+        pt.x = x;
+        pt.y = y;
+        return pt.matrixTransform(xform.inverse());
+    }
+
+    _private.canvas.canvas.onmousedown = function(event) {
+        lastX = event.clientX - _private.canvas.canvas.offsetLeft;
+        lastY = event.clientY - _private.canvas.canvas.offsetTop;
+        dragStart = transformedPoint(lastX, lastY);
+        dragging = false;
+    };
+    _private.canvas.canvas.onmousemove = function(event) {
+        lastX = event.clientX - _private.canvas.canvas.offsetLeft;
+        lastY = event.clientY - _private.canvas.canvas.offsetTop;
+        dragging = true;
+
+        if (dragStart) {
+            var pt = transformedPoint(lastX, lastY);
+            _private.canvas.translate(pt.x - dragStart.x, pt.y - dragStart.y);
+            update();
+        }    
+    };
+    _private.canvas.canvas.onmouseup = function(event) {
+        dragStart = false;
+    }
+
+    // var lastX = _private.canvasWidth / 2;
+    // var lastY = _private.canvasHeight / 2;
+    // var dragStart, dragged;
+    // _private.canvas.canvas.onmousedown = function(evt) {
+    //     document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+    //     lastX = evt.offsetX || (evt.pageX - _private.canvas.canvas.offsetLeft);
+    //     lastY = evt.offsetY || (evt.pageY - _private.canvas.canvas.offsetTop);
+    //     dragStart = _private.canvas.transformedPoint(lastX, lastY);
+    //     dragged = false;
+    // };
+    // _private.canvas.canvas.onmousemove = function(evt) {
+    //     lastX = evt.offsetX || (evt.pageX - _private.canvas.canvas.offsetLeft);
+    //     lastY = evt.offsetY || (evt.pageY - _private.canvas.canvas.offsetTop);
+    //     dragged = true;
+    //     if (dragStart) {
+    //         var pt = _private.canvas.transformedPoint(lastX, lastY);
+    //         _private.canvas.translate(pt.x - dragStart.x, pt.y - dragStart.y);
+    //         redraw();
+    //     }
+    //
+    // };
+    // _private.canvas.canvas.onmouseup = function(evt) {
+    //     dragStart = null;
+    //     //if (!dragged) zoom(evt.shiftKey ? -1 : 1);
+    // };
 
     /**
      * Loop and bind metabolite data to metabolite node to nodeset.
@@ -98,10 +153,10 @@ var System = function(attributes, system) {
         console.log('Building metabolites');
         for (var i = 0; i < system.metabolites.length; i++) {
             _private.nodesSet.push(new Metabolite({
-                name   : system.metabolites[i].name,
-                id     : system.metabolites[i].id,
-                type   : 'm',
-                radius : _private.metaboliteRadius
+                name: system.metabolites[i].name,
+                id: system.metabolites[i].id,
+                type: 'm',
+                radius: _private.metaboliteRadius
             }));
         }
     }
@@ -136,19 +191,19 @@ var System = function(attributes, system) {
      */
     function buildReactions(system) {
         console.log('Building reactions');
- 
+
         var source, target;
         var tempLinks = [];
         var radiusScale = scale_radius(system, 5, 15);
         system.reactions.forEach(function(reaction) {
-            if (reaction.flux_value > 0) { 
+            if (reaction.flux_value > 0) {
                 _private.nodesSet.push(new Reaction({
-                    name      : reaction.name,
-                    id        : reaction.id,
-                    type      : 'r',
-                    radius    : radiusScale(reaction.flux_value),
-                    fluxValue : reaction.flux_value
-                })); 
+                    name: reaction.name,
+                    id: reaction.id,
+                    type: 'r',
+                    radius: radiusScale(reaction.flux_value),
+                    fluxValue: reaction.flux_value
+                }));
 
                 // Assign metabolite source and target for each reaction
                 var metabolites = Object.keys(reaction.metabolites);
@@ -162,11 +217,11 @@ var System = function(attributes, system) {
                     }
 
                     tempLinks.push({
-                        id     : source + '-' + target,
-                        source : source,
-                        target : target
-                    })
-                }); 
+                        id: source + '-' + target,
+                        source: source,
+                        target: target
+                    });
+                });
             }
         });
 
@@ -180,7 +235,7 @@ var System = function(attributes, system) {
             _private.linkSet.push(new Link(
                 source.getID() + '-' + target.getID(),
                 source,
-                target     
+                target
             ));
         });
     }
@@ -196,7 +251,7 @@ var System = function(attributes, system) {
 
     function update() {
         //refresh
-        _private.canvas.clearRect(_private.cameraX, _private.cameraY,_private.cameraWidth, _private.cameraHeight); 
+        _private.canvas.clearRect(_private.cameraX, _private.cameraY, _private.cameraWidth, _private.cameraHeight);
 
         // Draw links
         _private.linkSet.forEach(function(d) {

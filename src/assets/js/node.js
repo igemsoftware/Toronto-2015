@@ -32,7 +32,7 @@ var Node = function(attr) {
         },
 
         toString: function() {
-            return (name.type + ': ' + _private.name + ' id: ' +
+            return (attr.name.type + ': ' + _private.name + ' id: ' +
                 _private.id + '\n');
         },
 
@@ -48,7 +48,7 @@ var Node = function(attr) {
     function mouseover(d) {
         _public._node.append('text')
             .attr('class', 'node-text')
-            .text(name)
+            .text(attr.name)
             .attr('x', 0)
             .attr('y', -18)
             .attr('font-family', 'Arial')

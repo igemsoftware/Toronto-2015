@@ -35,7 +35,7 @@ var Network = function(attributes) {
     }
 
     /**
-     * @param model object The json metabolic network data.
+     * @param model object The json metabolic model.
      *
      * @return none
      */
