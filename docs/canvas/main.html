@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>main.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>main.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Canvas = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Canvas"</span>
+Node = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Node"</span>
+<span class="hljs-function">
+<span class="hljs-title">checkCollisions</span> = <span class="hljs-params">(x,y)</span> -&gt;</span>
+    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>if x is n.x and y is n.y then n.drawRed(canv.ctx)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> n.checkCollision(x,y) <span class="hljs-keyword">then</span> n.drawRed()
+<span class="hljs-function">
+<span class="hljs-title">mousemove</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+        e.preventDefault()
+        checkCollisions(e.clientX, e.clientY)
+
+W = <span class="hljs-built_in">window</span>.innerWidth
+H = <span class="hljs-built_in">window</span>.innerHeight
+canv = <span class="hljs-keyword">new</span> Canvas(<span class="hljs-string">"canvas"</span>, W, H)
+canv.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemove, <span class="hljs-literal">false</span>)
+
+nodes = (<span class="hljs-keyword">new</span> Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), <span class="hljs-number">15</span>, canv.ctx) <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> [<span class="hljs-number">0.</span>..<span class="hljs-number">100</span>])
+n.draw() <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes
+canv.fill()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -78,11 +78,33 @@ module.exports = Node;
 
 
 },{}],3:[function(require,module,exports){
-var Canvas, H, Node, W, canv, checkCollisions, i, len, mousemove, n, nodes;
+var Canvas, H, Network, Node, W, canv, checkCollisions, i, len, mousemove, n, network, nodes;
 
 Canvas = require("./Canvas");
 
 Node = require("./Node");
+
+Network = (function() {
+  var foobar;
+
+  function Network(canvas, nodes1) {
+    this.canvas = canvas;
+    this.nodes = nodes1;
+    this.foo("foobars");
+  }
+
+  foobar = function(bar) {
+    return console.log(bar);
+  };
+
+  Network.prototype.foo = function(bar) {
+    console.log(this.nodes);
+    return foobar(bar);
+  };
+
+  return Network;
+
+})();
 
 checkCollisions = function(x, y) {
   var i, len, n, results;
@@ -124,6 +146,8 @@ for (i = 0, len = nodes.length; i < len; i++) {
   n = nodes[i];
   n.draw();
 }
+
+network = new Network(canv, nodes);
 
 canv.fill();
 

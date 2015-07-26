@@ -2,7 +2,7 @@
 
 #
 class Canvas
-    # Constructor
+    # **Constructor**
     constructor: (@id, @width, @height) ->
         # Create our `<canvas>` DOM element
         @c = document.createElement("canvas")
@@ -21,6 +21,7 @@ class Canvas
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
 
+    # **fill**
     fill: ->
         @ctx.fill()
 
