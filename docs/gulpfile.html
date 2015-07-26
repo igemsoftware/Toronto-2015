@@ -53,11 +53,18 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> gulp        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>),
     watch       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-watch'</span>),
+    concat      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-concat'</span>),
     wiredep     = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wiredep'</span>).stream,
-    inject      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-inject'</span>),
+    inject      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-inject'</span>), 
+    globby      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'globby'</span>),
+    combiner   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream-combiner2'</span>),
     sass        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-sass'</span>),
-    coffee      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-coffee'</span>),
+    plumber     = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-plumber'</span>),
+    browserify  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'browserify'</span>),
+    coffeeify   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'coffeeify'</span>),
     browserSync = <span class="hljs-built_in">require</span>(<span class="hljs-string">'browser-sync'</span>).create(),
+    buffer      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vinyl-buffer'</span>),
+    source      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vinyl-source-stream'</span>),
     sourcemaps  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-sourcemaps'</span>),
     docco       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-docco'</span>),
     gutil       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-util'</span>),
@@ -122,7 +129,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> globs = {
     index   : src + <span class="hljs-string">'/index.html'</span>,
     html    : src + <span class="hljs-string">'/**/*.html'</span>,
-    coffee  : src + <span class="hljs-string">'/coffee/*.coffee'</span>,
+    coffee  : src + <span class="hljs-string">'/coffee/**/*.coffee'</span>,
     libJS   : src + <span class="hljs-string">'/lib/**/*.js'</span>,
     sass    : src + <span class="hljs-string">'/styles/sass/*.scss'</span>,
     css     : src + <span class="hljs-string">'/styles/*.css'</span>
@@ -210,15 +217,34 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'coffee'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">return</span> gulp
-    .src(globs.coffee)
-    .pipe(sourcemaps.init())
-    .pipe(coffee({
-        bare: <span class="hljs-literal">true</span>
-    }).on(<span class="hljs-string">'error'</span>, gutil.log))
-    .pipe(sourcemaps.write(<span class="hljs-string">'./maps'</span>))
-    .pipe(gulp.dest(dests.js));
+            <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'coffee'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{  
+
+    globby([globs.coffee], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, entries</span>) </span>{
+        <span class="hljs-keyword">if</span> (err) {
+            gutil.log();
+            <span class="hljs-keyword">return</span>;
+        }
+        
+        <span class="hljs-keyword">var</span> b = browserify({
+            entries    : entries,
+            extensions : [<span class="hljs-string">'.coffee'</span>],
+            debug      : <span class="hljs-literal">true</span>,
+            transform  : [coffeeify]
+        });
+
+        <span class="hljs-keyword">var</span> combined = combiner.obj([
+            b.bundle(),
+            source(<span class="hljs-string">'bundle-coffee.js'</span>),
+            buffer(),
+            sourcemaps.init({loadMaps: <span class="hljs-literal">true</span>}),
+            sourcemaps.write(<span class="hljs-string">'./maps'</span>),
+            gulp.dest(dests.js)
+        ]);
+
+        combined.on(<span class="hljs-string">'error'</span>, gutil.log);
+
+        <span class="hljs-keyword">return</span> combined;
+    }); 
 });</pre></div></div>
             
         </li>
@@ -413,6 +439,10 @@
     del([globs.css], cb);
 });
 
+gulp.task(<span class="hljs-string">'clean:lib'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">cb</span>) </span>{
+    del([dests.js], cb);
+});
+
 gulp.task(<span class="hljs-string">'clean'</span>, [<span class="hljs-string">'clean:css'</span>]);</pre></div></div>
             
         </li>
@@ -437,7 +467,7 @@ gulp.task(<span class="hljs-string">'clean'</span>, [<span class="hljs-string">'
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
-              <p>Run <code>sass</code> and <code>coffee</code> before <code>serve</code>ing</p>
+              <p>Run <code>sass</code> and <code>coffee</code>before <code>serve</code>ing</p>
 
             </div>
             
@@ -479,7 +509,7 @@ gulp.task(<span class="hljs-string">'clean'</span>, [<span class="hljs-string">'
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    gulp.watch(globs.coffee, [<span class="hljs-string">'coffee'</span>]);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    watch(globs.coffee, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ gulp.start(<span class="hljs-string">'coffee'</span>); });</pre></div></div>
             
         </li>
         
@@ -494,7 +524,7 @@ gulp.task(<span class="hljs-string">'clean'</span>, [<span class="hljs-string">'
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    gulp.watch(globs.libJS).on(<span class="hljs-string">'change'</span>, reload);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    watch(globs.libJS, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ reload(); });</pre></div></div>
             
         </li>
         
@@ -509,7 +539,7 @@ gulp.task(<span class="hljs-string">'clean'</span>, [<span class="hljs-string">'
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    gulp.watch(globs.html).on(<span class="hljs-string">'change'</span>, reload);
+            <div class="content"><div class='highlight'><pre>    watch(globs.html, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ reload(); });
 });</pre></div></div>
             
         </li>

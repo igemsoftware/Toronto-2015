@@ -7,10 +7,11 @@ var gulp        = require('gulp'),
     watch       = require('gulp-watch'),
     concat      = require('gulp-concat'),
     wiredep     = require('wiredep').stream,
-    inject      = require('gulp-inject'),
-    through     = require('through2'),
+    inject      = require('gulp-inject'), 
     globby      = require('globby'),
+    combiner   = require('stream-combiner2'),
     sass        = require('gulp-sass'),
+    plumber     = require('gulp-plumber'),
     browserify  = require('browserify'),
     coffeeify   = require('coffeeify'),
     browserSync = require('browser-sync').create(),
@@ -62,20 +63,11 @@ gulp.task('sass', function() {
 // ### CoffeeScript
 
 // Compile `.coffee` into `.js`
-gulp.task('coffee', function() { 
-    var bundledStream = through();
-
-    bundledStream
-    .pipe(source('bundle-coffee.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-    .on('error', gutil.log)
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest(dests.js));
+gulp.task('coffee', function() {  
 
     globby([globs.coffee], function(err, entries) {
         if (err) {
-            bundledStream.emit('error', err);
+            gutil.log();
             return;
         }
         
@@ -86,10 +78,19 @@ gulp.task('coffee', function() {
             transform  : [coffeeify]
         });
 
-        b.bundle().pipe(bundledStream);
-    });
+        var combined = combiner.obj([
+            b.bundle(),
+            source('bundle-coffee.js'),
+            buffer(),
+            sourcemaps.init({loadMaps: true}),
+            sourcemaps.write('./maps'),
+            gulp.dest(dests.js)
+        ]);
 
-    return bundledStream;
+        combined.on('error', gutil.log);
+
+        return combined;
+    }); 
 });
 
 // ### Injects
