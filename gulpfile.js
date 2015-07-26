@@ -63,24 +63,10 @@ gulp.task('sass', function() {
 
 // Compile `.coffee` into `.js`
 gulp.task('coffee', function() { 
-    // var b = browserify({
-    //     entries: [globs.coffee],
-    //     extensions: ['.coffee'],
-    //     transform: [coffeeify]
-    // })
-    //
-    // return b.bundle()
-    // .pipe(source('bundle.js'))
-    // .pipe(buffer())
-    // .pipe(sourcemaps.init({loadMaps: true}))
-    // .on('error', gutil.log)
-    // .pipe(sourcemaps.write('./maps'))
-    // .pipe(gulp.dest(dests.js))
-    
     var bundledStream = through();
 
     bundledStream
-    .pipe(source('bundle.js'))
+    .pipe(source('bundle-coffee.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     .on('error', gutil.log)
@@ -169,6 +155,10 @@ gulp.task('docs', ['docs:gulpfile', 'docs:coffee'], function() {
 // Remove css files
 gulp.task('clean:css', function(cb) {
     del([globs.css], cb);
+});
+
+gulp.task('clean:lib', function(cb) {
+    del([dests.js], cb);
 });
 
 gulp.task('clean', ['clean:css']);

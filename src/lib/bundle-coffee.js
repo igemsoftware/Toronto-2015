@@ -23,4 +23,4 @@ module.exports = function(str) {
 },{}]},{},[1,2,3])
 
 
-//# sourceMappingURL=maps/bundle.js.map
+//# sourceMappingURL=maps/bundle-coffee.js.map
