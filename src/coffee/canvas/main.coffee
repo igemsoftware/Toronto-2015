@@ -29,19 +29,10 @@ currentActiveNode = null
 
 checkCollisions = (x,y) ->
         if not currentActiveNode?
-            console.log(currentActiveNode)
             for n in nodes
                 inside = n.checkCollision(x,y)
-                console.log(inside)
                 if inside then n.hover = true; n.drawRed(); currentActiveNode = n
-
                 if n.hover and (not inside) then n.hover = false; n.draw()
-                
-                #if n.hover then n.drawRed() else n.draw()
-
-                # if n.hover and (not n.checkCollision(x,y)) then
-                #     n.hover = false
-                #     n.draw()
         else
             inside = currentActiveNode.checkCollision(x,y)
             if not inside then currentActiveNode.draw(); currentActiveNode = null
@@ -55,7 +46,7 @@ H = window.innerHeight
 canv = new Canvas("canvas", W, H)
 canv.c.addEventListener("mousemove", mousemove, false)
 
-nodes = (new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 10, canv.ctx) for n in [0...3000])
+nodes = (new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx) for n in [0...100000])
 n.draw() for n in nodes
 
 network = new Network(canv, nodes)

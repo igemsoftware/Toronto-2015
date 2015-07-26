@@ -114,12 +114,10 @@ currentActiveNode = null;
 checkCollisions = function(x, y) {
   var i, inside, len, n, results;
   if (currentActiveNode == null) {
-    console.log(currentActiveNode);
     results = [];
     for (i = 0, len = nodes.length; i < len; i++) {
       n = nodes[i];
       inside = n.checkCollision(x, y);
-      console.log(inside);
       if (inside) {
         n.hover = true;
         n.drawRed();
@@ -158,8 +156,8 @@ canv.c.addEventListener("mousemove", mousemove, false);
 nodes = (function() {
   var i, results;
   results = [];
-  for (n = i = 0; i < 3000; n = ++i) {
-    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 10, canv.ctx));
+  for (n = i = 0; i < 100000; n = ++i) {
+    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx));
   }
   return results;
 })();
