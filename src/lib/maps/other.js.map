@@ -1,0 +1,1 @@
+{"version":3,"sources":["other.coffee"],"names":[],"mappings":"AAAA,KAAA,CAAM,mBAAN","file":"other.js","sourceRoot":"/source/","sourcesContent":["alert \"And another file!\"\n"]}

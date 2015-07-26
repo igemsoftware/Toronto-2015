@@ -1,0 +1,40 @@
+/*
+ * A partial implementation of the Ruby list functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/lists.rb
+ */
+/*
+ * A partial implementation of the Ruby constants functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/constants.rb
+ */
+/*
+ * A partial implementation of the Ruby display functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
+ */
+html::-webkit-scrollbar {
+  width: 12px; }
+
+html::-webkit-scrollbar-track-piece {
+  background: #00c9b6; }
+
+html::-webkit-scrollbar-thumb {
+  background: #009688; }
+
+html, body {
+  height: 100%;
+  width: 100%; }
+
+body {
+  height: 150%;
+  background-color: black; }
+  body:after {
+    content: '';
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: green;
+    -webkit-box-shadow: 0px 0px 10px 15px white;
+    -moz-box-shadow: 0px 0px 10px 15px white;
+    box-shadow: 0px 0px 10px 15px white; }

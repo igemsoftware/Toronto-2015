@@ -1,4 +1,28 @@
+@import 'compass';
+@import 'mixins';
+@import 'lumxcolors';
+@import 'colours';
+@import 'dimensions';
+@import 'scrollbar';
+
 html, body {
     height : 100%;
     width  : 100%;
+}
+
+body {
+    height: 150%;
+    background-color: black;
+
+    &:after {
+        content: '';
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background-color: green;
+        @include box-shadow(0px 0px 10px 15px white);
+    }
 }
