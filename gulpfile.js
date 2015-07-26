@@ -5,11 +5,17 @@
 // Installed with `npm install --save-dev <dep>`
 var gulp        = require('gulp'),
     watch       = require('gulp-watch'),
+    concat      = require('gulp-concat'),
     wiredep     = require('wiredep').stream,
     inject      = require('gulp-inject'),
+    through     = require('through2'),
+    globby      = require('globby'),
     sass        = require('gulp-sass'),
-    coffee      = require('gulp-coffee'),
+    browserify  = require('browserify'),
+    coffeeify   = require('coffeeify'),
     browserSync = require('browser-sync').create(),
+    buffer      = require('vinyl-buffer'),
+    source      = require('vinyl-source-stream'),
     sourcemaps  = require('gulp-sourcemaps'),
     docco       = require('gulp-docco'),
     gutil       = require('gulp-util'),
@@ -26,7 +32,7 @@ var src = './src';
 var globs = {
     index   : src + '/index.html',
     html    : src + '/**/*.html',
-    coffee  : src + '/coffee/*.coffee',
+    coffee  : src + '/coffee/**/*.coffee',
     libJS   : src + '/lib/**/*.js',
     sass    : src + '/styles/sass/*.scss',
     css     : src + '/styles/*.css'
@@ -56,15 +62,48 @@ gulp.task('sass', function() {
 // ### CoffeeScript
 
 // Compile `.coffee` into `.js`
-gulp.task('coffee', function() {
-    return gulp
-    .src(globs.coffee)
-    .pipe(sourcemaps.init())
-    .pipe(coffee({
-        bare: true
-    }).on('error', gutil.log))
+gulp.task('coffee', function() { 
+    // var b = browserify({
+    //     entries: [globs.coffee],
+    //     extensions: ['.coffee'],
+    //     transform: [coffeeify]
+    // })
+    //
+    // return b.bundle()
+    // .pipe(source('bundle.js'))
+    // .pipe(buffer())
+    // .pipe(sourcemaps.init({loadMaps: true}))
+    // .on('error', gutil.log)
+    // .pipe(sourcemaps.write('./maps'))
+    // .pipe(gulp.dest(dests.js))
+    
+    var bundledStream = through();
+
+    bundledStream
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .on('error', gutil.log)
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest(dests.js));
+
+    globby([globs.coffee], function(err, entries) {
+        if (err) {
+            bundledStream.emit('error', err);
+            return;
+        }
+        
+        var b = browserify({
+            entries    : entries,
+            extensions : ['.coffee'],
+            debug      : true,
+            transform  : [coffeeify]
+        });
+
+        b.bundle().pipe(bundledStream);
+    });
+
+    return bundledStream;
 });
 
 // ### Injects
@@ -137,7 +176,7 @@ gulp.task('clean', ['clean:css']);
 
 // ### Serve
 
-// Run `sass` and `coffee` before `serve`ing
+// Run `sass` and `coffee`before `serve`ing
 gulp.task('serve', ['sass', 'coffee'], function() { 
     browserSync.init({
         server: {
@@ -151,11 +190,11 @@ gulp.task('serve', ['sass', 'coffee'], function() {
     // Recompile `sass` as necessary
     watch(globs.sass, function() { gulp.start('sass'); });
     // Recompile `CoffeeScript` as necessary
-    gulp.watch(globs.coffee, ['coffee']);
+    watch(globs.coffee, function() { gulp.start('coffee'); });
     // Refresh on `libJS` changes i.e. `coffee` finished
-    gulp.watch(globs.libJS).on('change', reload);
+    watch(globs.libJS, function() { reload(); });
     // Refresh on any `HTML` changes
-    gulp.watch(globs.html).on('change', reload);
+    watch(globs.html, function() { reload(); });
 });
 
 // Serve docs folder

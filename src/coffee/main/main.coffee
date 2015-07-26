@@ -1,3 +1,6 @@
 # Is this thing working?ssdsdsdsd?
+
+foo = require "./other"
+
 awesome = "CoffeeScript"
-alert "#{awesome} is working!"
+foo "#{awesome} is working!"

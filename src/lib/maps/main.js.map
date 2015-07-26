@@ -1,1 +1,0 @@
-{"version":3,"sources":["main.coffee"],"names":[],"mappings":"AAAA,IAAA;;AAAA,OAAA,GAAU;;AACV,KAAA,CAAS,OAAD,GAAS,cAAjB","file":"main.js","sourceRoot":"/source/","sourcesContent":["awesome = \"CoffeeScript\"\nalert \"#{awesome} is working!\"\n"]}
