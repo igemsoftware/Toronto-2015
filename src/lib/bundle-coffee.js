@@ -1,19 +1,17 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Canvas, H, Node, W, canv, checkCollisions, i, len, n, nodes;
+var Canvas;
 
 Canvas = (function() {
   function Canvas(id, width, height) {
-    var c;
     this.id = id;
     this.width = width;
     this.height = height;
-    c = document.createElement("canvas");
-    c.id = this.id;
-    c.width = this.width;
-    c.height = this.height;
-    c.addEventListener("mouseover", this.mouseover, false);
-    c.addEventListener("mousemove", this.mousemove, false);
-    document.body.appendChild(c);
+    this.c = document.createElement("canvas");
+    this.c.id = this.id;
+    this.c.width = this.width;
+    this.c.height = this.height;
+    this.c.addEventListener("mouseover", this.mouseover, false);
+    document.body.appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
   }
 
@@ -26,14 +24,15 @@ Canvas = (function() {
     return console.log("mouseover");
   };
 
-  Canvas.prototype.mousemove = function(e) {
-    e.preventDefault();
-    return checkCollisions(e.clientX, e.clientY);
-  };
-
   return Canvas;
 
 })();
+
+module.exports = Canvas;
+
+
+},{}],2:[function(require,module,exports){
+var Node;
 
 Node = (function() {
   function Node(x1, y1, r, ctx) {
@@ -75,11 +74,42 @@ Node = (function() {
 
 })();
 
+module.exports = Node;
+
+
+},{}],3:[function(require,module,exports){
+var Canvas, H, Node, W, canv, checkCollisions, i, len, mousemove, n, nodes;
+
+Canvas = require("./Canvas");
+
+Node = require("./Node");
+
+checkCollisions = function(x, y) {
+  var i, len, n, results;
+  results = [];
+  for (i = 0, len = nodes.length; i < len; i++) {
+    n = nodes[i];
+    if (n.checkCollision(x, y)) {
+      results.push(n.drawRed());
+    } else {
+      results.push(void 0);
+    }
+  }
+  return results;
+};
+
+mousemove = function(e) {
+  e.preventDefault();
+  return checkCollisions(e.clientX, e.clientY);
+};
+
 W = window.innerWidth;
 
 H = window.innerHeight;
 
 canv = new Canvas("canvas", W, H);
+
+canv.c.addEventListener("mousemove", mousemove, false);
 
 nodes = (function() {
   var i, results;
@@ -97,22 +127,8 @@ for (i = 0, len = nodes.length; i < len; i++) {
 
 canv.fill();
 
-checkCollisions = function(x, y) {
-  var j, len1, results;
-  results = [];
-  for (j = 0, len1 = nodes.length; j < len1; j++) {
-    n = nodes[j];
-    if (n.checkCollision(x, y)) {
-      results.push(n.drawRed());
-    } else {
-      results.push(void 0);
-    }
-  }
-  return results;
-};
 
-
-},{}]},{},[1])
+},{"./Canvas":1,"./Node":2}]},{},[1,2,3])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map
