@@ -64,8 +64,6 @@ Node = (function() {
   Node.prototype.checkCollision = function(x, y) {
     var inside;
     inside = true;
-    this.ctx.strokeRect(this.x - this.r, this.y - this.r, 2 * this.r, 2 * this.r);
-    this.ctx.fill();
     if (!((this.x - this.r < x && x < this.x + this.r))) {
       inside = false;
     }
@@ -83,7 +81,7 @@ module.exports = Node;
 
 
 },{}],3:[function(require,module,exports){
-var Canvas, H, Network, Node, W, canv, checkCollisions, i, len, mousemove, n, network, nodes;
+var Canvas, H, Network, Node, W, canv, checkCollisions, currentActiveNode, i, len, mousemove, n, network, nodes;
 
 Canvas = require("./Canvas");
 
@@ -111,25 +109,37 @@ Network = (function() {
 
 })();
 
+currentActiveNode = null;
+
 checkCollisions = function(x, y) {
   var i, inside, len, n, results;
-  results = [];
-  for (i = 0, len = nodes.length; i < len; i++) {
-    n = nodes[i];
-    inside = n.checkCollision(x, y);
-    console.log(inside);
-    if (inside) {
-      n.hover = true;
-      n.drawRed();
+  if (currentActiveNode == null) {
+    console.log(currentActiveNode);
+    results = [];
+    for (i = 0, len = nodes.length; i < len; i++) {
+      n = nodes[i];
+      inside = n.checkCollision(x, y);
+      console.log(inside);
+      if (inside) {
+        n.hover = true;
+        n.drawRed();
+        currentActiveNode = n;
+      }
+      if (n.hover && (!inside)) {
+        n.hover = false;
+        results.push(n.draw());
+      } else {
+        results.push(void 0);
+      }
     }
-    if (n.hover && (!inside)) {
-      n.hover = false;
-      results.push(n.draw());
-    } else {
-      results.push(void 0);
+    return results;
+  } else {
+    inside = currentActiveNode.checkCollision(x, y);
+    if (!inside) {
+      currentActiveNode.draw();
+      return currentActiveNode = null;
     }
   }
-  return results;
 };
 
 mousemove = function(e) {
@@ -148,8 +158,8 @@ canv.c.addEventListener("mousemove", mousemove, false);
 nodes = (function() {
   var i, results;
   results = [];
-  for (n = i = 0; i < 100; n = ++i) {
-    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 15, canv.ctx));
+  for (n = i = 0; i < 3000; n = ++i) {
+    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 10, canv.ctx));
   }
   return results;
 })();
