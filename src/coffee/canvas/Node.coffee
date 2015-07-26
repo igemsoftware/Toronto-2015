@@ -3,10 +3,15 @@
 #
 class Node
     constructor: (@x, @y, @r, @ctx) ->
-    
+        @hover = false
+
     draw: ->
+        @ctx.beginPath()
         @ctx.moveTo(@x, @y)
         @ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
+        @ctx.fillStyle = "black"
+        @ctx.closePath()
+        @ctx.fill()
 
     drawRed: ->
         @ctx.beginPath()

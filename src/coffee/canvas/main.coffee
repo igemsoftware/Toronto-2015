@@ -28,7 +28,16 @@ class Network
 
 checkCollisions = (x,y) ->
         for n in nodes
-            if n.checkCollision(x,y) then n.drawRed()
+            inside = n.checkCollision(x,y)
+            console.log(inside)
+            if inside then n.hover = true; n.drawRed()
+            if n.hover and (not inside) then n.hover = false; n.draw()
+            
+            #if n.hover then n.drawRed() else n.draw()
+
+            # if n.hover and (not n.checkCollision(x,y)) then
+            #     n.hover = false
+            #     n.draw()
 
 mousemove = (e) ->
         e.preventDefault()

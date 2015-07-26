@@ -40,11 +40,16 @@ Node = (function() {
     this.y = y1;
     this.r = r;
     this.ctx = ctx;
+    this.hover = false;
   }
 
   Node.prototype.draw = function() {
+    this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
-    return this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+    this.ctx.fillStyle = "black";
+    this.ctx.closePath();
+    return this.ctx.fill();
   };
 
   Node.prototype.drawRed = function() {
@@ -107,12 +112,19 @@ Network = (function() {
 })();
 
 checkCollisions = function(x, y) {
-  var i, len, n, results;
+  var i, inside, len, n, results;
   results = [];
   for (i = 0, len = nodes.length; i < len; i++) {
     n = nodes[i];
-    if (n.checkCollision(x, y)) {
-      results.push(n.drawRed());
+    inside = n.checkCollision(x, y);
+    console.log(inside);
+    if (inside) {
+      n.hover = true;
+      n.drawRed();
+    }
+    if (n.hover && (!inside)) {
+      n.hover = false;
+      results.push(n.draw());
     } else {
       results.push(void 0);
     }
