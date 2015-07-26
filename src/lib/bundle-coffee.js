@@ -36,24 +36,39 @@ Canvas = (function() {
 })();
 
 Node = (function() {
-  function Node(x1, y1, r) {
+  function Node(x1, y1, r, ctx) {
     this.x = x1;
     this.y = y1;
     this.r = r;
+    this.ctx = ctx;
   }
 
-  Node.prototype.draw = function(ctx) {
-    ctx.moveTo(this.x, this.y);
-    return ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+  Node.prototype.draw = function() {
+    this.ctx.moveTo(this.x, this.y);
+    return this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
   };
 
-  Node.prototype.drawRed = function(ctx) {
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y);
-    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    ctx.fillStyle = "red";
-    ctx.closePath();
-    return ctx.fill();
+  Node.prototype.drawRed = function() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x, this.y);
+    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+    this.ctx.fillStyle = "red";
+    this.ctx.closePath();
+    return this.ctx.fill();
+  };
+
+  Node.prototype.checkCollision = function(x, y) {
+    var inside;
+    inside = true;
+    this.ctx.strokeRect(this.x - this.r, this.y - this.r, 2 * this.r, 2 * this.r);
+    this.ctx.fill();
+    if (!((this.x - this.r < x && x < this.x + this.r))) {
+      inside = false;
+    }
+    if (!((this.y - this.r < y && y < this.y + this.r))) {
+      inside = false;
+    }
+    return inside;
   };
 
   return Node;
@@ -70,14 +85,14 @@ nodes = (function() {
   var i, results;
   results = [];
   for (n = i = 0; i < 100; n = ++i) {
-    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 15));
+    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 15, canv.ctx));
   }
   return results;
 })();
 
 for (i = 0, len = nodes.length; i < len; i++) {
   n = nodes[i];
-  n.draw(canv.ctx);
+  n.draw();
 }
 
 canv.fill();
@@ -87,8 +102,8 @@ checkCollisions = function(x, y) {
   results = [];
   for (j = 0, len1 = nodes.length; j < len1; j++) {
     n = nodes[j];
-    if (x === n.x && y === n.y) {
-      results.push(n.drawRed(canv.ctx));
+    if (n.checkCollision(x, y)) {
+      results.push(n.drawRed());
     } else {
       results.push(void 0);
     }
