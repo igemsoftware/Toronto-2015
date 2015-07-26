@@ -111,8 +111,18 @@ gulp.task('docs:gulpfile', function() {
     .pipe(gulp.dest(dests.docs));
 })
 
+// CoffeeScript documentation
+gulp.task('docs:coffee', function() {
+    return gulp
+    .src(globs.coffee)
+    .pipe(docco())
+    .pipe(gulp.dest(dests.docs));
+})
+
 // all documentation
-gulp.task('docs', ['docs:gulpfile']);
+gulp.task('docs', ['docs:gulpfile', 'docs:coffee'], function() {
+    reload();
+});
 
 
 // ### Clean
@@ -154,7 +164,9 @@ gulp.task('serve:docs', ['docs'], function() {
         server: {
             baseDir : dests.docs 
         }
-    });    
+    });
+
+    watch(globs.coffee, function() { gulp.start('docs'); });    
 });
 
 // ### Default
