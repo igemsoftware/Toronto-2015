@@ -1,6 +1,8 @@
-// # gulpfile
+// # gulpfile.js
 
-// Development Dependencies
+// ### Development Dependencies
+ 
+// Installed with `npm install --save-dev <dep>`
 var gulp        = require('gulp'),
     watch       = require('gulp-watch'),
     wiredep     = require('wiredep').stream,
@@ -13,8 +15,14 @@ var gulp        = require('gulp'),
     gutil       = require('gulp-util'),
     del         = require('del');
 
-// Globs and Dests
+// For a little convenience
+var reload = browserSync.reload;
+
+// ### Options
+
+// Source directory
 var src = './src';
+// Globs used in `gulp.src(<glob>)`
 var globs = {
     index   : src + '/index.html',
     html    : src + '/**/*.html',
@@ -23,6 +31,7 @@ var globs = {
     sass    : src + '/styles/sass/*.scss',
     css     : src + '/styles/*.css'
 };
+// Destinations used in `gulp.dest(<dir>)`
 var dests = {
     index : src,
     js    : src + '/lib',
@@ -32,7 +41,7 @@ var dests = {
 
 // ### Sass
 
-// Compile scss into css
+// Compile `.scss` into `.css`
 gulp.task('sass', function() {
     return gulp
     .src(globs.sass)
@@ -46,7 +55,7 @@ gulp.task('sass', function() {
 
 // ### CoffeeScript
 
-// Compile .coffee into .js
+// Compile `.coffee` into `.js`
 gulp.task('coffee', function() {
     return gulp
     .src(globs.coffee)
@@ -57,6 +66,8 @@ gulp.task('coffee', function() {
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest(dests.js));
 });
+
+// ### Injects
 
 // Inject CSS
 gulp.task('inject:css', function() {
@@ -86,8 +97,7 @@ gulp.task('wiredep', function() {
     .pipe(gulp.dest(dests.index));
 });
 
-// ### Inject
-
+// Bringing it together
 gulp.task('inject', ['wiredep', 'inject:css', 'inject:js']);
 
 
@@ -114,11 +124,11 @@ gulp.task('clean:css', function(cb) {
 
 gulp.task('clean', ['clean:css']);
 
+
 // ### Serve
 
-gulp.task('serve', ['sass', 'coffee'], function() {
-    var reload = browserSync.reload;
-
+// Run `sass` and `coffee` before `serve`ing
+gulp.task('serve', ['sass', 'coffee'], function() { 
     browserSync.init({
         server: {
             baseDir : src,
@@ -128,18 +138,26 @@ gulp.task('serve', ['sass', 'coffee'], function() {
         }
     });
 
-    // Recompile sass as necessary
-    // gulp.watch(globs.sass, ['sass']);
-    watch(globs.sass, function() {
-        gulp.start('sass');
-    })
-    // Recompile CoffeeScript as necessary
+    // Recompile `sass` as necessary
+    watch(globs.sass, function() { gulp.start('sass'); });
+    // Recompile `CoffeeScript` as necessary
     gulp.watch(globs.coffee, ['coffee']);
-    // Refresh on libJS changes i.e. coffee finished
+    // Refresh on `libJS` changes i.e. `coffee` finished
     gulp.watch(globs.libJS).on('change', reload);
-    // Refresh on any HTML changes
+    // Refresh on any `HTML` changes
     gulp.watch(globs.html).on('change', reload);
 });
 
+// Serve docs folder
+gulp.task('serve:docs', ['docs'], function() {
+    browserSync.init({
+        server: {
+            baseDir : dests.docs 
+        }
+    });    
+});
+
 // ### Default
+
+// By default, `serve`
 gulp.task('default', ['serve']);
