@@ -22,11 +22,13 @@ class Node
         @ctx.fill()
 
     checkCollision: (x,y) ->
-        inside = true
+        inside = false
         # @ctx.strokeRect(@x - @r, @y - @r, 2*@r, 2*@r)
         # @ctx.fill()
-        if not ( @x - @r < x < @x + @r ) then inside = false
-        if not ( @y - @r < y < @y + @r ) then inside = false
+        if  ((x-@x)**2 + (y-@y)**2 <= @r**2 )
+          inside = true
+
+
 
         return inside
 

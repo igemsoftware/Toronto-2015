@@ -46,7 +46,7 @@ H = window.innerHeight
 canv = new Canvas("canvas", W, H)
 canv.c.addEventListener("mousemove", mousemove, false)
 
-nodes = (new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx) for n in [0...100000])
+nodes = (new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx) for n in [0...1000])
 n.draw() for n in nodes
 
 network = new Network(canv, nodes)

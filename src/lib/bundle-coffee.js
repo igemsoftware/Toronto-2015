@@ -63,12 +63,10 @@ Node = (function() {
 
   Node.prototype.checkCollision = function(x, y) {
     var inside;
-    inside = true;
-    if (!((this.x - this.r < x && x < this.x + this.r))) {
-      inside = false;
-    }
-    if (!((this.y - this.r < y && y < this.y + this.r))) {
-      inside = false;
+    inside = false;
+    console.log(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
+    if (Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2) <= Math.pow(this.r, 2)) {
+      inside = true;
     }
     return inside;
   };
@@ -156,7 +154,7 @@ canv.c.addEventListener("mousemove", mousemove, false);
 nodes = (function() {
   var i, results;
   results = [];
-  for (n = i = 0; i < 100000; n = ++i) {
+  for (n = i = 0; i < 1000; n = ++i) {
     results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx));
   }
   return results;

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>canvas.coffee</title>
+  <title>Canvas.coffee</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="../docco.css" />
@@ -15,7 +15,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>canvas.coffee</h1>
+                  <h1>Canvas.coffee</h1>
               </div>
           </li>
         
@@ -54,7 +54,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Constructor</p>
+              <p><strong>Constructor</strong></p>
 
             </div>
             
@@ -73,7 +73,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        c = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"canvas"</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@c</span> = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"canvas"</span>)</pre></div></div>
             
         </li>
         
@@ -88,9 +88,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        c.id     = <span class="hljs-property">@id</span>
-        c.width  = <span class="hljs-property">@width</span>
-        c.height = <span class="hljs-property">@height</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@c</span>.id     = <span class="hljs-property">@id</span>
+        <span class="hljs-property">@c</span>.width  = <span class="hljs-property">@width</span>
+        <span class="hljs-property">@c</span>.height = <span class="hljs-property">@height</span></pre></div></div>
             
         </li>
         
@@ -105,8 +105,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        c.addEventListener(<span class="hljs-string">"mouseover"</span>, <span class="hljs-property">@mouseover</span>, <span class="hljs-literal">false</span>)
-        c.addEventListener(<span class="hljs-string">"mousemove"</span>, <span class="hljs-property">@mousemove</span>, <span class="hljs-literal">false</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@c</span>.addEventListener(<span class="hljs-string">"mouseover"</span>, <span class="hljs-property">@mouseover</span>, <span class="hljs-literal">false</span>)</pre></div></div>
             
         </li>
         
@@ -117,11 +116,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Append it to the DOM</p>
+              <p>c.addEventListener(“mousemove”, @mousemove, false)</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-built_in">document</span>.body.appendChild(c)</pre></div></div>
             
         </li>
         
@@ -131,6 +128,21 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Append it to the DOM</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-built_in">document</span>.body.appendChild(<span class="hljs-property">@c</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Get 2d context</p>
 
@@ -143,24 +155,7 @@
 
     <span class="hljs-attribute">mouseover</span>: <span class="hljs-function"><span class="hljs-params">(e)</span> -&gt;</span>
         e.preventDefault()
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"mouseover"</span>)
-
-    <span class="hljs-attribute">mousemove</span>: <span class="hljs-function"><span class="hljs-params">(e)</span> -&gt;</span>
-        e.preventDefault()
-        checkCollisions(e.clientX, e.clientY)</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <h3 id="node">Node</h3>
-
-            </div>
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"mouseover"</span>)</pre></div></div>
             
         </li>
         
@@ -171,73 +166,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span></span>
-    <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>, <span class="hljs-property">@r</span>, <span class="hljs-property">@ctx</span>)</span> -&gt;</span>
-    
-    <span class="hljs-attribute">draw</span>: <span class="hljs-function">-&gt;</span>
-        <span class="hljs-property">@ctx</span>.moveTo(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>)
-        <span class="hljs-property">@ctx</span>.arc(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>, <span class="hljs-property">@r</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span> * Math.PI)
-
-    <span class="hljs-attribute">drawRed</span>: <span class="hljs-function">-&gt;</span>
-        <span class="hljs-property">@ctx</span>.beginPath()
-        <span class="hljs-property">@ctx</span>.moveTo(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>)
-        <span class="hljs-property">@ctx</span>.arc(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>, <span class="hljs-property">@r</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span> * Math.PI)
-        <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"red"</span>
-        <span class="hljs-property">@ctx</span>.closePath()
-        <span class="hljs-property">@ctx</span>.fill()
-
-    <span class="hljs-attribute">checkCollision</span>: <span class="hljs-function"><span class="hljs-params">(x,y)</span> -&gt;</span>
-        inside = <span class="hljs-literal">true</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-11">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
-              </div>
-              <p>@ctx.strokeRect(@x - @r, @y - @r, @x + @r, @y + @r)</p>
+              <p>mousemove: (e) -&gt;
+    e.preventDefault()
+    checkCollisions(e.clientX, e.clientY)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@ctx</span>.strokeRect(<span class="hljs-property">@x</span> - <span class="hljs-property">@r</span>, <span class="hljs-property">@y</span> - <span class="hljs-property">@r</span>, <span class="hljs-number">2</span>*<span class="hljs-property">@r</span>, <span class="hljs-number">2</span>*<span class="hljs-property">@r</span>)
-        <span class="hljs-property">@ctx</span>.fill()
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ( <span class="hljs-property">@x</span> - <span class="hljs-property">@r</span> &lt; x &lt; <span class="hljs-property">@x</span> + <span class="hljs-property">@r</span> ) <span class="hljs-keyword">then</span> inside = <span class="hljs-literal">false</span>
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ( <span class="hljs-property">@y</span> - <span class="hljs-property">@r</span> &lt; y &lt; <span class="hljs-property">@y</span> + <span class="hljs-property">@r</span> ) <span class="hljs-keyword">then</span> inside = <span class="hljs-literal">false</span>
-
-        <span class="hljs-keyword">return</span> inside
-
-
-W = <span class="hljs-built_in">window</span>.innerWidth
-H = <span class="hljs-built_in">window</span>.innerHeight
-canv = <span class="hljs-keyword">new</span> Canvas(<span class="hljs-string">"canvas"</span>, W, H)
-nodes = (<span class="hljs-keyword">new</span> Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), <span class="hljs-number">15</span>, canv.ctx) <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> [<span class="hljs-number">0.</span>..<span class="hljs-number">100</span>])
-n.draw() <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes
-canv.fill()
-<span class="hljs-function">
-
-<span class="hljs-title">checkCollisions</span> = <span class="hljs-params">(x,y)</span> -&gt;</span>
-    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-12">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
-              </div>
-              <p>if x is n.x and y is n.y then n.drawRed(canv.ctx)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> n.checkCollision(x,y) <span class="hljs-keyword">then</span> n.drawRed()</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-built_in">module</span>.exports = Canvas</pre></div></div>
             
         </li>
         
