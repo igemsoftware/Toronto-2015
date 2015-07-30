@@ -202,7 +202,8 @@ mouseup = function(e) {
 mousemove = function(e) {
   var dX, dY, tPt;
   e.preventDefault();
-  checkCollisions(e.clientX, e.clientY);
+  tPt = transformedPoint(e.clientX, e.clientY);
+  checkCollisions(tPt.x, tPt.y);
   lastX = e.clientX - CANVAS.c.offsetLeft;
   lastY = e.clientY - CANVAS.c.offsetTop;
   if (dragStart != null) {
@@ -289,7 +290,6 @@ render = function() {
   stats.begin();
   clear();
   draw();
-  update();
   stats.end();
   return requestAnimationFrame(render);
 };

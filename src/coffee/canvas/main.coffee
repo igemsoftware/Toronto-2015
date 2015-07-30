@@ -57,6 +57,7 @@ cameraHeight = H
 scale = 1
 svg = document.createElementNS('http://www.w3.org/2000/svg','svg')
 xform = svg.createSVGMatrix()
+
 transformedPoint = (x, y) ->
     pt = svg.createSVGPoint()
     pt.x = x
@@ -85,8 +86,10 @@ mousemove = (e) ->
     e.preventDefault()
 
     # Collisons
-    checkCollisions(e.clientX, e.clientY)
-    
+    tPt = transformedPoint(e.clientX, e.clientY)
+    #checkCollisions(e.clientX, e.clientY)
+    checkCollisions(tPt.x, tPt.y)
+
     # Dragging
     lastX = e.clientX - CANVAS.c.offsetLeft
     lastY = e.clientY - CANVAS.c.offsetTop
@@ -189,7 +192,7 @@ render = ->
     
     clear()
     draw()
-    update()
+    # update()
     
     stats.end()
     
