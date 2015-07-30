@@ -32,6 +32,22 @@ module.exports = Canvas;
 
 
 },{}],2:[function(require,module,exports){
+var Link;
+
+Link = (function() {
+  function Link(source, target) {
+    this.source = source;
+    this.target = target;
+  }
+
+  return Link;
+
+})();
+
+module.exports = Link;
+
+
+},{}],3:[function(require,module,exports){
 var Node;
 
 Node = (function() {
@@ -81,44 +97,62 @@ Node = (function() {
 module.exports = Node;
 
 
-},{}],3:[function(require,module,exports){
-var AnimationFrame, Canvas, H, Node, W, bg, canv, checkCollisions, clear, ctx, currentActiveNode, mousemove, n, nodes, render;
+},{}],4:[function(require,module,exports){
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, checkCollisions, clear, ctx, currentActiveNode, draw, links, mousemove, n, nodes, rand, render, sTime, update;
 
 Canvas = require("./Canvas");
 
 Node = require("./Node");
 
-bg = "white";
-
-W = window.innerWidth;
-
-H = window.innerHeight;
+Link = require("./Link");
 
 AnimationFrame = window.AnimationFrame;
 
 AnimationFrame.shim();
 
-canv = new Canvas("canvas", W, H);
+BG = "white";
 
-ctx = canv.ctx;
+W = window.innerWidth;
+
+H = window.innerHeight;
+
+CANVAS = new Canvas("canvas", W, H);
+
+sTime = (new Date()).getTime();
+
+ctx = CANVAS.ctx;
+
+rand = function(range) {
+  return Math.floor(Math.random() * range);
+};
 
 nodes = (function() {
-  var i, results;
+  var j, results;
   results = [];
-  for (n = i = 0; i < 500; n = ++i) {
-    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx));
+  for (n = j = 0; j < 500; n = ++j) {
+    results.push(new Node(rand(W), rand(H), 5, ctx));
   }
   return results;
 })();
 
 currentActiveNode = null;
 
+links = (function() {
+  var j, len, results;
+  results = [];
+  for (j = 0, len = nodes.length; j < len; j++) {
+    n = nodes[j];
+    results.push(new Link(rand(nodes.length), rand(nodes.length)));
+  }
+  return results;
+})();
+
 checkCollisions = function(x, y) {
-  var i, len, results;
+  var j, len, results;
   if (currentActiveNode == null) {
     results = [];
-    for (i = 0, len = nodes.length; i < len; i++) {
-      n = nodes[i];
+    for (j = 0, len = nodes.length; j < len; j++) {
+      n = nodes[j];
       if (n.checkCollision(x, y)) {
         n.hover = true;
         results.push(currentActiveNode = n);
@@ -139,22 +173,48 @@ mousemove = function(e) {
   return checkCollisions(e.clientX, e.clientY);
 };
 
-canv.c.addEventListener("mousemove", mousemove, false);
+CANVAS.c.addEventListener("mousemove", mousemove, false);
 
 clear = function() {
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, canv.width, canv.height);
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
   return ctx.fill();
 };
 
-render = function() {
-  var i, len;
-  stats.begin();
-  clear();
-  for (i = 0, len = nodes.length; i < len; i++) {
-    n = nodes[i];
+draw = function() {
+  var j, k, len, len1, link;
+  for (j = 0, len = nodes.length; j < len; j++) {
+    n = nodes[j];
     n.draw();
   }
+  for (k = 0, len1 = links.length; k < len1; k++) {
+    link = links[k];
+    ctx.moveTo(nodes[link.source].x, nodes[link.source].y);
+    ctx.lineTo(nodes[link.target].x, nodes[link.target].y);
+  }
+  return ctx.stroke();
+};
+
+update = function() {
+  var delta, i, j, k, len, len1, results;
+  delta = (new Date()).getTime() - sTime;
+  for (i = j = 0, len = nodes.length; j < len; i = ++j) {
+    n = nodes[i];
+    n.y += Math.sin(delta / (Math.PI * 100)) * (i / 100 + 1);
+  }
+  results = [];
+  for (i = k = 0, len1 = nodes.length; k < len1; i = ++k) {
+    n = nodes[i];
+    results.push(n.x += Math.sin(delta / (Math.PI * 250)) * (i / 100 + 1));
+  }
+  return results;
+};
+
+render = function() {
+  stats.begin();
+  clear();
+  draw();
+  update();
   stats.end();
   return requestAnimationFrame(render);
 };
@@ -162,7 +222,7 @@ render = function() {
 render();
 
 
-},{"./Canvas":1,"./Node":2}]},{},[1,2,3])
+},{"./Canvas":1,"./Link":2,"./Node":3}]},{},[1,2,3,4])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map
