@@ -184,7 +184,7 @@ links = (<span class="hljs-keyword">new</span> Link(rand(nodes.length),rand(node
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">checkCollisions</span> = <span class="hljs-params">(x,y)</span> -&gt;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">checkCollisions</span> = <span class="hljs-params">(x, y)</span> -&gt;</span>
         <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> currentActiveNode?
             <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes
                 <span class="hljs-keyword">if</span> n.checkCollision(x,y)
@@ -205,9 +205,13 @@ links = (<span class="hljs-keyword">new</span> Link(rand(nodes.length),rand(node
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p><strong>Mouse Events</strong></p>
+              <p><strong>For zooming</strong></p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>scale = <span class="hljs-number">1</span>
+svg = <span class="hljs-built_in">document</span>.createElementNS(<span class="hljs-string">'http://www.w3.org/2000/svg'</span>,<span class="hljs-string">'svg'</span>)
+xform = svg.createSVGMatrix()</pre></div></div>
             
         </li>
         
@@ -218,14 +222,15 @@ links = (<span class="hljs-keyword">new</span> Link(rand(nodes.length),rand(node
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p><strong>mousemove</strong></p>
+              <p><strong>transformedPoint</strong></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mousemove</span> = <span class="hljs-params">(e)</span> -&gt;</span>
-        e.preventDefault()
-        checkCollisions(e.clientX, e.clientY)
-CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemove, <span class="hljs-literal">false</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">transformedPoint</span> = <span class="hljs-params">(x, y)</span> -&gt;</span>
+    pt = svg.createSVGPoint()
+    pt.x = x
+    pt.y = y
+    <span class="hljs-keyword">return</span> pt.matrixTransform(xform.inverse())</pre></div></div>
             
         </li>
         
@@ -236,9 +241,14 @@ CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemov
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p><strong>Render Pipeline</strong></p>
+              <p><strong>For dragging</strong></p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>dragStart = <span class="hljs-literal">null</span>
+dragScaleFactor = <span class="hljs-number">1.5</span>
+lastX = W <span class="hljs-regexp">//</span> <span class="hljs-number">2</span>
+lastY = H <span class="hljs-regexp">//</span> <span class="hljs-number">2</span></pre></div></div>
             
         </li>
         
@@ -249,14 +259,9 @@ CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemov
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Clear the canvas</p>
+              <p><strong>Mouse Events</strong></p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">clear</span> = -&gt;</span>
-    ctx.fillStyle = BG
-    ctx.fillRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, W, H)
-    ctx.fill()</pre></div></div>
             
         </li>
         
@@ -266,6 +271,196 @@ CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemov
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p><strong>mousedown</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mousedown</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    lastX = e.clientX - CANVAS.c.offsetLeft
+    lastY = e.clientY - CANVAS.c.offsetTop
+    dragStart = transformedPoint(lastX, lastY)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p><strong>mouseup</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mouseup</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    dragStart = <span class="hljs-literal">null</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p><strong>mousemove</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mousemove</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    e.preventDefault()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Collisons</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    tPt = transformedPoint(e.clientX, e.clientY)
+    checkCollisions(tPt.x, tPt.y)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Dragging</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    lastX = e.clientX - CANVAS.c.offsetLeft
+    lastY = e.clientY - CANVAS.c.offsetTop
+
+    <span class="hljs-keyword">if</span> dragStart?
+        tPt = transformedPoint(lastX, lastY)
+        dX = (tPt.x - dragStart.x) * dragScaleFactor
+        dY = (tPt.y - dragStart.y) * dragScaleFactor
+        xform = xform.translate(dX, dY)
+        ctx.translate(dX, dY)
+        cameraX -= dX
+        cameraY -= dY</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p><strong>mousewheel</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mousewheel</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    e.preventDefault()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p><code>n</code> or <code>-n</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    wheel = event.wheelDelta / <span class="hljs-number">120</span>
+    zoom = <span class="hljs-number">1</span> + wheel / <span class="hljs-number">2</span>
+    
+    delta = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> e.wheelDelta?
+        delta = e.wheelDelta/<span class="hljs-number">120</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">if</span> e.detail?
+            delta = -e.detail
+
+    pt = transformedPoint(lastX, lastY)
+    ctx.translate(pt.x, pt.y)
+    xform = xform.translate(pt.x, pt.y)
+    factor = zoom
+    ctx.scale(factor, factor)
+    xform = xform.scaleNonUniform(factor, factor)
+    ctx.translate(-pt.x, -pt.y)
+    xform = xform.translate(-pt.x, -pt.y)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Creating event listeners</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>CANVAS.c.addEventListener(<span class="hljs-string">"mousedown"</span>, mousedown, <span class="hljs-literal">false</span>)
+CANVAS.c.addEventListener(<span class="hljs-string">"mouseup"</span>, mouseup, <span class="hljs-literal">false</span>)
+CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemove, <span class="hljs-literal">false</span>)
+CANVAS.c.addEventListener(<span class="hljs-string">"mousewheel"</span>, mousewheel, <span class="hljs-literal">false</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p><strong>Render Pipeline</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Clear the canvas</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">clear</span> = -&gt;</span>
+    ctx.fillStyle = BG
+    p1 = transformedPoint(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>)
+    p2 = transformedPoint(W,H)
+    ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
+    ctx.fill()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Draw nodes and links</p>
 
@@ -282,11 +477,11 @@ CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemov
         </li>
         
         
-        <li id="section-17">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Update node x,y values</p>
 
@@ -309,11 +504,11 @@ CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemov
         </li>
         
         
-        <li id="section-18">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Request next frame</p>
 
@@ -324,11 +519,11 @@ CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemov
         </li>
         
         
-        <li id="section-19">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p><strong>Start the render loop</strong></p>
 

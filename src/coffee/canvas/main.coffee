@@ -47,17 +47,12 @@ checkCollisions = (x, y) ->
                 currentActiveNode = null
 
 
-# **For zooming and panning**
-lastX = W // 2
-lastY = H // 2
-cameraX = 0
-cameraY = 0
-cameraWidth = W
-cameraHeight = H
+# **For zooming**
 scale = 1
 svg = document.createElementNS('http://www.w3.org/2000/svg','svg')
 xform = svg.createSVGMatrix()
 
+# **transformedPoint**
 transformedPoint = (x, y) ->
     pt = svg.createSVGPoint()
     pt.x = x
@@ -68,6 +63,8 @@ transformedPoint = (x, y) ->
 # **For dragging**
 dragStart = null
 dragScaleFactor = 1.5
+lastX = W // 2
+lastY = H // 2
 
 # **Mouse Events**
 
@@ -87,7 +84,6 @@ mousemove = (e) ->
 
     # Collisons
     tPt = transformedPoint(e.clientX, e.clientY)
-    #checkCollisions(e.clientX, e.clientY)
     checkCollisions(tPt.x, tPt.y)
 
     # Dragging
@@ -107,34 +103,11 @@ mousemove = (e) ->
 mousewheel = (e) ->
     e.preventDefault()
 
-    # n or -n
+    # `n` or `-n`
     wheel = event.wheelDelta / 120
-    # wheel = delta
     zoom = 1 + wheel / 2
     
-    # camera way
-
-    # mouseX = e.clientX - CANVAS.c.offsetLeft
-    # mouseY = e.clientY - CANVAS.c.offsetTop
-    #
-    # xOffset = mouseX / scale + cameraX - mouseX / (scale * zoom)
-    # yOffset = mouseY / scale + cameraY - mouseY / (scale * zoom)
-    #
-    #
-    # ctx.translate(cameraX, cameraY)
-    # ctx.scale(zoom,zoom)
-    # xform = xform.scaleNonUniform(zoom,zoom)
-    # scale *= zoom
-    # ctx.translate(-xOffset, -yOffset)
-    # cameraX = xOffset
-    # cameraY = yOffset
-    # cameraWidth = W / scale
-    # cameraHeight = H / scale
-
-    # Matrix way
-    
     delta = 0
-
     if e.wheelDelta?
         delta = e.wheelDelta/120
     else
@@ -150,7 +123,7 @@ mousewheel = (e) ->
     ctx.translate(-pt.x, -pt.y)
     xform = xform.translate(-pt.x, -pt.y)
 
-# Creating event listenerss
+# Creating event listeners
 CANVAS.c.addEventListener("mousedown", mousedown, false)
 CANVAS.c.addEventListener("mouseup", mouseup, false)
 CANVAS.c.addEventListener("mousemove", mousemove, false)
@@ -162,16 +135,11 @@ CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 # Clear the canvas
 clear = ->
     ctx.fillStyle = BG
-    # ctx.fillRect(0, 0, W, H)
-    # Camera way
-    # ctx.fillRect(cameraX, cameraY, cameraWidth, cameraHeight)
-    # Matrix way
     p1 = transformedPoint(0,0)
     p2 = transformedPoint(W,H)
     ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
-    
     ctx.fill()
-#
+
 # Draw nodes and links
 draw = ->
     n.draw() for n in nodes
@@ -192,7 +160,7 @@ render = ->
     
     clear()
     draw()
-    # update()
+    update()
     
     stats.end()
     

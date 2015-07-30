@@ -290,6 +290,7 @@ render = function() {
   stats.begin();
   clear();
   draw();
+  update();
   stats.end();
   return requestAnimationFrame(render);
 };
