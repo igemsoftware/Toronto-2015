@@ -50,6 +50,11 @@ checkCollisions = (x, y) ->
 # **For zooming and panning**
 lastX = W // 2
 lastY = H // 2
+cameraX = 0
+cameraY = 0
+cameraWidth = W
+cameraHeight = H
+scale = 1
 svg = document.createElementNS('http://www.w3.org/2000/svg','svg')
 xform = svg.createSVGMatrix()
 transformedPoint = (x, y) ->
@@ -73,18 +78,46 @@ mousemove = (e) ->
 mousewheel = (e) ->
     e.preventDefault()
 
+    # delta = 0
+    #
+    # if e.wheelDelta?
+    #     delta = e.wheelDelta/120
+    # else
+    #     if e.detail?
+    #         delta = -e.detail
+        
+    #delta = evt.wheelDelta ? evt.wheelDelta/120 : evt.detail ? -evt.detail : 0
+
     # n or -n
     wheel = event.wheelDelta / 120
+    # wheel = delta
     zoom = 1 + wheel / 2
+    
+    mouseX = e.clientX - CANVAS.c.offsetLeft
+    mouseY = e.clientY - CANVAS.c.offsetTop
+        
+    xOffset = mouseX / scale + cameraX - mouseX / (scale * zoom)
+    yOffset = mouseY / scale + cameraY - mouseY / (scale * zoom)
 
-    pt = transformedPoint(lastX, lastY)
-    ctx.translate(pt.x, pt.y)
-    xform = xform.translate(pt.x, pt.y)
-    factor = zoom
-    ctx.scale(factor, factor)
-    xform = xform.scaleNonUniform(factor, factor)
-    ctx.translate(-pt.x, -pt.y)
-    xform = xform.translate(-pt.x, -pt.y)
+
+    ctx.translate(cameraX, cameraY)
+    ctx.scale(zoom,zoom)
+    xform = xform.scaleNonUniform(zoom,zoom)
+    scale *= zoom
+    ctx.translate(-xOffset, -yOffset)
+    cameraX = xOffset
+    cameraY = yOffset
+    cameraWidth = W / scale
+    cameraHeight = H / scale
+
+    # pt = transformedPoint(lastX, lastY)
+    # ctx.translate(pt.x, pt.y)
+    # xform = xform.translate(pt.x, pt.y)
+    # factor = zoom
+    # ctx.scale(factor, factor)
+    # xform = xform.scaleNonUniform(factor, factor)
+    # ctx.translate(-pt.x, -pt.y)
+    # xform = xform.translate(-pt.x, -pt.y)
 
 # Creating event listenerss
 CANVAS.c.addEventListener("mousemove", mousemove, false)
@@ -96,9 +129,10 @@ CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 # Clear the canvas
 clear = ->
     ctx.fillStyle = BG
-    ctx.fillRect(0, 0, W, H)
+    # ctx.fillRect(0, 0, W, H)
+    ctx.fillRect(cameraX, cameraY, cameraWidth, cameraHeight)
     ctx.fill()
-
+#
 # Draw nodes and links
 draw = ->
     n.draw() for n in nodes
