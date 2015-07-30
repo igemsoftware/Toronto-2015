@@ -193,23 +193,26 @@ mousemove = function(e) {
 };
 
 mousewheel = function(e) {
-  var mouseX, mouseY, wheel, xOffset, yOffset, zoom;
+  var delta, factor, pt, wheel, zoom;
   e.preventDefault();
   wheel = event.wheelDelta / 120;
   zoom = 1 + wheel / 2;
-  mouseX = e.clientX - CANVAS.c.offsetLeft;
-  mouseY = e.clientY - CANVAS.c.offsetTop;
-  xOffset = mouseX / scale + cameraX - mouseX / (scale * zoom);
-  yOffset = mouseY / scale + cameraY - mouseY / (scale * zoom);
-  ctx.translate(cameraX, cameraY);
-  ctx.scale(zoom, zoom);
-  xform = xform.scaleNonUniform(zoom, zoom);
-  scale *= zoom;
-  ctx.translate(-xOffset, -yOffset);
-  cameraX = xOffset;
-  cameraY = yOffset;
-  cameraWidth = W / scale;
-  return cameraHeight = H / scale;
+  delta = 0;
+  if (e.wheelDelta != null) {
+    delta = e.wheelDelta / 120;
+  } else {
+    if (e.detail != null) {
+      delta = -e.detail;
+    }
+  }
+  pt = transformedPoint(lastX, lastY);
+  ctx.translate(pt.x, pt.y);
+  xform = xform.translate(pt.x, pt.y);
+  factor = zoom;
+  ctx.scale(factor, factor);
+  xform = xform.scaleNonUniform(factor, factor);
+  ctx.translate(-pt.x, -pt.y);
+  return xform = xform.translate(-pt.x, -pt.y);
 };
 
 CANVAS.c.addEventListener("mousemove", mousemove, false);
@@ -217,8 +220,11 @@ CANVAS.c.addEventListener("mousemove", mousemove, false);
 CANVAS.c.addEventListener("mousewheel", mousewheel, false);
 
 clear = function() {
+  var p1, p2;
   ctx.fillStyle = BG;
-  ctx.fillRect(cameraX, cameraY, cameraWidth, cameraHeight);
+  p1 = transformedPoint(0, 0);
+  p2 = transformedPoint(W, H);
+  ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
   return ctx.fill();
 };
 

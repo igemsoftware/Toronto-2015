@@ -78,46 +78,48 @@ mousemove = (e) ->
 mousewheel = (e) ->
     e.preventDefault()
 
-    # delta = 0
-    #
-    # if e.wheelDelta?
-    #     delta = e.wheelDelta/120
-    # else
-    #     if e.detail?
-    #         delta = -e.detail
-        
-    #delta = evt.wheelDelta ? evt.wheelDelta/120 : evt.detail ? -evt.detail : 0
-
     # n or -n
     wheel = event.wheelDelta / 120
     # wheel = delta
     zoom = 1 + wheel / 2
     
-    mouseX = e.clientX - CANVAS.c.offsetLeft
-    mouseY = e.clientY - CANVAS.c.offsetTop
-        
-    xOffset = mouseX / scale + cameraX - mouseX / (scale * zoom)
-    yOffset = mouseY / scale + cameraY - mouseY / (scale * zoom)
+    # camera way
 
+    # mouseX = e.clientX - CANVAS.c.offsetLeft
+    # mouseY = e.clientY - CANVAS.c.offsetTop
+    #
+    # xOffset = mouseX / scale + cameraX - mouseX / (scale * zoom)
+    # yOffset = mouseY / scale + cameraY - mouseY / (scale * zoom)
+    #
+    #
+    # ctx.translate(cameraX, cameraY)
+    # ctx.scale(zoom,zoom)
+    # xform = xform.scaleNonUniform(zoom,zoom)
+    # scale *= zoom
+    # ctx.translate(-xOffset, -yOffset)
+    # cameraX = xOffset
+    # cameraY = yOffset
+    # cameraWidth = W / scale
+    # cameraHeight = H / scale
 
-    ctx.translate(cameraX, cameraY)
-    ctx.scale(zoom,zoom)
-    xform = xform.scaleNonUniform(zoom,zoom)
-    scale *= zoom
-    ctx.translate(-xOffset, -yOffset)
-    cameraX = xOffset
-    cameraY = yOffset
-    cameraWidth = W / scale
-    cameraHeight = H / scale
+    # Matrix way
+    
+    delta = 0
 
-    # pt = transformedPoint(lastX, lastY)
-    # ctx.translate(pt.x, pt.y)
-    # xform = xform.translate(pt.x, pt.y)
-    # factor = zoom
-    # ctx.scale(factor, factor)
-    # xform = xform.scaleNonUniform(factor, factor)
-    # ctx.translate(-pt.x, -pt.y)
-    # xform = xform.translate(-pt.x, -pt.y)
+    if e.wheelDelta?
+        delta = e.wheelDelta/120
+    else
+        if e.detail?
+            delta = -e.detail
+
+    pt = transformedPoint(lastX, lastY)
+    ctx.translate(pt.x, pt.y)
+    xform = xform.translate(pt.x, pt.y)
+    factor = zoom
+    ctx.scale(factor, factor)
+    xform = xform.scaleNonUniform(factor, factor)
+    ctx.translate(-pt.x, -pt.y)
+    xform = xform.translate(-pt.x, -pt.y)
 
 # Creating event listenerss
 CANVAS.c.addEventListener("mousemove", mousemove, false)
@@ -130,7 +132,13 @@ CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 clear = ->
     ctx.fillStyle = BG
     # ctx.fillRect(0, 0, W, H)
-    ctx.fillRect(cameraX, cameraY, cameraWidth, cameraHeight)
+    # Camera way
+    # ctx.fillRect(cameraX, cameraY, cameraWidth, cameraHeight)
+    # Matrix way
+    p1 = transformedPoint(0,0)
+    p2 = transformedPoint(W,H)
+    ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
+    
     ctx.fill()
 #
 # Draw nodes and links
