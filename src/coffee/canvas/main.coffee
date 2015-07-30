@@ -34,7 +34,7 @@ links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
 # **Functions**
 
 # **checkCollisions**
-checkCollisions = (x,y) ->
+checkCollisions = (x, y) ->
         if not currentActiveNode?
             for n in nodes
                 if n.checkCollision(x,y)
@@ -46,13 +46,49 @@ checkCollisions = (x,y) ->
             if not currentActiveNode.checkCollision(x,y)
                 currentActiveNode = null
 
+
+# **For zooming and panning**
+lastX = W // 2
+lastY = H // 2
+svg = document.createElementNS('http://www.w3.org/2000/svg','svg')
+xform = svg.createSVGMatrix()
+transformedPoint = (x, y) ->
+    pt = svg.createSVGPoint()
+    pt.x = x
+    pt.y = y
+    return pt.matrixTransform(xform.inverse())
+
+
 # **Mouse Events**
 
 # **mousemove**
 mousemove = (e) ->
-        e.preventDefault()
-        checkCollisions(e.clientX, e.clientY)
+    e.preventDefault()
+
+    lastX = e.clientX - CANVAS.c.offsetLeft
+    lastY = e.clientY - CANVAS.c.offsetTop
+    checkCollisions(e.clientX, e.clientY)
+
+# **mousewheel**
+mousewheel = (e) ->
+    e.preventDefault()
+
+    # n or -n
+    wheel = event.wheelDelta / 120
+    zoom = 1 + wheel / 2
+
+    pt = transformedPoint(lastX, lastY)
+    ctx.translate(pt.x, pt.y)
+    xform = xform.translate(pt.x, pt.y)
+    factor = zoom
+    ctx.scale(factor, factor)
+    xform = xform.scaleNonUniform(factor, factor)
+    ctx.translate(-pt.x, -pt.y)
+    xform = xform.translate(-pt.x, -pt.y)
+
+# Creating event listenerss
 CANVAS.c.addEventListener("mousemove", mousemove, false)
+CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 
 
 # **Render Pipeline**

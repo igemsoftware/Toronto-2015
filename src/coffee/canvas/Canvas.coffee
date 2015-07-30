@@ -19,18 +19,6 @@ class Canvas
         document.body.appendChild(@c)
         
         # Get 2d context
-        @ctx = document.getElementById(@id).getContext("2d")
-
-    # **fill**
-    fill: ->
-        @ctx.fill()
-
-    mouseover: (e) ->
-        e.preventDefault()
-        console.log("mouseover")
-
-    # mousemove: (e) ->
-    #     e.preventDefault()
-    #     checkCollisions(e.clientX, e.clientY)
+        @ctx = document.getElementById(@id).getContext("2d") 
 
 module.exports = Canvas

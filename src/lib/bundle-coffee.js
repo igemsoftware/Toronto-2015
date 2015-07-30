@@ -15,15 +15,6 @@ Canvas = (function() {
     this.ctx = document.getElementById(this.id).getContext("2d");
   }
 
-  Canvas.prototype.fill = function() {
-    return this.ctx.fill();
-  };
-
-  Canvas.prototype.mouseover = function(e) {
-    e.preventDefault();
-    return console.log("mouseover");
-  };
-
   return Canvas;
 
 })();
@@ -98,7 +89,7 @@ module.exports = Node;
 
 
 },{}],4:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, checkCollisions, clear, ctx, currentActiveNode, draw, links, mousemove, n, nodes, rand, render, sTime, update;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, checkCollisions, clear, ctx, currentActiveNode, draw, lastX, lastY, links, mousemove, mousewheel, n, nodes, rand, render, sTime, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -168,12 +159,47 @@ checkCollisions = function(x, y) {
   }
 };
 
+lastX = Math.floor(W / 2);
+
+lastY = Math.floor(H / 2);
+
+svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+xform = svg.createSVGMatrix();
+
+transformedPoint = function(x, y) {
+  var pt;
+  pt = svg.createSVGPoint();
+  pt.x = x;
+  pt.y = y;
+  return pt.matrixTransform(xform.inverse());
+};
+
 mousemove = function(e) {
   e.preventDefault();
+  lastX = e.clientX - CANVAS.c.offsetLeft;
+  lastY = e.clientY - CANVAS.c.offsetTop;
   return checkCollisions(e.clientX, e.clientY);
 };
 
+mousewheel = function(e) {
+  var factor, pt, wheel, zoom;
+  e.preventDefault();
+  wheel = event.wheelDelta / 120;
+  zoom = 1 + wheel / 2;
+  pt = transformedPoint(lastX, lastY);
+  ctx.translate(pt.x, pt.y);
+  xform = xform.translate(pt.x, pt.y);
+  factor = zoom;
+  ctx.scale(factor, factor);
+  xform = xform.scaleNonUniform(factor, factor);
+  ctx.translate(-pt.x, -pt.y);
+  return xform = xform.translate(-pt.x, -pt.y);
+};
+
 CANVAS.c.addEventListener("mousemove", mousemove, false);
+
+CANVAS.c.addEventListener("mousewheel", mousewheel, false);
 
 clear = function() {
   ctx.fillStyle = BG;
