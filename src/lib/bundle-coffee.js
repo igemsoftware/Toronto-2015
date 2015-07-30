@@ -89,7 +89,7 @@ module.exports = Node;
 
 
 },{}],4:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, cameraHeight, cameraWidth, cameraX, cameraY, checkCollisions, clear, ctx, currentActiveNode, draw, lastX, lastY, links, mousemove, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, cameraHeight, cameraWidth, cameraX, cameraY, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -185,11 +185,35 @@ transformedPoint = function(x, y) {
   return pt.matrixTransform(xform.inverse());
 };
 
-mousemove = function(e) {
-  e.preventDefault();
+dragStart = null;
+
+dragScaleFactor = 1.5;
+
+mousedown = function(e) {
   lastX = e.clientX - CANVAS.c.offsetLeft;
   lastY = e.clientY - CANVAS.c.offsetTop;
-  return checkCollisions(e.clientX, e.clientY);
+  return dragStart = transformedPoint(lastX, lastY);
+};
+
+mouseup = function(e) {
+  return dragStart = null;
+};
+
+mousemove = function(e) {
+  var dX, dY, tPt;
+  e.preventDefault();
+  checkCollisions(e.clientX, e.clientY);
+  lastX = e.clientX - CANVAS.c.offsetLeft;
+  lastY = e.clientY - CANVAS.c.offsetTop;
+  if (dragStart != null) {
+    tPt = transformedPoint(lastX, lastY);
+    dX = (tPt.x - dragStart.x) * dragScaleFactor;
+    dY = (tPt.y - dragStart.y) * dragScaleFactor;
+    xform = xform.translate(dX, dY);
+    ctx.translate(dX, dY);
+    cameraX -= dX;
+    return cameraY -= dY;
+  }
 };
 
 mousewheel = function(e) {
@@ -214,6 +238,10 @@ mousewheel = function(e) {
   ctx.translate(-pt.x, -pt.y);
   return xform = xform.translate(-pt.x, -pt.y);
 };
+
+CANVAS.c.addEventListener("mousedown", mousedown, false);
+
+CANVAS.c.addEventListener("mouseup", mouseup, false);
 
 CANVAS.c.addEventListener("mousemove", mousemove, false);
 

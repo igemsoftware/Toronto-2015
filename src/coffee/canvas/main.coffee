@@ -64,15 +64,41 @@ transformedPoint = (x, y) ->
     return pt.matrixTransform(xform.inverse())
 
 
+# **For dragging**
+dragStart = null
+dragScaleFactor = 1.5
+
 # **Mouse Events**
+
+# **mousedown**
+mousedown = (e) ->
+    lastX = e.clientX - CANVAS.c.offsetLeft
+    lastY = e.clientY - CANVAS.c.offsetTop
+    dragStart = transformedPoint(lastX, lastY)
+
+# **mouseup**
+mouseup = (e) ->
+    dragStart = null
 
 # **mousemove**
 mousemove = (e) ->
     e.preventDefault()
 
+    # Collisons
+    checkCollisions(e.clientX, e.clientY)
+    
+    # Dragging
     lastX = e.clientX - CANVAS.c.offsetLeft
     lastY = e.clientY - CANVAS.c.offsetTop
-    checkCollisions(e.clientX, e.clientY)
+
+    if dragStart?
+        tPt = transformedPoint(lastX, lastY)
+        dX = (tPt.x - dragStart.x) * dragScaleFactor
+        dY = (tPt.y - dragStart.y) * dragScaleFactor
+        xform = xform.translate(dX, dY)
+        ctx.translate(dX, dY)
+        cameraX -= dX
+        cameraY -= dY
 
 # **mousewheel**
 mousewheel = (e) ->
@@ -122,6 +148,8 @@ mousewheel = (e) ->
     xform = xform.translate(-pt.x, -pt.y)
 
 # Creating event listenerss
+CANVAS.c.addEventListener("mousedown", mousedown, false)
+CANVAS.c.addEventListener("mouseup", mouseup, false)
 CANVAS.c.addEventListener("mousemove", mousemove, false)
 CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 
