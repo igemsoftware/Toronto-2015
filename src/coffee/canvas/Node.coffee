@@ -9,8 +9,13 @@ class Node
         @ctx.beginPath()
         @ctx.moveTo(@x, @y)
         @ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
-        @ctx.fillStyle = "black"
         @ctx.closePath()
+
+        if @hover
+            @ctx.fillStyle = "red"
+        else
+            @ctx.fillStyle = "black"
+
         @ctx.fill()
 
     drawRed: ->

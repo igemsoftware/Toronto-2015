@@ -47,8 +47,12 @@ Node = (function() {
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    this.ctx.fillStyle = "black";
     this.ctx.closePath();
+    if (this.hover) {
+      this.ctx.fillStyle = "red";
+    } else {
+      this.ctx.fillStyle = "black";
+    }
     return this.ctx.fill();
   };
 
@@ -64,7 +68,6 @@ Node = (function() {
   Node.prototype.checkCollision = function(x, y) {
     var inside;
     inside = false;
-    console.log(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
     if (Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2) <= Math.pow(this.r, 2)) {
       inside = true;
     }
@@ -79,60 +82,53 @@ module.exports = Node;
 
 
 },{}],3:[function(require,module,exports){
-var Canvas, H, Network, Node, W, canv, checkCollisions, currentActiveNode, i, len, mousemove, n, network, nodes;
+var AnimationFrame, Canvas, H, Node, W, bg, canv, checkCollisions, clear, ctx, currentActiveNode, mousemove, n, nodes, render;
 
 Canvas = require("./Canvas");
 
 Node = require("./Node");
 
-Network = (function() {
-  var foobar;
+bg = "white";
 
-  function Network(canvas, nodes1) {
-    this.canvas = canvas;
-    this.nodes = nodes1;
-    this.foo("foobars");
+W = window.innerWidth;
+
+H = window.innerHeight;
+
+AnimationFrame = window.AnimationFrame;
+
+AnimationFrame.shim();
+
+canv = new Canvas("canvas", W, H);
+
+ctx = canv.ctx;
+
+nodes = (function() {
+  var i, results;
+  results = [];
+  for (n = i = 0; i < 500; n = ++i) {
+    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx));
   }
-
-  foobar = function(bar) {
-    return console.log(bar);
-  };
-
-  Network.prototype.foo = function(bar) {
-    console.log(this.nodes);
-    return foobar(bar);
-  };
-
-  return Network;
-
+  return results;
 })();
 
 currentActiveNode = null;
 
 checkCollisions = function(x, y) {
-  var i, inside, len, n, results;
+  var i, len, results;
   if (currentActiveNode == null) {
     results = [];
     for (i = 0, len = nodes.length; i < len; i++) {
       n = nodes[i];
-      inside = n.checkCollision(x, y);
-      if (inside) {
+      if (n.checkCollision(x, y)) {
         n.hover = true;
-        n.drawRed();
-        currentActiveNode = n;
-      }
-      if (n.hover && (!inside)) {
-        n.hover = false;
-        results.push(n.draw());
+        results.push(currentActiveNode = n);
       } else {
-        results.push(void 0);
+        results.push(n.hover = false);
       }
     }
     return results;
   } else {
-    inside = currentActiveNode.checkCollision(x, y);
-    if (!inside) {
-      currentActiveNode.draw();
+    if (!currentActiveNode.checkCollision(x, y)) {
       return currentActiveNode = null;
     }
   }
@@ -143,31 +139,27 @@ mousemove = function(e) {
   return checkCollisions(e.clientX, e.clientY);
 };
 
-W = window.innerWidth;
-
-H = window.innerHeight;
-
-canv = new Canvas("canvas", W, H);
-
 canv.c.addEventListener("mousemove", mousemove, false);
 
-nodes = (function() {
-  var i, results;
-  results = [];
-  for (n = i = 0; i < 1000; n = ++i) {
-    results.push(new Node(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 5, canv.ctx));
+clear = function() {
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, canv.width, canv.height);
+  return ctx.fill();
+};
+
+render = function() {
+  var i, len;
+  stats.begin();
+  clear();
+  for (i = 0, len = nodes.length; i < len; i++) {
+    n = nodes[i];
+    n.draw();
   }
-  return results;
-})();
+  stats.end();
+  return requestAnimationFrame(render);
+};
 
-for (i = 0, len = nodes.length; i < len; i++) {
-  n = nodes[i];
-  n.draw();
-}
-
-network = new Network(canv, nodes);
-
-canv.fill();
+render();
 
 
 },{"./Canvas":1,"./Node":2}]},{},[1,2,3])

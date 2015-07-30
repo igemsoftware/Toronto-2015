@@ -17,11 +17,28 @@
 <body>
     <!-- bower:js -->
     <script src="../bower_components/animation-frame/AnimationFrame.js"></script>
+    <script src="../bower_components/stats.js/build/stats.min.js"></script>
     <!-- endbower -->
+
+    <script>
+        var stats = new Stats();
+
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '0px';
+        stats.domElement.style.top = '0px';
+
+        document.body.appendChild(stats.domElement);
+
+        // var update = function() {
+        //     stats.update()
+        //     requestAnimationFrame(update);
+        // };
+    </script>
 
     <!-- inject:js -->
     <script src="lib/bundle-coffee.js"></script>
     <!-- endinject -->
+
 </body>
 
 </html>

@@ -15,6 +15,7 @@
   "dependencies": {
     "animation-frame": "~0.2.4",
     "sanitize-css": "~1.1.0",
-    "compass-mixins": "~1.0.2"
+    "compass-mixins": "~1.0.2",
+    "stats.js": "*"
   }
 }

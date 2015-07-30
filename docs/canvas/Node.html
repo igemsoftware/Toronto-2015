@@ -27,7 +27,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h3 id="node">Node</h3>
+              <p>###Node</p>
 
             </div>
             
@@ -45,10 +45,20 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span></span>
     <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>, <span class="hljs-property">@r</span>, <span class="hljs-property">@ctx</span>)</span> -&gt;</span>
-    
+        <span class="hljs-property">@hover</span> = <span class="hljs-literal">false</span>
+
     <span class="hljs-attribute">draw</span>: <span class="hljs-function">-&gt;</span>
+        <span class="hljs-property">@ctx</span>.beginPath()
         <span class="hljs-property">@ctx</span>.moveTo(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>)
         <span class="hljs-property">@ctx</span>.arc(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>, <span class="hljs-property">@r</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span> * Math.PI)
+        <span class="hljs-property">@ctx</span>.closePath()
+
+        <span class="hljs-keyword">if</span> <span class="hljs-property">@hover</span>
+            <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"red"</span>
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"black"</span>
+
+        <span class="hljs-property">@ctx</span>.fill()
 
     <span class="hljs-attribute">drawRed</span>: <span class="hljs-function">-&gt;</span>
         <span class="hljs-property">@ctx</span>.beginPath()
@@ -59,11 +69,26 @@
         <span class="hljs-property">@ctx</span>.fill()
 
     <span class="hljs-attribute">checkCollision</span>: <span class="hljs-function"><span class="hljs-params">(x,y)</span> -&gt;</span>
-        inside = <span class="hljs-literal">true</span>
-        <span class="hljs-property">@ctx</span>.strokeRect(<span class="hljs-property">@x</span> - <span class="hljs-property">@r</span>, <span class="hljs-property">@y</span> - <span class="hljs-property">@r</span>, <span class="hljs-number">2</span>*<span class="hljs-property">@r</span>, <span class="hljs-number">2</span>*<span class="hljs-property">@r</span>)
-        <span class="hljs-property">@ctx</span>.fill()
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ( <span class="hljs-property">@x</span> - <span class="hljs-property">@r</span> &lt; x &lt; <span class="hljs-property">@x</span> + <span class="hljs-property">@r</span> ) <span class="hljs-keyword">then</span> inside = <span class="hljs-literal">false</span>
-        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ( <span class="hljs-property">@y</span> - <span class="hljs-property">@r</span> &lt; y &lt; <span class="hljs-property">@y</span> + <span class="hljs-property">@r</span> ) <span class="hljs-keyword">then</span> inside = <span class="hljs-literal">false</span>
+        inside = <span class="hljs-literal">false</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>@ctx.strokeRect(@x - @r, @y - @r, 2<em>@r, 2</em>@r)
+@ctx.fill()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span>  ((x-<span class="hljs-property">@x</span>)**<span class="hljs-number">2</span> + (y-<span class="hljs-property">@y</span>)**<span class="hljs-number">2</span> &lt;= <span class="hljs-property">@r</span>**<span class="hljs-number">2</span> )
+          inside = <span class="hljs-literal">true</span>
+
+
 
         <span class="hljs-keyword">return</span> inside
 
