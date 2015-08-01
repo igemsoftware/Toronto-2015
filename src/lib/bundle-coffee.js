@@ -89,7 +89,7 @@ module.exports = Node;
 
 
 },{}],4:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, cameraHeight, cameraWidth, cameraX, cameraY, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -159,18 +159,6 @@ checkCollisions = function(x, y) {
   }
 };
 
-lastX = Math.floor(W / 2);
-
-lastY = Math.floor(H / 2);
-
-cameraX = 0;
-
-cameraY = 0;
-
-cameraWidth = W;
-
-cameraHeight = H;
-
 scale = 1;
 
 svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -188,6 +176,10 @@ transformedPoint = function(x, y) {
 dragStart = null;
 
 dragScaleFactor = 1.5;
+
+lastX = Math.floor(W / 2);
+
+lastY = Math.floor(H / 2);
 
 mousedown = function(e) {
   lastX = e.clientX - CANVAS.c.offsetLeft;
@@ -290,7 +282,6 @@ render = function() {
   stats.begin();
   clear();
   draw();
-  update();
   stats.end();
   return requestAnimationFrame(render);
 };

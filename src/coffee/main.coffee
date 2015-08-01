@@ -160,7 +160,7 @@ render = ->
     
     clear()
     draw()
-    update()
+    #update()
     
     stats.end()
     
