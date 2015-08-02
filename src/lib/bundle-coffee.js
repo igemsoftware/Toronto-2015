@@ -62,7 +62,7 @@ Node = (function() {
     if (this.hover) {
       this.ctx.fillStyle = "red";
     } else {
-      this.ctx.fillStyle = "rgb(" + (rand(155) + 100) + ",0,0)";
+      this.ctx.fillStyle = "black";
     }
     return this.ctx.fill();
   };
@@ -96,7 +96,7 @@ AnimationFrame = window.AnimationFrame;
 
 AnimationFrame.shim();
 
-BG = "black";
+BG = "white";
 
 W = window.innerWidth;
 
@@ -115,7 +115,7 @@ rand = function(range) {
 nodes = (function() {
   var j, results;
   results = [];
-  for (n = j = 0; j < 4000; n = ++j) {
+  for (n = j = 0; j < 500; n = ++j) {
     results.push(new Node(rand(W), rand(H), 5, ctx));
   }
   return results;
@@ -233,7 +233,7 @@ CANVAS.c.addEventListener("mousemove", mousemove, false);
 
 CANVAS.c.addEventListener("mousewheel", mousewheel, false);
 
-force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(0.1).friction(0.9).linkDistance(20).charge(-30).gravity(0.1).theta(4).alpha(0.1).start();
+force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(0.1).friction(0.9).linkDistance(20).charge(-30).gravity(0.1).theta(0.8).alpha(0.1).start();
 
 clear = function() {
   var p1, p2;
@@ -255,7 +255,6 @@ draw = function() {
     ctx.moveTo(link.source.x, link.source.y);
     ctx.lineTo(link.target.x, link.target.y);
   }
-  ctx.strokeStyle = "rgb(100,0,0)";
   return ctx.stroke();
 };
 

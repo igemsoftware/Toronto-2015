@@ -17,8 +17,8 @@ class Node
         if @hover
             @ctx.fillStyle = "red"
         else
-            #@ctx.fillStyle = "black"
-            @ctx.fillStyle = "rgb(#{rand(155)+100},0,0)"
+            @ctx.fillStyle = "black"
+            #@ctx.fillStyle = "rgb(#{rand(155)+100},0,0)"
 
         @ctx.fill()
 

@@ -9,7 +9,7 @@ AnimationFrame.shim()
 
 
 # **Static Variables**
-BG = "black"
+BG = "white"
 W = window.innerWidth
 H = window.innerHeight
 # The painters `<canvas>`
@@ -25,7 +25,7 @@ rand = (range) ->
 # By *live*, these will be actively accessed/modified throughout runtime.
 
 # The list of *Nodes*
-nodes = (new Node(rand(W), rand(H), 5, ctx) for n in [0...4000])
+nodes = (new Node(rand(W), rand(H), 5, ctx) for n in [0...500])
 #nodes = (new Node(100, 200, 5, ctx) for n in [0..500])
 #nodes = (new Node(null, null, 5, ctx) for n in [0..1000])
 
@@ -132,7 +132,7 @@ CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 
 # **D3 Force Layout**
 force = d3.layout.force()
-    # The nodes: mutates x,y 
+    # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links) 
     .nodes(nodes)
     # The links: mutates source, target
     .links(links)
@@ -148,12 +148,23 @@ force = d3.layout.force()
     .charge(-30)
     # Sets the maximum distance over which charge forces are applied; \infty if not specified
     #.chargeDistance()
+    # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
     .gravity(0.1)
     # Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) < theta => treat quadrant as single large node
-    .theta(4)
+    .theta(0.8)
+    # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
     .alpha(0.1)
+    # Let's get this party start()ed
     .start()
 
+# Uncomment this and reanable force.tick() in render()
+# Although, then nothing happens.
+#force.stop()
+
+# Precompute layout for static rendering
+# optionify this later
+# force.tick() for n in nodes
+# force.stop()
 
 # **Render Pipeline**
 
@@ -175,7 +186,7 @@ draw = ->
         ctx.moveTo(link.source.x, link.source.y)
         ctx.lineTo(link.target.x, link.target.y)
    
-    ctx.strokeStyle = "rgb(100,0,0)"
+    #ctx.strokeStyle = "rgb(100,0,0)"
     ctx.stroke()
 
 # Update node x,y values
@@ -189,7 +200,9 @@ render = ->
     
     clear()
     draw()
+    # turn update() on for some sinusoidal rythmic fun
     #update()
+    #force.tick()
     
     stats.end()
     
@@ -198,3 +211,18 @@ render = ->
 
 # **Start the render loop**
 render()
+
+# or use the non-animation frame way
+# I get same FPS either way
+# we probably need some JS testing library to get useful benchmarks
+# or compare frame times with profiler
+# but it seems basically the same
+
+# force.on("tick", ->
+#     stats.begin()
+#
+#     clear()
+#     draw()
+#
+#     stats.end()
+# )
