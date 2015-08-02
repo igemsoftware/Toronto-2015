@@ -19,6 +19,6 @@ class Canvas
         document.body.appendChild(@c)
         
         # Get 2d context
-        @ctx = document.getElementById(@id).getContext("2d") 
+        @ctx = document.getElementById(@id).getContext("2d")
 
 module.exports = Canvas

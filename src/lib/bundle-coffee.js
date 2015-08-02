@@ -39,7 +39,11 @@ module.exports = Link;
 
 
 },{}],3:[function(require,module,exports){
-var Node;
+var Node, rand;
+
+rand = function(range) {
+  return Math.floor(Math.random() * range);
+};
 
 Node = (function() {
   function Node(x1, y1, r, ctx) {
@@ -58,17 +62,8 @@ Node = (function() {
     if (this.hover) {
       this.ctx.fillStyle = "red";
     } else {
-      this.ctx.fillStyle = "black";
+      this.ctx.fillStyle = "rgb(" + (rand(155) + 100) + ",0,0)";
     }
-    return this.ctx.fill();
-  };
-
-  Node.prototype.drawRed = function() {
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    this.ctx.fillStyle = "red";
-    this.ctx.closePath();
     return this.ctx.fill();
   };
 
@@ -89,7 +84,7 @@ module.exports = Node;
 
 
 },{}],4:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -101,7 +96,7 @@ AnimationFrame = window.AnimationFrame;
 
 AnimationFrame.shim();
 
-BG = "white";
+BG = "black";
 
 W = window.innerWidth;
 
@@ -120,7 +115,7 @@ rand = function(range) {
 nodes = (function() {
   var j, results;
   results = [];
-  for (n = j = 0; j < 500; n = ++j) {
+  for (n = j = 0; j < 4000; n = ++j) {
     results.push(new Node(rand(W), rand(H), 5, ctx));
   }
   return results;
@@ -238,6 +233,8 @@ CANVAS.c.addEventListener("mousemove", mousemove, false);
 
 CANVAS.c.addEventListener("mousewheel", mousewheel, false);
 
+force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(0.1).friction(0.9).linkDistance(20).charge(-30).gravity(0.1).theta(4).alpha(0.1).start();
+
 clear = function() {
   var p1, p2;
   ctx.fillStyle = BG;
@@ -255,9 +252,10 @@ draw = function() {
   }
   for (k = 0, len1 = links.length; k < len1; k++) {
     link = links[k];
-    ctx.moveTo(nodes[link.source].x, nodes[link.source].y);
-    ctx.lineTo(nodes[link.target].x, nodes[link.target].y);
+    ctx.moveTo(link.source.x, link.source.y);
+    ctx.lineTo(link.target.x, link.target.y);
   }
+  ctx.strokeStyle = "rgb(100,0,0)";
   return ctx.stroke();
 };
 

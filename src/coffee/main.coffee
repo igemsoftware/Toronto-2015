@@ -9,7 +9,7 @@ AnimationFrame.shim()
 
 
 # **Static Variables**
-BG = "white"
+BG = "black"
 W = window.innerWidth
 H = window.innerHeight
 # The painters `<canvas>`
@@ -25,7 +25,10 @@ rand = (range) ->
 # By *live*, these will be actively accessed/modified throughout runtime.
 
 # The list of *Nodes*
-nodes = (new Node(rand(W), rand(H), 5, ctx) for n in [0...500])
+nodes = (new Node(rand(W), rand(H), 5, ctx) for n in [0...4000])
+#nodes = (new Node(100, 200, 5, ctx) for n in [0..500])
+#nodes = (new Node(null, null, 5, ctx) for n in [0..1000])
+
 # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
 currentActiveNode = null
 links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
@@ -35,16 +38,16 @@ links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
 
 # **checkCollisions**
 checkCollisions = (x, y) ->
-        if not currentActiveNode?
-            for n in nodes
-                if n.checkCollision(x,y)
-                    n.hover = true
-                    currentActiveNode = n
-                else
-                    n.hover = false
-        else
-            if not currentActiveNode.checkCollision(x,y)
-                currentActiveNode = null
+    if not currentActiveNode?
+        for n in nodes
+            if n.checkCollision(x,y)
+                n.hover = true
+                currentActiveNode = n
+            else
+                n.hover = false
+    else
+        if not currentActiveNode.checkCollision(x,y)
+            currentActiveNode = null
 
 
 # **For zooming**
@@ -127,8 +130,29 @@ CANVAS.c.addEventListener("mouseup", mouseup, false)
 CANVAS.c.addEventListener("mousemove", mousemove, false)
 CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 
-# **D3 Things**
-
+# **D3 Force Layout**
+force = d3.layout.force()
+    # The nodes: mutates x,y 
+    .nodes(nodes)
+    # The links: mutates source, target
+    .links(links)
+    # Affects gravitational center and initial random position
+    .size([W, H])
+    # Sets "rigidity" of links in range [0,1]; func(link, index), this -> force; evaluated at start()
+    .linkStrength(0.1)
+    # At each tick of the simulation, the particle velocity is scaled by the specified friction
+    .friction(0.9)
+    # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
+    .linkDistance(20)
+    # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
+    .charge(-30)
+    # Sets the maximum distance over which charge forces are applied; \infty if not specified
+    #.chargeDistance()
+    .gravity(0.1)
+    # Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) < theta => treat quadrant as single large node
+    .theta(4)
+    .alpha(0.1)
+    .start()
 
 
 # **Render Pipeline**
@@ -146,8 +170,12 @@ draw = ->
     n.draw() for n in nodes
     
     for link in links
-        ctx.moveTo(nodes[link.source].x, nodes[link.source].y)
-        ctx.lineTo(nodes[link.target].x, nodes[link.target].y)
+        # ctx.moveTo(nodes[link.source].x, nodes[link.source].y)
+        # ctx.lineTo(nodes[link.target].x, nodes[link.target].y)
+        ctx.moveTo(link.source.x, link.source.y)
+        ctx.lineTo(link.target.x, link.target.y)
+   
+    ctx.strokeStyle = "rgb(100,0,0)"
     ctx.stroke()
 
 # Update node x,y values

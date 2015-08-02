@@ -1,3 +1,6 @@
+rand = (range) ->
+    return Math.floor(Math.random() * range)
+
 # ###Node
 
 #
@@ -14,26 +17,14 @@ class Node
         if @hover
             @ctx.fillStyle = "red"
         else
-            @ctx.fillStyle = "black"
+            #@ctx.fillStyle = "black"
+            @ctx.fillStyle = "rgb(#{rand(155)+100},0,0)"
 
-        @ctx.fill()
-
-    drawRed: ->
-        @ctx.beginPath()
-        @ctx.moveTo(@x, @y)
-        @ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
-        @ctx.fillStyle = "red"
-        @ctx.closePath()
         @ctx.fill()
 
     checkCollision: (x,y) ->
         inside = false
-        # @ctx.strokeRect(@x - @r, @y - @r, 2*@r, 2*@r)
-        # @ctx.fill()
-        if  ((x-@x)**2 + (y-@y)**2 <= @r**2 )
-          inside = true
-
-
+        if ((x-@x)**2 + (y-@y)**2 <= @r**2) then inside = true
 
         return inside
 
