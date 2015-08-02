@@ -96,8 +96,6 @@ mousemove = (e) ->
         dY = (tPt.y - dragStart.y) * dragScaleFactor
         xform = xform.translate(dX, dY)
         ctx.translate(dX, dY)
-        cameraX -= dX
-        cameraY -= dY
 
 # **mousewheel**
 mousewheel = (e) ->
@@ -128,6 +126,9 @@ CANVAS.c.addEventListener("mousedown", mousedown, false)
 CANVAS.c.addEventListener("mouseup", mouseup, false)
 CANVAS.c.addEventListener("mousemove", mousemove, false)
 CANVAS.c.addEventListener("mousewheel", mousewheel, false)
+
+# **D3 Things**
+
 
 
 # **Render Pipeline**

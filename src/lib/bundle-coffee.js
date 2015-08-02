@@ -203,9 +203,7 @@ mousemove = function(e) {
     dX = (tPt.x - dragStart.x) * dragScaleFactor;
     dY = (tPt.y - dragStart.y) * dragScaleFactor;
     xform = xform.translate(dX, dY);
-    ctx.translate(dX, dY);
-    cameraX -= dX;
-    return cameraY -= dY;
+    return ctx.translate(dX, dY);
   }
 };
 
