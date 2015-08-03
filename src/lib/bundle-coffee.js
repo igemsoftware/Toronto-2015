@@ -26,7 +26,8 @@ module.exports = Canvas;
 var Link;
 
 Link = (function() {
-  function Link(source, target) {
+  function Link(id, source, target) {
+    this.id = id;
     this.source = source;
     this.target = target;
   }
@@ -55,6 +56,7 @@ Node = (function() {
     this.id = attr.id;
     this.name = attr.name;
     this.type = attr.type;
+    this.flux_value = attr.flux_value;
   }
 
   Node.prototype.draw = function() {
@@ -65,7 +67,12 @@ Node = (function() {
     if (this.hover) {
       this.ctx.fillStyle = "red";
     } else {
-      this.ctx.fillStyle = "black";
+      if (this.type === "m") {
+        this.ctx.fillStyle = "black";
+      }
+      if (this.type === "r") {
+        this.ctx.fillStyle = "blue";
+      }
     }
     return this.ctx.fill();
   };
@@ -87,7 +94,7 @@ module.exports = Node;
 
 
 },{}],4:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, buildMetabolites, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -217,6 +224,8 @@ CANVAS.c.addEventListener("mousemove", mousemove, false);
 
 CANVAS.c.addEventListener("mousewheel", mousewheel, false);
 
+console.log(data);
+
 console.log(data.metabolites.length + " metabolites");
 
 buildMetabolites = function(model) {
@@ -238,19 +247,87 @@ buildMetabolites = function(model) {
   return tempNodes;
 };
 
-nodes = buildMetabolites(data);
+scaleRadius = function(model, minRadius, maxRadius) {
+  var fluxes, largest, reaction;
+  fluxes = (function() {
+    var j, len, ref, results;
+    ref = model.reactions;
+    results = [];
+    for (j = 0, len = ref.length; j < len; j++) {
+      reaction = ref[j];
+      results.push(reaction.flux_value);
+    }
+    return results;
+  })();
+  largest = Math.max.apply(Math, fluxes);
+  return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);
+};
 
-console.log(nodes);
+nodeMap = function(nodes) {
+  var i, j, len, map, node;
+  map = new Object();
+  for (i = j = 0, len = nodes.length; j < len; i = ++j) {
+    node = nodes[i];
+    map[node.id] = i;
+  }
+  return map;
+};
 
-links = (function() {
-  var j, len, results;
+buildReactions = function(model) {
+  var j, k, l, len, len1, len2, link, metabolite, nodeAttributes, nodesMap, radiusScale, reaction, ref, ref1, results, source, target, tempLinks;
+  radiusScale = scaleRadius(model, 5, 15);
+  tempLinks = new Array();
+  ref = model.reactions;
+  for (j = 0, len = ref.length; j < len; j++) {
+    reaction = ref[j];
+    if (reaction.flux_value > 0) {
+      nodeAttributes = {
+        x: rand(W),
+        y: rand(H),
+        r: radiusScale(reaction.flux_value),
+        name: reaction.name,
+        id: reaction.id,
+        type: "r",
+        flux_value: reaction.flux_value
+      };
+      nodes.push(new Node(nodeAttributes, ctx));
+      ref1 = Object.keys(reaction.metabolites);
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        metabolite = ref1[k];
+        source = null;
+        target = null;
+        if (metabolite > 0) {
+          source = reaction.id;
+          target = metabolite;
+        } else {
+          source = metabolite;
+          target = reaction.id;
+        }
+        link = {
+          id: source + "-" + target,
+          source: source,
+          target: target
+        };
+        tempLinks.push(link);
+      }
+    }
+  }
+  nodesMap = nodeMap(nodes);
   results = [];
-  for (j = 0, len = nodes.length; j < len; j++) {
-    n = nodes[j];
-    results.push(new Link(rand(nodes.length), rand(nodes.length)));
+  for (l = 0, len2 = tempLinks.length; l < len2; l++) {
+    link = tempLinks[l];
+    source = nodes[nodesMap[link.source]];
+    target = nodes[nodesMap[link.target]];
+    results.push(links.push(new Link(source.id + "-" + target.id, source, target)));
   }
   return results;
-})();
+};
+
+nodes = buildMetabolites(data);
+
+links = new Array();
+
+buildReactions(data);
 
 force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(0.1).friction(0.9).linkDistance(20).charge(-30).gravity(0.1).theta(0.8).alpha(0.1).start();
 
@@ -264,7 +341,7 @@ clear = function() {
 };
 
 draw = function() {
-  var j, k, len, len1, link;
+  var j, k, len, len1, link, n;
   for (j = 0, len = nodes.length; j < len; j++) {
     n = nodes[j];
     n.draw();
@@ -278,7 +355,7 @@ draw = function() {
 };
 
 update = function() {
-  var delta, i, j, k, len, len1, results;
+  var delta, i, j, k, len, len1, n, results;
   delta = (new Date()).getTime() - sTime;
   for (i = j = 0, len = nodes.length; j < len; i = ++j) {
     n = nodes[i];

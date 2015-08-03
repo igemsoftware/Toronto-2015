@@ -15,6 +15,7 @@ class Node
         @type = attr.type
 
         # reaction has flux value
+        @flux_value = attr.flux_value
 
     draw: ->
         @ctx.beginPath()
@@ -27,7 +28,8 @@ class Node
         if @hover
             @ctx.fillStyle = "red"
         else
-            @ctx.fillStyle = "black"
+            @ctx.fillStyle = "black" if @type is "m"
+            @ctx.fillStyle = "blue" if @type is "r"
             #@ctx.fillStyle = "rgb(#{rand(155)+100},0,0)"
 
         @ctx.fill()

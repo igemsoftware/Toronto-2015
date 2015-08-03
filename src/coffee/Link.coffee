@@ -1,4 +1,4 @@
 class Link
-    constructor: (@source, @target) ->
+    constructor: (@id, @source, @target) ->
 
 module.exports = Link

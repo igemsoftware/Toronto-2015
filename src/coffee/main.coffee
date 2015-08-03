@@ -141,7 +141,7 @@ CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 #       buildReactions(model)
 #       set up force layout
 
-# console.log(data)
+console.log(data)
 console.log("#{data.metabolites.length} metabolites")
 
 buildMetabolites = (model) ->
@@ -159,10 +159,79 @@ buildMetabolites = (model) ->
 
     return tempNodes
 
-nodes = buildMetabolites(data)
-console.log(nodes)
 
-links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
+scaleRadius = (model, minRadius, maxRadius) ->
+    fluxes = (reaction.flux_value for reaction in model.reactions)
+    largest = Math.max.apply(Math, fluxes)
+    
+    return d3.scale.linear()
+        .domain([0, largest])
+        .range([minRadius, maxRadius])
+
+nodeMap = (nodes) ->
+    map = new Object()
+
+    for node,i in nodes
+        map[node.id] = i
+
+    return map
+
+buildReactions = (model) ->
+    radiusScale = scaleRadius(model, 5, 15)
+    tempLinks = new Array()
+
+    # tempNodes = new Array()
+
+    for reaction in model.reactions
+        if reaction.flux_value > 0
+            nodeAttributes =
+                x: rand(W)
+                y: rand(H)
+                r: radiusScale(reaction.flux_value)
+                name: reaction.name
+                id: reaction.id
+                type: "r"
+                flux_value: reaction.flux_value
+
+            # tempNodes.push(new Node(nodeAttributes, ctx))
+            nodes.push(new Node(nodeAttributes, ctx))
+
+            # Assign metabolite source and target for each reaction
+            for metabolite in Object.keys(reaction.metabolites)
+                source = null
+                target = null
+                
+                if metabolite > 0
+                    source = reaction.id
+                    target = metabolite
+                else
+                    source = metabolite
+                    target = reaction.id
+
+                link =
+                    id: "#{source}-#{target}"
+                    source: source
+                    target: target
+
+                tempLinks.push(link)
+
+
+    # console.log(tempNodes)
+    #console.log(tempLinks)
+    nodesMap = nodeMap(nodes)
+    
+    for link in tempLinks
+        source = nodes[nodesMap[link.source]]
+        target = nodes[nodesMap[link.target]]
+
+        links.push(new Link("#{source.id}-#{target.id}", source, target))
+
+
+nodes = buildMetabolites(data)
+# console.log(nodes)
+links = new Array()
+buildReactions(data)
+#links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
 
 # **D3 Force Layout**
 force = d3.layout.force()
