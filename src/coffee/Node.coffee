@@ -5,14 +5,24 @@ rand = (range) ->
 
 #
 class Node
-    constructor: (@x, @y, @r, @ctx) ->
+    constructor: (attr, @ctx) ->
+        @x = attr.x
+        @y = attr.y
+        @r = attr.r
         @hover = false
+        @id = attr.id
+        @name = attr.name
+        @type = attr.type
+
+        # reaction has flux value
 
     draw: ->
         @ctx.beginPath()
         @ctx.moveTo(@x, @y)
         @ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
         @ctx.closePath()
+
+        # todo: draw metabolite, reaction different colours
 
         if @hover
             @ctx.fillStyle = "red"

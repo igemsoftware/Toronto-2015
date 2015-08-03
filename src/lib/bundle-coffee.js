@@ -46,12 +46,15 @@ rand = function(range) {
 };
 
 Node = (function() {
-  function Node(x1, y1, r, ctx) {
-    this.x = x1;
-    this.y = y1;
-    this.r = r;
+  function Node(attr, ctx) {
     this.ctx = ctx;
+    this.x = attr.x;
+    this.y = attr.y;
+    this.r = attr.r;
     this.hover = false;
+    this.id = attr.id;
+    this.name = attr.name;
+    this.type = attr.type;
   }
 
   Node.prototype.draw = function() {
@@ -84,7 +87,7 @@ module.exports = Node;
 
 
 },{}],4:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, buildMetabolites, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, n, nodes, rand, render, sTime, scale, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -112,29 +115,10 @@ rand = function(range) {
   return Math.floor(Math.random() * range);
 };
 
-nodes = (function() {
-  var j, results;
-  results = [];
-  for (n = j = 0; j < 500; n = ++j) {
-    results.push(new Node(rand(W), rand(H), 5, ctx));
-  }
-  return results;
-})();
-
 currentActiveNode = null;
 
-links = (function() {
-  var j, len, results;
-  results = [];
-  for (j = 0, len = nodes.length; j < len; j++) {
-    n = nodes[j];
-    results.push(new Link(rand(nodes.length), rand(nodes.length)));
-  }
-  return results;
-})();
-
 checkCollisions = function(x, y) {
-  var j, len, results;
+  var j, len, n, results;
   if (currentActiveNode == null) {
     results = [];
     for (j = 0, len = nodes.length; j < len; j++) {
@@ -232,6 +216,41 @@ CANVAS.c.addEventListener("mouseup", mouseup, false);
 CANVAS.c.addEventListener("mousemove", mousemove, false);
 
 CANVAS.c.addEventListener("mousewheel", mousewheel, false);
+
+console.log(data.metabolites.length + " metabolites");
+
+buildMetabolites = function(model) {
+  var j, len, metabolite, nodeAttributes, ref, tempNodes;
+  tempNodes = new Array();
+  ref = model.metabolites;
+  for (j = 0, len = ref.length; j < len; j++) {
+    metabolite = ref[j];
+    nodeAttributes = {
+      x: rand(W),
+      y: rand(H),
+      r: 5,
+      name: metabolite.name,
+      id: metabolite.id,
+      type: "m"
+    };
+    tempNodes.push(new Node(nodeAttributes, ctx));
+  }
+  return tempNodes;
+};
+
+nodes = buildMetabolites(data);
+
+console.log(nodes);
+
+links = (function() {
+  var j, len, results;
+  results = [];
+  for (j = 0, len = nodes.length; j < len; j++) {
+    n = nodes[j];
+    results.push(new Link(rand(nodes.length), rand(nodes.length)));
+  }
+  return results;
+})();
 
 force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(0.1).friction(0.9).linkDistance(20).charge(-30).gravity(0.1).theta(0.8).alpha(0.1).start();
 

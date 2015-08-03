@@ -25,13 +25,13 @@ rand = (range) ->
 # By *live*, these will be actively accessed/modified throughout runtime.
 
 # The list of *Nodes*
-nodes = (new Node(rand(W), rand(H), 5, ctx) for n in [0...500])
+#nodes = (new Node(rand(W), rand(H), 5, ctx) for n in [0...500])
 #nodes = (new Node(100, 200, 5, ctx) for n in [0..500])
 #nodes = (new Node(null, null, 5, ctx) for n in [0..1000])
 
 # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
 currentActiveNode = null
-links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
+
 
 
 # **Functions**
@@ -129,6 +129,40 @@ CANVAS.c.addEventListener("mousedown", mousedown, false)
 CANVAS.c.addEventListener("mouseup", mouseup, false)
 CANVAS.c.addEventListener("mousemove", mousemove, false)
 CANVAS.c.addEventListener("mousewheel", mousewheel, false)
+
+
+# **Network construction pipeline**
+
+# 1. Push "System" into "Pathways"
+# pathways.push(new System(attributes, model))
+
+# 2. init(model) ->
+#       buildMetabolites(model)
+#       buildReactions(model)
+#       set up force layout
+
+# console.log(data)
+console.log("#{data.metabolites.length} metabolites")
+
+buildMetabolites = (model) ->
+    tempNodes = new Array()
+    for metabolite in model.metabolites
+        nodeAttributes =
+            x: rand(W)
+            y: rand(H)
+            r: 5
+            name: metabolite.name
+            id: metabolite.id
+            type: "m"
+
+        tempNodes.push(new Node(nodeAttributes, ctx))
+
+    return tempNodes
+
+nodes = buildMetabolites(data)
+console.log(nodes)
+
+links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
 
 # **D3 Force Layout**
 force = d3.layout.force()
