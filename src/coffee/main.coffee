@@ -266,6 +266,7 @@ force = d3.layout.force()
 
 # Precompute layout for static rendering
 # optionify this later
+# This will *need* a loading gif
 # force.tick() for n in nodes
 # force.stop()
 
