@@ -329,7 +329,7 @@ links = new Array();
 
 buildReactions(data);
 
-force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(0.1).friction(0.9).linkDistance(20).charge(-30).gravity(0.1).theta(0.8).alpha(0.1).start();
+force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
 
 clear = function() {
   var p1, p2;

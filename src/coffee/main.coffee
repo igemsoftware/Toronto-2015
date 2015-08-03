@@ -242,13 +242,13 @@ force = d3.layout.force()
     # Affects gravitational center and initial random position
     .size([W, H])
     # Sets "rigidity" of links in range [0,1]; func(link, index), this -> force; evaluated at start()
-    .linkStrength(0.1)
+    .linkStrength(2)
     # At each tick of the simulation, the particle velocity is scaled by the specified friction
     .friction(0.9)
     # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
-    .linkDistance(20)
+    .linkDistance(50)
     # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
-    .charge(-30)
+    .charge(-500)
     # Sets the maximum distance over which charge forces are applied; \infty if not specified
     #.chargeDistance()
     # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
