@@ -130,13 +130,15 @@ Reaction = (function(superClass) {
 
   Reaction.prototype.draw = function() {
     var i, j, nos, ref, size;
-    nos = 6;
+    nos = 8;
     size = this.r;
     this.ctx.beginPath();
     this.ctx.moveTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
     for (i = j = 0, ref = nos; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
       this.ctx.lineTo(this.x + this.r * Math.cos(i * 2 * Math.PI / nos), this.y + this.r * Math.sin(i * (2 * Math.PI / nos)));
     }
+    this.ctx.lineTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
+    this.ctx.lineTo(this.x + this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + this.r * Math.sin(1 * (2 * Math.PI / nos)));
     this.ctx.strokeStyle = "rgb(120,120,120)";
     this.ctx.stroke();
     this.ctx.fillStyle = "blue";

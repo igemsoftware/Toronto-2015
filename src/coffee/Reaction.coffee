@@ -2,7 +2,7 @@ Node = require("./Node")
 
 class Reaction extends Node
     draw: ->
-        nos = 6
+        nos = 8
         size = @r
 
         @ctx.beginPath()
@@ -10,6 +10,9 @@ class Reaction extends Node
 
         for i in [0...nos]
             @ctx.lineTo(@x + @r * Math.cos(i * 2 * Math.PI / nos), @y + @r * Math.sin (i * (2 * Math.PI / nos)))
+
+        @ctx.lineTo(@x + @r * Math.cos(0), @y + @r * Math.sin(0))
+        @ctx.lineTo(@x + @r * Math.cos(1 * 2 * Math.PI / nos), @y + @r * Math.sin (1 * (2 * Math.PI / nos)))
 
         @ctx.strokeStyle = "rgb(120,120,120)"
         @ctx.stroke()
