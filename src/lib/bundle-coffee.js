@@ -129,8 +129,8 @@ Reaction = (function(superClass) {
   }
 
   Reaction.prototype.draw = function() {
-    var i, j, nos, ref, size;
-    nos = 8;
+    var factor, i, j, k, nos, ref, ref1, size;
+    nos = 6;
     size = this.r;
     this.ctx.beginPath();
     this.ctx.moveTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
@@ -139,11 +139,20 @@ Reaction = (function(superClass) {
     }
     this.ctx.lineTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
     this.ctx.lineTo(this.x + this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + this.r * Math.sin(1 * (2 * Math.PI / nos)));
-    this.ctx.strokeStyle = "rgb(120,120,120)";
-    this.ctx.stroke();
     this.ctx.fillStyle = "blue";
     this.ctx.closePath();
-    return this.ctx.fill();
+    this.ctx.fill();
+    factor = 1.2;
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
+    for (i = k = 0, ref1 = nos; 0 <= ref1 ? k < ref1 : k > ref1; i = 0 <= ref1 ? ++k : --k) {
+      this.ctx.lineTo(this.x + factor * this.r * Math.cos(i * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(i * (2 * Math.PI / nos)));
+    }
+    this.ctx.lineTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
+    this.ctx.lineTo(this.x + factor * this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(1 * (2 * Math.PI / nos)));
+    this.ctx.closePath();
+    this.ctx.strokeStyle = "blue";
+    return this.ctx.stroke();
   };
 
   return Reaction;
