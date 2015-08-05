@@ -1,6 +1,8 @@
 # **Classes**
 Canvas = require "./Canvas"
 Node   = require "./Node"
+Metabolite = require "./Metabolite"
+Reaction = require "./Reaction"
 Link   = require "./Link"
 
 # Setup [AnimationFrame](https://github.com/kof/animation-frame)
@@ -20,19 +22,8 @@ ctx = CANVAS.ctx
 rand = (range) ->
     return Math.floor(Math.random() * range)
 
-# **Live Variables**
-
-# By *live*, these will be actively accessed/modified throughout runtime.
-
-# The list of *Nodes*
-#nodes = (new Node(rand(W), rand(H), 5, ctx) for n in [0...500])
-#nodes = (new Node(100, 200, 5, ctx) for n in [0..500])
-#nodes = (new Node(null, null, 5, ctx) for n in [0..1000])
-
 # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
 currentActiveNode = null
-
-
 
 # **Functions**
 
@@ -107,7 +98,7 @@ mousewheel = (e) ->
     # `n` or `-n`
     wheel = event.wheelDelta / 120
     zoom = 1 + wheel / 2
-    
+
     delta = 0
     if e.wheelDelta?
         delta = e.wheelDelta/120
@@ -155,7 +146,7 @@ buildMetabolites = (model) ->
             id: metabolite.id
             type: "m"
 
-        tempNodes.push(new Node(nodeAttributes, ctx))
+        tempNodes.push(new Metabolite(nodeAttributes, ctx))
 
     return tempNodes
 
@@ -163,7 +154,7 @@ buildMetabolites = (model) ->
 scaleRadius = (model, minRadius, maxRadius) ->
     fluxes = (reaction.flux_value for reaction in model.reactions)
     largest = Math.max.apply(Math, fluxes)
-    
+
     return d3.scale.linear()
         .domain([0, largest])
         .range([minRadius, maxRadius])
@@ -194,13 +185,13 @@ buildReactions = (model) ->
                 flux_value: reaction.flux_value
 
             # tempNodes.push(new Node(nodeAttributes, ctx))
-            nodes.push(new Node(nodeAttributes, ctx))
+            nodes.push(new Reaction(nodeAttributes, ctx))
 
             # Assign metabolite source and target for each reaction
             for metabolite in Object.keys(reaction.metabolites)
                 source = null
                 target = null
-                
+
                 if metabolite > 0
                     source = reaction.id
                     target = metabolite
@@ -219,7 +210,7 @@ buildReactions = (model) ->
     # console.log(tempNodes)
     #console.log(tempLinks)
     nodesMap = nodeMap(nodes)
-    
+
     for link in tempLinks
         source = nodes[nodesMap[link.source]]
         target = nodes[nodesMap[link.target]]
@@ -235,7 +226,7 @@ buildReactions(data)
 
 # **D3 Force Layout**
 force = d3.layout.force()
-    # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links) 
+    # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
     .nodes(nodes)
     # The links: mutates source, target
     .links(links)
@@ -283,13 +274,13 @@ clear = ->
 # Draw nodes and links
 draw = ->
     n.draw() for n in nodes
-    
+
     for link in links
         # ctx.moveTo(nodes[link.source].x, nodes[link.source].y)
         # ctx.lineTo(nodes[link.target].x, nodes[link.target].y)
         ctx.moveTo(link.source.x, link.source.y)
         ctx.lineTo(link.target.x, link.target.y)
-   
+
     #ctx.strokeStyle = "rgb(100,0,0)"
     ctx.stroke()
 
@@ -301,15 +292,15 @@ update = ->
 
 render = ->
     stats.begin()
-    
+
     clear()
     draw()
     # turn update() on for some sinusoidal rythmic fun
     #update()
     #force.tick()
-    
+
     stats.end()
-    
+
     # Request next frame
     requestAnimationFrame(render)
 

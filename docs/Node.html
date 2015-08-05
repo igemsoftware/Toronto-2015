@@ -83,48 +83,6 @@
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@flux_value</span> = attr.flux_value
 
-    <span class="hljs-attribute">draw</span>: <span class="hljs-function">-&gt;</span>
-        <span class="hljs-property">@ctx</span>.beginPath()
-        <span class="hljs-property">@ctx</span>.moveTo(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>)
-        <span class="hljs-property">@ctx</span>.arc(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>, <span class="hljs-property">@r</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span> * Math.PI)
-        <span class="hljs-property">@ctx</span>.closePath()</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>todo: draw metabolite, reaction different colours</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-        <span class="hljs-keyword">if</span> <span class="hljs-property">@hover</span>
-            <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"red"</span>
-        <span class="hljs-keyword">else</span>
-            <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"black"</span> <span class="hljs-keyword">if</span> <span class="hljs-property">@type</span> <span class="hljs-keyword">is</span> <span class="hljs-string">"m"</span>
-            <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"blue"</span> <span class="hljs-keyword">if</span> <span class="hljs-property">@type</span> <span class="hljs-keyword">is</span> <span class="hljs-string">"r"</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>@ctx.fillStyle = “rgb(#{rand(155)+100},0,0)”</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-        <span class="hljs-property">@ctx</span>.fill()
-
     <span class="hljs-attribute">checkCollision</span>: <span class="hljs-function"><span class="hljs-params">(x,y)</span> -&gt;</span>
         inside = <span class="hljs-literal">false</span>
         <span class="hljs-keyword">if</span> ((x-<span class="hljs-property">@x</span>)**<span class="hljs-number">2</span> + (y-<span class="hljs-property">@y</span>)**<span class="hljs-number">2</span> &lt;= <span class="hljs-property">@r</span>**<span class="hljs-number">2</span>) <span class="hljs-keyword">then</span> inside = <span class="hljs-literal">true</span>

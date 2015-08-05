@@ -40,6 +40,39 @@ module.exports = Link;
 
 
 },{}],3:[function(require,module,exports){
+var Metabolite, Node,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+Node = require("./Node");
+
+Metabolite = (function(superClass) {
+  extend(Metabolite, superClass);
+
+  function Metabolite() {
+    return Metabolite.__super__.constructor.apply(this, arguments);
+  }
+
+  Metabolite.prototype.draw = function() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x, this.y);
+    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+    this.ctx.closePath();
+    this.ctx.fillStyle = "black";
+    if (this.hover) {
+      this.ctx.fillStyle = "green";
+    }
+    return this.ctx.fill();
+  };
+
+  return Metabolite;
+
+})(Node);
+
+module.exports = Metabolite;
+
+
+},{"./Node":4}],4:[function(require,module,exports){
 var Node, rand;
 
 rand = function(range) {
@@ -59,24 +92,6 @@ Node = (function() {
     this.flux_value = attr.flux_value;
   }
 
-  Node.prototype.draw = function() {
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    this.ctx.closePath();
-    if (this.hover) {
-      this.ctx.fillStyle = "red";
-    } else {
-      if (this.type === "m") {
-        this.ctx.fillStyle = "black";
-      }
-      if (this.type === "r") {
-        this.ctx.fillStyle = "blue";
-      }
-    }
-    return this.ctx.fill();
-  };
-
   Node.prototype.checkCollision = function(x, y) {
     var inside;
     inside = false;
@@ -93,12 +108,49 @@ Node = (function() {
 module.exports = Node;
 
 
-},{}],4:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Node, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
+},{}],5:[function(require,module,exports){
+var Node, Reaction,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+Node = require("./Node");
+
+Reaction = (function(superClass) {
+  extend(Reaction, superClass);
+
+  function Reaction() {
+    return Reaction.__super__.constructor.apply(this, arguments);
+  }
+
+  Reaction.prototype.draw = function() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x, this.y);
+    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+    this.ctx.closePath();
+    this.ctx.fillStyle = "blue";
+    if (this.hover) {
+      this.ctx.fillStyle = "red";
+    }
+    return this.ctx.fill();
+  };
+
+  return Reaction;
+
+})(Node);
+
+module.exports = Reaction;
+
+
+},{"./Node":4}],6:[function(require,module,exports){
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
 Node = require("./Node");
+
+Metabolite = require("./Metabolite");
+
+Reaction = require("./Reaction");
 
 Link = require("./Link");
 
@@ -242,7 +294,7 @@ buildMetabolites = function(model) {
       id: metabolite.id,
       type: "m"
     };
-    tempNodes.push(new Node(nodeAttributes, ctx));
+    tempNodes.push(new Metabolite(nodeAttributes, ctx));
   }
   return tempNodes;
 };
@@ -290,7 +342,7 @@ buildReactions = function(model) {
         type: "r",
         flux_value: reaction.flux_value
       };
-      nodes.push(new Node(nodeAttributes, ctx));
+      nodes.push(new Reaction(nodeAttributes, ctx));
       ref1 = Object.keys(reaction.metabolites);
       for (k = 0, len1 = ref1.length; k < len1; k++) {
         metabolite = ref1[k];
@@ -380,7 +432,7 @@ render = function() {
 render();
 
 
-},{"./Canvas":1,"./Link":2,"./Node":3}]},{},[1,2,3,4])
+},{"./Canvas":1,"./Link":2,"./Metabolite":3,"./Node":4,"./Reaction":5}]},{},[1,2,3,4,5,6])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map

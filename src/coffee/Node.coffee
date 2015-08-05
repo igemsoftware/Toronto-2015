@@ -17,23 +17,6 @@ class Node
         # reaction has flux value
         @flux_value = attr.flux_value
 
-    draw: ->
-        @ctx.beginPath()
-        @ctx.moveTo(@x, @y)
-        @ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
-        @ctx.closePath()
-
-        # todo: draw metabolite, reaction different colours
-
-        if @hover
-            @ctx.fillStyle = "red"
-        else
-            @ctx.fillStyle = "black" if @type is "m"
-            @ctx.fillStyle = "blue" if @type is "r"
-            #@ctx.fillStyle = "rgb(#{rand(155)+100},0,0)"
-
-        @ctx.fill()
-
     checkCollision: (x,y) ->
         inside = false
         if ((x-@x)**2 + (y-@y)**2 <= @r**2) then inside = true
