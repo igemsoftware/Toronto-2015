@@ -215,7 +215,7 @@ buildReactions = (model) ->
         source = nodes[nodesMap[link.source]]
         target = nodes[nodesMap[link.target]]
 
-        links.push(new Link("#{source.id}-#{target.id}", source, target))
+        links.push(new Link("#{source.id}-#{target.id}", source, target, ctx))
 
 
 nodes = buildMetabolites(data)
@@ -273,16 +273,12 @@ clear = ->
 
 # Draw nodes and links
 draw = ->
-    n.draw() for n in nodes
-
-    for link in links
-        # ctx.moveTo(nodes[link.source].x, nodes[link.source].y)
-        # ctx.lineTo(nodes[link.target].x, nodes[link.target].y)
-        ctx.moveTo(link.source.x, link.source.y)
-        ctx.lineTo(link.target.x, link.target.y)
-
-    #ctx.strokeStyle = "rgb(100,0,0)"
+    ctx.strokeStyle = "black"
+    link.draw() for link in links
     ctx.stroke()
+
+    node.draw() for node in nodes
+
 
 # Update node x,y values
 update = ->

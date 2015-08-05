@@ -26,11 +26,17 @@ module.exports = Canvas;
 var Link;
 
 Link = (function() {
-  function Link(id, source, target) {
+  function Link(id, source, target, ctx) {
     this.id = id;
     this.source = source;
     this.target = target;
+    this.ctx = ctx;
   }
+
+  Link.prototype.draw = function() {
+    this.ctx.moveTo(this.source.x, this.source.y);
+    return this.ctx.lineTo(this.target.x, this.target.y);
+  };
 
   return Link;
 
@@ -123,14 +129,18 @@ Reaction = (function(superClass) {
   }
 
   Reaction.prototype.draw = function() {
+    var i, j, nos, ref, size;
+    nos = 6;
+    size = this.r;
     this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    this.ctx.closePath();
-    this.ctx.fillStyle = "blue";
-    if (this.hover) {
-      this.ctx.fillStyle = "red";
+    this.ctx.moveTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
+    for (i = j = 0, ref = nos; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+      this.ctx.lineTo(this.x + this.r * Math.cos(i * 2 * Math.PI / nos), this.y + this.r * Math.sin(i * (2 * Math.PI / nos)));
     }
+    this.ctx.strokeStyle = "rgb(120,120,120)";
+    this.ctx.stroke();
+    this.ctx.fillStyle = "blue";
+    this.ctx.closePath();
     return this.ctx.fill();
   };
 
@@ -370,7 +380,7 @@ buildReactions = function(model) {
     link = tempLinks[l];
     source = nodes[nodesMap[link.source]];
     target = nodes[nodesMap[link.target]];
-    results.push(links.push(new Link(source.id + "-" + target.id, source, target)));
+    results.push(links.push(new Link(source.id + "-" + target.id, source, target, ctx)));
   }
   return results;
 };
@@ -393,17 +403,19 @@ clear = function() {
 };
 
 draw = function() {
-  var j, k, len, len1, link, n;
-  for (j = 0, len = nodes.length; j < len; j++) {
-    n = nodes[j];
-    n.draw();
+  var j, k, len, len1, link, node, results;
+  ctx.strokeStyle = "black";
+  for (j = 0, len = links.length; j < len; j++) {
+    link = links[j];
+    link.draw();
   }
-  for (k = 0, len1 = links.length; k < len1; k++) {
-    link = links[k];
-    ctx.moveTo(link.source.x, link.source.y);
-    ctx.lineTo(link.target.x, link.target.y);
+  ctx.stroke();
+  results = [];
+  for (k = 0, len1 = nodes.length; k < len1; k++) {
+    node = nodes[k];
+    results.push(node.draw());
   }
-  return ctx.stroke();
+  return results;
 };
 
 update = function() {
