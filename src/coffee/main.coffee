@@ -1,9 +1,9 @@
 # **Classes**
-Canvas = require "./Canvas"
-Node   = require "./Node"
+Canvas     = require "./Canvas"
+Node       = require "./Node"
 Metabolite = require "./Metabolite"
-Reaction = require "./Reaction"
-Link   = require "./Link"
+Reaction   = require "./Reaction"
+Link       = require "./Link"
 
 # Setup [AnimationFrame](https://github.com/kof/animation-frame)
 AnimationFrame = window.AnimationFrame
@@ -203,6 +203,7 @@ buildReactions = (model) ->
                     id: "#{source}-#{target}"
                     source: source
                     target: target
+                    flux_value: reaction.flux_value
 
                 tempLinks.push(link)
 
@@ -215,6 +216,7 @@ buildReactions = (model) ->
         source = nodes[nodesMap[link.source]]
         target = nodes[nodesMap[link.target]]
 
+        # link.flux_value valid at this point
         links.push(new Link("#{source.id}-#{target.id}", source, target, ctx))
 
 

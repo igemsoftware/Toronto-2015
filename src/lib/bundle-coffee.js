@@ -387,7 +387,8 @@ buildReactions = function(model) {
         link = {
           id: source + "-" + target,
           source: source,
-          target: target
+          target: target,
+          flux_value: reaction.flux_value
         };
         tempLinks.push(link);
       }
