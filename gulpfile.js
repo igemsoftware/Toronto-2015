@@ -1,13 +1,13 @@
 // # gulpfile.js
 
 // ### Development Dependencies
- 
+
 // Installed with `npm install --save-dev <dep>`
 var gulp        = require('gulp'),
     watch       = require('gulp-watch'),
     concat      = require('gulp-concat'),
     wiredep     = require('wiredep').stream,
-    inject      = require('gulp-inject'), 
+    inject      = require('gulp-inject'),
     globby      = require('globby'),
     combiner   = require('stream-combiner2'),
     sass        = require('gulp-sass'),
@@ -52,8 +52,8 @@ var dests = {
 gulp.task('sass', function() {
     return gulp
     .src(globs.sass)
-    .pipe(sass({   
-        includePaths: ['./bower_components/compass-mixins/lib'] 
+    .pipe(sass({
+        includePaths: ['./bower_components/compass-mixins/lib']
     }).on('error', sass.logError))
     .pipe(gulp.dest(dests.css))
     .pipe(browserSync.stream());
@@ -63,14 +63,14 @@ gulp.task('sass', function() {
 // ### CoffeeScript
 
 // Compile `.coffee` into `.js`
-gulp.task('coffee', function() {  
+gulp.task('coffee', function() {
 
     globby([globs.coffee], function(err, entries) {
         if (err) {
             gutil.log();
             return;
         }
-        
+
         var b = browserify({
             entries    : entries,
             extensions : ['.coffee'],
@@ -90,14 +90,14 @@ gulp.task('coffee', function() {
         combined.on('error', gutil.log);
 
         return combined;
-    }); 
+    });
 });
 
 // ### Injects
 
 // Inject CSS
 gulp.task('inject:css', function() {
-    var sources = gulp.src(globs.css, {read: false});    
+    var sources = gulp.src(globs.css, {read: false});
 
     return gulp
     .src(globs.index)
@@ -107,10 +107,10 @@ gulp.task('inject:css', function() {
 
 // Inject JS
 gulp.task('inject:js', function() {
-    var sources = gulp.src(globs.libJS, {read: false}); 
+    var sources = gulp.src(globs.libJS, {read: false});
 
     return gulp
-    .src(globs.index) 
+    .src(globs.index)
     .pipe(inject(sources, {relative: true}))
     .pipe(gulp.dest(dests.index));
 });
@@ -168,12 +168,13 @@ gulp.task('clean', ['clean:css']);
 // ### Serve
 
 // Run `sass` and `coffee`before `serve`ing
-gulp.task('serve', ['sass', 'coffee'], function() { 
+gulp.task('serve', ['sass', 'coffee'], function() {
     browserSync.init({
         server: {
             baseDir : src,
             routes  : {
-                '/bower_components' : './bower_components'    
+                '/bower_components' : './bower_components',
+                '/node_modules' :'./node_modules'    
             }
         }
     });
@@ -192,11 +193,11 @@ gulp.task('serve', ['sass', 'coffee'], function() {
 gulp.task('serve:docs', ['docs'], function() {
     browserSync.init({
         server: {
-            baseDir : dests.docs 
+            baseDir : dests.docs
         }
     });
 
-    watch(globs.coffee, function() { gulp.start('docs'); });    
+    watch(globs.coffee, function() { gulp.start('docs'); });
 });
 
 // ### Default

@@ -26,17 +26,25 @@ module.exports = Canvas;
 var Link;
 
 Link = (function() {
+  var solveForX, y;
+
   function Link(id, source, target, ctx) {
     this.id = id;
     this.source = source;
     this.target = target;
     this.ctx = ctx;
+    this.thickness = 3;
   }
 
-  Link.prototype.draw = function() {
-    this.ctx.moveTo(this.source.x, this.source.y);
-    return this.ctx.lineTo(this.target.x, this.target.y);
+  y = function(x1, y1, m) {
+    return function(x) {
+      return m * (x - x1) + y1 + translate;
+    };
   };
+
+  solveForX = function(g, h) {};
+
+  Link.prototype.draw = function() {};
 
   return Link;
 
@@ -163,7 +171,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, j, lastX, lastY, len, links, mousedown, mousemove, mouseup, mousewheel, n, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -404,6 +412,13 @@ buildReactions(data);
 
 force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
 
+for (j = 0, len = nodes.length; j < len; j++) {
+  n = nodes[j];
+  force.tick();
+}
+
+force.stop();
+
 clear = function() {
   var p1, p2;
   ctx.fillStyle = BG;
@@ -414,30 +429,28 @@ clear = function() {
 };
 
 draw = function() {
-  var j, k, len, len1, link, node, results;
-  ctx.strokeStyle = "black";
-  for (j = 0, len = links.length; j < len; j++) {
-    link = links[j];
+  var k, l, len1, len2, link, node, results;
+  for (k = 0, len1 = links.length; k < len1; k++) {
+    link = links[k];
     link.draw();
   }
-  ctx.stroke();
   results = [];
-  for (k = 0, len1 = nodes.length; k < len1; k++) {
-    node = nodes[k];
+  for (l = 0, len2 = nodes.length; l < len2; l++) {
+    node = nodes[l];
     results.push(node.draw());
   }
   return results;
 };
 
 update = function() {
-  var delta, i, j, k, len, len1, n, results;
+  var delta, i, k, l, len1, len2, results;
   delta = (new Date()).getTime() - sTime;
-  for (i = j = 0, len = nodes.length; j < len; i = ++j) {
+  for (i = k = 0, len1 = nodes.length; k < len1; i = ++k) {
     n = nodes[i];
     n.y += Math.sin(delta / (Math.PI * 100)) * (i / 100 + 1);
   }
   results = [];
-  for (i = k = 0, len1 = nodes.length; k < len1; i = ++k) {
+  for (i = l = 0, len2 = nodes.length; l < len2; i = ++l) {
     n = nodes[i];
     results.push(n.x += Math.sin(delta / (Math.PI * 250)) * (i / 100 + 1));
   }

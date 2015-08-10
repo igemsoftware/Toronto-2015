@@ -258,8 +258,8 @@ force = d3.layout.force()
 # Precompute layout for static rendering
 # optionify this later
 # This will *need* a loading gif
-# force.tick() for n in nodes
-# force.stop()
+force.tick() for n in nodes
+force.stop()
 
 # **Render Pipeline**
 
@@ -273,9 +273,9 @@ clear = ->
 
 # Draw nodes and links
 draw = ->
-    ctx.strokeStyle = "black"
+    #ctx.strokeStyle = "black"
     link.draw() for link in links
-    ctx.stroke()
+    #ctx.stroke()
 
     node.draw() for node in nodes
 
