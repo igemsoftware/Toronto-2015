@@ -208,8 +208,6 @@ buildReactions = (model) ->
                 tempLinks.push(link)
 
 
-    # console.log(tempNodes)
-    #console.log(tempLinks)
     nodesMap = nodeMap(nodes)
 
     for link in tempLinks
@@ -221,7 +219,7 @@ buildReactions = (model) ->
 
 
 nodes = buildMetabolites(data)
-# console.log(nodes)
+
 links = new Array()
 buildReactions(data)
 #links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)
@@ -260,8 +258,8 @@ force = d3.layout.force()
 # Precompute layout for static rendering
 # optionify this later
 # This will *need* a loading gif
-force.tick() for n in nodes
-force.stop()
+#force.tick() for n in nodes
+#force.stop()
 
 # **Render Pipeline**
 
@@ -275,9 +273,10 @@ clear = ->
 
 # Draw nodes and links
 draw = ->
-    #ctx.strokeStyle = "black"
+    ctx.strokeStyle = "black"
+    ctx.fillStyle = "black"
     link.draw() for link in links
-    #ctx.stroke()
+    ctx.stroke()
 
     node.draw() for node in nodes
 
@@ -290,7 +289,6 @@ update = ->
 
 render = ->
     stats.begin()
-
     clear()
     draw()
     # turn update() on for some sinusoidal rythmic fun
@@ -303,6 +301,7 @@ render = ->
     requestAnimationFrame(render)
 
 # **Start the render loop**
+
 render()
 
 # or use the non-animation frame way

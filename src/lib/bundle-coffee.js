@@ -26,25 +26,33 @@ module.exports = Canvas;
 var Link;
 
 Link = (function() {
-  var solveForX, y;
+  var y;
 
   function Link(id, source, target, ctx) {
     this.id = id;
     this.source = source;
     this.target = target;
     this.ctx = ctx;
-    this.thickness = 3;
+    this.thickness = 5;
   }
 
   y = function(x1, y1, m) {
     return function(x) {
-      return m * (x - x1) + y1 + translate;
+      return m * (x - x1) + y1;
     };
   };
 
-  solveForX = function(g, h) {};
-
-  Link.prototype.draw = function() {};
+  Link.prototype.draw = function() {
+    var angle, length;
+    length = Math.sqrt(Math.pow(this.source.x - this.target.x, 2) + Math.pow(this.source.y - this.target.y, 2));
+    angle = Math.atan2(this.source.y - this.target.y, this.source.x - this.target.x);
+    this.ctx.save();
+    this.ctx.translate(this.source.x, this.source.y);
+    this.ctx.rotate(angle + Math.PI / 2);
+    this.ctx.rect(-this.thickness / 2, 0, this.thickness, length);
+    this.ctx.fill();
+    return this.ctx.restore();
+  };
 
   return Link;
 
@@ -171,7 +179,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, j, lastX, lastY, len, links, mousedown, mousemove, mouseup, mousewheel, n, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -413,13 +421,6 @@ buildReactions(data);
 
 force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
 
-for (j = 0, len = nodes.length; j < len; j++) {
-  n = nodes[j];
-  force.tick();
-}
-
-force.stop();
-
 clear = function() {
   var p1, p2;
   ctx.fillStyle = BG;
@@ -430,28 +431,31 @@ clear = function() {
 };
 
 draw = function() {
-  var k, l, len1, len2, link, node, results;
-  for (k = 0, len1 = links.length; k < len1; k++) {
-    link = links[k];
+  var j, k, len, len1, link, node, results;
+  ctx.strokeStyle = "black";
+  ctx.fillStyle = "black";
+  for (j = 0, len = links.length; j < len; j++) {
+    link = links[j];
     link.draw();
   }
+  ctx.stroke();
   results = [];
-  for (l = 0, len2 = nodes.length; l < len2; l++) {
-    node = nodes[l];
+  for (k = 0, len1 = nodes.length; k < len1; k++) {
+    node = nodes[k];
     results.push(node.draw());
   }
   return results;
 };
 
 update = function() {
-  var delta, i, k, l, len1, len2, results;
+  var delta, i, j, k, len, len1, n, results;
   delta = (new Date()).getTime() - sTime;
-  for (i = k = 0, len1 = nodes.length; k < len1; i = ++k) {
+  for (i = j = 0, len = nodes.length; j < len; i = ++j) {
     n = nodes[i];
     n.y += Math.sin(delta / (Math.PI * 100)) * (i / 100 + 1);
   }
   results = [];
-  for (i = l = 0, len2 = nodes.length; l < len2; i = ++l) {
+  for (i = k = 0, len1 = nodes.length; k < len1; i = ++k) {
     n = nodes[i];
     results.push(n.x += Math.sin(delta / (Math.PI * 250)) * (i / 100 + 1));
   }
