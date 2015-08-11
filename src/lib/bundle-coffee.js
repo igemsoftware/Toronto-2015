@@ -28,12 +28,15 @@ var Link;
 Link = (function() {
   var y;
 
-  function Link(id, source, target, ctx) {
-    this.id = id;
-    this.source = source;
-    this.target = target;
+  function Link(attr, ctx) {
+    this.attr = attr;
     this.ctx = ctx;
+    this.id = this.attr.id;
+    this.source = this.attr.source;
+    this.target = this.attr.target;
+    this.fluxValue = this.attr.fluxValue;
     this.thickness = 5;
+    console.log(this.fluxValue);
   }
 
   y = function(x1, y1, m) {
@@ -42,19 +45,18 @@ Link = (function() {
     };
   };
 
+  Link.prototype.setM = function() {
+    return this.m = (this.target.y - this.source.y) / (this.target.x - this.source.x);
+  };
+
   Link.prototype.draw = function() {
-    var angle, c, length;
-    length = Math.sqrt(Math.pow(this.source.x - this.target.x, 2) + Math.pow(this.source.y - this.target.y, 2));
-    angle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x);
-    c = 10;
-    this.ctx.save();
-    this.ctx.translate(this.source.x, this.source.y);
-    this.ctx.rotate(angle - Math.PI / 2);
-    this.ctx.rect(-this.thickness / 2, 0, this.thickness, length - c);
-    this.ctx.fill();
-    this.ctx.restore();
-    this.ctx.fill();
-    return this.ctx.restore();
+    this.setM();
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.source.x, this.source.y);
+    this.ctx.lineTo(this.target.x, this.target.y);
+    this.ctx.closePath();
+    this.ctx.strokeStyle = "black";
+    return this.ctx.stroke();
   };
 
   return Link;
@@ -366,7 +368,7 @@ nodeMap = function(nodes) {
 };
 
 buildReactions = function(model) {
-  var j, k, l, len, len1, len2, link, metabolite, nodeAttributes, nodesMap, radiusScale, reaction, ref, ref1, results, source, target, tempLinks;
+  var j, k, l, len, len1, len2, link, linkAttr, metabolite, nodeAttributes, nodesMap, radiusScale, reaction, ref, ref1, results, source, target, tempLinks;
   radiusScale = scaleRadius(model, 5, 15);
   tempLinks = new Array();
   ref = model.reactions;
@@ -396,7 +398,7 @@ buildReactions = function(model) {
           target = reaction.id;
         }
         link = {
-          id: source + "-" + target,
+          id: source.id + "-" + target.id,
           source: source,
           target: target,
           flux_value: reaction.flux_value
@@ -409,9 +411,13 @@ buildReactions = function(model) {
   results = [];
   for (l = 0, len2 = tempLinks.length; l < len2; l++) {
     link = tempLinks[l];
-    source = nodes[nodesMap[link.source]];
-    target = nodes[nodesMap[link.target]];
-    results.push(links.push(new Link(source.id + "-" + target.id, source, target, ctx)));
+    linkAttr = {
+      id: link.id,
+      source: nodes[nodesMap[link.source]],
+      target: nodes[nodesMap[link.target]],
+      fluxValue: link.flux_value
+    };
+    results.push(links.push(new Link(linkAttr, ctx)));
   }
   return results;
 };
@@ -435,13 +441,10 @@ clear = function() {
 
 draw = function() {
   var j, k, len, len1, link, node, results;
-  ctx.strokeStyle = "black";
-  ctx.fillStyle = "black";
   for (j = 0, len = links.length; j < len; j++) {
     link = links[j];
     link.draw();
   }
-  ctx.stroke();
   results = [];
   for (k = 0, len1 = nodes.length; k < len1; k++) {
     node = nodes[k];

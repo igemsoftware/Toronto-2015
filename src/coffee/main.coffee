@@ -200,22 +200,22 @@ buildReactions = (model) ->
                     target = reaction.id
 
                 link =
-                    id: "#{source}-#{target}"
+                    id: "#{source.id}-#{target.id}"
                     source: source
                     target: target
                     flux_value: reaction.flux_value
 
                 tempLinks.push(link)
 
-
     nodesMap = nodeMap(nodes)
-
     for link in tempLinks
-        source = nodes[nodesMap[link.source]]
-        target = nodes[nodesMap[link.target]]
+        linkAttr =
+            id: link.id
+            source: nodes[nodesMap[link.source]]
+            target: nodes[nodesMap[link.target]]
+            fluxValue: link.flux_value
 
-        # link.flux_value valid at this point
-        links.push(new Link("#{source.id}-#{target.id}", source, target, ctx))
+        links.push(new Link(linkAttr, ctx))
 
 
 nodes = buildMetabolites(data)
@@ -273,10 +273,10 @@ clear = ->
 
 # Draw nodes and links
 draw = ->
-    ctx.strokeStyle = "black"
-    ctx.fillStyle = "black"
+    # ctx.strokeStyle = "black"
+    # ctx.fillStyle = "black"
     link.draw() for link in links
-    ctx.stroke()
+    # ctx.stroke()
 
     node.draw() for node in nodes
 
