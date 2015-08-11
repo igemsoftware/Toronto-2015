@@ -54,6 +54,7 @@ Link = (function() {
     this.ctx.beginPath();
     this.ctx.moveTo(this.source.x, this.source.y);
     this.ctx.lineTo(this.target.x, this.target.y);
+    this.ctx.lineWidth = this.thickness;
     this.ctx.closePath();
     this.ctx.strokeStyle = "black";
     return this.ctx.stroke();

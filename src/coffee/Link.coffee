@@ -22,6 +22,7 @@ class Link
         @ctx.beginPath()
         @ctx.moveTo(@source.x, @source.y)
         @ctx.lineTo(@target.x, @target.y)
+        @ctx.lineWidth = @thickness
         @ctx.closePath()
 
         @ctx.strokeStyle = "black"
