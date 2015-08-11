@@ -2,18 +2,94 @@
 var Canvas;
 
 Canvas = (function() {
-  function Canvas(id, width, height) {
+  var mousedownHandler, mousemoveHandler, mouseupHandler, mousewheelHandler;
+
+  function Canvas(id, width, height, BG) {
     this.id = id;
     this.width = width;
     this.height = height;
+    this.BG = BG;
     this.c = document.createElement("canvas");
     this.c.id = this.id;
     this.c.width = this.width;
     this.c.height = this.height;
-    this.c.addEventListener("mouseover", this.mouseover, false);
+    this.c.addEventListener("mousewheel", mousewheelHandler.bind(this), false);
+    this.c.addEventListener("mousedown", mousedownHandler.bind(this), false);
+    this.c.addEventListener("mouseup", mouseupHandler.bind(this), false);
+    this.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
     document.body.appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
+    this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    this.xform = this.svg.createSVGMatrix();
+    this.dragStart = null;
+    this.dragScaleFactor = 1.5;
+    this.lastX = Math.floor(this.width / 2);
+    this.lastY = Math.floor(this.width / 2);
   }
+
+  Canvas.prototype.clear = function() {
+    var p1, p2;
+    this.ctx.fillStyle = this.BG;
+    p1 = this.transformedPoint(0, 0);
+    p2 = this.transformedPoint(this.width, this.height);
+    this.ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
+    return this.ctx.fill();
+  };
+
+  Canvas.prototype.transformedPoint = function(x, y) {
+    var pt;
+    pt = this.svg.createSVGPoint();
+    pt.x = x;
+    pt.y = y;
+    return pt.matrixTransform(this.xform.inverse());
+  };
+
+  mousedownHandler = function(e) {
+    this.lastX = e.clientX - this.c.offsetLeft;
+    this.lastY = e.clientY - this.c.offsetTop;
+    return this.dragStart = this.transformedPoint(this.lastX, this.lastY);
+  };
+
+  mouseupHandler = function(e) {
+    return this.dragStart = null;
+  };
+
+  mousemoveHandler = function(e) {
+    var dX, dY, tPt;
+    e.preventDefault();
+    this.lastX = e.clientX - this.c.offsetLeft;
+    this.lastY = e.clientY - this.c.offsetTop;
+    if (this.dragStart != null) {
+      tPt = this.transformedPoint(this.lastX, this.lastY);
+      dX = (tPt.x - this.dragStart.x) * this.dragScaleFactor;
+      dY = (tPt.y - this.dragStart.y) * this.dragScaleFactor;
+      this.xform = this.xform.translate(dX, dY);
+      return this.ctx.translate(dX, dY);
+    }
+  };
+
+  mousewheelHandler = function(e) {
+    var delta, factor, pt, wheel, zoom;
+    e.preventDefault();
+    wheel = e.wheelDelta / 120;
+    zoom = 1 + wheel / 2;
+    delta = 0;
+    if (e.wheelDelta != null) {
+      delta = e.wheelDelta / 120;
+    } else {
+      if (e.detail != null) {
+        delta = -e.detail;
+      }
+    }
+    factor = zoom;
+    pt = this.transformedPoint(this.lastX, this.lastY);
+    this.ctx.translate(pt.x, pt.y);
+    this.xform = this.xform.translate(pt.x, pt.y);
+    this.ctx.scale(factor, factor);
+    this.xform = this.xform.scaleNonUniform(factor, factor);
+    this.ctx.translate(-pt.x, -pt.y);
+    return this.xform = this.xform.translate(-pt.x, -pt.y);
+  };
 
   return Canvas;
 
@@ -194,7 +270,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, metaboliteRadius, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
+var AnimationFrame, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, ctx, currentActiveNode, draw, force, links, metaboliteRadius, mousemove, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -212,13 +288,11 @@ AnimationFrame.shim();
 
 metaboliteRadius = 10;
 
-BG = "white";
-
 W = window.innerWidth;
 
 H = window.innerHeight;
 
-CANVAS = new Canvas("canvas", W, H);
+CANVAS = new Canvas("canvas", W, H, "white");
 
 sTime = (new Date()).getTime();
 
@@ -265,70 +339,14 @@ transformedPoint = function(x, y) {
   return pt.matrixTransform(xform.inverse());
 };
 
-dragStart = null;
-
-dragScaleFactor = 1.5;
-
-lastX = Math.floor(W / 2);
-
-lastY = Math.floor(H / 2);
-
-mousedown = function(e) {
-  lastX = e.clientX - CANVAS.c.offsetLeft;
-  lastY = e.clientY - CANVAS.c.offsetTop;
-  return dragStart = transformedPoint(lastX, lastY);
-};
-
-mouseup = function(e) {
-  return dragStart = null;
-};
-
 mousemove = function(e) {
-  var dX, dY, tPt;
+  var tPt;
   e.preventDefault();
   tPt = transformedPoint(e.clientX, e.clientY);
-  checkCollisions(tPt.x, tPt.y);
-  lastX = e.clientX - CANVAS.c.offsetLeft;
-  lastY = e.clientY - CANVAS.c.offsetTop;
-  if (dragStart != null) {
-    tPt = transformedPoint(lastX, lastY);
-    dX = (tPt.x - dragStart.x) * dragScaleFactor;
-    dY = (tPt.y - dragStart.y) * dragScaleFactor;
-    xform = xform.translate(dX, dY);
-    return ctx.translate(dX, dY);
-  }
+  return checkCollisions(tPt.x, tPt.y);
 };
-
-mousewheel = function(e) {
-  var delta, factor, pt, wheel, zoom;
-  e.preventDefault();
-  wheel = event.wheelDelta / 120;
-  zoom = 1 + wheel / 2;
-  delta = 0;
-  if (e.wheelDelta != null) {
-    delta = e.wheelDelta / 120;
-  } else {
-    if (e.detail != null) {
-      delta = -e.detail;
-    }
-  }
-  pt = transformedPoint(lastX, lastY);
-  ctx.translate(pt.x, pt.y);
-  xform = xform.translate(pt.x, pt.y);
-  factor = zoom;
-  ctx.scale(factor, factor);
-  xform = xform.scaleNonUniform(factor, factor);
-  ctx.translate(-pt.x, -pt.y);
-  return xform = xform.translate(-pt.x, -pt.y);
-};
-
-CANVAS.c.addEventListener("mousedown", mousedown, false);
-
-CANVAS.c.addEventListener("mouseup", mouseup, false);
 
 CANVAS.c.addEventListener("mousemove", mousemove, false);
-
-CANVAS.c.addEventListener("mousewheel", mousewheel, false);
 
 console.log(data);
 
@@ -444,15 +462,6 @@ buildReactions(data);
 
 force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
 
-clear = function() {
-  var p1, p2;
-  ctx.fillStyle = BG;
-  p1 = transformedPoint(0, 0);
-  p2 = transformedPoint(W, H);
-  ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
-  return ctx.fill();
-};
-
 draw = function() {
   var j, k, len, len1, link, node, results;
   for (j = 0, len = links.length; j < len; j++) {
@@ -484,7 +493,7 @@ update = function() {
 
 render = function() {
   stats.begin();
-  clear();
+  CANVAS.clear();
   draw();
   stats.end();
   return requestAnimationFrame(render);

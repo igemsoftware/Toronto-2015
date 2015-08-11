@@ -12,11 +12,10 @@ AnimationFrame.shim()
 
 # **Static Variables**
 metaboliteRadius = 10
-BG = "white"
 W = window.innerWidth
 H = window.innerHeight
 # The painters `<canvas>`
-CANVAS = new Canvas("canvas", W, H)
+CANVAS = new Canvas("canvas", W, H, "white")
 sTime = (new Date()).getTime()
 # For some convenience
 ctx = CANVAS.ctx
@@ -54,24 +53,7 @@ transformedPoint = (x, y) ->
     pt.y = y
     return pt.matrixTransform(xform.inverse())
 
-
-# **For dragging**
-dragStart = null
-dragScaleFactor = 1.5
-lastX = W // 2
-lastY = H // 2
-
 # **Mouse Events**
-
-# **mousedown**
-mousedown = (e) ->
-    lastX = e.clientX - CANVAS.c.offsetLeft
-    lastY = e.clientY - CANVAS.c.offsetTop
-    dragStart = transformedPoint(lastX, lastY)
-
-# **mouseup**
-mouseup = (e) ->
-    dragStart = null
 
 # **mousemove**
 mousemove = (e) ->
@@ -81,46 +63,8 @@ mousemove = (e) ->
     tPt = transformedPoint(e.clientX, e.clientY)
     checkCollisions(tPt.x, tPt.y)
 
-    # Dragging
-    lastX = e.clientX - CANVAS.c.offsetLeft
-    lastY = e.clientY - CANVAS.c.offsetTop
-
-    if dragStart?
-        tPt = transformedPoint(lastX, lastY)
-        dX = (tPt.x - dragStart.x) * dragScaleFactor
-        dY = (tPt.y - dragStart.y) * dragScaleFactor
-        xform = xform.translate(dX, dY)
-        ctx.translate(dX, dY)
-
-# **mousewheel**
-mousewheel = (e) ->
-    e.preventDefault()
-
-    # `n` or `-n`
-    wheel = event.wheelDelta / 120
-    zoom = 1 + wheel / 2
-
-    delta = 0
-    if e.wheelDelta?
-        delta = e.wheelDelta/120
-    else
-        if e.detail?
-            delta = -e.detail
-
-    pt = transformedPoint(lastX, lastY)
-    ctx.translate(pt.x, pt.y)
-    xform = xform.translate(pt.x, pt.y)
-    factor = zoom
-    ctx.scale(factor, factor)
-    xform = xform.scaleNonUniform(factor, factor)
-    ctx.translate(-pt.x, -pt.y)
-    xform = xform.translate(-pt.x, -pt.y)
-
 # Creating event listeners
-CANVAS.c.addEventListener("mousedown", mousedown, false)
-CANVAS.c.addEventListener("mouseup", mouseup, false)
 CANVAS.c.addEventListener("mousemove", mousemove, false)
-CANVAS.c.addEventListener("mousewheel", mousewheel, false)
 
 
 # **Network construction pipeline**
@@ -266,21 +210,9 @@ force = d3.layout.force()
 
 # **Render Pipeline**
 
-# Clear the canvas
-clear = ->
-    ctx.fillStyle = BG
-    p1 = transformedPoint(0,0)
-    p2 = transformedPoint(W,H)
-    ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
-    ctx.fill()
-
 # Draw nodes and links
 draw = ->
-    # ctx.strokeStyle = "black"
-    # ctx.fillStyle = "black"
     link.draw() for link in links
-    # ctx.stroke()
-
     node.draw() for node in nodes
 
 
@@ -292,7 +224,7 @@ update = ->
 
 render = ->
     stats.begin()
-    clear()
+    CANVAS.clear()
     draw()
     # turn update() on for some sinusoidal rythmic fun
     #update()
