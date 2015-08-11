@@ -20,16 +20,14 @@ class Link
         lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x)
         if lineAngle < 0
             lineAngle = 2*Math.PI + lineAngle
+        #h is the hypotonous length of the arrow
         h = 10
+        #is the angle from the line to the arrow
         theta = Math.PI/8
         @ctx.beginPath()
 
         sourcex = @source.x + @r*Math.cos(lineAngle)
         sourcey = @source.y + @r*Math.sin(lineAngle)
-        #else if Math.PI <= lineAngle
-
-            #sourcex = @source.x - @r*Math.cos(Math.PI - theta)
-            #sourcey = @source.y - @r*Math.sin(Math.PI - theta)
         @ctx.moveTo(@target.x, @target.y)
         @ctx.lineTo(sourcex, sourcey)
         @ctx.lineTo(sourcex + h*Math.cos(theta + lineAngle), sourcey + h*Math.sin(theta + lineAngle))
