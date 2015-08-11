@@ -66,7 +66,8 @@ AnimationFrame.shim()</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>BG = <span class="hljs-string">"white"</span>
+            <div class="content"><div class='highlight'><pre>metaboliteRadius = <span class="hljs-number">10</span>
+BG = <span class="hljs-string">"white"</span>
 W = <span class="hljs-built_in">window</span>.innerWidth
 H = <span class="hljs-built_in">window</span>.innerHeight</pre></div></div>
             
@@ -435,7 +436,7 @@ pathways.push(new System(attributes, model))</li>
         nodeAttributes =
             <span class="hljs-attribute">x</span>: rand(W)
             <span class="hljs-attribute">y</span>: rand(H)
-            <span class="hljs-attribute">r</span>: <span class="hljs-number">5</span>
+            <span class="hljs-attribute">r</span>: metaboliteRadius
             <span class="hljs-attribute">name</span>: metabolite.name
             <span class="hljs-attribute">id</span>: metabolite.id
             <span class="hljs-attribute">type</span>: <span class="hljs-string">"m"</span>
@@ -530,34 +531,24 @@ pathways.push(new System(attributes, model))</li>
                     target = reaction.id
 
                 link =
-                    <span class="hljs-attribute">id</span>: <span class="hljs-string">"<span class="hljs-subst">#{source}</span>-<span class="hljs-subst">#{target}</span>"</span>
+                    <span class="hljs-attribute">id</span>: <span class="hljs-string">"<span class="hljs-subst">#{source.id}</span>-<span class="hljs-subst">#{target.id}</span>"</span>
                     <span class="hljs-attribute">source</span>: source
                     <span class="hljs-attribute">target</span>: target
                     <span class="hljs-attribute">flux_value</span>: reaction.flux_value
 
                 tempLinks.push(link)
 
-
     nodesMap = nodeMap(nodes)
-
     <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> tempLinks
-        source = nodes[nodesMap[link.source]]
-        target = nodes[nodesMap[link.target]]</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-27">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
-              </div>
-              <p>link.flux_value valid at this point</p>
+        linkAttr =
+            <span class="hljs-attribute">id</span>: link.id
+            <span class="hljs-attribute">source</span>: nodes[nodesMap[link.source]]
+            <span class="hljs-attribute">target</span>: nodes[nodesMap[link.target]]
+            <span class="hljs-attribute">fluxValue</span>: link.flux_value
+            <span class="hljs-attribute">r</span>: metaboliteRadius
+            <span class="hljs-attribute">linkScale</span>: scaleRadius(model, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>)
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        links.push(<span class="hljs-keyword">new</span> Link(<span class="hljs-string">"<span class="hljs-subst">#{source.id}</span>-<span class="hljs-subst">#{target.id}</span>"</span>, source, target, ctx))
+        links.push(<span class="hljs-keyword">new</span> Link(linkAttr, ctx))
 
 
 nodes = buildMetabolites(data)
@@ -568,11 +559,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>links = (new Link(rand(nodes.length),rand(nodes.length)) for n in nodes)</p>
 
@@ -581,11 +572,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p><strong>D3 Force Layout</strong></p>
 
@@ -596,11 +587,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)</p>
 
@@ -611,11 +602,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>The links: mutates source, target</p>
 
@@ -626,11 +617,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Affects gravitational center and initial random position</p>
 
@@ -641,11 +632,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Sets “rigidity” of links in range [0,1]; func(link, index), this -&gt; force; evaluated at start()</p>
 
@@ -656,11 +647,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>At each tick of the simulation, the particle velocity is scaled by the specified friction</p>
 
@@ -671,11 +662,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Target distance b/w nodes; func(link, index), this -&gt; force; evaluated at start()</p>
 
@@ -686,11 +677,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Charges to be used in calculation for quadtree BH traversal; func(node,index), this -&gt; force; evaluated at start()</p>
 
@@ -701,11 +692,11 @@ buildReactions(data)</pre></div></div>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Sets the maximum distance over which charge forces are applied; \infty if not specified
 .chargeDistance()
@@ -718,11 +709,11 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
         </li>
         
         
-        <li id="section-38">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) &lt; theta =&gt; treat quadrant as single large node</p>
 
@@ -733,11 +724,11 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
         </li>
         
         
-        <li id="section-39">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Force layout’s cooling parameter from [0,1]; layout stops when this reaches 0</p>
 
@@ -748,11 +739,11 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
         </li>
         
         
-        <li id="section-40">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Let’s get this party start()ed</p>
 
@@ -763,14 +754,31 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
         </li>
         
         
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Uncomment this and reanable force.tick() in render()
+Although, then nothing happens.
+force.stop()</p>
+
+            </div>
+            
+        </li>
+        
+        
         <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
-              <p>Uncomment this and reanable force.tick() in render()
-Although, then nothing happens.
+              <p>Precompute layout for static rendering
+optionify this later
+This will <em>need</em> a loading gif
+force.tick() for n in nodes
 force.stop()</p>
 
             </div>
@@ -784,11 +792,7 @@ force.stop()</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
-              <p>Precompute layout for static rendering
-optionify this later
-This will <em>need</em> a loading gif
-force.tick() for n in nodes
-force.stop()</p>
+              <p><strong>Render Pipeline</strong></p>
 
             </div>
             
@@ -800,19 +804,6 @@ force.stop()</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-43">&#182;</a>
-              </div>
-              <p><strong>Render Pipeline</strong></p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-44">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Clear the canvas</p>
 
@@ -828,23 +819,33 @@ force.stop()</p>
         </li>
         
         
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Draw nodes and links</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">draw</span> = -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
         <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
-              <p>Draw nodes and links</p>
+              <p>ctx.strokeStyle = “black”
+ctx.fillStyle = “black”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">draw</span> = -&gt;</span>
-    ctx.strokeStyle = <span class="hljs-string">"black"</span>
-    ctx.fillStyle = <span class="hljs-string">"black"</span>
-    link.draw() <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> links
-    ctx.stroke()
-
-    node.draw() <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> nodes</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    link.draw() <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> links</pre></div></div>
             
         </li>
         
@@ -854,6 +855,22 @@ force.stop()</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>ctx.stroke()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+    node.draw() <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> nodes</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Update node x,y values</p>
 
@@ -872,11 +889,11 @@ force.stop()</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>turn update() on for some sinusoidal rythmic fun
 update()
@@ -890,11 +907,11 @@ force.tick()</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Request next frame</p>
 
@@ -905,11 +922,11 @@ force.tick()</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p><strong>Start the render loop</strong></p>
 
@@ -921,11 +938,11 @@ render()</pre></div></div>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>or use the non-animation frame way
 I get same FPS either way
@@ -938,11 +955,11 @@ but it seems basically the same</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>force.on(“tick”, -&gt;
     stats.begin()</p>

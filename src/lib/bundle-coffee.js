@@ -36,7 +36,8 @@ Link = (function() {
     this.source = this.attr.source;
     this.target = this.attr.target;
     this.fluxValue = this.attr.fluxValue;
-    this.thickness = 1;
+    this.linkScale = this.attr.linkScale;
+    this.thickness = this.linkScale(this.fluxValue);
   }
 
   y = function(x1, y1, m) {
@@ -52,9 +53,6 @@ Link = (function() {
   Link.prototype.draw = function() {
     var h, lineAngle, sourcex, sourcey, theta;
     lineAngle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x);
-    if (lineAngle < 0) {
-      lineAngle = 2 * Math.PI + lineAngle;
-    }
     h = 10;
     theta = Math.PI / 8;
     this.ctx.beginPath();
@@ -212,7 +210,7 @@ AnimationFrame = window.AnimationFrame;
 
 AnimationFrame.shim();
 
-metaboliteRadius = 5;
+metaboliteRadius = 10;
 
 BG = "white";
 
@@ -430,7 +428,8 @@ buildReactions = function(model) {
       source: nodes[nodesMap[link.source]],
       target: nodes[nodesMap[link.target]],
       fluxValue: link.flux_value,
-      r: metaboliteRadius
+      r: metaboliteRadius,
+      linkScale: scaleRadius(model, 1, 5)
     };
     results.push(links.push(new Link(linkAttr, ctx)));
   }

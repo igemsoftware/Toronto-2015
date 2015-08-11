@@ -5,7 +5,8 @@ class Link
         @source = @attr.source
         @target = @attr.target
         @fluxValue = @attr.fluxValue
-        @thickness = 1
+        @linkScale = @attr.linkScale
+        @thickness = @linkScale(@fluxValue)
 
     y = (x1, y1, m) ->
         return (x)->
@@ -18,11 +19,10 @@ class Link
     draw: ->
 
         lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x)
-        if lineAngle < 0
-            lineAngle = 2*Math.PI + lineAngle
+
         #h is the hypotonous length of the arrow
         h = 10
-        #is the angle from the line to the arrow
+        #theta is the angle from the line to the arrow
         theta = Math.PI/8
         @ctx.beginPath()
 
