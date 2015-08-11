@@ -31,7 +31,162 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Link</span></span>
-    <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@id</span>, <span class="hljs-property">@source</span>, <span class="hljs-property">@target</span>)</span> -&gt;</span>
+    <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@id</span>, <span class="hljs-property">@source</span>, <span class="hljs-property">@target</span>, <span class="hljs-property">@ctx</span>)</span> -&gt;</span>
+        <span class="hljs-property">@thickness</span> = <span class="hljs-number">5</span>
+<span class="hljs-function">
+    <span class="hljs-title">y</span> = <span class="hljs-params">(x1, y1, m)</span> -&gt;</span>
+        <span class="hljs-keyword">return</span> (x)-&gt;
+            <span class="hljs-keyword">return</span> m*(x-x1)+y1
+
+    <span class="hljs-attribute">draw</span>: <span class="hljs-function">-&gt;</span>
+        length = Math.sqrt((<span class="hljs-property">@source</span>.x - <span class="hljs-property">@target</span>.x)**<span class="hljs-number">2</span> + (<span class="hljs-property">@source</span>.y - <span class="hljs-property">@target</span>.y)**<span class="hljs-number">2</span>)
+        angle = Math.atan2(<span class="hljs-property">@source</span>.y-<span class="hljs-property">@target</span>.y, <span class="hljs-property">@source</span>.x - <span class="hljs-property">@target</span>.x)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>@ctx.moveTo(@source.x, @source.y)
+@ctx.lineTo(@target.x, @target.y)
+@ctx.save()
+@ctx.rect(@source.x, @source.y, length, @thickness)
+@ctx.fill()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+        <span class="hljs-property">@ctx</span>.save()
+        <span class="hljs-property">@ctx</span>.translate(<span class="hljs-property">@source</span>.x, <span class="hljs-property">@source</span>.y)
+        <span class="hljs-property">@ctx</span>.rotate(angle + Math.PI/<span class="hljs-number">2</span>)
+        <span class="hljs-property">@ctx</span>.rect(-<span class="hljs-property">@thickness</span>/<span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-property">@thickness</span>, length)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>@ctx.beginPath()
+@ctx.lineTo(@target.x-2<em>@thickness</em>Math.cos(angle-Math.PI/6),@target.y-2<em>@thickness</em>Math.sin(angle-Math.PI/6));
+@ctx.moveTo(@target.x, @target.y);
+@ctx.lineTo(@target.x-2<em>@thickness</em>Math.cos(angle+Math.PI/6),@target.y-2<em>@thickness</em>Math.sin(angle+Math.PI/6));</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@ctx</span>.fill()
+        <span class="hljs-property">@ctx</span>.restore()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>@ctx.fillRect(50, 50, 100, 100)</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>m = (@source.y - @target.y)/(@source.x - @target.x)
+lineFromSourceTranslatedPlus = y(@source.x, @source.y + @thickness, m)
+lineFromSourceTranslatedMinus = y(@source.x, @source.y - @thickness, m)
+perpToSource = y(@source.x, @source.y, -1/m)
+perpToTarget = y(@target.x, @target.y, -1/m)
+angle = Math.atan2(@target.y-@source.y,@target.x-@source.x);
+@ctx.moveTo(@source.x, @source.y);
+@ctx.lineTo(@target.x, @target.y);
+@ctx.lineTo(@target.x-@thickness<em>Math.cos(angle-Math.PI/6),@target.y-@thickness</em>Math.sin(angle-Math.PI/6));
+@ctx.moveTo(@target.x, @target.y);
+@ctx.lineTo(@target.x-@thickness<em>Math.cos(angle+Math.PI/6),@target.y-@thickness</em>Math.sin(angle+Math.PI/6));</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>draw: -&gt;</p>
+<pre><code><span class="hljs-comment">#@ctx.moveTo(@source.x, @source.y)</span>
+m = (<span class="hljs-property">@source</span>.y-<span class="hljs-property">@target</span>.y)/(<span class="hljs-property">@source</span>.x-<span class="hljs-property">@target</span>.x)
+<span class="hljs-comment"># lineFromSourceTranslatedPlus = y(@source.x, @source.y + @thickness,  m)</span>
+<span class="hljs-comment"># lineFromSourceTranslatedMinus = y(@source.x, @source.y - @thickness, m)</span>
+<span class="hljs-comment"># perpToSource = y(@source.x, @source.y, -1/m)</span>
+<span class="hljs-comment"># perpToTarget = y(@target.x, @target.y, -1/m)</span>
+line1 =
+    <span class="hljs-attribute">start</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-property">@source</span>.x
+        <span class="hljs-attribute">y</span>: <span class="hljs-property">@source</span>.y
+    <span class="hljs-attribute">end</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-property">@target</span>.x
+        <span class="hljs-attribute">y</span>: <span class="hljs-property">@target</span>.y + <span class="hljs-property">@thickness</span>
+line2 =
+    <span class="hljs-attribute">start</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-property">@source</span>.x
+        <span class="hljs-attribute">y</span>: <span class="hljs-property">@source</span>.y
+    <span class="hljs-attribute">end</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-property">@target</span>.x
+        <span class="hljs-attribute">y</span>:  <span class="hljs-property">@target</span>.y - <span class="hljs-property">@thickness</span>
+temp = y(<span class="hljs-property">@source</span>.x, <span class="hljs-property">@source</span>.y, -<span class="hljs-number">1</span>/m)
+linePerpSource =
+    <span class="hljs-attribute">start</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-property">@source</span>.x
+        <span class="hljs-attribute">y</span>: <span class="hljs-property">@source</span>.y
+    <span class="hljs-attribute">end</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>
+        <span class="hljs-attribute">y</span>: temp(<span class="hljs-number">0</span>)
+temp = y(<span class="hljs-property">@target</span>.x, <span class="hljs-property">@target</span>.y, -<span class="hljs-number">1</span>/m)
+linePerpTarget =
+    <span class="hljs-attribute">start</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-property">@target</span>.x
+        <span class="hljs-attribute">y</span>: <span class="hljs-property">@target</span>.y
+    <span class="hljs-attribute">end</span>:
+        <span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>
+        <span class="hljs-attribute">y</span>: temp(<span class="hljs-number">0</span>)
+
+
+start = intersection.intersect(line1, linePerpSource)
+
+<span class="hljs-property">@ctx</span>.moveTo(start.x, start.y)
+
+inters = intersection.intersect(line1, linePerpTarget)
+<span class="hljs-comment">#console.log intersection.describe(line2, linePerpSource)</span>
+<span class="hljs-property">@ctx</span>.lineTo(inters.x, inters.y)
+inters = intersection.intersect(line2, linePerpTarget)
+<span class="hljs-property">@ctx</span>.lineTo(inters.x, inters.y)
+inters = intersection.intersect(line1, linePerpTarget)
+<span class="hljs-property">@ctx</span>.lineTo(inters.x, inters.y)
+<span class="hljs-property">@ctx</span>.lineTo(start.x, start.y)
+<span class="hljs-comment">#@ctx.closePath()</span>
+<span class="hljs-comment"># @ctx.fillStyle = "red"</span>
+<span class="hljs-comment"># @ctx.fill()</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
 
 <span class="hljs-built_in">module</span>.exports = Link</pre></div></div>
             

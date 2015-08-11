@@ -43,13 +43,16 @@ Link = (function() {
   };
 
   Link.prototype.draw = function() {
-    var angle, length;
+    var angle, c, length;
     length = Math.sqrt(Math.pow(this.source.x - this.target.x, 2) + Math.pow(this.source.y - this.target.y, 2));
-    angle = Math.atan2(this.source.y - this.target.y, this.source.x - this.target.x);
+    angle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x);
+    c = 10;
     this.ctx.save();
     this.ctx.translate(this.source.x, this.source.y);
-    this.ctx.rotate(angle + Math.PI / 2);
-    this.ctx.rect(-this.thickness / 2, 0, this.thickness, length);
+    this.ctx.rotate(angle - Math.PI / 2);
+    this.ctx.rect(-this.thickness / 2, 0, this.thickness, length - c);
+    this.ctx.fill();
+    this.ctx.restore();
     this.ctx.fill();
     return this.ctx.restore();
   };

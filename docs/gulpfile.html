@@ -55,7 +55,7 @@
     watch       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-watch'</span>),
     concat      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-concat'</span>),
     wiredep     = <span class="hljs-built_in">require</span>(<span class="hljs-string">'wiredep'</span>).stream,
-    inject      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-inject'</span>), 
+    inject      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-inject'</span>),
     globby      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'globby'</span>),
     combiner   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'stream-combiner2'</span>),
     sass        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp-sass'</span>),
@@ -184,8 +184,8 @@
             <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'sass'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> gulp
     .src(globs.sass)
-    .pipe(sass({   
-        includePaths: [<span class="hljs-string">'./bower_components/compass-mixins/lib'</span>] 
+    .pipe(sass({
+        includePaths: [<span class="hljs-string">'./bower_components/compass-mixins/lib'</span>]
     }).on(<span class="hljs-string">'error'</span>, sass.logError))
     .pipe(gulp.dest(dests.css))
     .pipe(browserSync.stream());
@@ -217,14 +217,14 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'coffee'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{  
+            <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'coffee'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
 
     globby([globs.coffee], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, entries</span>) </span>{
         <span class="hljs-keyword">if</span> (err) {
             gutil.log();
             <span class="hljs-keyword">return</span>;
         }
-        
+
         <span class="hljs-keyword">var</span> b = browserify({
             entries    : entries,
             extensions : [<span class="hljs-string">'.coffee'</span>],
@@ -244,7 +244,7 @@
         combined.on(<span class="hljs-string">'error'</span>, gutil.log);
 
         <span class="hljs-keyword">return</span> combined;
-    }); 
+    });
 });</pre></div></div>
             
         </li>
@@ -274,7 +274,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'inject:css'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> sources = gulp.src(globs.css, {read: <span class="hljs-literal">false</span>});    
+    <span class="hljs-keyword">var</span> sources = gulp.src(globs.css, {read: <span class="hljs-literal">false</span>});
 
     <span class="hljs-keyword">return</span> gulp
     .src(globs.index)
@@ -296,10 +296,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'inject:js'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> sources = gulp.src(globs.libJS, {read: <span class="hljs-literal">false</span>}); 
+    <span class="hljs-keyword">var</span> sources = gulp.src(globs.libJS, {read: <span class="hljs-literal">false</span>});
 
     <span class="hljs-keyword">return</span> gulp
-    .src(globs.index) 
+    .src(globs.index)
     .pipe(inject(sources, {relative: <span class="hljs-literal">true</span>}))
     .pipe(gulp.dest(dests.index));
 });</pre></div></div>
@@ -471,12 +471,13 @@ gulp.task(<span class="hljs-string">'clean'</span>, [<span class="hljs-string">'
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'serve'</span>, [<span class="hljs-string">'sass'</span>, <span class="hljs-string">'coffee'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ 
+            <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'serve'</span>, [<span class="hljs-string">'sass'</span>, <span class="hljs-string">'coffee'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     browserSync.init({
         server: {
             baseDir : src,
             routes  : {
-                <span class="hljs-string">'/bower_components'</span> : <span class="hljs-string">'./bower_components'</span>    
+                <span class="hljs-string">'/bower_components'</span> : <span class="hljs-string">'./bower_components'</span>,
+                <span class="hljs-string">'/node_modules'</span> :<span class="hljs-string">'./node_modules'</span>    
             }
         }
     });</pre></div></div>
@@ -558,11 +559,11 @@ gulp.task(<span class="hljs-string">'clean'</span>, [<span class="hljs-string">'
             <div class="content"><div class='highlight'><pre>gulp.task(<span class="hljs-string">'serve:docs'</span>, [<span class="hljs-string">'docs'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     browserSync.init({
         server: {
-            baseDir : dests.docs 
+            baseDir : dests.docs
         }
     });
 
-    watch(globs.coffee, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ gulp.start(<span class="hljs-string">'docs'</span>); });    
+    watch(globs.coffee, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ gulp.start(<span class="hljs-string">'docs'</span>); });
 });</pre></div></div>
             
         </li>

@@ -34,16 +34,85 @@
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Reaction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Node</span></span>
     <span class="hljs-attribute">draw</span>: <span class="hljs-function">-&gt;</span>
-        <span class="hljs-property">@ctx</span>.beginPath()
-        <span class="hljs-property">@ctx</span>.moveTo(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>)
-        <span class="hljs-property">@ctx</span>.arc(<span class="hljs-property">@x</span>, <span class="hljs-property">@y</span>, <span class="hljs-property">@r</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span> * Math.PI)
-        <span class="hljs-property">@ctx</span>.closePath()
+        nos = <span class="hljs-number">6</span>
+        size = <span class="hljs-property">@r</span>
 
-        <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"blue"</span>
-        <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"red"</span> <span class="hljs-keyword">if</span> <span class="hljs-property">@hover</span>
+        <span class="hljs-property">@ctx</span>.beginPath()
+        <span class="hljs-property">@ctx</span>.moveTo(<span class="hljs-property">@x</span> + <span class="hljs-property">@r</span> * Math.cos(<span class="hljs-number">0</span>), <span class="hljs-property">@y</span> + <span class="hljs-property">@r</span> * Math.sin(<span class="hljs-number">0</span>))
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">0.</span>..nos]
+            <span class="hljs-property">@ctx</span>.lineTo(<span class="hljs-property">@x</span> + <span class="hljs-property">@r</span> * Math.cos(i * <span class="hljs-number">2</span> * Math.PI / nos), <span class="hljs-property">@y</span> + <span class="hljs-property">@r</span> * Math.sin (i * (<span class="hljs-number">2</span> * Math.PI / nos)))
+
+        <span class="hljs-property">@ctx</span>.lineTo(<span class="hljs-property">@x</span> + <span class="hljs-property">@r</span> * Math.cos(<span class="hljs-number">0</span>), <span class="hljs-property">@y</span> + <span class="hljs-property">@r</span> * Math.sin(<span class="hljs-number">0</span>))
+        <span class="hljs-property">@ctx</span>.lineTo(<span class="hljs-property">@x</span> + <span class="hljs-property">@r</span> * Math.cos(<span class="hljs-number">1</span> * <span class="hljs-number">2</span> * Math.PI / nos), <span class="hljs-property">@y</span> + <span class="hljs-property">@r</span> * Math.sin (<span class="hljs-number">1</span> * (<span class="hljs-number">2</span> * Math.PI / nos)))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>@ctx.strokeStyle = “rgb(120,120,120)”
+@ctx.stroke()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@ctx</span>.fillStyle = <span class="hljs-string">"blue"</span>
+        <span class="hljs-property">@ctx</span>.closePath()
 
         <span class="hljs-property">@ctx</span>.fill()
 
+        factor = <span class="hljs-number">1.2</span>
+        <span class="hljs-property">@ctx</span>.beginPath()
+        <span class="hljs-property">@ctx</span>.moveTo(<span class="hljs-property">@x</span> + factor * <span class="hljs-property">@r</span> * Math.cos(<span class="hljs-number">0</span>), <span class="hljs-property">@y</span> + factor * <span class="hljs-property">@r</span> * Math.sin(<span class="hljs-number">0</span>))
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">0.</span>..nos]
+            <span class="hljs-property">@ctx</span>.lineTo(<span class="hljs-property">@x</span> + factor * <span class="hljs-property">@r</span> * Math.cos(i * <span class="hljs-number">2</span> * Math.PI / nos), <span class="hljs-property">@y</span> + factor * <span class="hljs-property">@r</span> * Math.sin (i * (<span class="hljs-number">2</span> * Math.PI / nos)))
+
+        <span class="hljs-property">@ctx</span>.lineTo(<span class="hljs-property">@x</span> + factor * <span class="hljs-property">@r</span> * Math.cos(<span class="hljs-number">0</span>), <span class="hljs-property">@y</span> + factor * <span class="hljs-property">@r</span> * Math.sin(<span class="hljs-number">0</span>))
+        <span class="hljs-property">@ctx</span>.lineTo(<span class="hljs-property">@x</span> + factor * <span class="hljs-property">@r</span> * Math.cos(<span class="hljs-number">1</span> * <span class="hljs-number">2</span> * Math.PI / nos), <span class="hljs-property">@y</span> + factor * <span class="hljs-property">@r</span> * Math.sin (<span class="hljs-number">1</span> * (<span class="hljs-number">2</span> * Math.PI / nos)))
+
+        <span class="hljs-property">@ctx</span>.closePath()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>@ctx.strokeStyle = “rgb(120,120,120)”</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@ctx</span>.strokeStyle = <span class="hljs-string">"blue"</span>
+        <span class="hljs-property">@ctx</span>.stroke()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>@ctx.beginPath()
+@ctx.moveTo(@x, @y)
+@ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
+@ctx.closePath()</p>
+<p>@ctx.fillStyle = “blue”
+@ctx.fillStyle = “red” if @hover</p>
+<p>@ctx.fill()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
 <span class="hljs-built_in">module</span>.exports = Reaction</pre></div></div>
             
         </li>
