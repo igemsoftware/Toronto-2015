@@ -32,11 +32,11 @@ Link = (function() {
     this.attr = attr;
     this.ctx = ctx;
     this.id = this.attr.id;
+    this.r = this.attr.r;
     this.source = this.attr.source;
     this.target = this.attr.target;
     this.fluxValue = this.attr.fluxValue;
-    this.thickness = 5;
-    console.log(this.fluxValue);
+    this.thickness = 1;
   }
 
   y = function(x1, y1, m) {
@@ -50,10 +50,21 @@ Link = (function() {
   };
 
   Link.prototype.draw = function() {
-    this.setM();
+    var h, lineAngle, sourcex, sourcey, theta;
+    lineAngle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x);
+    if (lineAngle < 0) {
+      lineAngle = 2 * Math.PI + lineAngle;
+    }
+    h = 10;
+    theta = Math.PI / 8;
     this.ctx.beginPath();
-    this.ctx.moveTo(this.source.x, this.source.y);
-    this.ctx.lineTo(this.target.x, this.target.y);
+    sourcex = this.source.x + this.r * Math.cos(lineAngle);
+    sourcey = this.source.y + this.r * Math.sin(lineAngle);
+    this.ctx.moveTo(this.target.x, this.target.y);
+    this.ctx.lineTo(sourcex, sourcey);
+    this.ctx.lineTo(sourcex + h * Math.cos(theta + lineAngle), sourcey + h * Math.sin(theta + lineAngle));
+    this.ctx.moveTo(sourcex, sourcey);
+    this.ctx.lineTo(sourcex + h * Math.cos(-theta + lineAngle), sourcey + h * Math.sin(-theta + lineAngle));
     this.ctx.lineWidth = this.thickness;
     this.ctx.closePath();
     this.ctx.strokeStyle = "black";
@@ -185,7 +196,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
+var AnimationFrame, BG, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, clear, ctx, currentActiveNode, dragScaleFactor, dragStart, draw, force, lastX, lastY, links, metaboliteRadius, mousedown, mousemove, mouseup, mousewheel, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
 
 Canvas = require("./Canvas");
 
@@ -200,6 +211,8 @@ Link = require("./Link");
 AnimationFrame = window.AnimationFrame;
 
 AnimationFrame.shim();
+
+metaboliteRadius = 5;
 
 BG = "white";
 
@@ -332,7 +345,7 @@ buildMetabolites = function(model) {
     nodeAttributes = {
       x: rand(W),
       y: rand(H),
-      r: 5,
+      r: metaboliteRadius,
       name: metabolite.name,
       id: metabolite.id,
       type: "m"
@@ -416,7 +429,8 @@ buildReactions = function(model) {
       id: link.id,
       source: nodes[nodesMap[link.source]],
       target: nodes[nodesMap[link.target]],
-      fluxValue: link.flux_value
+      fluxValue: link.flux_value,
+      r: metaboliteRadius
     };
     results.push(links.push(new Link(linkAttr, ctx)));
   }

@@ -11,6 +11,7 @@ AnimationFrame.shim()
 
 
 # **Static Variables**
+metaboliteRadius = 5
 BG = "white"
 W = window.innerWidth
 H = window.innerHeight
@@ -141,7 +142,7 @@ buildMetabolites = (model) ->
         nodeAttributes =
             x: rand(W)
             y: rand(H)
-            r: 5
+            r: metaboliteRadius
             name: metabolite.name
             id: metabolite.id
             type: "m"
@@ -214,6 +215,7 @@ buildReactions = (model) ->
             source: nodes[nodesMap[link.source]]
             target: nodes[nodesMap[link.target]]
             fluxValue: link.flux_value
+            r: metaboliteRadius
 
         links.push(new Link(linkAttr, ctx))
 
