@@ -127,18 +127,25 @@ Link = (function() {
   };
 
   Link.prototype.draw = function() {
-    var h, lineAngle, sourcex, sourcey, theta;
-    lineAngle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x);
+    var h, lineAngle, targetx, targety, theta;
+    lineAngle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x) + Math.PI;
     h = 10;
     theta = Math.PI / 8;
     this.ctx.beginPath();
-    sourcex = this.source.x + this.r * Math.cos(lineAngle);
-    sourcey = this.source.y + this.r * Math.sin(lineAngle);
-    this.ctx.moveTo(this.target.x, this.target.y);
-    this.ctx.lineTo(sourcex, sourcey);
-    this.ctx.lineTo(sourcex + h * Math.cos(theta + lineAngle), sourcey + h * Math.sin(theta + lineAngle));
-    this.ctx.moveTo(sourcex, sourcey);
-    this.ctx.lineTo(sourcex + h * Math.cos(-theta + lineAngle), sourcey + h * Math.sin(-theta + lineAngle));
+    if (this.target.type === "r") {
+      targetx = this.target.x;
+      targety = this.target.y;
+    } else {
+      targetx = this.target.x + this.r * Math.cos(lineAngle);
+      targety = this.target.y + this.r * Math.sin(lineAngle);
+    }
+    this.ctx.moveTo(this.source.x, this.source.y);
+    this.ctx.lineTo(targetx, targety);
+    if (this.source.type === "r") {
+      this.ctx.lineTo(targetx + h * Math.cos(theta + lineAngle), targety + h * Math.sin(theta + lineAngle));
+      this.ctx.moveTo(targetx, targety);
+      this.ctx.lineTo(targetx + h * Math.cos(-theta + lineAngle), targety + h * Math.sin(-theta + lineAngle));
+    }
     this.ctx.lineWidth = this.thickness;
     this.ctx.closePath();
     this.ctx.strokeStyle = "black";

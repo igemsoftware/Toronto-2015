@@ -18,21 +18,26 @@ class Link
 
     draw: ->
 
-        lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x)
+        lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x) + Math.PI
 
         #h is the hypotonous length of the arrow
         h = 10
         #theta is the angle from the line to the arrow
         theta = Math.PI/8
         @ctx.beginPath()
-
-        sourcex = @source.x + @r*Math.cos(lineAngle)
-        sourcey = @source.y + @r*Math.sin(lineAngle)
-        @ctx.moveTo(@target.x, @target.y)
-        @ctx.lineTo(sourcex, sourcey)
-        @ctx.lineTo(sourcex + h*Math.cos(theta + lineAngle), sourcey + h*Math.sin(theta + lineAngle))
-        @ctx.moveTo(sourcex, sourcey)
-        @ctx.lineTo(sourcex + h*Math.cos(-theta + lineAngle), sourcey + h*Math.sin(-theta + lineAngle))
+        if @target.type is "r"
+            targetx = @target.x
+            targety = @target.y
+        else
+            targetx = @target.x + @r*Math.cos(lineAngle)
+            targety = @target.y + @r*Math.sin(lineAngle)
+        @ctx.moveTo(@source.x, @source.y)
+        @ctx.lineTo(targetx, targety)
+        #create arrow
+        if @source.type is "r"
+            @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
+            @ctx.moveTo(targetx, targety)
+            @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
         @ctx.lineWidth = @thickness
         @ctx.closePath()
         @ctx.strokeStyle = "black"
