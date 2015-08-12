@@ -202,6 +202,7 @@ Node = (function() {
     this.id = attr.id;
     this.name = attr.name;
     this.type = attr.type;
+    this.colour = attr.colour;
     this.flux_value = attr.flux_value;
   }
 
@@ -246,7 +247,7 @@ Reaction = (function(superClass) {
     }
     this.ctx.lineTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
     this.ctx.lineTo(this.x + this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + this.r * Math.sin(1 * (2 * Math.PI / nos)));
-    this.ctx.fillStyle = "blue";
+    this.ctx.fillStyle = this.colour;
     this.ctx.closePath();
     this.ctx.fill();
     factor = 1.2;
@@ -258,7 +259,7 @@ Reaction = (function(superClass) {
     this.ctx.lineTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
     this.ctx.lineTo(this.x + factor * this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(1 * (2 * Math.PI / nos)));
     this.ctx.closePath();
-    this.ctx.strokeStyle = "blue";
+    this.ctx.strokeStyle = this.colour;
     return this.ctx.stroke();
   };
 
@@ -289,12 +290,12 @@ System = (function() {
 
   function System(attr) {
     var AnimationFrame, i, len, n, ref;
-    this.attr = attr;
-    this.W = this.attr.width;
-    this.H = this.attr.height;
-    this.BG = this.attr.backgroundColour;
-    this.metaboliteRadius = this.attr.metaboliteRadius;
-    this.useStatic = this.attr.useStatic;
+    this.W = attr.width;
+    this.H = attr.height;
+    this.BG = attr.backgroundColour;
+    this.metaboliteRadius = attr.metaboliteRadius;
+    this.useStatic = attr.useStatic;
+    this.everything = attr.everything;
     this.currentActiveNode = null;
     this.canvas = new Canvas("canvas", this.W, this.H, this.BG);
     this.canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
@@ -370,7 +371,7 @@ System = (function() {
     ref = model.reactions;
     for (i = 0, len = ref.length; i < len; i++) {
       reaction = ref[i];
-      if (reaction.flux_value > 0) {
+      if (this.everything || reaction.flux_value > 0) {
         reactionAttributes = {
           x: utilities.rand(this.W),
           y: utilities.rand(this.H),
@@ -378,7 +379,8 @@ System = (function() {
           name: reaction.name,
           id: reaction.id,
           type: "r",
-          flux_value: reaction.flux_value
+          flux_value: reaction.flux_value,
+          colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
         };
         this.nodes.push(new Reaction(reactionAttributes, this.canvas.ctx));
         ref1 = Object.keys(reaction.metabolites);
@@ -461,7 +463,8 @@ systemAttributes = {
   height: window.innerHeight,
   backgroundColour: "white",
   metaboliteRadius: 10,
-  useStatic: false
+  useStatic: false,
+  everything: true
 };
 
 system = new System(systemAttributes);

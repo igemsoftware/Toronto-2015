@@ -9,12 +9,13 @@ Link       = require "./Link"
 utilities = require("./utilities")
 
 class System
-    constructor: (@attr) ->
-        @W                = @attr.width
-        @H                = @attr.height
-        @BG               = @attr.backgroundColour
-        @metaboliteRadius = @attr.metaboliteRadius
-        @useStatic        = @attr.useStatic
+    constructor: (attr) ->
+        @W                = attr.width
+        @H                = attr.height
+        @BG               = attr.backgroundColour
+        @metaboliteRadius = attr.metaboliteRadius
+        @useStatic        = attr.useStatic
+        @everything       = attr.everything
 
         # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
         @currentActiveNode = null
@@ -108,7 +109,7 @@ class System
         tempLinks = new Array()
 
         for reaction in model.reactions
-            if reaction.flux_value > 0
+            if @everything or reaction.flux_value > 0
                 reactionAttributes =
                     x          : utilities.rand(@W)
                     y          : utilities.rand(@H)
@@ -117,6 +118,7 @@ class System
                     id         : reaction.id
                     type       : "r"
                     flux_value : reaction.flux_value
+                    colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
 
                 @nodes.push(new Reaction(reactionAttributes, @canvas.ctx))
 

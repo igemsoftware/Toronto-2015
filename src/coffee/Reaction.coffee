@@ -16,7 +16,7 @@ class Reaction extends Node
 
         # @ctx.strokeStyle = "rgb(120,120,120)"
         # @ctx.stroke()
-        @ctx.fillStyle = "blue"
+        @ctx.fillStyle = @colour
         @ctx.closePath()
 
         @ctx.fill()
@@ -33,7 +33,7 @@ class Reaction extends Node
 
         @ctx.closePath()
         # @ctx.strokeStyle = "rgb(120,120,120)"
-        @ctx.strokeStyle = "blue"
+        @ctx.strokeStyle = @colour
         @ctx.stroke()
 
         # @ctx.beginPath()

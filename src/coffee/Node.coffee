@@ -13,6 +13,7 @@ class Node
         @id = attr.id
         @name = attr.name
         @type = attr.type
+        @colour = attr.colour
 
         # reaction has flux value
         @flux_value = attr.flux_value

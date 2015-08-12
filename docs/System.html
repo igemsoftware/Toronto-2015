@@ -53,12 +53,13 @@ Link       = <span class="hljs-built_in">require</span> <span class="hljs-string
             <div class="content"><div class='highlight'><pre>utilities = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utilities"</span>)
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">System</span></span>
-    <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@attr</span>)</span> -&gt;</span>
-        <span class="hljs-property">@W</span>                = <span class="hljs-property">@attr</span>.width
-        <span class="hljs-property">@H</span>                = <span class="hljs-property">@attr</span>.height
-        <span class="hljs-property">@BG</span>               = <span class="hljs-property">@attr</span>.backgroundColour
-        <span class="hljs-property">@metaboliteRadius</span> = <span class="hljs-property">@attr</span>.metaboliteRadius
-        <span class="hljs-property">@useStatic</span>        = <span class="hljs-property">@attr</span>.useStatic</pre></div></div>
+    <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(attr)</span> -&gt;</span>
+        <span class="hljs-property">@W</span>                = attr.width
+        <span class="hljs-property">@H</span>                = attr.height
+        <span class="hljs-property">@BG</span>               = attr.backgroundColour
+        <span class="hljs-property">@metaboliteRadius</span> = attr.metaboliteRadius
+        <span class="hljs-property">@useStatic</span>        = attr.useStatic
+        <span class="hljs-property">@everything</span>       = attr.everything</pre></div></div>
             
         </li>
         
@@ -391,7 +392,7 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
         tempLinks = <span class="hljs-keyword">new</span> Array()
 
         <span class="hljs-keyword">for</span> reaction <span class="hljs-keyword">in</span> model.reactions
-            <span class="hljs-keyword">if</span> reaction.flux_value &gt; <span class="hljs-number">0</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-property">@everything</span> <span class="hljs-keyword">or</span> reaction.flux_value &gt; <span class="hljs-number">0</span>
                 reactionAttributes =
                     x          : utilities.rand(<span class="hljs-property">@W</span>)
                     y          : utilities.rand(<span class="hljs-property">@H</span>)
@@ -400,6 +401,7 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
                     id         : reaction.id
                     type       : <span class="hljs-string">"r"</span>
                     flux_value : reaction.flux_value
+                    colour     : <span class="hljs-string">"rgb(<span class="hljs-subst">#{utilities.rand(<span class="hljs-number">255</span>)}</span>, <span class="hljs-subst">#{utilities.rand(<span class="hljs-number">255</span>)}</span>, <span class="hljs-subst">#{utilities.rand(<span class="hljs-number">255</span>)}</span>)"</span>
 
                 <span class="hljs-property">@nodes</span>.push(<span class="hljs-keyword">new</span> Reaction(reactionAttributes, <span class="hljs-property">@canvas</span>.ctx))</pre></div></div>
             
