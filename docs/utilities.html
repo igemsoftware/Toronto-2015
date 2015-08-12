@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>utilities.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>utilities.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Quick and easy random integers from [0,range]</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">rand</span> = <span class="hljs-params">(range)</span> -&gt;</span>
+    <span class="hljs-keyword">return</span> Math.floor(Math.random() * (range + <span class="hljs-number">1</span>))
+<span class="hljs-function">
+<span class="hljs-title">scaleRadius</span> = <span class="hljs-params">(model, minRadius, maxRadius)</span> -&gt;</span>
+    fluxes = (reaction.flux_value <span class="hljs-keyword">for</span> reaction <span class="hljs-keyword">in</span> model.reactions)
+    largest = Math.max.apply(Math, fluxes)
+
+    <span class="hljs-keyword">return</span> d3.scale.linear()
+        .domain([<span class="hljs-number">0</span>, largest])
+        .range([minRadius, maxRadius])
+<span class="hljs-function">
+<span class="hljs-title">nodeMap</span> = <span class="hljs-params">(nodes)</span> -&gt;</span>
+    map = <span class="hljs-keyword">new</span> Object()
+
+    <span class="hljs-keyword">for</span> node,i <span class="hljs-keyword">in</span> nodes
+        map[node.id] = i
+
+    <span class="hljs-keyword">return</span> map
+
+<span class="hljs-built_in">module</span>.exports =
+    rand        : rand
+    scaleRadius : scaleRadius
+    nodeMap     : nodeMap</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

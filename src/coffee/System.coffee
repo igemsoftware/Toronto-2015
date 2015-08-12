@@ -6,7 +6,7 @@ Reaction   = require "./Reaction"
 Link       = require "./Link"
 
 # **Utility Functions**
-rand = require("./utilites").rand
+utilities = require("./utilities")
 
 class System
     constructor: (@attr) ->
@@ -17,7 +17,7 @@ class System
         @useStatic        = @attr.useStatic
 
         # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
-        currentActiveNode = null
+        @currentActiveNode = null
 
         # Create Canvas Object
         # Handles zooming and panning
@@ -75,12 +75,12 @@ class System
             for node in @nodes
                 if node.checkCollision(x,y)
                     node.hover = true
-                    currentActiveNode = node
+                    @currentActiveNode = node
                 else
                     node.hover = false
         else
-            if not currentActiveNode.checkCollision(x,y)
-                currentActiveNode = null
+            if not @currentActiveNode.checkCollision(x,y)
+                @currentActiveNode = null
 
     mousemoveHandler = (e) ->
         e.preventDefault()
@@ -92,8 +92,8 @@ class System
         tempNodes = new Array()
         for metabolite in model.metabolites
             nodeAttributes =
-                x    : rand(@W)
-                y    : rand(@H)
+                x    : utilities.rand(@W)
+                y    : utilities.rand(@H)
                 r    : @metaboliteRadius
                 name : metabolite.name
                 id   : metabolite.id
@@ -103,31 +103,15 @@ class System
 
         return tempNodes
 
-    scaleRadius = (model, minRadius, maxRadius) ->
-        fluxes = (reaction.flux_value for reaction in model.reactions)
-        largest = Math.max.apply(Math, fluxes)
-
-        return d3.scale.linear()
-            .domain([0, largest])
-            .range([minRadius, maxRadius])
-
-    nodeMap = (nodes) ->
-        map = new Object()
-
-        for node,i in nodes
-            map[node.id] = i
-
-        return map
-
     buildReactions: (model) ->
-        radiusScale = scaleRadius(model, 5, 15)
+        radiusScale = utilities.scaleRadius(model, 5, 15)
         tempLinks = new Array()
 
         for reaction in model.reactions
             if reaction.flux_value > 0
                 reactionAttributes =
-                    x          : rand(@W)
-                    y          : rand(@H)
+                    x          : utilities.rand(@W)
+                    y          : utilities.rand(@H)
                     r          : radiusScale(reaction.flux_value)
                     name       : reaction.name
                     id         : reaction.id
@@ -156,7 +140,7 @@ class System
 
                     tempLinks.push(link)
 
-        nodesMap = nodeMap(@nodes)
+        nodesMap = utilities.nodeMap(@nodes)
         for link in tempLinks
             linkAttr =
                 id        : link.id
@@ -164,7 +148,7 @@ class System
                 target    : @nodes[nodesMap[link.target]]
                 fluxValue : link.flux_value
                 r         : @metaboliteRadius
-                linkScale : scaleRadius(model, 1, 5)
+                linkScale : utilities.scaleRadius(model, 1, 5)
 
             @links.push(new Link(linkAttr, @canvas.ctx))
 

@@ -50,7 +50,7 @@ Link       = <span class="hljs-built_in">require</span> <span class="hljs-string
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>rand = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utilites"</span>).rand
+            <div class="content"><div class='highlight'><pre>utilities = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utilities"</span>)
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">System</span></span>
     <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@attr</span>)</span> -&gt;</span>
@@ -73,7 +73,7 @@ Link       = <span class="hljs-built_in">require</span> <span class="hljs-string
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        currentActiveNode = <span class="hljs-literal">null</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@currentActiveNode</span> = <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -345,12 +345,12 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
             <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> <span class="hljs-property">@nodes</span>
                 <span class="hljs-keyword">if</span> node.checkCollision(x,y)
                     node.hover = <span class="hljs-literal">true</span>
-                    currentActiveNode = node
+                    <span class="hljs-property">@currentActiveNode</span> = node
                 <span class="hljs-keyword">else</span>
                     node.hover = <span class="hljs-literal">false</span>
         <span class="hljs-keyword">else</span>
-            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> currentActiveNode.checkCollision(x,y)
-                currentActiveNode = <span class="hljs-literal">null</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@currentActiveNode</span>.checkCollision(x,y)
+                <span class="hljs-property">@currentActiveNode</span> = <span class="hljs-literal">null</span>
 <span class="hljs-function">
     <span class="hljs-title">mousemoveHandler</span> = <span class="hljs-params">(e)</span> -&gt;</span>
         e.preventDefault()</pre></div></div>
@@ -375,8 +375,8 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
         tempNodes = <span class="hljs-keyword">new</span> Array()
         <span class="hljs-keyword">for</span> metabolite <span class="hljs-keyword">in</span> model.metabolites
             nodeAttributes =
-                x    : rand(<span class="hljs-property">@W</span>)
-                y    : rand(<span class="hljs-property">@H</span>)
+                x    : utilities.rand(<span class="hljs-property">@W</span>)
+                y    : utilities.rand(<span class="hljs-property">@H</span>)
                 r    : <span class="hljs-property">@metaboliteRadius</span>
                 name : metabolite.name
                 id   : metabolite.id
@@ -385,32 +385,16 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
             tempNodes.push(<span class="hljs-keyword">new</span> Metabolite(nodeAttributes, <span class="hljs-property">@canvas</span>.ctx))
 
         <span class="hljs-keyword">return</span> tempNodes
-<span class="hljs-function">
-    <span class="hljs-title">scaleRadius</span> = <span class="hljs-params">(model, minRadius, maxRadius)</span> -&gt;</span>
-        fluxes = (reaction.flux_value <span class="hljs-keyword">for</span> reaction <span class="hljs-keyword">in</span> model.reactions)
-        largest = Math.max.apply(Math, fluxes)
-
-        <span class="hljs-keyword">return</span> d3.scale.linear()
-            .domain([<span class="hljs-number">0</span>, largest])
-            .range([minRadius, maxRadius])
-<span class="hljs-function">
-    <span class="hljs-title">nodeMap</span> = <span class="hljs-params">(nodes)</span> -&gt;</span>
-        map = <span class="hljs-keyword">new</span> Object()
-
-        <span class="hljs-keyword">for</span> node,i <span class="hljs-keyword">in</span> nodes
-            map[node.id] = i
-
-        <span class="hljs-keyword">return</span> map
 
     <span class="hljs-attribute">buildReactions</span>: <span class="hljs-function"><span class="hljs-params">(model)</span> -&gt;</span>
-        radiusScale = scaleRadius(model, <span class="hljs-number">5</span>, <span class="hljs-number">15</span>)
+        radiusScale = utilities.scaleRadius(model, <span class="hljs-number">5</span>, <span class="hljs-number">15</span>)
         tempLinks = <span class="hljs-keyword">new</span> Array()
 
         <span class="hljs-keyword">for</span> reaction <span class="hljs-keyword">in</span> model.reactions
             <span class="hljs-keyword">if</span> reaction.flux_value &gt; <span class="hljs-number">0</span>
                 reactionAttributes =
-                    x          : rand(<span class="hljs-property">@W</span>)
-                    y          : rand(<span class="hljs-property">@H</span>)
+                    x          : utilities.rand(<span class="hljs-property">@W</span>)
+                    y          : utilities.rand(<span class="hljs-property">@H</span>)
                     r          : radiusScale(reaction.flux_value)
                     name       : reaction.name
                     id         : reaction.id
@@ -451,7 +435,7 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
 
                     tempLinks.push(link)
 
-        nodesMap = nodeMap(<span class="hljs-property">@nodes</span>)
+        nodesMap = utilities.nodeMap(<span class="hljs-property">@nodes</span>)
         <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> tempLinks
             linkAttr =
                 id        : link.id
@@ -459,7 +443,7 @@ Weak geometric constraint similar to a virtual spring connecting each node to th
                 target    : <span class="hljs-property">@nodes</span>[nodesMap[link.target]]
                 fluxValue : link.flux_value
                 r         : <span class="hljs-property">@metaboliteRadius</span>
-                linkScale : scaleRadius(model, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>)
+                linkScale : utilities.scaleRadius(model, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>)
 
             <span class="hljs-property">@links</span>.push(<span class="hljs-keyword">new</span> Link(linkAttr, <span class="hljs-property">@canvas</span>.ctx))
 

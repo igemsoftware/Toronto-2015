@@ -270,7 +270,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var Canvas, Link, Metabolite, Node, Reaction, System, rand;
+var Canvas, Link, Metabolite, Node, Reaction, System, utilities;
 
 Canvas = require("./Canvas");
 
@@ -282,20 +282,20 @@ Reaction = require("./Reaction");
 
 Link = require("./Link");
 
-rand = require("./utilites").rand;
+utilities = require("./utilities");
 
 System = (function() {
-  var mousemoveHandler, nodeMap, scaleRadius;
+  var mousemoveHandler;
 
   function System(attr) {
-    var AnimationFrame, currentActiveNode, j, len, n, ref;
+    var AnimationFrame, i, len, n, ref;
     this.attr = attr;
     this.W = this.attr.width;
     this.H = this.attr.height;
     this.BG = this.attr.backgroundColour;
     this.metaboliteRadius = this.attr.metaboliteRadius;
     this.useStatic = this.attr.useStatic;
-    currentActiveNode = null;
+    this.currentActiveNode = null;
     this.canvas = new Canvas("canvas", this.W, this.H, this.BG);
     this.canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
     this.nodes = this.buildMetabolites(data);
@@ -304,8 +304,8 @@ System = (function() {
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
     if (this.useStatic) {
       ref = this.nodes;
-      for (j = 0, len = ref.length; j < len; j++) {
-        n = ref[j];
+      for (i = 0, len = ref.length; i < len; i++) {
+        n = ref[i];
         this.force.tick();
       }
       this.force.stop();
@@ -316,23 +316,23 @@ System = (function() {
   }
 
   System.prototype.checkCollisions = function(x, y) {
-    var currentActiveNode, j, len, node, ref, results;
+    var i, len, node, ref, results;
     if (this.currentActiveNode == null) {
       ref = this.nodes;
       results = [];
-      for (j = 0, len = ref.length; j < len; j++) {
-        node = ref[j];
+      for (i = 0, len = ref.length; i < len; i++) {
+        node = ref[i];
         if (node.checkCollision(x, y)) {
           node.hover = true;
-          results.push(currentActiveNode = node);
+          results.push(this.currentActiveNode = node);
         } else {
           results.push(node.hover = false);
         }
       }
       return results;
     } else {
-      if (!currentActiveNode.checkCollision(x, y)) {
-        return currentActiveNode = null;
+      if (!this.currentActiveNode.checkCollision(x, y)) {
+        return this.currentActiveNode = null;
       }
     }
   };
@@ -345,14 +345,14 @@ System = (function() {
   };
 
   System.prototype.buildMetabolites = function(model) {
-    var j, len, metabolite, nodeAttributes, ref, tempNodes;
+    var i, len, metabolite, nodeAttributes, ref, tempNodes;
     tempNodes = new Array();
     ref = model.metabolites;
-    for (j = 0, len = ref.length; j < len; j++) {
-      metabolite = ref[j];
+    for (i = 0, len = ref.length; i < len; i++) {
+      metabolite = ref[i];
       nodeAttributes = {
-        x: rand(this.W),
-        y: rand(this.H),
+        x: utilities.rand(this.W),
+        y: utilities.rand(this.H),
         r: this.metaboliteRadius,
         name: metabolite.name,
         id: metabolite.id,
@@ -363,43 +363,17 @@ System = (function() {
     return tempNodes;
   };
 
-  scaleRadius = function(model, minRadius, maxRadius) {
-    var fluxes, largest, reaction;
-    fluxes = (function() {
-      var j, len, ref, results;
-      ref = model.reactions;
-      results = [];
-      for (j = 0, len = ref.length; j < len; j++) {
-        reaction = ref[j];
-        results.push(reaction.flux_value);
-      }
-      return results;
-    })();
-    largest = Math.max.apply(Math, fluxes);
-    return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);
-  };
-
-  nodeMap = function(nodes) {
-    var i, j, len, map, node;
-    map = new Object();
-    for (i = j = 0, len = nodes.length; j < len; i = ++j) {
-      node = nodes[i];
-      map[node.id] = i;
-    }
-    return map;
-  };
-
   System.prototype.buildReactions = function(model) {
-    var j, k, l, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, reactionAttributes, ref, ref1, results, source, target, tempLinks;
-    radiusScale = scaleRadius(model, 5, 15);
+    var i, j, k, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, reactionAttributes, ref, ref1, results, source, target, tempLinks;
+    radiusScale = utilities.scaleRadius(model, 5, 15);
     tempLinks = new Array();
     ref = model.reactions;
-    for (j = 0, len = ref.length; j < len; j++) {
-      reaction = ref[j];
+    for (i = 0, len = ref.length; i < len; i++) {
+      reaction = ref[i];
       if (reaction.flux_value > 0) {
         reactionAttributes = {
-          x: rand(this.W),
-          y: rand(this.H),
+          x: utilities.rand(this.W),
+          y: utilities.rand(this.H),
           r: radiusScale(reaction.flux_value),
           name: reaction.name,
           id: reaction.id,
@@ -408,8 +382,8 @@ System = (function() {
         };
         this.nodes.push(new Reaction(reactionAttributes, this.canvas.ctx));
         ref1 = Object.keys(reaction.metabolites);
-        for (k = 0, len1 = ref1.length; k < len1; k++) {
-          metabolite = ref1[k];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          metabolite = ref1[j];
           source = null;
           target = null;
           if (reaction.metabolites[metabolite] > 0) {
@@ -429,17 +403,17 @@ System = (function() {
         }
       }
     }
-    nodesMap = nodeMap(this.nodes);
+    nodesMap = utilities.nodeMap(this.nodes);
     results = [];
-    for (l = 0, len2 = tempLinks.length; l < len2; l++) {
-      link = tempLinks[l];
+    for (k = 0, len2 = tempLinks.length; k < len2; k++) {
+      link = tempLinks[k];
       linkAttr = {
         id: link.id,
         source: this.nodes[nodesMap[link.source]],
         target: this.nodes[nodesMap[link.target]],
         fluxValue: link.flux_value,
         r: this.metaboliteRadius,
-        linkScale: scaleRadius(model, 1, 5)
+        linkScale: utilities.scaleRadius(model, 1, 5)
       };
       results.push(this.links.push(new Link(linkAttr, this.canvas.ctx)));
     }
@@ -447,16 +421,16 @@ System = (function() {
   };
 
   System.prototype.draw = function() {
-    var j, k, len, len1, link, node, ref, ref1, results;
+    var i, j, len, len1, link, node, ref, ref1, results;
     ref = this.links;
-    for (j = 0, len = ref.length; j < len; j++) {
-      link = ref[j];
+    for (i = 0, len = ref.length; i < len; i++) {
+      link = ref[i];
       link.draw();
     }
     ref1 = this.nodes;
     results = [];
-    for (k = 0, len1 = ref1.length; k < len1; k++) {
-      node = ref1[k];
+    for (j = 0, len1 = ref1.length; j < len1; j++) {
+      node = ref1[j];
       results.push(node.draw());
     }
     return results;
@@ -477,7 +451,7 @@ System = (function() {
 module.exports = System;
 
 
-},{"./Canvas":1,"./Link":2,"./Metabolite":3,"./Node":4,"./Reaction":5,"./utilites":8}],7:[function(require,module,exports){
+},{"./Canvas":1,"./Link":2,"./Metabolite":3,"./Node":4,"./Reaction":5,"./utilities":8}],7:[function(require,module,exports){
 var System, system, systemAttributes;
 
 System = require("./System");
@@ -494,14 +468,42 @@ system = new System(systemAttributes);
 
 
 },{"./System":6}],8:[function(require,module,exports){
-var rand;
+var nodeMap, rand, scaleRadius;
 
 rand = function(range) {
   return Math.floor(Math.random() * (range + 1));
 };
 
+scaleRadius = function(model, minRadius, maxRadius) {
+  var fluxes, largest, reaction;
+  fluxes = (function() {
+    var j, len, ref, results;
+    ref = model.reactions;
+    results = [];
+    for (j = 0, len = ref.length; j < len; j++) {
+      reaction = ref[j];
+      results.push(reaction.flux_value);
+    }
+    return results;
+  })();
+  largest = Math.max.apply(Math, fluxes);
+  return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);
+};
+
+nodeMap = function(nodes) {
+  var i, j, len, map, node;
+  map = new Object();
+  for (i = j = 0, len = nodes.length; j < len; i = ++j) {
+    node = nodes[i];
+    map[node.id] = i;
+  }
+  return map;
+};
+
 module.exports = {
-  rand: rand
+  rand: rand,
+  scaleRadius: scaleRadius,
+  nodeMap: nodeMap
 };
 
 
