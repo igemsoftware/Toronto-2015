@@ -270,7 +270,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var AnimationFrame, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, ctx, currentActiveNode, draw, force, links, metaboliteRadius, mousemove, nodeMap, nodes, rand, render, sTime, scale, scaleRadius, svg, transformedPoint, update, xform;
+var AnimationFrame, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, ctx, currentActiveNode, draw, force, links, metaboliteRadius, mousemove, nodeMap, nodes, rand, render, sTime, scaleRadius, update;
 
 Canvas = require("./Canvas");
 
@@ -325,24 +325,10 @@ checkCollisions = function(x, y) {
   }
 };
 
-scale = 1;
-
-svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-
-xform = svg.createSVGMatrix();
-
-transformedPoint = function(x, y) {
-  var pt;
-  pt = svg.createSVGPoint();
-  pt.x = x;
-  pt.y = y;
-  return pt.matrixTransform(xform.inverse());
-};
-
 mousemove = function(e) {
   var tPt;
   e.preventDefault();
-  tPt = transformedPoint(e.clientX, e.clientY);
+  tPt = CANVAS.transformedPoint(e.clientX, e.clientY);
   return checkCollisions(tPt.x, tPt.y);
 };
 

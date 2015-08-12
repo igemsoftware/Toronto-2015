@@ -40,27 +40,13 @@ checkCollisions = (x, y) ->
         if not currentActiveNode.checkCollision(x,y)
             currentActiveNode = null
 
-
-# **For zooming**
-scale = 1
-svg = document.createElementNS('http://www.w3.org/2000/svg','svg')
-xform = svg.createSVGMatrix()
-
-# **transformedPoint**
-transformedPoint = (x, y) ->
-    pt = svg.createSVGPoint()
-    pt.x = x
-    pt.y = y
-    return pt.matrixTransform(xform.inverse())
-
 # **Mouse Events**
 
 # **mousemove**
 mousemove = (e) ->
     e.preventDefault()
-
     # Collisons
-    tPt = transformedPoint(e.clientX, e.clientY)
+    tPt = CANVAS.transformedPoint(e.clientX, e.clientY)
     checkCollisions(tPt.x, tPt.y)
 
 # Creating event listeners
