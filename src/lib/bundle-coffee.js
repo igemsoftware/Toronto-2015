@@ -270,7 +270,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var AnimationFrame, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, ctx, currentActiveNode, draw, force, links, metaboliteRadius, mousemove, nodeMap, nodes, rand, render, sTime, scaleRadius;
+var Canvas, Link, Metabolite, Node, Reaction, System, rand;
 
 Canvas = require("./Canvas");
 
@@ -282,198 +282,230 @@ Reaction = require("./Reaction");
 
 Link = require("./Link");
 
-AnimationFrame = window.AnimationFrame;
+rand = require("./utilites").rand;
 
-AnimationFrame.shim();
+System = (function() {
+  var mousemoveHandler, nodeMap, scaleRadius;
 
-metaboliteRadius = 10;
+  function System(attr) {
+    var AnimationFrame, currentActiveNode, j, len, n, ref;
+    this.attr = attr;
+    this.W = this.attr.width;
+    this.H = this.attr.height;
+    this.BG = this.attr.backgroundColour;
+    this.metaboliteRadius = this.attr.metaboliteRadius;
+    this.useStatic = this.attr.useStatic;
+    currentActiveNode = null;
+    this.canvas = new Canvas("canvas", this.W, this.H, this.BG);
+    this.canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
+    this.nodes = this.buildMetabolites(data);
+    this.links = new Array();
+    this.buildReactions(data);
+    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
+    if (this.useStatic) {
+      ref = this.nodes;
+      for (j = 0, len = ref.length; j < len; j++) {
+        n = ref[j];
+        this.force.tick();
+      }
+      this.force.stop();
+    }
+    AnimationFrame = window.AnimationFrame;
+    AnimationFrame.shim();
+    this.render();
+  }
 
-W = window.innerWidth;
-
-H = window.innerHeight;
-
-CANVAS = new Canvas("canvas", W, H, "white");
-
-sTime = (new Date()).getTime();
-
-ctx = CANVAS.ctx;
-
-rand = function(range) {
-  return Math.floor(Math.random() * range);
-};
-
-currentActiveNode = null;
-
-checkCollisions = function(x, y) {
-  var j, len, n, results;
-  if (currentActiveNode == null) {
-    results = [];
-    for (j = 0, len = nodes.length; j < len; j++) {
-      n = nodes[j];
-      if (n.checkCollision(x, y)) {
-        n.hover = true;
-        results.push(currentActiveNode = n);
-      } else {
-        results.push(n.hover = false);
+  System.prototype.checkCollisions = function(x, y) {
+    var currentActiveNode, j, len, node, ref, results;
+    if (this.currentActiveNode == null) {
+      ref = this.nodes;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        node = ref[j];
+        if (node.checkCollision(x, y)) {
+          node.hover = true;
+          results.push(currentActiveNode = node);
+        } else {
+          results.push(node.hover = false);
+        }
+      }
+      return results;
+    } else {
+      if (!currentActiveNode.checkCollision(x, y)) {
+        return currentActiveNode = null;
       }
     }
-    return results;
-  } else {
-    if (!currentActiveNode.checkCollision(x, y)) {
-      return currentActiveNode = null;
+  };
+
+  mousemoveHandler = function(e) {
+    var tPt;
+    e.preventDefault();
+    tPt = this.canvas.transformedPoint(e.clientX, e.clientY);
+    return this.checkCollisions(tPt.x, tPt.y);
+  };
+
+  System.prototype.buildMetabolites = function(model) {
+    var j, len, metabolite, nodeAttributes, ref, tempNodes;
+    tempNodes = new Array();
+    ref = model.metabolites;
+    for (j = 0, len = ref.length; j < len; j++) {
+      metabolite = ref[j];
+      nodeAttributes = {
+        x: rand(this.W),
+        y: rand(this.H),
+        r: this.metaboliteRadius,
+        name: metabolite.name,
+        id: metabolite.id,
+        type: "m"
+      };
+      tempNodes.push(new Metabolite(nodeAttributes, this.canvas.ctx));
     }
-  }
-};
+    return tempNodes;
+  };
 
-mousemove = function(e) {
-  var tPt;
-  e.preventDefault();
-  tPt = CANVAS.transformedPoint(e.clientX, e.clientY);
-  return checkCollisions(tPt.x, tPt.y);
-};
+  scaleRadius = function(model, minRadius, maxRadius) {
+    var fluxes, largest, reaction;
+    fluxes = (function() {
+      var j, len, ref, results;
+      ref = model.reactions;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        reaction = ref[j];
+        results.push(reaction.flux_value);
+      }
+      return results;
+    })();
+    largest = Math.max.apply(Math, fluxes);
+    return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);
+  };
 
-CANVAS.c.addEventListener("mousemove", mousemove, false);
+  nodeMap = function(nodes) {
+    var i, j, len, map, node;
+    map = new Object();
+    for (i = j = 0, len = nodes.length; j < len; i = ++j) {
+      node = nodes[i];
+      map[node.id] = i;
+    }
+    return map;
+  };
 
-console.log(data);
-
-console.log(data.metabolites.length + " metabolites");
-
-buildMetabolites = function(model) {
-  var j, len, metabolite, nodeAttributes, ref, tempNodes;
-  tempNodes = new Array();
-  ref = model.metabolites;
-  for (j = 0, len = ref.length; j < len; j++) {
-    metabolite = ref[j];
-    nodeAttributes = {
-      x: rand(W),
-      y: rand(H),
-      r: metaboliteRadius,
-      name: metabolite.name,
-      id: metabolite.id,
-      type: "m"
-    };
-    tempNodes.push(new Metabolite(nodeAttributes, ctx));
-  }
-  return tempNodes;
-};
-
-scaleRadius = function(model, minRadius, maxRadius) {
-  var fluxes, largest, reaction;
-  fluxes = (function() {
-    var j, len, ref, results;
+  System.prototype.buildReactions = function(model) {
+    var j, k, l, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, reactionAttributes, ref, ref1, results, source, target, tempLinks;
+    radiusScale = scaleRadius(model, 5, 15);
+    tempLinks = new Array();
     ref = model.reactions;
-    results = [];
     for (j = 0, len = ref.length; j < len; j++) {
       reaction = ref[j];
-      results.push(reaction.flux_value);
-    }
-    return results;
-  })();
-  largest = Math.max.apply(Math, fluxes);
-  return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);
-};
-
-nodeMap = function(nodes) {
-  var i, j, len, map, node;
-  map = new Object();
-  for (i = j = 0, len = nodes.length; j < len; i = ++j) {
-    node = nodes[i];
-    map[node.id] = i;
-  }
-  return map;
-};
-
-buildReactions = function(model) {
-  var j, k, l, len, len1, len2, link, linkAttr, metabolite, nodeAttributes, nodesMap, radiusScale, reaction, ref, ref1, results, source, target, tempLinks;
-  radiusScale = scaleRadius(model, 5, 15);
-  tempLinks = new Array();
-  ref = model.reactions;
-  for (j = 0, len = ref.length; j < len; j++) {
-    reaction = ref[j];
-    if (reaction.flux_value > 0) {
-      nodeAttributes = {
-        x: rand(W),
-        y: rand(H),
-        r: radiusScale(reaction.flux_value),
-        name: reaction.name,
-        id: reaction.id,
-        type: "r",
-        flux_value: reaction.flux_value
-      };
-      nodes.push(new Reaction(nodeAttributes, ctx));
-      ref1 = Object.keys(reaction.metabolites);
-      for (k = 0, len1 = ref1.length; k < len1; k++) {
-        metabolite = ref1[k];
-        source = null;
-        target = null;
-        if (metabolite > 0) {
-          source = reaction.id;
-          target = metabolite;
-        } else {
-          source = metabolite;
-          target = reaction.id;
-        }
-        link = {
-          id: source.id + "-" + target.id,
-          source: source,
-          target: target,
+      if (reaction.flux_value > 0) {
+        reactionAttributes = {
+          x: rand(this.W),
+          y: rand(this.H),
+          r: radiusScale(reaction.flux_value),
+          name: reaction.name,
+          id: reaction.id,
+          type: "r",
           flux_value: reaction.flux_value
         };
-        tempLinks.push(link);
+        this.nodes.push(new Reaction(reactionAttributes, this.canvas.ctx));
+        ref1 = Object.keys(reaction.metabolites);
+        for (k = 0, len1 = ref1.length; k < len1; k++) {
+          metabolite = ref1[k];
+          source = null;
+          target = null;
+          if (reaction.metabolites[metabolite] > 0) {
+            source = reaction.id;
+            target = metabolite;
+          } else {
+            source = metabolite;
+            target = reaction.id;
+          }
+          link = {
+            id: source.id + "-" + target.id,
+            source: source,
+            target: target,
+            flux_value: reaction.flux_value
+          };
+          tempLinks.push(link);
+        }
       }
     }
-  }
-  nodesMap = nodeMap(nodes);
-  results = [];
-  for (l = 0, len2 = tempLinks.length; l < len2; l++) {
-    link = tempLinks[l];
-    linkAttr = {
-      id: link.id,
-      source: nodes[nodesMap[link.source]],
-      target: nodes[nodesMap[link.target]],
-      fluxValue: link.flux_value,
-      r: metaboliteRadius,
-      linkScale: scaleRadius(model, 1, 5)
-    };
-    results.push(links.push(new Link(linkAttr, ctx)));
-  }
-  return results;
+    nodesMap = nodeMap(this.nodes);
+    results = [];
+    for (l = 0, len2 = tempLinks.length; l < len2; l++) {
+      link = tempLinks[l];
+      linkAttr = {
+        id: link.id,
+        source: this.nodes[nodesMap[link.source]],
+        target: this.nodes[nodesMap[link.target]],
+        fluxValue: link.flux_value,
+        r: this.metaboliteRadius,
+        linkScale: scaleRadius(model, 1, 5)
+      };
+      results.push(this.links.push(new Link(linkAttr, this.canvas.ctx)));
+    }
+    return results;
+  };
+
+  System.prototype.draw = function() {
+    var j, k, len, len1, link, node, ref, ref1, results;
+    ref = this.links;
+    for (j = 0, len = ref.length; j < len; j++) {
+      link = ref[j];
+      link.draw();
+    }
+    ref1 = this.nodes;
+    results = [];
+    for (k = 0, len1 = ref1.length; k < len1; k++) {
+      node = ref1[k];
+      results.push(node.draw());
+    }
+    return results;
+  };
+
+  System.prototype.render = function() {
+    stats.begin();
+    this.canvas.clear();
+    this.draw();
+    stats.end();
+    return requestAnimationFrame(this.render.bind(this));
+  };
+
+  return System;
+
+})();
+
+module.exports = System;
+
+
+},{"./Canvas":1,"./Link":2,"./Metabolite":3,"./Node":4,"./Reaction":5,"./utilites":8}],7:[function(require,module,exports){
+var System, system, systemAttributes;
+
+System = require("./System");
+
+systemAttributes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+  backgroundColour: "white",
+  metaboliteRadius: 10,
+  useStatic: false
 };
 
-nodes = buildMetabolites(data);
+system = new System(systemAttributes);
 
-links = new Array();
 
-buildReactions(data);
+},{"./System":6}],8:[function(require,module,exports){
+var rand;
 
-force = d3.layout.force().nodes(nodes).links(links).size([W, H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
-
-draw = function() {
-  var j, k, len, len1, link, node, results;
-  for (j = 0, len = links.length; j < len; j++) {
-    link = links[j];
-    link.draw();
-  }
-  results = [];
-  for (k = 0, len1 = nodes.length; k < len1; k++) {
-    node = nodes[k];
-    results.push(node.draw());
-  }
-  return results;
+rand = function(range) {
+  return Math.floor(Math.random() * (range + 1));
 };
 
-render = function() {
-  stats.begin();
-  CANVAS.clear();
-  draw();
-  stats.end();
-  return requestAnimationFrame(render);
+module.exports = {
+  rand: rand
 };
 
-render();
 
-
-},{"./Canvas":1,"./Link":2,"./Metabolite":3,"./Node":4,"./Reaction":5}]},{},[1,2,3,4,5,6])
+},{}]},{},[1,2,3,4,5,6,7,8])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map

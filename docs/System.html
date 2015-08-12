@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>System.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>System.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p><strong>Classes</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Canvas     = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Canvas"</span>
+Node       = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Node"</span>
+Metabolite = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Metabolite"</span>
+Reaction   = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Reaction"</span>
+Link       = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Link"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><strong>Utility Functions</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>rand = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utilites"</span>).rand
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">System</span></span>
+    <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@attr</span>)</span> -&gt;</span>
+        <span class="hljs-property">@W</span>                = <span class="hljs-property">@attr</span>.width
+        <span class="hljs-property">@H</span>                = <span class="hljs-property">@attr</span>.height
+        <span class="hljs-property">@BG</span>               = <span class="hljs-property">@attr</span>.backgroundColour
+        <span class="hljs-property">@metaboliteRadius</span> = <span class="hljs-property">@attr</span>.metaboliteRadius
+        <span class="hljs-property">@useStatic</span>        = <span class="hljs-property">@attr</span>.useStatic</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Modified by <code>checkCollisions</code>, enables O(1) runtime when a node is already hovered</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        currentActiveNode = <span class="hljs-literal">null</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Create Canvas Object
+Handles zooming and panning</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@canvas</span> = <span class="hljs-keyword">new</span> Canvas(<span class="hljs-string">"canvas"</span>, <span class="hljs-property">@W</span>, <span class="hljs-property">@H</span>, <span class="hljs-property">@BG</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Event listeners. Bind so we preserve <code>this</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@canvas</span>.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemoveHandler.bind(<span class="hljs-keyword">this</span>), <span class="hljs-literal">false</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Build metabolites and reactions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@nodes</span> = <span class="hljs-property">@buildMetabolites</span>(data)
+        <span class="hljs-property">@links</span> = <span class="hljs-keyword">new</span> Array()
+        <span class="hljs-property">@buildReactions</span>(data)
+
+        <span class="hljs-property">@force</span> = d3.layout.force()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .nodes(<span class="hljs-property">@nodes</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>The links: mutates source, target</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .links(<span class="hljs-property">@links</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Affects gravitational center and initial random position</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .size([<span class="hljs-property">@W</span>, <span class="hljs-property">@H</span>])</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Sets “rigidity” of links in range [0,1]; func(link, index), this -&gt; force; evaluated at start()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .linkStrength(<span class="hljs-number">2</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>At each tick of the simulation, the particle velocity is scaled by the specified friction</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .friction(<span class="hljs-number">0.9</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Target distance b/w nodes; func(link, index), this -&gt; force; evaluated at start()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .linkDistance(<span class="hljs-number">50</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Charges to be used in calculation for quadtree BH traversal; func(node,index), this -&gt; force; evaluated at start()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .charge(-<span class="hljs-number">500</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Sets the maximum distance over which charge forces are applied; \infty if not specified
+.chargeDistance()
+Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout’s size</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .gravity(<span class="hljs-number">0.1</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) &lt; theta =&gt; treat quadrant as single large node</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .theta(<span class="hljs-number">0.8</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Force layout’s cooling parameter from [0,1]; layout stops when this reaches 0</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .alpha(<span class="hljs-number">0.1</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Let’s get this party start()ed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            .start()
+
+        <span class="hljs-keyword">if</span> <span class="hljs-property">@useStatic</span>
+            <span class="hljs-property">@force</span>.tick() <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-property">@nodes</span>
+            <span class="hljs-property">@force</span>.stop()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Setup <a href="https://github.com/kof/animation-frame">AnimationFrame</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        AnimationFrame = <span class="hljs-built_in">window</span>.AnimationFrame
+        AnimationFrame.shim()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Render: to cause to be or become</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-property">@render</span>()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p><em>checkCollisions</em></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">checkCollisions</span>: <span class="hljs-function"><span class="hljs-params">(x, y)</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@currentActiveNode</span>?
+            <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> <span class="hljs-property">@nodes</span>
+                <span class="hljs-keyword">if</span> node.checkCollision(x,y)
+                    node.hover = <span class="hljs-literal">true</span>
+                    currentActiveNode = node
+                <span class="hljs-keyword">else</span>
+                    node.hover = <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> currentActiveNode.checkCollision(x,y)
+                currentActiveNode = <span class="hljs-literal">null</span>
+<span class="hljs-function">
+    <span class="hljs-title">mousemoveHandler</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+        e.preventDefault()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Collisons</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        tPt = <span class="hljs-property">@canvas</span>.transformedPoint(e.clientX, e.clientY)
+        <span class="hljs-property">@checkCollisions</span>(tPt.x, tPt.y)
+
+    <span class="hljs-attribute">buildMetabolites</span>: <span class="hljs-function"><span class="hljs-params">(model)</span> -&gt;</span>
+        tempNodes = <span class="hljs-keyword">new</span> Array()
+        <span class="hljs-keyword">for</span> metabolite <span class="hljs-keyword">in</span> model.metabolites
+            nodeAttributes =
+                x    : rand(<span class="hljs-property">@W</span>)
+                y    : rand(<span class="hljs-property">@H</span>)
+                r    : <span class="hljs-property">@metaboliteRadius</span>
+                name : metabolite.name
+                id   : metabolite.id
+                type : <span class="hljs-string">"m"</span>
+
+            tempNodes.push(<span class="hljs-keyword">new</span> Metabolite(nodeAttributes, <span class="hljs-property">@canvas</span>.ctx))
+
+        <span class="hljs-keyword">return</span> tempNodes
+<span class="hljs-function">
+    <span class="hljs-title">scaleRadius</span> = <span class="hljs-params">(model, minRadius, maxRadius)</span> -&gt;</span>
+        fluxes = (reaction.flux_value <span class="hljs-keyword">for</span> reaction <span class="hljs-keyword">in</span> model.reactions)
+        largest = Math.max.apply(Math, fluxes)
+
+        <span class="hljs-keyword">return</span> d3.scale.linear()
+            .domain([<span class="hljs-number">0</span>, largest])
+            .range([minRadius, maxRadius])
+<span class="hljs-function">
+    <span class="hljs-title">nodeMap</span> = <span class="hljs-params">(nodes)</span> -&gt;</span>
+        map = <span class="hljs-keyword">new</span> Object()
+
+        <span class="hljs-keyword">for</span> node,i <span class="hljs-keyword">in</span> nodes
+            map[node.id] = i
+
+        <span class="hljs-keyword">return</span> map
+
+    <span class="hljs-attribute">buildReactions</span>: <span class="hljs-function"><span class="hljs-params">(model)</span> -&gt;</span>
+        radiusScale = scaleRadius(model, <span class="hljs-number">5</span>, <span class="hljs-number">15</span>)
+        tempLinks = <span class="hljs-keyword">new</span> Array()
+
+        <span class="hljs-keyword">for</span> reaction <span class="hljs-keyword">in</span> model.reactions
+            <span class="hljs-keyword">if</span> reaction.flux_value &gt; <span class="hljs-number">0</span>
+                reactionAttributes =
+                    x          : rand(<span class="hljs-property">@W</span>)
+                    y          : rand(<span class="hljs-property">@H</span>)
+                    r          : radiusScale(reaction.flux_value)
+                    name       : reaction.name
+                    id         : reaction.id
+                    type       : <span class="hljs-string">"r"</span>
+                    flux_value : reaction.flux_value
+
+                <span class="hljs-property">@nodes</span>.push(<span class="hljs-keyword">new</span> Reaction(reactionAttributes, <span class="hljs-property">@canvas</span>.ctx))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Assign metabolite source and target for each reaction</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">for</span> metabolite <span class="hljs-keyword">in</span> Object.keys(reaction.metabolites)
+                    source = <span class="hljs-literal">null</span>
+                    target = <span class="hljs-literal">null</span>
+
+                    <span class="hljs-keyword">if</span> reaction.metabolites[metabolite] &gt; <span class="hljs-number">0</span>
+                        source = reaction.id
+                        target = metabolite
+                    <span class="hljs-keyword">else</span>
+                        source = metabolite
+                        target = reaction.id
+
+                    link =
+                        id         : <span class="hljs-string">"<span class="hljs-subst">#{source.id}</span>-<span class="hljs-subst">#{target.id}</span>"</span>
+                        source     : source
+                        target     : target
+                        flux_value : reaction.flux_value
+
+                    tempLinks.push(link)
+
+        nodesMap = nodeMap(<span class="hljs-property">@nodes</span>)
+        <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> tempLinks
+            linkAttr =
+                id        : link.id
+                source    : <span class="hljs-property">@nodes</span>[nodesMap[link.source]]
+                target    : <span class="hljs-property">@nodes</span>[nodesMap[link.target]]
+                fluxValue : link.flux_value
+                r         : <span class="hljs-property">@metaboliteRadius</span>
+                linkScale : scaleRadius(model, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>)
+
+            <span class="hljs-property">@links</span>.push(<span class="hljs-keyword">new</span> Link(linkAttr, <span class="hljs-property">@canvas</span>.ctx))
+
+    <span class="hljs-attribute">draw</span>: <span class="hljs-function">-&gt;</span>
+        link.draw() <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> <span class="hljs-property">@links</span>
+        node.draw() <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> <span class="hljs-property">@nodes</span>
+
+    <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
+        stats.begin()
+
+        <span class="hljs-property">@canvas</span>.clear()
+        <span class="hljs-property">@draw</span>()
+
+        stats.end()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Request next frame</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        requestAnimationFrame(<span class="hljs-property">@render</span>.bind(<span class="hljs-keyword">this</span>))
+
+<span class="hljs-built_in">module</span>.exports = System</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
