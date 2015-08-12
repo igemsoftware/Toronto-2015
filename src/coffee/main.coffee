@@ -6,6 +6,6 @@ systemAttributes =
     backgroundColour : "white"
     metaboliteRadius : 10
     useStatic        : false
-    everything       : true
+    everything       : false
 
 system = new System(systemAttributes)
