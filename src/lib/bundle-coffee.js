@@ -270,7 +270,7 @@ module.exports = Reaction;
 
 
 },{"./Node":4}],6:[function(require,module,exports){
-var AnimationFrame, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, ctx, currentActiveNode, draw, force, links, metaboliteRadius, mousemove, nodeMap, nodes, rand, render, sTime, scaleRadius, update;
+var AnimationFrame, CANVAS, Canvas, H, Link, Metabolite, Node, Reaction, W, buildMetabolites, buildReactions, checkCollisions, ctx, currentActiveNode, draw, force, links, metaboliteRadius, mousemove, nodeMap, nodes, rand, render, sTime, scaleRadius;
 
 Canvas = require("./Canvas");
 
@@ -458,21 +458,6 @@ draw = function() {
   for (k = 0, len1 = nodes.length; k < len1; k++) {
     node = nodes[k];
     results.push(node.draw());
-  }
-  return results;
-};
-
-update = function() {
-  var delta, i, j, k, len, len1, n, results;
-  delta = (new Date()).getTime() - sTime;
-  for (i = j = 0, len = nodes.length; j < len; i = ++j) {
-    n = nodes[i];
-    n.y += Math.sin(delta / (Math.PI * 100)) * (i / 100 + 1);
-  }
-  results = [];
-  for (i = k = 0, len1 = nodes.length; k < len1; i = ++k) {
-    n = nodes[i];
-    results.push(n.x += Math.sin(delta / (Math.PI * 250)) * (i / 100 + 1));
   }
   return results;
 };

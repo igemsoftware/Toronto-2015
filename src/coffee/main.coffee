@@ -184,10 +184,6 @@ force = d3.layout.force()
     # Let's get this party start()ed
     .start()
 
-# Uncomment this and reanable force.tick() in render()
-# Although, then nothing happens.
-#force.stop()
-
 # Precompute layout for static rendering
 # optionify this later
 # This will *need* a loading gif
@@ -201,20 +197,11 @@ draw = ->
     link.draw() for link in links
     node.draw() for node in nodes
 
-
-# Update node x,y values
-update = ->
-    delta = (new Date()).getTime() - sTime
-    n.y += Math.sin(delta/(Math.PI*100))*(i/100 + 1) for n,i in nodes
-    n.x += Math.sin(delta/(Math.PI*250))*(i/100 + 1) for n,i in nodes
-
 render = ->
     stats.begin()
+
     CANVAS.clear()
     draw()
-    # turn update() on for some sinusoidal rythmic fun
-    #update()
-    #force.tick()
 
     stats.end()
 
@@ -234,7 +221,7 @@ render()
 # force.on("tick", ->
 #     stats.begin()
 #
-#     clear()
+#     CANVAS.clear()
 #     draw()
 #
 #     stats.end()
