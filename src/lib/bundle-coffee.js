@@ -114,7 +114,18 @@ Link = (function() {
     this.fluxValue = this.attr.fluxValue;
     this.linkScale = this.attr.linkScale;
     this.thickness = this.linkScale(this.fluxValue);
+    this.appendSubstratesAndProducts();
   }
+
+  Link.prototype.appendSubstratesAndProducts = function() {
+    if (this.source.type === 'm' && this.target.type === 'r') {
+      this.source.outNeighbours.push(this.target);
+      return this.target.substrates.push(this.source);
+    } else if (this.source.type === 'r' && this.target.type === 'm') {
+      this.target.inNeighbours.push(this.source);
+      return this.source.products.push(this.target);
+    }
+  };
 
   y = function(x1, y1, m) {
     return function(x) {
@@ -210,6 +221,8 @@ Node = (function() {
     this.name = attr.name;
     this.type = attr.type;
     this.colour = attr.colour;
+    this.substrates = this.inNeighbours = new Array();
+    this.products = this.outNeighbours = new Array();
     this.flux_value = attr.flux_value;
   }
 
@@ -324,7 +337,7 @@ System = (function() {
   }
 
   System.prototype.checkCollisions = function(x, y, e) {
-    var i, len, node, nodetext, ref, results;
+    var i, len, node, nodetext, product, products, ref, results, substrate, substrates;
     if (this.currentActiveNode == null) {
       ref = this.nodes;
       results = [];
@@ -338,7 +351,31 @@ System = (function() {
             'left': e.clientX,
             'top': e.clientY
           });
-          nodetext.html("" + node.name);
+          if (node.type === 'r') {
+            substrates = (function() {
+              var j, len1, ref1, results1;
+              ref1 = node.substrates;
+              results1 = [];
+              for (j = 0, len1 = ref1.length; j < len1; j++) {
+                substrate = ref1[j];
+                results1.push(substrate.name);
+              }
+              return results1;
+            })();
+            products = (function() {
+              var j, len1, ref1, results1;
+              ref1 = node.products;
+              results1 = [];
+              for (j = 0, len1 = ref1.length; j < len1; j++) {
+                product = ref1[j];
+                results1.push(product.name);
+              }
+              return results1;
+            })();
+            nodetext.html(substrates + " -(" + node.name + ")-> " + products);
+          } else {
+            nodetext.html("" + node.name);
+          }
           results.push(this.currentActiveNode = node);
         } else {
           results.push(node.hover = false);

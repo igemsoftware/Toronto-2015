@@ -124,7 +124,7 @@ gulp.task('wiredep', function() {
 });
 
 // Bringing it together
-gulp.task('inject', ['wiredep', 'inject:css', 'inject:js']);
+gulp.task('inject', ['inject:css', 'inject:js', 'wiredep']);
 
 
 // ### Docco

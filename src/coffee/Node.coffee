@@ -15,6 +15,11 @@ class Node
         @type = attr.type
         @colour = attr.colour
 
+        # Reaction properties
+        # In neighbours
+        @substrates = @inNeighbours = new Array()
+        # Out neighbours
+        @products = @outNeighbours = new Array()
         # reaction has flux value
         @flux_value = attr.flux_value
 

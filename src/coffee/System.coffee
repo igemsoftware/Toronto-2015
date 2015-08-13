@@ -83,7 +83,14 @@ class System
                         'top': e.clientY
 
                     })
-                    nodetext.html("#{node.name}")
+
+                    if node.type is 'r'
+                        substrates = (substrate.name for substrate in node.substrates)
+                        products = (product.name for product in node.products)
+                        nodetext.html("#{substrates} -(#{node.name})-> #{products}")
+                    else
+                        nodetext.html("#{node.name}")
+
                     @currentActiveNode = node
                 else
                     node.hover = false

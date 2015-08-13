@@ -8,6 +8,18 @@ class Link
         @linkScale = @attr.linkScale
         @thickness = @linkScale(@fluxValue)
 
+        @appendSubstratesAndProducts()
+
+    appendSubstratesAndProducts: ->
+        if @source.type is 'm' and @target.type is 'r'
+            # Case 1: substrate - reaction
+            @source.outNeighbours.push(@target)
+            @target.substrates.push(@source)
+        else if @source.type is 'r' and @target.type is 'm'
+            # Case 2: reaction -> product
+            @target.inNeighbours.push(@source)
+            @source.products.push(@target)
+
     y = (x1, y1, m) ->
         return (x)->
             return m*(x-x1)+y1
