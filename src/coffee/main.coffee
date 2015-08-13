@@ -7,5 +7,6 @@ systemAttributes =
     metaboliteRadius : 10
     useStatic        : false
     everything       : false
+    hideObjective    : true
 
 system = new System(systemAttributes)

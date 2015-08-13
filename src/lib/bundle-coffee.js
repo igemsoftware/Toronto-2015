@@ -309,24 +309,40 @@ System = (function() {
   var mousemoveHandler;
 
   function System(attr) {
-    var AnimationFrame, i, len, n, ref;
+    var AnimationFrame, chargeHandler, j, len, linkDistanceHandler, n, ref;
     this.W = attr.width;
     this.H = attr.height;
     this.BG = attr.backgroundColour;
     this.metaboliteRadius = attr.metaboliteRadius;
     this.useStatic = attr.useStatic;
     this.everything = attr.everything;
+    this.hideObjective = attr.hideObjective;
     this.currentActiveNode = null;
     this.canvas = new Canvas("canvas", this.W, this.H, this.BG);
     this.canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
     this.nodes = this.buildMetabolites(data);
     this.links = new Array();
     this.buildReactions(data);
-    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(50).charge(-500).gravity(0.1).theta(0.8).alpha(0.1).start();
+    linkDistanceHandler = function(link, i) {
+      var factor;
+      factor = 0;
+      if (link.target.type === 'r') {
+        factor = link.target.substrates.length;
+      } else if (link.source.type === 'r') {
+        factor = link.source.products.length;
+      }
+      return factor * 100;
+    };
+    chargeHandler = function(node, i) {
+      var factor;
+      factor = node.inNeighbours.length + node.outNeighbours.length + 1;
+      return factor * -100;
+    };
+    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(linkDistanceHandler).charge(chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).start();
     if (this.useStatic) {
       ref = this.nodes;
-      for (i = 0, len = ref.length; i < len; i++) {
-        n = ref[i];
+      for (j = 0, len = ref.length; j < len; j++) {
+        n = ref[j];
         this.force.tick();
       }
       this.force.stop();
@@ -337,12 +353,12 @@ System = (function() {
   }
 
   System.prototype.checkCollisions = function(x, y, e) {
-    var i, len, node, nodetext, product, products, ref, results, substrate, substrates;
+    var j, len, node, nodetext, product, products, ref, results, substrate, substrates;
     if (this.currentActiveNode == null) {
       ref = this.nodes;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        node = ref[i];
+      for (j = 0, len = ref.length; j < len; j++) {
+        node = ref[j];
         if (node.checkCollision(x, y)) {
           node.hover = true;
           nodetext = $('#nodetext');
@@ -353,21 +369,21 @@ System = (function() {
           });
           if (node.type === 'r') {
             substrates = (function() {
-              var j, len1, ref1, results1;
+              var k, len1, ref1, results1;
               ref1 = node.substrates;
               results1 = [];
-              for (j = 0, len1 = ref1.length; j < len1; j++) {
-                substrate = ref1[j];
+              for (k = 0, len1 = ref1.length; k < len1; k++) {
+                substrate = ref1[k];
                 results1.push(substrate.name);
               }
               return results1;
             })();
             products = (function() {
-              var j, len1, ref1, results1;
+              var k, len1, ref1, results1;
               ref1 = node.products;
               results1 = [];
-              for (j = 0, len1 = ref1.length; j < len1; j++) {
-                product = ref1[j];
+              for (k = 0, len1 = ref1.length; k < len1; k++) {
+                product = ref1[k];
                 results1.push(product.name);
               }
               return results1;
@@ -398,11 +414,11 @@ System = (function() {
   };
 
   System.prototype.buildMetabolites = function(model) {
-    var i, len, metabolite, nodeAttributes, ref, tempNodes;
+    var j, len, metabolite, nodeAttributes, ref, tempNodes;
     tempNodes = new Array();
     ref = model.metabolites;
-    for (i = 0, len = ref.length; i < len; i++) {
-      metabolite = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      metabolite = ref[j];
       nodeAttributes = {
         x: utilities.rand(this.W),
         y: utilities.rand(this.H),
@@ -417,12 +433,12 @@ System = (function() {
   };
 
   System.prototype.buildReactions = function(model) {
-    var i, j, k, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, reactionAttributes, ref, ref1, results, source, target, tempLinks;
+    var j, k, l, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, reactionAttributes, ref, ref1, results, source, target, tempLinks;
     radiusScale = utilities.scaleRadius(model, 5, 15);
     tempLinks = new Array();
     ref = model.reactions;
-    for (i = 0, len = ref.length; i < len; i++) {
-      reaction = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      reaction = ref[j];
       if (this.everything || reaction.flux_value > 0) {
         reactionAttributes = {
           x: utilities.rand(this.W),
@@ -434,10 +450,13 @@ System = (function() {
           flux_value: reaction.flux_value,
           colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
         };
+        if (reactionAttributes.name.indexOf('objective function') !== -1) {
+          continue;
+        }
         this.nodes.push(new Reaction(reactionAttributes, this.canvas.ctx));
         ref1 = Object.keys(reaction.metabolites);
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          metabolite = ref1[j];
+        for (k = 0, len1 = ref1.length; k < len1; k++) {
+          metabolite = ref1[k];
           source = null;
           target = null;
           if (reaction.metabolites[metabolite] > 0) {
@@ -459,8 +478,8 @@ System = (function() {
     }
     nodesMap = utilities.nodeMap(this.nodes);
     results = [];
-    for (k = 0, len2 = tempLinks.length; k < len2; k++) {
-      link = tempLinks[k];
+    for (l = 0, len2 = tempLinks.length; l < len2; l++) {
+      link = tempLinks[l];
       linkAttr = {
         id: link.id,
         source: this.nodes[nodesMap[link.source]],
@@ -475,16 +494,16 @@ System = (function() {
   };
 
   System.prototype.draw = function() {
-    var i, j, len, len1, link, node, ref, ref1, results;
+    var j, k, len, len1, link, node, ref, ref1, results;
     ref = this.links;
-    for (i = 0, len = ref.length; i < len; i++) {
-      link = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      link = ref[j];
       link.draw();
     }
     ref1 = this.nodes;
     results = [];
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      node = ref1[j];
+    for (k = 0, len1 = ref1.length; k < len1; k++) {
+      node = ref1[k];
       results.push(node.draw());
     }
     return results;
@@ -516,7 +535,8 @@ systemAttributes = {
   backgroundColour: "white",
   metaboliteRadius: 10,
   useStatic: false,
-  everything: false
+  everything: false,
+  hideObjective: true
 };
 
 system = new System(systemAttributes);

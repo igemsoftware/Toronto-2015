@@ -16,6 +16,7 @@ class System
         @metaboliteRadius = attr.metaboliteRadius
         @useStatic        = attr.useStatic
         @everything       = attr.everything
+        @hideObjective    = attr.hideObjective
 
         # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
         @currentActiveNode = null
@@ -32,6 +33,20 @@ class System
         @links = new Array()
         @buildReactions(data)
 
+        linkDistanceHandler = (link, i) ->
+            factor = 0
+            if link.target.type is 'r'
+                factor = link.target.substrates.length
+            else if link.source.type is 'r'
+                factor = link.source.products.length
+
+            return factor * 100
+
+        chargeHandler = (node, i) ->
+            factor = node.inNeighbours.length + node.outNeighbours.length + 1
+
+            return factor * -100
+
         @force = d3.layout.force()
             # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
             .nodes(@nodes)
@@ -44,9 +59,9 @@ class System
             # At each tick of the simulation, the particle velocity is scaled by the specified friction
             .friction(0.9)
             # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
-            .linkDistance(50)
+            .linkDistance(linkDistanceHandler)
             # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
-            .charge(-500)
+            .charge(chargeHandler)
             # Sets the maximum distance over which charge forces are applied; \infty if not specified
             #.chargeDistance()
             # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
@@ -135,6 +150,11 @@ class System
                     type       : "r"
                     flux_value : reaction.flux_value
                     colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+
+                # Hardcoded kinda
+                # Don't include biomass objective function reaction; skews drawing
+                if reactionAttributes.name.indexOf('objective function') isnt -1
+                    continue
 
                 @nodes.push(new Reaction(reactionAttributes, @canvas.ctx))
 
