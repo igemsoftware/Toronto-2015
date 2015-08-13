@@ -388,7 +388,7 @@ System = (function() {
               }
               return results1;
             })();
-            nodetext.html(substrates + " -(" + node.name + ")-> " + products);
+            nodetext.html(substrates + " --- (" + node.name + ") ---> " + products);
           } else {
             nodetext.html("" + node.name);
           }
