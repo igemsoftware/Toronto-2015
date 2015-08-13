@@ -323,8 +323,8 @@ System = (function() {
     this.render();
   }
 
-  System.prototype.checkCollisions = function(x, y) {
-    var i, len, node, ref, results;
+  System.prototype.checkCollisions = function(x, y, e) {
+    var i, len, node, nodetext, ref, results;
     if (this.currentActiveNode == null) {
       ref = this.nodes;
       results = [];
@@ -332,6 +332,13 @@ System = (function() {
         node = ref[i];
         if (node.checkCollision(x, y)) {
           node.hover = true;
+          nodetext = $('#nodetext');
+          nodetext.addClass('showing');
+          nodetext.css({
+            'left': e.clientX,
+            'top': e.clientY
+          });
+          nodetext.html("" + node.name);
           results.push(this.currentActiveNode = node);
         } else {
           results.push(node.hover = false);
@@ -340,7 +347,8 @@ System = (function() {
       return results;
     } else {
       if (!this.currentActiveNode.checkCollision(x, y)) {
-        return this.currentActiveNode = null;
+        this.currentActiveNode = null;
+        return $('#nodetext').removeClass('showing');
       }
     }
   };
@@ -349,7 +357,7 @@ System = (function() {
     var tPt;
     e.preventDefault();
     tPt = this.canvas.transformedPoint(e.clientX, e.clientY);
-    return this.checkCollisions(tPt.x, tPt.y);
+    return this.checkCollisions(tPt.x, tPt.y, e);
   };
 
   System.prototype.buildMetabolites = function(model) {

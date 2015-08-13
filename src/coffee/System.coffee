@@ -71,23 +71,32 @@ class System
         @render()
 
     # *checkCollisions*
-    checkCollisions: (x, y) ->
+    checkCollisions: (x, y, e) ->
         if not @currentActiveNode?
             for node in @nodes
                 if node.checkCollision(x,y)
                     node.hover = true
+                    nodetext =  $('#nodetext')
+                    nodetext.addClass('showing')
+                    nodetext.css({
+                        'left': e.clientX,
+                        'top': e.clientY
+
+                    })
+                    nodetext.html("#{node.name}")
                     @currentActiveNode = node
                 else
                     node.hover = false
         else
             if not @currentActiveNode.checkCollision(x,y)
                 @currentActiveNode = null
+                $('#nodetext').removeClass('showing');
 
     mousemoveHandler = (e) ->
         e.preventDefault()
         # Collisons
         tPt = @canvas.transformedPoint(e.clientX, e.clientY)
-        @checkCollisions(tPt.x, tPt.y)
+        @checkCollisions(tPt.x, tPt.y, e)
 
     buildMetabolites: (model) ->
         tempNodes = new Array()
