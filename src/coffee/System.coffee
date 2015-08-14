@@ -18,6 +18,8 @@ class System
         @everything       = attr.everything
         @hideObjective    = attr.hideObjective
 
+        @nodetext =  $('#nodetext')
+
 
         # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
         @currentActiveNode = null
@@ -30,27 +32,15 @@ class System
         @canvas.c.addEventListener("mousedown", mousedownHandler.bind(this), false)
         @canvas.c.addEventListener("mouseup", mouseupHandler.bind(this), false)
 
-
+        @clientX = 0
+        @clientY = 0
         # Build metabolites and reactions
         @nodes = @buildMetabolites(data)
+
         #nodes to be exlcuded (Deleted)
         @exclusions = new Array()
         @links = new Array()
         @buildReactions(data)
-
-        linkDistanceHandler = (link, i) ->
-            factor = 0
-            if link.target.type is 'r'
-                factor = link.target.substrates.length
-            else if link.source.type is 'r'
-                factor = link.source.products.length
-
-            return factor * 100
-
-        chargeHandler = (node, i) ->
-            factor = node.inNeighbours.length + node.outNeighbours.length + 1
-
-            return factor * -100
 
         @force = d3.layout.force()
             # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
@@ -64,9 +54,9 @@ class System
             # At each tick of the simulation, the particle velocity is scaled by the specified friction
             .friction(0.9)
             # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
-            .linkDistance(linkDistanceHandler)
+            .linkDistance(@linkDistanceHandler)
             # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
-            .charge(chargeHandler)
+            .charge(@chargeHandler)
             # Sets the maximum distance over which charge forces are applied; \infty if not specified
             #.chargeDistance()
             # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
@@ -76,6 +66,7 @@ class System
             # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
             .alpha(0.1)
             # Let's get this party start()ed
+            .on("tick", @tick.bind(this))
             .start()
 
         if @useStatic
@@ -90,15 +81,38 @@ class System
         # Render: to cause to be or become
         @render()
 
+
+
+
+    linkDistanceHandler: (link, i) ->
+        factor = 0
+        if link.target.type is 'r'
+            factor = link.target.substrates.length
+        else if link.source.type is 'r'
+            factor = link.source.products.length
+
+        return factor * 100
+
+    chargeHandler: (node, i) ->
+        factor = node.inNeighbours.length + node.outNeighbours.length + 1
+
+        return factor * -100
+
+    tick: () ->
+        if @currentActiveNode? and window.fba.isDraggingNode
+            tPt = @canvas.transformedPoint(@clientX, @clientY)
+            @currentActiveNode.x = tPt.x
+            @currentActiveNode.y = tPt.y
+
     # *checkCollisions*
     checkCollisions: (x, y, e) ->
         if not @currentActiveNode?
             for node in @nodes
                 if node.checkCollision(x,y)
                     node.hover = true
-                    nodetext =  $('#nodetext')
-                    nodetext.addClass('showing')
-                    nodetext.css({
+
+                    @nodetext.addClass('showing')
+                    @nodetext.css({
                         'left': e.clientX,
                         'top': e.clientY
 
@@ -107,9 +121,9 @@ class System
                     if node.type is 'r'
                         substrates = (substrate.name for substrate in node.substrates)
                         products = (product.name for product in node.products)
-                        nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}")
+                        @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}")
                     else
-                        nodetext.html("#{node.name}")
+                        @nodetext.html("#{node.name}")
 
                     @currentActiveNode = node
                 else
@@ -120,20 +134,31 @@ class System
                 $('#nodetext').removeClass('showing');
 
     mousedownHandler = (e) ->
+        @clientX = e.clientX
+        @clientY = e.clientY
         tPt = @canvas.transformedPoint(e.clientX, e.clientY)
         @checkCollisions(tPt.x, tPt.y, e)
         if @currentActiveNode?
             window.fba.isDraggingNode = true
 
     mouseupHandler = (e) ->
+        @clientX = e.clientX
+        @clientY = e.clientY
         window.fba.isDraggingNode = false
     mousemoveHandler = (e) ->
         e.preventDefault()
+        @clientX = e.clientX
+        @clientY = e.clientY
         tPt = @canvas.transformedPoint(e.clientX, e.clientY)
 
         if window.fba.isDraggingNode
             @currentActiveNode.x = tPt.x
             @currentActiveNode.y = tPt.y
+            @nodetext.css({
+                'left': e.clientX,
+                'top': e.clientY
+
+            })
         else
             @checkCollisions(tPt.x, tPt.y, e)
 

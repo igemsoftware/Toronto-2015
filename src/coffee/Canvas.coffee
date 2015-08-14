@@ -20,7 +20,27 @@ class Canvas
         @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
 
         # Append it to the DOM
+        #tried to disable select, failed misribly.
         document.body.appendChild(@c)
+
+        $(@id).css({
+            "-moz-user-select": "none",
+            "-webkit-user-select": "none",
+            "-ms-user-select" : "none",
+            "user-select": "none",
+            "-o-user-select": "none",
+            "unselectable": "on"
+        })
+        # $(@id).css(
+
+        #     ).bind('selectstart', ->
+        #         return false)
+        #console.log(d3.select(@id).node())
+        #d3.select(@id).node().attr("-moz-user-select", "none")
+                            # .style("-webkit-user-select", "none")
+                            # .style("-ms-user-select", "none")
+                            # .style("-o-user-select", "none")
+                            # .style("unslectable": "on")
 
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")

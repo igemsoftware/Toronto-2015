@@ -22,6 +22,14 @@ Canvas = (function() {
     this.c.addEventListener("mouseup", mouseupHandler.bind(this), false);
     this.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
     document.body.appendChild(this.c);
+    $(this.id).css({
+      "-moz-user-select": "none",
+      "-webkit-user-select": "none",
+      "-ms-user-select": "none",
+      "user-select": "none",
+      "-o-user-select": "none",
+      "unselectable": "on"
+    });
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.xform = this.svg.createSVGMatrix();
@@ -315,7 +323,7 @@ System = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler;
 
   function System(attr) {
-    var AnimationFrame, chargeHandler, j, len, linkDistanceHandler, n, ref;
+    var AnimationFrame, j, len, n, ref;
     this.W = attr.width;
     this.H = attr.height;
     this.BG = attr.backgroundColour;
@@ -323,31 +331,19 @@ System = (function() {
     this.useStatic = attr.useStatic;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
+    this.nodetext = $('#nodetext');
     this.currentActiveNode = null;
     this.canvas = new Canvas("canvas", this.W, this.H, this.BG);
     this.canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
     this.canvas.c.addEventListener("mousedown", mousedownHandler.bind(this), false);
     this.canvas.c.addEventListener("mouseup", mouseupHandler.bind(this), false);
+    this.clientX = 0;
+    this.clientY = 0;
     this.nodes = this.buildMetabolites(data);
     this.exclusions = new Array();
     this.links = new Array();
     this.buildReactions(data);
-    linkDistanceHandler = function(link, i) {
-      var factor;
-      factor = 0;
-      if (link.target.type === 'r') {
-        factor = link.target.substrates.length;
-      } else if (link.source.type === 'r') {
-        factor = link.source.products.length;
-      }
-      return factor * 100;
-    };
-    chargeHandler = function(node, i) {
-      var factor;
-      factor = node.inNeighbours.length + node.outNeighbours.length + 1;
-      return factor * -100;
-    };
-    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(linkDistanceHandler).charge(chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).start();
+    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).on("tick", this.tick.bind(this)).start();
     if (this.useStatic) {
       ref = this.nodes;
       for (j = 0, len = ref.length; j < len; j++) {
@@ -361,8 +357,34 @@ System = (function() {
     this.render();
   }
 
+  System.prototype.linkDistanceHandler = function(link, i) {
+    var factor;
+    factor = 0;
+    if (link.target.type === 'r') {
+      factor = link.target.substrates.length;
+    } else if (link.source.type === 'r') {
+      factor = link.source.products.length;
+    }
+    return factor * 100;
+  };
+
+  System.prototype.chargeHandler = function(node, i) {
+    var factor;
+    factor = node.inNeighbours.length + node.outNeighbours.length + 1;
+    return factor * -100;
+  };
+
+  System.prototype.tick = function() {
+    var tPt;
+    if ((this.currentActiveNode != null) && window.fba.isDraggingNode) {
+      tPt = this.canvas.transformedPoint(this.clientX, this.clientY);
+      this.currentActiveNode.x = tPt.x;
+      return this.currentActiveNode.y = tPt.y;
+    }
+  };
+
   System.prototype.checkCollisions = function(x, y, e) {
-    var j, len, node, nodetext, product, products, ref, results, substrate, substrates;
+    var j, len, node, product, products, ref, results, substrate, substrates;
     if (this.currentActiveNode == null) {
       ref = this.nodes;
       results = [];
@@ -370,9 +392,8 @@ System = (function() {
         node = ref[j];
         if (node.checkCollision(x, y)) {
           node.hover = true;
-          nodetext = $('#nodetext');
-          nodetext.addClass('showing');
-          nodetext.css({
+          this.nodetext.addClass('showing');
+          this.nodetext.css({
             'left': e.clientX,
             'top': e.clientY
           });
@@ -397,9 +418,9 @@ System = (function() {
               }
               return results1;
             })();
-            nodetext.html(substrates + " --- (" + node.name + ") ---> " + products);
+            this.nodetext.html(substrates + " --- (" + node.name + ") ---> " + products);
           } else {
-            nodetext.html("" + node.name);
+            this.nodetext.html("" + node.name);
           }
           results.push(this.currentActiveNode = node);
         } else {
@@ -417,6 +438,8 @@ System = (function() {
 
   mousedownHandler = function(e) {
     var tPt;
+    this.clientX = e.clientX;
+    this.clientY = e.clientY;
     tPt = this.canvas.transformedPoint(e.clientX, e.clientY);
     this.checkCollisions(tPt.x, tPt.y, e);
     if (this.currentActiveNode != null) {
@@ -425,16 +448,24 @@ System = (function() {
   };
 
   mouseupHandler = function(e) {
+    this.clientX = e.clientX;
+    this.clientY = e.clientY;
     return window.fba.isDraggingNode = false;
   };
 
   mousemoveHandler = function(e) {
     var tPt;
     e.preventDefault();
+    this.clientX = e.clientX;
+    this.clientY = e.clientY;
     tPt = this.canvas.transformedPoint(e.clientX, e.clientY);
     if (window.fba.isDraggingNode) {
       this.currentActiveNode.x = tPt.x;
-      return this.currentActiveNode.y = tPt.y;
+      this.currentActiveNode.y = tPt.y;
+      return this.nodetext.css({
+        'left': e.clientX,
+        'top': e.clientY
+      });
     } else {
       return this.checkCollisions(tPt.x, tPt.y, e);
     }
@@ -561,7 +592,7 @@ systemAttributes = {
   height: window.innerHeight,
   backgroundColour: "white",
   metaboliteRadius: 10,
-  useStatic: true,
+  useStatic: false,
   everything: false,
   hideObjective: true
 };
