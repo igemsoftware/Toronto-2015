@@ -1,6 +1,8 @@
 # ###Canvas
 
-#
+
+window.fba =
+    isDraggingNode: false
 class Canvas
     # **Constructor**
     constructor: (@id, @width, @height, @BG) ->
@@ -47,7 +49,9 @@ class Canvas
     mousedownHandler = (e) ->
         @lastX = e.clientX - @c.offsetLeft
         @lastY = e.clientY - @c.offsetTop
-        @dragStart = @transformedPoint(@lastX, @lastY)
+
+        if not window.fba.isDraggingNode
+            @dragStart = @transformedPoint(@lastX, @lastY)
 
     # **mouseup**
     mouseupHandler = (e) ->
@@ -60,8 +64,7 @@ class Canvas
         # Dragging
         @lastX = e.clientX - @c.offsetLeft
         @lastY = e.clientY - @c.offsetTop
-
-        if @dragStart?
+        if @dragStart? and not window.fba.isDraggingNode
             tPt = @transformedPoint(@lastX, @lastY)
             dX = (tPt.x - @dragStart.x) * @dragScaleFactor
             dY = (tPt.y - @dragStart.y) * @dragScaleFactor

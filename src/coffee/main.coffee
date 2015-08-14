@@ -5,7 +5,7 @@ systemAttributes =
     height           : window.innerHeight
     backgroundColour : "white"
     metaboliteRadius : 10
-    useStatic        : false
+    useStatic        : true
     everything       : false
     hideObjective    : true
 

@@ -1,6 +1,10 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Canvas;
 
+window.fba = {
+  isDraggingNode: false
+};
+
 Canvas = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler, mousewheelHandler;
 
@@ -47,7 +51,9 @@ Canvas = (function() {
   mousedownHandler = function(e) {
     this.lastX = e.clientX - this.c.offsetLeft;
     this.lastY = e.clientY - this.c.offsetTop;
-    return this.dragStart = this.transformedPoint(this.lastX, this.lastY);
+    if (!window.fba.isDraggingNode) {
+      return this.dragStart = this.transformedPoint(this.lastX, this.lastY);
+    }
   };
 
   mouseupHandler = function(e) {
@@ -59,7 +65,7 @@ Canvas = (function() {
     e.preventDefault();
     this.lastX = e.clientX - this.c.offsetLeft;
     this.lastY = e.clientY - this.c.offsetTop;
-    if (this.dragStart != null) {
+    if ((this.dragStart != null) && !window.fba.isDraggingNode) {
       tPt = this.transformedPoint(this.lastX, this.lastY);
       dX = (tPt.x - this.dragStart.x) * this.dragScaleFactor;
       dY = (tPt.y - this.dragStart.y) * this.dragScaleFactor;
@@ -306,7 +312,7 @@ Link = require("./Link");
 utilities = require("./utilities");
 
 System = (function() {
-  var mousemoveHandler;
+  var mousedownHandler, mousemoveHandler, mouseupHandler;
 
   function System(attr) {
     var AnimationFrame, chargeHandler, j, len, linkDistanceHandler, n, ref;
@@ -320,7 +326,10 @@ System = (function() {
     this.currentActiveNode = null;
     this.canvas = new Canvas("canvas", this.W, this.H, this.BG);
     this.canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
+    this.canvas.c.addEventListener("mousedown", mousedownHandler.bind(this), false);
+    this.canvas.c.addEventListener("mouseup", mouseupHandler.bind(this), false);
     this.nodes = this.buildMetabolites(data);
+    this.exclusions = new Array();
     this.links = new Array();
     this.buildReactions(data);
     linkDistanceHandler = function(link, i) {
@@ -406,11 +415,29 @@ System = (function() {
     }
   };
 
+  mousedownHandler = function(e) {
+    var tPt;
+    tPt = this.canvas.transformedPoint(e.clientX, e.clientY);
+    this.checkCollisions(tPt.x, tPt.y, e);
+    if (this.currentActiveNode != null) {
+      return window.fba.isDraggingNode = true;
+    }
+  };
+
+  mouseupHandler = function(e) {
+    return window.fba.isDraggingNode = false;
+  };
+
   mousemoveHandler = function(e) {
     var tPt;
     e.preventDefault();
     tPt = this.canvas.transformedPoint(e.clientX, e.clientY);
-    return this.checkCollisions(tPt.x, tPt.y, e);
+    if (window.fba.isDraggingNode) {
+      this.currentActiveNode.x = tPt.x;
+      return this.currentActiveNode.y = tPt.y;
+    } else {
+      return this.checkCollisions(tPt.x, tPt.y, e);
+    }
   };
 
   System.prototype.buildMetabolites = function(model) {
@@ -534,7 +561,7 @@ systemAttributes = {
   height: window.innerHeight,
   backgroundColour: "white",
   metaboliteRadius: 10,
-  useStatic: false,
+  useStatic: true,
   everything: false,
   hideObjective: true
 };

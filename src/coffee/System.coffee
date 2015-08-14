@@ -18,18 +18,23 @@ class System
         @everything       = attr.everything
         @hideObjective    = attr.hideObjective
 
+
         # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
         @currentActiveNode = null
 
         # Create Canvas Object
         # Handles zooming and panning
         @canvas = new Canvas("canvas", @W, @H, @BG)
-
         # Event listeners. Bind so we preserve `this`
         @canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
+        @canvas.c.addEventListener("mousedown", mousedownHandler.bind(this), false)
+        @canvas.c.addEventListener("mouseup", mouseupHandler.bind(this), false)
+
 
         # Build metabolites and reactions
         @nodes = @buildMetabolites(data)
+        #nodes to be exlcuded (Deleted)
+        @exclusions = new Array()
         @links = new Array()
         @buildReactions(data)
 
@@ -114,11 +119,23 @@ class System
                 @currentActiveNode = null
                 $('#nodetext').removeClass('showing');
 
-    mousemoveHandler = (e) ->
-        e.preventDefault()
-        # Collisons
+    mousedownHandler = (e) ->
         tPt = @canvas.transformedPoint(e.clientX, e.clientY)
         @checkCollisions(tPt.x, tPt.y, e)
+        if @currentActiveNode?
+            window.fba.isDraggingNode = true
+
+    mouseupHandler = (e) ->
+        window.fba.isDraggingNode = false
+    mousemoveHandler = (e) ->
+        e.preventDefault()
+        tPt = @canvas.transformedPoint(e.clientX, e.clientY)
+
+        if window.fba.isDraggingNode
+            @currentActiveNode.x = tPt.x
+            @currentActiveNode.y = tPt.y
+        else
+            @checkCollisions(tPt.x, tPt.y, e)
 
     buildMetabolites: (model) ->
         tempNodes = new Array()
