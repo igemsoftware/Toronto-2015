@@ -205,4 +205,5 @@ class System
         # Request next frame
         requestAnimationFrame(@render.bind(this))
 
+window.FBA.System = System
 module.exports = System

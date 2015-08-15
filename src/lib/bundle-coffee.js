@@ -521,6 +521,8 @@ System = (function() {
 
 })();
 
+window.FBA.System = System;
+
 module.exports = System;
 
 

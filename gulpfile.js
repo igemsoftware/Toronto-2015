@@ -51,9 +51,9 @@ var dests = {
 // Compile `.scss` into `.css`
 gulp.task('sass', function() {
     return gulp
-    .src(globs.sass)
+de    .src(globs.sass)
     .pipe(sass({
-        includePaths: ['./bower_components/compass-mixins/lib']
+       includePaths: ['./bower_components/compass-mixins/lib']
     }).on('error', sass.logError))
     .pipe(gulp.dest(dests.css))
     .pipe(browserSync.stream());
