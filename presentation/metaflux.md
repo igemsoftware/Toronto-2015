@@ -69,6 +69,28 @@ code {
 
 %end
 
+<!-- bower:js -->
+<!-- endbower -->
+
+<script>
+var stats = {
+    begin: function() {
+        return;
+    },
+    end: function() {
+        return;
+    }
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.js"></script>
+<script src="http://45.55.193.224/fba-webapp-fresh/src/iJO1366.js"></script>
+ <script src="http://45.55.193.224/fba-webapp-fresh/src/lib/bundle-coffee.js"></script> -->
+
+
+
 
 %%%%%%%%%%%%%%%%%%%
 %% Here we go...
@@ -93,7 +115,7 @@ code {
 
 % 4
 %css
-#step-4 {
+#step-5 {
     background: rgba(0,0,0,0)
 }
 %end
@@ -109,12 +131,28 @@ How do I optimize the biomass of toluene degrading bacteria?
 FBA:= Flux Balance Analysis
 <img src="./img/fba.gif" style="height: 500px; width: auto;" />
 
+!SLIDE slide x=3000 y=1500 rotate=-90
+
+wheee
+<canvas id="canvas2"></canvas>
+<script>
+system = new FBA.System({
+        width: 200,
+        height: 200,
+        backgroundColour: 'white',
+        metaboliteRadius: 10,
+        useStatic: false,
+        everything: true,
+        hideObjective: true
+})
+</script>
+
 %% The End
 %%%%%%%%%%%%%%%
 
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<script src="http://45.55.193.224/fba-webapp-fresh/src/lib/bundle-coffee.js"></script>
+
+
 
 <script type="text/javascript">
 // rAF polyfill in external js file
