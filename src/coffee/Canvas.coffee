@@ -1,6 +1,8 @@
 # ###Canvas
 
-#
+
+window.fba =
+    isDraggingNode: false
 class Canvas
     # **Constructor**
     constructor: (@id, @width, @height, @BG) ->
@@ -18,7 +20,27 @@ class Canvas
         @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
 
         # Append it to the DOM
+        #tried to disable select, failed misribly.
         document.body.appendChild(@c)
+
+        $(@id).css({
+            "-moz-user-select": "none",
+            "-webkit-user-select": "none",
+            "-ms-user-select" : "none",
+            "user-select": "none",
+            "-o-user-select": "none",
+            "unselectable": "on"
+        })
+        # $(@id).css(
+
+        #     ).bind('selectstart', ->
+        #         return false)
+        #console.log(d3.select(@id).node())
+        #d3.select(@id).node().attr("-moz-user-select", "none")
+                            # .style("-webkit-user-select", "none")
+                            # .style("-ms-user-select", "none")
+                            # .style("-o-user-select", "none")
+                            # .style("unslectable": "on")
 
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
@@ -47,7 +69,9 @@ class Canvas
     mousedownHandler = (e) ->
         @lastX = e.clientX - @c.offsetLeft
         @lastY = e.clientY - @c.offsetTop
-        @dragStart = @transformedPoint(@lastX, @lastY)
+
+        if not window.fba.isDraggingNode
+            @dragStart = @transformedPoint(@lastX, @lastY)
 
     # **mouseup**
     mouseupHandler = (e) ->
@@ -60,8 +84,7 @@ class Canvas
         # Dragging
         @lastX = e.clientX - @c.offsetLeft
         @lastY = e.clientY - @c.offsetTop
-
-        if @dragStart?
+        if @dragStart? and not window.fba.isDraggingNode
             tPt = @transformedPoint(@lastX, @lastY)
             dX = (tPt.x - @dragStart.x) * @dragScaleFactor
             dY = (tPt.y - @dragStart.y) * @dragScaleFactor
