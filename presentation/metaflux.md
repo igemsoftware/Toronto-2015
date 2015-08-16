@@ -85,9 +85,9 @@ var stats = {
 
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.js"></script>
 <script src="http://45.55.193.224/fba-webapp-fresh/src/iJO1366.js"></script>
- <script src="http://45.55.193.224/fba-webapp-fresh/src/lib/bundle-coffee.js"></script> -->
+ <script src="http://45.55.193.224/fba-webapp-fresh/src/lib/bundle-coffee.js"></script>
 
 
 

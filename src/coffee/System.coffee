@@ -195,8 +195,9 @@ class System
 
                 # Hardcoded kinda
                 # Don't include biomass objective function reaction; skews drawing
-                if reactionAttributes.name.indexOf('objective function') isnt -1
-                    continue
+                if @hideObjective
+                    if reactionAttributes.name.indexOf('objective function') isnt -1
+                        continue
 
                 @nodes.push(new Reaction(reactionAttributes, @canvas.ctx))
 

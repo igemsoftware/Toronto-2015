@@ -508,8 +508,10 @@ System = (function() {
           flux_value: reaction.flux_value,
           colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
         };
-        if (reactionAttributes.name.indexOf('objective function') !== -1) {
-          continue;
+        if (this.hideObjective) {
+          if (reactionAttributes.name.indexOf('objective function') !== -1) {
+            continue;
+          }
         }
         this.nodes.push(new Reaction(reactionAttributes, this.canvas.ctx));
         ref1 = Object.keys(reaction.metabolites);
