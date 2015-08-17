@@ -339,8 +339,8 @@ System = (function() {
     this.canvas.c.addEventListener("mouseup", mouseupHandler.bind(this), false);
     this.clientX = 0;
     this.clientY = 0;
-    this.nodes = this.buildMetabolites(data);
     this.exclusions = new Array();
+    this.nodes = this.buildMetabolites(data);
     this.links = new Array();
     this.buildReactions(data);
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).on("tick", this.tick.bind(this)).start();
@@ -384,7 +384,7 @@ System = (function() {
   };
 
   System.prototype.checkCollisions = function(x, y, e) {
-    var j, len, node, product, products, ref, results, substrate, substrates;
+    var j, len, node, product, products, ref, results, substrate, substrates, that;
     if (this.currentActiveNode == null) {
       ref = this.nodes;
       results = [];
@@ -418,10 +418,14 @@ System = (function() {
               }
               return results1;
             })();
-            this.nodetext.html(substrates + " --- (" + node.name + ") ---> " + products);
+            this.nodetext.html(substrates + " --- (" + node.name + ") ---> " + products + "<br>");
           } else {
-            this.nodetext.html("" + node.name);
+            this.nodetext.html(node.name + "<br>");
           }
+          that = this;
+          this.nodetext.append('<button type="button">Delete</button>').click(function() {
+            return that.deleteNode(node);
+          });
           results.push(this.currentActiveNode = node);
         } else {
           results.push(node.hover = false);
@@ -434,6 +438,21 @@ System = (function() {
         return $('#nodetext').removeClass('showing');
       }
     }
+  };
+
+  System.prototype.deleteNode = function(node) {
+    this.exclusions.push(node);
+    this.force.stop();
+    return this.reinitalize();
+  };
+
+  System.prototype.reinitalize = function() {
+    this.clientX = 0;
+    this.clientY = 0;
+    this.nodes = this.buildMetabolites(data);
+    this.links = new Array();
+    this.buildReactions(data);
+    return this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).on("tick", this.tick.bind(this)).start();
   };
 
   mousedownHandler = function(e) {
@@ -450,7 +469,8 @@ System = (function() {
   mouseupHandler = function(e) {
     this.clientX = e.clientX;
     this.clientY = e.clientY;
-    return window.fba.isDraggingNode = false;
+    window.fba.isDraggingNode = false;
+    return this.currentActiveNode = null;
   };
 
   mousemoveHandler = function(e) {
@@ -472,11 +492,21 @@ System = (function() {
   };
 
   System.prototype.buildMetabolites = function(model) {
-    var j, len, metabolite, nodeAttributes, ref, tempNodes;
+    var exclusion, j, k, len, len1, metabolite, nodeAttributes, ref, ref1, tempNodes;
     tempNodes = new Array();
     ref = model.metabolites;
     for (j = 0, len = ref.length; j < len; j++) {
       metabolite = ref[j];
+      if (metabolite.id.toString() === "Zn2tex") {
+        console.log("heress");
+      }
+      ref1 = this.exclusions;
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        exclusion = ref1[k];
+        if (metabolite.id.toString() === exclusion.id.toString()) {
+          console.log("here");
+        }
+      }
       nodeAttributes = {
         x: utilities.rand(this.W),
         y: utilities.rand(this.H),
