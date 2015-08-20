@@ -11,7 +11,7 @@ class Link
         @appendSubstratesAndProducts()
 
     appendSubstratesAndProducts: ->
-        
+
         if @source.type is 'm' and @target.type is 'r'
             # Case 1: substrate - reaction
             @source.outNeighbours.push(@target)

@@ -344,14 +344,15 @@ System = (function() {
     this.links = new Array();
     this.force = null;
     if (this.data != null) {
-      this.initalizeData();
+      this.buildMetabolites(this.data);
+      this.buildReactions(this.data);
     }
+    this.initalizeForce();
+    this.startAnimate();
   }
 
-  System.prototype.initalizeData = function() {
-    var AnimationFrame, j, len, n, ref;
-    this.buildMetabolites(this.data);
-    this.buildReactions(this.data);
+  System.prototype.initalizeForce = function() {
+    var j, len, n, ref;
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).on("tick", this.tick.bind(this)).start();
     if (this.useStatic) {
       ref = this.nodes;
@@ -359,8 +360,12 @@ System = (function() {
         n = ref[j];
         this.force.tick();
       }
-      this.force.stop();
+      return this.force.stop();
     }
+  };
+
+  System.prototype.startAnimate = function() {
+    var AnimationFrame;
     AnimationFrame = window.AnimationFrame;
     AnimationFrame.shim();
     return this.render();
@@ -557,7 +562,7 @@ System = (function() {
             target = reaction.id;
           }
           link = {
-            id: source.id + "-" + target.id,
+            id: source + "-" + target,
             source: source,
             target: target,
             flux_value: reaction.flux_value
@@ -633,7 +638,7 @@ systemAttributes = {
   hideObjective: true
 };
 
-system = new System(systemAttributes, data);
+system = new System(systemAttributes);
 
 
 },{"./System":6}],8:[function(require,module,exports){

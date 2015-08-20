@@ -9,4 +9,4 @@ systemAttributes =
     everything       : false
     hideObjective    : true
 
-system = new System(systemAttributes, data)
+system = new System(systemAttributes)

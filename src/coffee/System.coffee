@@ -41,12 +41,13 @@ class System
         @force = null
         #nodes to be exlcuded (Deleted)
         if @data?
-            @initalizeData()
+            @buildMetabolites(@data)
+            @buildReactions(@data)
+        @initalizeForce()
+        @startAnimate()
 
+    initalizeForce: () ->
 
-    initalizeData: () ->
-        @buildMetabolites(@data)
-        @buildReactions(@data)
         @force = d3.layout.force()
             # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
             .nodes(@nodes)
@@ -78,6 +79,8 @@ class System
             @force.tick() for n in @nodes
             @force.stop()
 
+
+    startAnimate: () ->
         # Setup [AnimationFrame](https://github.com/kof/animation-frame)
         AnimationFrame = window.AnimationFrame
         AnimationFrame.shim()
@@ -244,9 +247,8 @@ class System
                     else
                         source = metabolite
                         target = reaction.id
-
                     link =
-                        id         : "#{source.id}-#{target.id}"
+                        id         : "#{source}-#{target}"
                         source     : source
                         target     : target
                         flux_value : reaction.flux_value

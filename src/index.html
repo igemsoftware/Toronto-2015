@@ -25,9 +25,33 @@
     <script src="../bower_components/stats.js/build/stats.min.js"></script>
     <script src="../bower_components/d3/d3.js"></script>
 
+
+
+
     <!-- endbower -->
     <div id="nodetext">
     </div>
+
+    <div id="sidebar" style="width: 200px; position: absolute; right: 0; height: 100%; background:red">
+        <!-- <form> -->
+            <input type="text" id="metab_id" placeholder="metabolite id"></input>
+            <input type="text" id="metab_name" placeholder="metabolite name"></input>
+            <input type="text" id="metab_compartment" placeholder="metabolite comp."></input>
+
+            
+            <button type="submit" id="submit">Submit</button>
+        <!-- </form> -->
+
+    </div>
+
+    <script>
+        var n=0
+        $('#submit').click(function() {
+            console.log('clicked ' + n)
+            n+= 1
+        })
+    </script>
+
     <script>
         var stats = new Stats();
 
