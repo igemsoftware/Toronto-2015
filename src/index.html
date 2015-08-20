@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>drawee</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/sanitize-css/dist/sanitize.css" />
+    <!-- endbower -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="styles/styles.css">
+    <!-- endinject -->
+</head>
+
+<body>
+    <script src="iJO1366.js"></script>
+    <!-- <script src="toydata.js"></script> -->
+    <script src="../node_modules/intersection/index.js"></script>
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/animation-frame/AnimationFrame.js"></script>
+    <script src="../bower_components/stats.js/build/stats.min.js"></script>
+    <script src="../bower_components/d3/d3.js"></script>
+
+
+
+
+    <!-- endbower -->
+    <div id="nodetext">
+    </div>
+
+    <div id="sidebar" style="width: 200px; position: absolute; right: 0; height: 100%; background:red">
+        <!-- <form> -->
+            <input type="text" id="metab_id" placeholder="metabolite id"></input>
+            <input type="text" id="metab_name" placeholder="metabolite name"></input>
+            <input type="text" id="metab_compartment" placeholder="metabolite comp."></input>
+
+            
+            <button type="submit" id="submit">Submit</button>
+        <!-- </form> -->
+
+    </div>
+
+    <script>
+        var n=0
+        $('#submit').click(function() {
+            console.log('clicked ' + n)
+            n+= 1
+        })
+    </script>
+
+    <script>
+        var stats = new Stats();
+
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '0px';
+        stats.domElement.style.top = '0px';
+
+        document.body.appendChild(stats.domElement);
+
+        // var update = function() {
+        //     stats.update()
+        //     requestAnimationFrame(update);
+        // };
+    </script>
+
+    <!-- inject:js -->
+    <script src="lib/bundle-coffee.js"></script>
+    <!-- endinject -->
+
+</body>
+
+</html>

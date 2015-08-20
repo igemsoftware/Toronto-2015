@@ -1,0 +1,23 @@
+{
+  "name": "drawee",
+  "version": "0.0.0",
+  "authors": [
+    "Julian Mazzitelli <mazzitelli.julian@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "animation-frame": "~0.2.4",
+    "sanitize-css": "~1.1.0",
+    "compass-mixins": "~1.0.2",
+    "stats.js": "*",
+    "d3": "~3.5.6",
+    "jquery": "~2.1.4"
+  }
+}

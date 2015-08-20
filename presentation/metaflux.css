@@ -1,0 +1,66 @@
+/* add your css style rules here */
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  background-image: url('./img/bg.jpg');
+  background-position: center center;
+  background-size: 100% auto;
+}
+
+.step {
+  width: 800px;
+  height: 600px;
+  padding: 20px;
+
+  font-size: 3em;
+  text-align: center;
+
+  opacity: 0.3;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+ul {
+    text-align: left;
+    font-size: 0.5em;
+}
+
+.slide {
+  background: rgba(250,250,250,0.9);
+  overflow-y: hidden;
+}
+
+code {
+  background-color: yellow;
+  font-size: 14px;
+}
+
+.fullWidth {
+    width: 100%;
+    height: auto;
+}
+
+.absHeading {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.vCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%)
+}
+
+#step-5 {
+    background: rgba(0,0,0,0)
+}
