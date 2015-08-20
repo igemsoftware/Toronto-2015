@@ -638,7 +638,7 @@ systemAttributes = {
   hideObjective: true
 };
 
-system = new System(systemAttributes);
+system = new System(systemAttributes, data);
 
 
 },{"./System":6}],8:[function(require,module,exports){
