@@ -34,11 +34,12 @@ class System
 
         @clientX = 0
         @clientY = 0
+        @exclusions = new Array()
         # Build metabolites and reactions
         @nodes = @buildMetabolites(data)
 
         #nodes to be exlcuded (Deleted)
-        @exclusions = new Array()
+
         @links = new Array()
         @buildReactions(data)
 
@@ -121,9 +122,16 @@ class System
                     if node.type is 'r'
                         substrates = (substrate.name for substrate in node.substrates)
                         products = (product.name for product in node.products)
-                        @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}")
+                        @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
                     else
-                        @nodetext.html("#{node.name}")
+                        @nodetext.html("#{node.name}<br>")
+                    that = this
+                    @nodetext.append('<button type="button">Delete</button>').click(() ->
+                        #had to hack my way through, and .bind was not working in this case....
+                        #Issue, calling this function multiple times
+                        that.deleteNode(node)
+                    )
+
 
                     @currentActiveNode = node
                 else
@@ -132,6 +140,56 @@ class System
             if not @currentActiveNode.checkCollision(x,y)
                 @currentActiveNode = null
                 $('#nodetext').removeClass('showing');
+
+    deleteNode : (node) ->
+        # console.log node
+        # for inNeighbour in node.inNeighbours
+        #     inNeighbour.remove(node)
+        #we'll deal with in neighbours and out neighbours later
+        @exclusions.push(node)
+        @force.stop()
+
+        @reinitalize()
+
+
+        #re initalize
+        #that.force.stop()
+
+
+
+    reinitalize : () ->
+        @clientX = 0
+        @clientY = 0
+        # Build metabolites and reactions
+        @nodes = @buildMetabolites(data)
+        @links = new Array()
+        @buildReactions(data)
+        @force = d3.layout.force()
+            # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
+            .nodes(@nodes)
+            # The links: mutates source, target
+            .links(@links)
+            # Affects gravitational center and initial random position
+            .size([@W, @H])
+            # Sets "rigidity" of links in range [0,1]; func(link, index), this -> force; evaluated at start()
+            .linkStrength(2)
+            # At each tick of the simulation, the particle velocity is scaled by the specified friction
+            .friction(0.9)
+            # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
+            .linkDistance(@linkDistanceHandler)
+            # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
+            .charge(@chargeHandler)
+            # Sets the maximum distance over which charge forces are applied; \infty if not specified
+            #.chargeDistance()
+            # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
+            .gravity(0.1)
+            # Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) < theta => treat quadrant as single large node
+            .theta(0.8)
+            # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
+            .alpha(0.1)
+            # Let's get this party start()ed
+            .on("tick", @tick.bind(this))
+            .start()
 
     mousedownHandler = (e) ->
         @clientX = e.clientX
@@ -145,6 +203,7 @@ class System
         @clientX = e.clientX
         @clientY = e.clientY
         window.fba.isDraggingNode = false
+        @currentActiveNode = null
     mousemoveHandler = (e) ->
         e.preventDefault()
         @clientX = e.clientX
@@ -165,6 +224,11 @@ class System
     buildMetabolites: (model) ->
         tempNodes = new Array()
         for metabolite in model.metabolites
+            if metabolite.id.toString() is "Zn2tex"
+                console.log("heress")
+            for exclusion in @exclusions
+                if metabolite.id.toString() is exclusion.id.toString()
+                    console.log ("here")
             nodeAttributes =
                 x    : utilities.rand(@W)
                 y    : utilities.rand(@H)
@@ -182,6 +246,7 @@ class System
         tempLinks = new Array()
 
         for reaction in model.reactions
+
             if @everything or reaction.flux_value > 0
                 reactionAttributes =
                     x          : utilities.rand(@W)
@@ -202,7 +267,10 @@ class System
                 @nodes.push(new Reaction(reactionAttributes, @canvas.ctx))
 
                 # Assign metabolite source and target for each reaction
+
                 for metabolite in Object.keys(reaction.metabolites)
+
+
                     source = null
                     target = null
 
