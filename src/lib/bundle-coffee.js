@@ -600,7 +600,7 @@ systemAttributes = {
   metaboliteRadius: 10,
   useStatic: false,
   everything: false,
-  hideObjective: true
+  hideObjective: false
 };
 
 system = new System(systemAttributes);
