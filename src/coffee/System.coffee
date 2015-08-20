@@ -9,7 +9,7 @@ Link       = require "./Link"
 utilities = require("./utilities")
 
 class System
-    constructor: (attr) ->
+    constructor: (attr, @data) ->
         @W                = attr.width
         @H                = attr.height
         @BG               = attr.backgroundColour
@@ -35,14 +35,18 @@ class System
         @clientX = 0
         @clientY = 0
         @exclusions = new Array()
-        # Build metabolites and reactions
-        @nodes = @buildMetabolites(data)
 
-        #nodes to be exlcuded (Deleted)
-
+        @nodes = new Array()
         @links = new Array()
-        @buildReactions(data)
+        @force = null
+        #nodes to be exlcuded (Deleted)
+        if @data?
+            @initalizeData()
 
+
+    initalizeData: () ->
+        @buildMetabolites(@data)
+        @buildReactions(@data)
         @force = d3.layout.force()
             # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
             .nodes(@nodes)
@@ -74,17 +78,12 @@ class System
             @force.tick() for n in @nodes
             @force.stop()
 
-
         # Setup [AnimationFrame](https://github.com/kof/animation-frame)
         AnimationFrame = window.AnimationFrame
         AnimationFrame.shim()
 
         # Render: to cause to be or become
         @render()
-
-
-
-
     linkDistanceHandler: (link, i) ->
         factor = 0
         if link.target.type is 'r'
@@ -157,40 +156,6 @@ class System
 
 
 
-    reinitalize : () ->
-        @clientX = 0
-        @clientY = 0
-        # Build metabolites and reactions
-        @nodes = @buildMetabolites(data)
-        @links = new Array()
-        @buildReactions(data)
-        @force = d3.layout.force()
-            # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
-            .nodes(@nodes)
-            # The links: mutates source, target
-            .links(@links)
-            # Affects gravitational center and initial random position
-            .size([@W, @H])
-            # Sets "rigidity" of links in range [0,1]; func(link, index), this -> force; evaluated at start()
-            .linkStrength(2)
-            # At each tick of the simulation, the particle velocity is scaled by the specified friction
-            .friction(0.9)
-            # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
-            .linkDistance(@linkDistanceHandler)
-            # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
-            .charge(@chargeHandler)
-            # Sets the maximum distance over which charge forces are applied; \infty if not specified
-            #.chargeDistance()
-            # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
-            .gravity(0.1)
-            # Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) < theta => treat quadrant as single large node
-            .theta(0.8)
-            # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
-            .alpha(0.1)
-            # Let's get this party start()ed
-            .on("tick", @tick.bind(this))
-            .start()
-
     mousedownHandler = (e) ->
         @clientX = e.clientX
         @clientY = e.clientY
@@ -222,7 +187,6 @@ class System
             @checkCollisions(tPt.x, tPt.y, e)
 
     buildMetabolites: (model) ->
-        tempNodes = new Array()
         for metabolite in model.metabolites
             if metabolite.id.toString() is "Zn2tex"
                 console.log("heress")
@@ -237,9 +201,9 @@ class System
                 id   : metabolite.id
                 type : "m"
 
-            tempNodes.push(new Metabolite(nodeAttributes, @canvas.ctx))
+            @nodes.push(new Metabolite(nodeAttributes, @canvas.ctx))
 
-        return tempNodes
+
 
     buildReactions: (model) ->
         radiusScale = utilities.scaleRadius(model, 5, 15)

@@ -322,8 +322,8 @@ utilities = require("./utilities");
 System = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler;
 
-  function System(attr) {
-    var AnimationFrame, j, len, n, ref;
+  function System(attr, data) {
+    this.data = data;
     this.W = attr.width;
     this.H = attr.height;
     this.BG = attr.backgroundColour;
@@ -340,9 +340,18 @@ System = (function() {
     this.clientX = 0;
     this.clientY = 0;
     this.exclusions = new Array();
-    this.nodes = this.buildMetabolites(data);
+    this.nodes = new Array();
     this.links = new Array();
-    this.buildReactions(data);
+    this.force = null;
+    if (this.data != null) {
+      this.initalizeData();
+    }
+  }
+
+  System.prototype.initalizeData = function() {
+    var AnimationFrame, j, len, n, ref;
+    this.buildMetabolites(this.data);
+    this.buildReactions(this.data);
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).on("tick", this.tick.bind(this)).start();
     if (this.useStatic) {
       ref = this.nodes;
@@ -354,8 +363,8 @@ System = (function() {
     }
     AnimationFrame = window.AnimationFrame;
     AnimationFrame.shim();
-    this.render();
-  }
+    return this.render();
+  };
 
   System.prototype.linkDistanceHandler = function(link, i) {
     var factor;
@@ -446,15 +455,6 @@ System = (function() {
     return this.reinitalize();
   };
 
-  System.prototype.reinitalize = function() {
-    this.clientX = 0;
-    this.clientY = 0;
-    this.nodes = this.buildMetabolites(data);
-    this.links = new Array();
-    this.buildReactions(data);
-    return this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1).on("tick", this.tick.bind(this)).start();
-  };
-
   mousedownHandler = function(e) {
     var tPt;
     this.clientX = e.clientX;
@@ -492,9 +492,9 @@ System = (function() {
   };
 
   System.prototype.buildMetabolites = function(model) {
-    var exclusion, j, k, len, len1, metabolite, nodeAttributes, ref, ref1, tempNodes;
-    tempNodes = new Array();
+    var exclusion, j, k, len, len1, metabolite, nodeAttributes, ref, ref1, results;
     ref = model.metabolites;
+    results = [];
     for (j = 0, len = ref.length; j < len; j++) {
       metabolite = ref[j];
       if (metabolite.id.toString() === "Zn2tex") {
@@ -515,9 +515,9 @@ System = (function() {
         id: metabolite.id,
         type: "m"
       };
-      tempNodes.push(new Metabolite(nodeAttributes, this.canvas.ctx));
+      results.push(this.nodes.push(new Metabolite(nodeAttributes, this.canvas.ctx)));
     }
-    return tempNodes;
+    return results;
   };
 
   System.prototype.buildReactions = function(model) {
@@ -630,10 +630,10 @@ systemAttributes = {
   metaboliteRadius: 10,
   useStatic: false,
   everything: false,
-  hideObjective: false
+  hideObjective: true
 };
 
-system = new System(systemAttributes);
+system = new System(systemAttributes, data);
 
 
 },{"./System":6}],8:[function(require,module,exports){
