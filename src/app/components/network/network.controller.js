@@ -21,11 +21,17 @@ angular.module('fbaApp')
     // ==== Network Class ====
     //create new network
     var network = new Network(attrs);
+<<<<<<< HEAD
     // for visualizing on ecoli model
     //  var dataRequest = $http.get('http://45.55.193.224/toydata.json');
     var dataRequest = $http.get('http://45.55.193.224/iJO1366.json');
     //var dataRequest = $http.get('http://localhost:3000/iJO1366.json');
     
+=======
+
+    var dataRequest = $http.get('http://45.55.193.224/toydata.json');
+  //  var dataRequest = $http.get('http://45.55.193.224/iJO1366.json');
+>>>>>>> origin/sigma
     dataRequest.success(function(data) {
         network.addSystem(data);
     }).error(function(err) {

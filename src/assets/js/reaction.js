@@ -2,6 +2,7 @@
 /* global palette */
 'use strict';
 
+<<<<<<< HEAD
 var Reaction = function(attr) {
 
     //var that = new Node(attr.name, attr._id, attr.type, attr.radius);
@@ -28,5 +29,19 @@ var Reaction = function(attr) {
         that.context.closePath();
     };
 
+=======
+var Reaction = function(network, name, id, radius, flux_value) {
+    var that = new Node(network, name, id, "r", radius);
+
+    network.graph.addNode({
+      "id": id,
+      "label": name,
+      "x": that.position.x,
+      "y": that.position.y, //random for now
+      "size": 3
+    })
+    that.node = network.graph.nodes()[network.graph.nodes().length-1];
+    
+>>>>>>> origin/sigma
     return that;
 };

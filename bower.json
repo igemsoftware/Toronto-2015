@@ -14,7 +14,11 @@
     "d3": "~3.5.5",
     "fontawesome": "~4.3.0",
     "ng-table": "~0.5.4",
+<<<<<<< HEAD
     "stats.js": "*",
     "animation-frame": "~0.2.4"
+=======
+    "sigma.js": "*"
+>>>>>>> origin/sigma
   }
 }
