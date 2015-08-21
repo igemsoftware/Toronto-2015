@@ -24,16 +24,6 @@ team.
 Straightforward drag and drop UI, ability to add species, and analazye
 their reactions and metabolites, along side calculating their flux.
 
-## Technologies Used
-
-| Name    | Reference              | Version |
-|:--------|:-----------------------|:--------|
-| Node    | https://nodejs.org/    | 0.12.6  |
-| Angular | https://angularjs.org/ | 1.4.2   |
-| Bower   | http://bower.io/       | 1.4.1   |
-| D3      | http://d3js.org        | 3.5.5   |
-
-
 ## Installation
 
 To be able to use our web app, you must have [NodeJS](https://nodejs.org/) and
@@ -105,7 +95,7 @@ version. Each task completion warrants a *micro* versioning.
     * Using the results of FBA on each species, we have gathered a flux for each reaction in *rxns_e* of that specie. This will be different across the species; set a new upper and lower bound for each of this reactions by taking the average - SD and the average + SD. In this way, for all of the reactions which share extracellular metabolites, after this point, they will have the same lower and upper bounds.
     * Perform FBA on each species again. Optimizing for biomass, as before. Again, more structured time analysis is needed, however this should take similar time to the previous step.
     * Each biomass objective function for each species returns a numeric value. Use z-scoring to standardize these distributions, so that we may compute a 'relative biomass' value for each specie. The sum of all these values must be equal to 1.
-    * Construct a single metabolic model representing the entire community. Each species will be assigned a 'compartment'. The upper and lower bounds of each reaction in each specie will be modified as per that specie's relative biomass. In this way, reactions belonging to a less important specie will have less effect (or more) on the optimization of the objective function, which will be biomass. The results of this cFBA analysis should coincide (to a degree) with experimentally observed community dynamics. 
+    * Construct a single metabolic model representing the entire community. Each species will be assigned a 'compartment'. The upper and lower bounds of each reaction in each specie will be modified as per that specie's relative biomass. In this way, reactions belonging to a less important specie will have less effect (or more) on the optimization of the objective function, which will be biomass. The results of this cFBA analysis should coincide (to a degree) with experimentally observed community dynamics.
 
 
 ## License
