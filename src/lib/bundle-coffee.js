@@ -323,6 +323,7 @@ System = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler;
 
   function System(attr, data) {
+    var that;
     this.data = data;
     this.W = attr.width;
     this.H = attr.height;
@@ -343,6 +344,22 @@ System = (function() {
     this.nodes = new Array();
     this.links = new Array();
     this.force = null;
+    that = this;
+    $('#addMetabolite').click(function() {
+      return that.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m");
+    });
+    $("#addReaction").click(function() {
+      var source, target;
+      source = {
+        id: $('#source').val().trim(),
+        name: $('#source').text().trim()
+      };
+      target = {
+        id: $('#target').val().trim(),
+        name: $('#target').text().trim()
+      };
+      return that.addReaction(source, target, $("#addReaction").val());
+    });
     if (this.data != null) {
       this.buildMetabolites(this.data);
       this.buildReactions(this.data);
@@ -350,6 +367,39 @@ System = (function() {
     this.initalizeForce();
     this.startAnimate();
   }
+
+  System.prototype.addMetabolite = function(id, name, type) {
+    var metabolite, nodeAttributes;
+    nodeAttributes = {
+      x: utilities.rand(this.W),
+      y: utilities.rand(this.H),
+      r: this.metaboliteRadius,
+      name: name,
+      id: id,
+      type: type
+    };
+    metabolite = new Metabolite(nodeAttributes, this.canvas.ctx);
+    d3.select("#source").append("option").attr("value", id).text(name);
+    d3.select("#target").append("option").attr("value", id).text(name);
+    return this.nodes.push(metabolite);
+  };
+
+  System.prototype.addReaction = function(source, target, name) {
+    var linkAttr;
+    console.log(source.name);
+    console.log(source.id);
+    console.log(name);
+    return;
+    linkAttr = {
+      id: link.id,
+      source: this.nodes[nodesMap[link.source]],
+      target: this.nodes[nodesMap[link.target]],
+      fluxValue: link.flux_value,
+      r: this.metaboliteRadius,
+      linkScale: utilities.scaleRadius(model, 1, 5)
+    };
+    return this.links.push(new Link(linkAttr, this.canvas.ctx));
+  };
 
   System.prototype.initalizeForce = function() {
     var j, len, n, ref;
@@ -638,7 +688,7 @@ systemAttributes = {
   hideObjective: true
 };
 
-system = new System(systemAttributes, data);
+system = new System(systemAttributes);
 
 
 },{"./System":6}],8:[function(require,module,exports){

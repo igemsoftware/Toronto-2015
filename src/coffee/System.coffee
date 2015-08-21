@@ -39,13 +39,55 @@ class System
         @nodes = new Array()
         @links = new Array()
         @force = null
+        that = this
+        $('#addMetabolite').click(->
+            that.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
+        )
+        $("#addReaction").click(->
+            source =
+                id : $('#source').val().trim()
+                name : $('#source').text().trim()
+            target =
+                id:  $('#target').val().trim()
+                name: $('#target').text().trim()
+            that.addReaction(source, target, $("#addReaction").val())
+        )
         #nodes to be exlcuded (Deleted)
         if @data?
             @buildMetabolites(@data)
             @buildReactions(@data)
         @initalizeForce()
+
         @startAnimate()
 
+    addMetabolite: (id, name, type) ->
+        nodeAttributes =
+            x    : utilities.rand(@W)
+            y    : utilities.rand(@H)
+            r    : @metaboliteRadius
+            name : name
+            id   : id
+            type : type
+        metabolite = new Metabolite(nodeAttributes, @canvas.ctx)
+        d3.select("#source").append("option").attr("value", id).text(name)
+        d3.select("#target").append("option").attr("value", id).text(name)
+        @nodes.push(metabolite)
+
+
+    addReaction: (source, target, name) ->
+        console.log(source.name)
+        console.log(source.id)
+        console.log(name)
+        return
+        linkAttr =
+            id        : link.id
+            source    : @nodes[nodesMap[link.source]]
+            target    : @nodes[nodesMap[link.target]]
+            fluxValue : link.flux_value
+            r         : @metaboliteRadius
+            linkScale : utilities.scaleRadius(model, 1, 5)
+
+        @links.push(new Link(linkAttr, @canvas.ctx))
     initalizeForce: () ->
 
         @force = d3.layout.force()
