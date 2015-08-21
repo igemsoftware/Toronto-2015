@@ -84,7 +84,29 @@ version. Each task completion warrants a *micro* versioning.
 
 ### Back-end
 
+* Route for receiving model, and sending back model after FBA
+    * store base model, as well as 'experiments'
+    * experiments will store:
+        * the framework which was used to achieve results
+        * list of gene insertion/deletions, (reactions)
+        * for each reaction, the flux
+* compute 'flux deltas' for every experiment used with a specific model
+* quee Python child processes, or find a better way to manage child processes. consider porting to a python based serverside framework such as Flask. how does Flask handle routes that will take on the order of minutes? Perhaps implement a job system.
+* Users? to store and retrieve your 'experiments'
+
 ### Community Flux Balance Analysis Pipeline
+
+* Models have varying names for metabolites, or sometimes none and only the id. Develop a pipeline for creating and maintaining a standardized set of metabolites and reactions to be used across all models. Integrate this with a web application to increase cooperation and standardization
+* cFBA framework
+    * Given a list of `n` species and their respective genome scale metabolic models (following SBML format as either originally an `.xml` or later as a `.json`),
+    * Develop a list of all reactions across all species that occur in the extracellular space, or `e`
+    * For each species `i` in `n`, loop through every reaction in `e`. If a reaction contains a metabolite that is involved in a reaction from the 'global e reactions', append it into the model of that specie. This should take O(*rxns_e* \* *n*) where *rxns_e* is the maximal number of extracellular reactions in a specie, and *n* is the number of species.
+    * Perform FBA individual on each species `i` in `n`, optimizing for biomass production. The time this takes is proportional to the size of the linear problem to be solved. Further time analysis is necessary to accurately provide an upper bound on this process.
+    * Using the results of FBA on each species, we have gathered a flux for each reaction in *rxns_e* of that specie. This will be different across the species; set a new upper and lower bound for each of this reactions by taking the average - SD and the average + SD. In this way, for all of the reactions which share extracellular metabolites, after this point, they will have the same lower and upper bounds.
+    * Perform FBA on each species again. Optimizing for biomass, as before. Again, more structured time analysis is needed, however this should take similar time to the previous step.
+    * Each biomass objective function for each species returns a numeric value. Use z-scoring to standardize these distributions, so that we may compute a 'relative biomass' value for each specie. The sum of all these values must be equal to 1.
+    * Construct a single metabolic model representing the entire community. Each species will be assigned a 'compartment'. The upper and lower bounds of each reaction in each specie will be modified as per that specie's relative biomass. In this way, reactions belonging to a less important specie will have less effect (or more) on the optimization of the objective function, which will be biomass. The results of this cFBA analysis should coincide (to a degree) with experimentally observed community dynamics. 
+
 
 ## License
 MIT License
