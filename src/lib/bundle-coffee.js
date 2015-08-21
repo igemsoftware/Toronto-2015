@@ -352,13 +352,13 @@ System = (function() {
       var source, target;
       source = {
         id: $('#source').val().trim(),
-        name: $('#source').text().trim()
+        name: $('#source :selected').text()
       };
       target = {
         id: $('#target').val().trim(),
-        name: $('#target').text().trim()
+        name: $('#target :selected').text()
       };
-      return that.addReaction(source, target, $("#addReaction").val());
+      return that.addReaction(source, target, $("#reaction_name").val());
     });
     if (this.data != null) {
       this.buildMetabolites(this.data);
@@ -385,18 +385,46 @@ System = (function() {
   };
 
   System.prototype.addReaction = function(source, target, name) {
-    var linkAttr;
-    console.log(source.name);
-    console.log(source.id);
-    console.log(name);
-    return;
+    var j, len, linkAttr, metabolite, reaction, reactionAttributes, ref, src, tgt;
+    src = null;
+    tgt = null;
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      metabolite = ref[j];
+      if (metabolite.id === source.id && metabolite.name === source.name) {
+        src = metabolite;
+      } else if (metabolite.id === target.id && metabolite.name === target.name) {
+        tgt = metabolite;
+      }
+    }
+    reactionAttributes = {
+      x: utilities.rand(this.W),
+      y: utilities.rand(this.H),
+      r: 5,
+      name: name,
+      id: name,
+      type: "r",
+      flux_value: 0,
+      colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+    };
+    reaction = new Reaction(reactionAttributes, this.canvas.ctx);
+    this.nodes.push(reaction);
     linkAttr = {
-      id: link.id,
-      source: this.nodes[nodesMap[link.source]],
-      target: this.nodes[nodesMap[link.target]],
-      fluxValue: link.flux_value,
+      id: source.id + "-" + reaction.id,
+      source: src,
+      target: reaction,
+      fluxValue: 0,
       r: this.metaboliteRadius,
-      linkScale: utilities.scaleRadius(model, 1, 5)
+      linkScale: utilities.scaleRadius(null, 1, 5)
+    };
+    this.links.push(new Link(linkAttr, this.canvas.ctx));
+    linkAttr = {
+      id: reaction.id + "-" + target.id,
+      source: reaction,
+      target: tgt,
+      fluxValue: 0,
+      r: this.metaboliteRadius,
+      linkScale: utilities.scaleRadius(null, 1, 5)
     };
     return this.links.push(new Link(linkAttr, this.canvas.ctx));
   };
@@ -700,17 +728,20 @@ rand = function(range) {
 
 scaleRadius = function(model, minRadius, maxRadius) {
   var fluxes, largest, reaction;
-  fluxes = (function() {
-    var j, len, ref, results;
-    ref = model.reactions;
-    results = [];
-    for (j = 0, len = ref.length; j < len; j++) {
-      reaction = ref[j];
-      results.push(reaction.flux_value);
-    }
-    return results;
-  })();
-  largest = Math.max.apply(Math, fluxes);
+  largest = 1;
+  if (model) {
+    fluxes = (function() {
+      var j, len, ref, results;
+      ref = model.reactions;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        reaction = ref[j];
+        results.push(reaction.flux_value);
+      }
+      return results;
+    })();
+    largest = Math.max.apply(Math, fluxes);
+  }
   return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);
 };
 

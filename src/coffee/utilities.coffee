@@ -3,8 +3,10 @@ rand = (range) ->
     return Math.floor(Math.random() * (range + 1))
 
 scaleRadius = (model, minRadius, maxRadius) ->
-    fluxes = (reaction.flux_value for reaction in model.reactions)
-    largest = Math.max.apply(Math, fluxes)
+    largest = 1
+    if model
+        fluxes = (reaction.flux_value for reaction in model.reactions)
+        largest = Math.max.apply(Math, fluxes)
 
     return d3.scale.linear()
         .domain([0, largest])

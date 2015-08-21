@@ -46,11 +46,11 @@ class System
         $("#addReaction").click(->
             source =
                 id : $('#source').val().trim()
-                name : $('#source').text().trim()
+                name : $('#source :selected').text()
             target =
                 id:  $('#target').val().trim()
-                name: $('#target').text().trim()
-            that.addReaction(source, target, $("#addReaction").val())
+                name: $('#target :selected').text()
+            that.addReaction(source, target, $("#reaction_name").val())
         )
         #nodes to be exlcuded (Deleted)
         if @data?
@@ -75,19 +75,45 @@ class System
 
 
     addReaction: (source, target, name) ->
-        console.log(source.name)
-        console.log(source.id)
-        console.log(name)
-        return
+        src  = null
+        tgt = null
+
+        for metabolite in @nodes
+            if metabolite.id is source.id and metabolite.name is source.name
+                src = metabolite
+            else if metabolite.id is target.id and metabolite.name is target.name
+                tgt = metabolite
+        reactionAttributes =
+            x          : utilities.rand(@W)
+            y          : utilities.rand(@H)
+            r          : 5 #hardcoded right now
+            name       : name
+            id         : name
+            type       : "r"
+            flux_value : 0
+            colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+        reaction = new Reaction(reactionAttributes, @canvas.ctx)
+        @nodes.push(reaction)
         linkAttr =
-            id        : link.id
-            source    : @nodes[nodesMap[link.source]]
-            target    : @nodes[nodesMap[link.target]]
-            fluxValue : link.flux_value
-            r         : @metaboliteRadius
-            linkScale : utilities.scaleRadius(model, 1, 5)
+            id        : "#{source.id}-#{reaction.id}"
+            source    : src
+            target    : reaction
+            fluxValue : 0
+            r         : @metaboliteRadius #why does this even need this? idc rn
+            linkScale : utilities.scaleRadius(null, 1, 5)
 
         @links.push(new Link(linkAttr, @canvas.ctx))
+        linkAttr =
+            id        : "#{reaction.id}-#{target.id}"
+            source    : reaction
+            target    : tgt
+            fluxValue : 0
+            r         : @metaboliteRadius #why does this even need this? idc rn
+            linkScale : utilities.scaleRadius(null, 1, 5)
+        @links.push(new Link(linkAttr, @canvas.ctx))
+
+
+
     initalizeForce: () ->
 
         @force = d3.layout.force()
