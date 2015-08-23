@@ -40,13 +40,14 @@ $ gulp
 
 ## Changelog
 
-### 1.1.0
+### 1.1.1
 
 * Renders metabolic network as a set of *nodes* and *links*
 * Integration of d3 with custom canvas rendering for improved performance
 * Basic dragging of nodes working
 * Panning and zooming of canvas working
 * Added deletion and adding, beta and WIP
+    * Self linking error handling, removal of nodes from target/source when trying to create a reaction is now removed from the options menu
 
 ## ToDos
 

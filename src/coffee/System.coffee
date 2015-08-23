@@ -86,15 +86,12 @@ class System
 
 
     addReaction: (source, target, name) ->
-        src  = null
-        tgt = null
-
         for node in @nodes
             if node.id is source.id and node.name is node.name
                 src = node
             else if node.id is target.id and node.name is node.name
                 tgt = node
-        if src is tgt
+        if not src? or not tgt?
             alert("No self linking!")
         else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
             linkAttr =
@@ -205,14 +202,12 @@ class System
             for node in @nodes
                 if node.checkCollision(x,y)
                     node.hover = true
-
                     @nodetext.addClass('showing')
                     @nodetext.css({
                         'left': e.clientX,
                         'top': e.clientY
 
                     })
-
                     if node.type is 'r'
                         substrates = (substrate.name for substrate in node.substrates)
                         products = (product.name for product in node.products)
@@ -240,6 +235,18 @@ class System
         for outNeighbour in node.outNeighbours
             nodeIndex = outNeighbour.inNeighbours.indexOf(node)
             outNeighbour.inNeighbours.splice(nodeIndex, 1)
+
+        #mix jquery and d3 lol....quick 'n' dirty
+        #removes from the options menu
+        d3.select("#source").selectAll("option")[0].forEach((d)->
+                if  $(d).val() is node.id and $(d).text() is node.name
+                    $(d).remove()
+            )
+        d3.select("#target").selectAll("option")[0].forEach((d)->
+                if  $(d).val() is node.id and $(d).text() is node.name
+                    $(d).remove()
+            )
+
 
 
     mousedownHandler = (e) ->

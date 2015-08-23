@@ -410,8 +410,6 @@ System = (function() {
 
   System.prototype.addReaction = function(source, target, name) {
     var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
-    src = null;
-    tgt = null;
     ref = this.nodes;
     for (j = 0, len = ref.length; j < len; j++) {
       node = ref[j];
@@ -421,7 +419,7 @@ System = (function() {
         tgt = node;
       }
     }
-    if (src === tgt) {
+    if ((src == null) || (tgt == null)) {
       return alert("No self linking!");
     } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
       linkAttr = {
@@ -571,7 +569,7 @@ System = (function() {
   };
 
   System.prototype.deleteNode = function(node) {
-    var inNeighbour, j, k, len, len1, nodeIndex, outNeighbour, ref, ref1, results;
+    var inNeighbour, j, k, len, len1, nodeIndex, outNeighbour, ref, ref1;
     this.exclusions.push(node);
     node.deleted = true;
     ref = node.inNeighbours;
@@ -581,13 +579,21 @@ System = (function() {
       inNeighbour.outNeighbours.splice(nodeIndex, 1);
     }
     ref1 = node.outNeighbours;
-    results = [];
     for (k = 0, len1 = ref1.length; k < len1; k++) {
       outNeighbour = ref1[k];
       nodeIndex = outNeighbour.inNeighbours.indexOf(node);
-      results.push(outNeighbour.inNeighbours.splice(nodeIndex, 1));
+      outNeighbour.inNeighbours.splice(nodeIndex, 1);
     }
-    return results;
+    d3.select("#source").selectAll("option")[0].forEach(function(d) {
+      if ($(d).val() === node.id && $(d).text() === node.name) {
+        return $(d).remove();
+      }
+    });
+    return d3.select("#target").selectAll("option")[0].forEach(function(d) {
+      if ($(d).val() === node.id && $(d).text() === node.name) {
+        return $(d).remove();
+      }
+    });
   };
 
   mousedownHandler = function(e) {
