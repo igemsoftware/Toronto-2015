@@ -40,7 +40,7 @@ $ gulp
 
 ## Changelog
 
-### 1.0.0
+### 1.1.0
 
 * Renders metabolic network as a set of *nodes* and *links*
 * Integration of d3 with custom canvas rendering for improved performance
