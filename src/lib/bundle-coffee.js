@@ -153,28 +153,30 @@ Link = (function() {
 
   Link.prototype.draw = function() {
     var h, lineAngle, targetx, targety, theta;
-    lineAngle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x) + Math.PI;
-    h = 10;
-    theta = Math.PI / 8;
-    this.ctx.beginPath();
-    if (this.target.type === "r") {
-      targetx = this.target.x;
-      targety = this.target.y;
-    } else {
-      targetx = this.target.x + this.r * Math.cos(lineAngle);
-      targety = this.target.y + this.r * Math.sin(lineAngle);
+    if (!this.target.deleted && !this.source.deleted) {
+      lineAngle = Math.atan2(this.target.y - this.source.y, this.target.x - this.source.x) + Math.PI;
+      h = 10;
+      theta = Math.PI / 8;
+      this.ctx.beginPath();
+      if (this.target.type === "r") {
+        targetx = this.target.x;
+        targety = this.target.y;
+      } else {
+        targetx = this.target.x + this.r * Math.cos(lineAngle);
+        targety = this.target.y + this.r * Math.sin(lineAngle);
+      }
+      this.ctx.moveTo(this.source.x, this.source.y);
+      this.ctx.lineTo(targetx, targety);
+      if (this.source.type === "r") {
+        this.ctx.lineTo(targetx + h * Math.cos(theta + lineAngle), targety + h * Math.sin(theta + lineAngle));
+        this.ctx.moveTo(targetx, targety);
+        this.ctx.lineTo(targetx + h * Math.cos(-theta + lineAngle), targety + h * Math.sin(-theta + lineAngle));
+      }
+      this.ctx.lineWidth = this.thickness;
+      this.ctx.closePath();
+      this.ctx.strokeStyle = "black";
+      return this.ctx.stroke();
     }
-    this.ctx.moveTo(this.source.x, this.source.y);
-    this.ctx.lineTo(targetx, targety);
-    if (this.source.type === "r") {
-      this.ctx.lineTo(targetx + h * Math.cos(theta + lineAngle), targety + h * Math.sin(theta + lineAngle));
-      this.ctx.moveTo(targetx, targety);
-      this.ctx.lineTo(targetx + h * Math.cos(-theta + lineAngle), targety + h * Math.sin(-theta + lineAngle));
-    }
-    this.ctx.lineWidth = this.thickness;
-    this.ctx.closePath();
-    this.ctx.strokeStyle = "black";
-    return this.ctx.stroke();
   };
 
   return Link;
@@ -199,15 +201,17 @@ Metabolite = (function(superClass) {
   }
 
   Metabolite.prototype.draw = function() {
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    this.ctx.closePath();
-    this.ctx.fillStyle = "black";
-    if (this.hover) {
-      this.ctx.fillStyle = "green";
+    if (!this.deleted) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x, this.y);
+      this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+      this.ctx.closePath();
+      this.ctx.fillStyle = "black";
+      if (this.hover) {
+        this.ctx.fillStyle = "green";
+      }
+      return this.ctx.fill();
     }
-    return this.ctx.fill();
   };
 
   return Metabolite;
@@ -237,6 +241,7 @@ Node = (function() {
     this.colour = attr.colour;
     this.substrates = this.inNeighbours = new Array();
     this.products = this.outNeighbours = new Array();
+    this.deleted = false;
     this.flux_value = attr.flux_value;
   }
 
@@ -272,29 +277,31 @@ Reaction = (function(superClass) {
 
   Reaction.prototype.draw = function() {
     var factor, i, j, k, nos, ref, ref1, size;
-    nos = 6;
-    size = this.r;
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
-    for (i = j = 0, ref = nos; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-      this.ctx.lineTo(this.x + this.r * Math.cos(i * 2 * Math.PI / nos), this.y + this.r * Math.sin(i * (2 * Math.PI / nos)));
+    if (!this.deleted) {
+      nos = 6;
+      size = this.r;
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
+      for (i = j = 0, ref = nos; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        this.ctx.lineTo(this.x + this.r * Math.cos(i * 2 * Math.PI / nos), this.y + this.r * Math.sin(i * (2 * Math.PI / nos)));
+      }
+      this.ctx.lineTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
+      this.ctx.lineTo(this.x + this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + this.r * Math.sin(1 * (2 * Math.PI / nos)));
+      this.ctx.fillStyle = this.colour;
+      this.ctx.closePath();
+      this.ctx.fill();
+      factor = 1.2;
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
+      for (i = k = 0, ref1 = nos; 0 <= ref1 ? k < ref1 : k > ref1; i = 0 <= ref1 ? ++k : --k) {
+        this.ctx.lineTo(this.x + factor * this.r * Math.cos(i * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(i * (2 * Math.PI / nos)));
+      }
+      this.ctx.lineTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
+      this.ctx.lineTo(this.x + factor * this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(1 * (2 * Math.PI / nos)));
+      this.ctx.closePath();
+      this.ctx.strokeStyle = this.colour;
+      return this.ctx.stroke();
     }
-    this.ctx.lineTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
-    this.ctx.lineTo(this.x + this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + this.r * Math.sin(1 * (2 * Math.PI / nos)));
-    this.ctx.fillStyle = this.colour;
-    this.ctx.closePath();
-    this.ctx.fill();
-    factor = 1.2;
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
-    for (i = k = 0, ref1 = nos; 0 <= ref1 ? k < ref1 : k > ref1; i = 0 <= ref1 ? ++k : --k) {
-      this.ctx.lineTo(this.x + factor * this.r * Math.cos(i * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(i * (2 * Math.PI / nos)));
-    }
-    this.ctx.lineTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
-    this.ctx.lineTo(this.x + factor * this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(1 * (2 * Math.PI / nos)));
-    this.ctx.closePath();
-    this.ctx.strokeStyle = this.colour;
-    return this.ctx.stroke();
   };
 
   return Reaction;
@@ -345,6 +352,9 @@ System = (function() {
     this.links = new Array();
     this.force = null;
     that = this;
+    $('#nodetext').click(function() {
+      return that.deleteNode(that.currentActiveNode);
+    });
     $('#addMetabolite').click(function() {
       return that.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m");
     });
@@ -544,10 +554,8 @@ System = (function() {
           } else {
             this.nodetext.html(node.name + "<br>");
           }
+          this.nodetext.append("Click above text to delete node (WIP)");
           that = this;
-          this.nodetext.append('<button type="button">Delete</button>').click(function() {
-            return that.deleteNode(node);
-          });
           results.push(this.currentActiveNode = node);
         } else {
           results.push(node.hover = false);
@@ -563,9 +571,23 @@ System = (function() {
   };
 
   System.prototype.deleteNode = function(node) {
+    var inNeighbour, j, k, len, len1, nodeIndex, outNeighbour, ref, ref1, results;
     this.exclusions.push(node);
-    this.force.stop();
-    return this.reinitalize();
+    node.deleted = true;
+    ref = node.inNeighbours;
+    for (j = 0, len = ref.length; j < len; j++) {
+      inNeighbour = ref[j];
+      nodeIndex = inNeighbour.outNeighbours.indexOf(node);
+      inNeighbour.outNeighbours.splice(nodeIndex, 1);
+    }
+    ref1 = node.outNeighbours;
+    results = [];
+    for (k = 0, len1 = ref1.length; k < len1; k++) {
+      outNeighbour = ref1[k];
+      nodeIndex = outNeighbour.inNeighbours.indexOf(node);
+      results.push(outNeighbour.inNeighbours.splice(nodeIndex, 1));
+    }
+    return results;
   };
 
   mousedownHandler = function(e) {

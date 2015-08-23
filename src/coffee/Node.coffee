@@ -20,6 +20,7 @@ class Node
         @substrates = @inNeighbours = new Array()
         # Out neighbours
         @products = @outNeighbours = new Array()
+        @deleted = false
         # reaction has flux value
         @flux_value = attr.flux_value
 

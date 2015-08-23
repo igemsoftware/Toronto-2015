@@ -40,6 +40,9 @@ class System
         @links = new Array()
         @force = null
         that = this
+        $('#nodetext').click(->
+            that.deleteNode(that.currentActiveNode)
+        )
         $('#addMetabolite').click(->
             that.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
         )
@@ -216,12 +219,8 @@ class System
                         @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
                     else
                         @nodetext.html("#{node.name}<br>")
+                    @nodetext.append("Click above text to delete node (WIP)")
                     that = this
-                    @nodetext.append('<button type="button">Delete</button>').click(() ->
-                        #had to hack my way through, and .bind was not working in this case....
-                        #Issue, calling this function multiple times
-                        that.deleteNode(node)
-                    )
 
 
                     @currentActiveNode = node
@@ -233,19 +232,14 @@ class System
                 $('#nodetext').removeClass('showing');
 
     deleteNode : (node) ->
-        # console.log node
-        # for inNeighbour in node.inNeighbours
-        #     inNeighbour.remove(node)
-        #we'll deal with in neighbours and out neighbours later
         @exclusions.push(node)
-        @force.stop()
-
-        @reinitalize()
-
-
-        #re initalize
-        #that.force.stop()
-
+        node.deleted = true
+        for inNeighbour in node.inNeighbours
+            nodeIndex = inNeighbour.outNeighbours.indexOf(node)
+            inNeighbour.outNeighbours.splice(nodeIndex, 1)
+        for outNeighbour in node.outNeighbours
+            nodeIndex = outNeighbour.inNeighbours.indexOf(node)
+            outNeighbour.inNeighbours.splice(nodeIndex, 1)
 
 
     mousedownHandler = (e) ->

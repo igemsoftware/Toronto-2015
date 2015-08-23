@@ -30,31 +30,31 @@ class Link
         @m = (@target.y - @source.y) / (@target.x - @source.x)
 
     draw: ->
+        if not @target.deleted and not @source.deleted
+            lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x) + Math.PI
 
-        lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x) + Math.PI
-
-        #h is the hypotonous length of the arrow
-        h = 10
-        #theta is the angle from the line to the arrow
-        theta = Math.PI/8
-        @ctx.beginPath()
-        if @target.type is "r"
-            targetx = @target.x
-            targety = @target.y
-        else
-            targetx = @target.x + @r*Math.cos(lineAngle)
-            targety = @target.y + @r*Math.sin(lineAngle)
-        @ctx.moveTo(@source.x, @source.y)
-        @ctx.lineTo(targetx, targety)
-        #create arrow
-        if @source.type is "r"
-            @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
-            @ctx.moveTo(targetx, targety)
-            @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
-        @ctx.lineWidth = @thickness
-        @ctx.closePath()
-        @ctx.strokeStyle = "black"
-        @ctx.stroke()
+            #h is the hypotonous length of the arrow
+            h = 10
+            #theta is the angle from the line to the arrow
+            theta = Math.PI/8
+            @ctx.beginPath()
+            if @target.type is "r"
+                targetx = @target.x
+                targety = @target.y
+            else
+                targetx = @target.x + @r*Math.cos(lineAngle)
+                targety = @target.y + @r*Math.sin(lineAngle)
+            @ctx.moveTo(@source.x, @source.y)
+            @ctx.lineTo(targetx, targety)
+            #create arrow
+            if @source.type is "r"
+                @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
+                @ctx.moveTo(targetx, targety)
+                @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
+            @ctx.lineWidth = @thickness
+            @ctx.closePath()
+            @ctx.strokeStyle = "black"
+            @ctx.stroke()
 
 
 
