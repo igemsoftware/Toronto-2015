@@ -363,10 +363,24 @@ System = (function() {
     if (this.data != null) {
       this.buildMetabolites(this.data);
       this.buildReactions(this.data);
+      this.populateOptions(this.nodes);
     }
     this.initalizeForce();
     this.startAnimate();
   }
+
+  System.prototype.populateOptions = function(nodes) {
+    var j, len, node, results, source, target;
+    source = d3.select("#source");
+    target = d3.select("#target");
+    results = [];
+    for (j = 0, len = nodes.length; j < len; j++) {
+      node = nodes[j];
+      source.append("option").attr("value", node.id).text(node.name);
+      results.push(target.append("option").attr("value", node.id).text(node.name));
+    }
+    return results;
+  };
 
   System.prototype.addMetabolite = function(id, name, type) {
     var metabolite, nodeAttributes;
@@ -385,48 +399,64 @@ System = (function() {
   };
 
   System.prototype.addReaction = function(source, target, name) {
-    var j, len, linkAttr, metabolite, reaction, reactionAttributes, ref, src, tgt;
+    var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
     src = null;
     tgt = null;
     ref = this.nodes;
     for (j = 0, len = ref.length; j < len; j++) {
-      metabolite = ref[j];
-      if (metabolite.id === source.id && metabolite.name === source.name) {
-        src = metabolite;
-      } else if (metabolite.id === target.id && metabolite.name === target.name) {
-        tgt = metabolite;
+      node = ref[j];
+      if (node.id === source.id && node.name === node.name) {
+        src = node;
+      } else if (node.id === target.id && node.name === node.name) {
+        tgt = node;
       }
     }
-    reactionAttributes = {
-      x: utilities.rand(this.W),
-      y: utilities.rand(this.H),
-      r: 5,
-      name: name,
-      id: name,
-      type: "r",
-      flux_value: 0,
-      colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
-    };
-    reaction = new Reaction(reactionAttributes, this.canvas.ctx);
-    this.nodes.push(reaction);
-    linkAttr = {
-      id: source.id + "-" + reaction.id,
-      source: src,
-      target: reaction,
-      fluxValue: 0,
-      r: this.metaboliteRadius,
-      linkScale: utilities.scaleRadius(null, 1, 5)
-    };
-    this.links.push(new Link(linkAttr, this.canvas.ctx));
-    linkAttr = {
-      id: reaction.id + "-" + target.id,
-      source: reaction,
-      target: tgt,
-      fluxValue: 0,
-      r: this.metaboliteRadius,
-      linkScale: utilities.scaleRadius(null, 1, 5)
-    };
-    return this.links.push(new Link(linkAttr, this.canvas.ctx));
+    if (src === tgt) {
+      return alert("No self linking!");
+    } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.canvas.ctx));
+    } else if (src.type === "m" && tgt.type === "m") {
+      reactionAttributes = {
+        x: utilities.rand(this.W),
+        y: utilities.rand(this.H),
+        r: 5,
+        name: name,
+        id: name,
+        type: "r",
+        flux_value: 0,
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+      };
+      reaction = new Reaction(reactionAttributes, this.canvas.ctx);
+      this.nodes.push(reaction);
+      linkAttr = {
+        id: source.id + "-" + reaction.id,
+        source: src,
+        target: reaction,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      this.links.push(new Link(linkAttr, this.canvas.ctx));
+      linkAttr = {
+        id: reaction.id + "-" + target.id,
+        source: reaction,
+        target: tgt,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.canvas.ctx));
+    } else {
+      return alert("Invalid linkage");
+    }
   };
 
   System.prototype.initalizeForce = function() {
@@ -716,7 +746,7 @@ systemAttributes = {
   hideObjective: true
 };
 
-system = new System(systemAttributes);
+system = new System(systemAttributes, data);
 
 
 },{"./System":6}],8:[function(require,module,exports){

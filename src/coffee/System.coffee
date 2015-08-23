@@ -56,10 +56,18 @@ class System
         if @data?
             @buildMetabolites(@data)
             @buildReactions(@data)
+            @populateOptions(@nodes)
+
         @initalizeForce()
 
         @startAnimate()
 
+    populateOptions: (nodes) ->
+        source = d3.select("#source")
+        target = d3.select("#target")
+        for node in nodes
+            source.append("option").attr("value", node.id).text(node.name)
+            target.append("option").attr("value", node.id).text(node.name)
     addMetabolite: (id, name, type) ->
         nodeAttributes =
             x    : utilities.rand(@W)
@@ -78,40 +86,53 @@ class System
         src  = null
         tgt = null
 
-        for metabolite in @nodes
-            if metabolite.id is source.id and metabolite.name is source.name
-                src = metabolite
-            else if metabolite.id is target.id and metabolite.name is target.name
-                tgt = metabolite
-        reactionAttributes =
-            x          : utilities.rand(@W)
-            y          : utilities.rand(@H)
-            r          : 5 #hardcoded right now
-            name       : name
-            id         : name
-            type       : "r"
-            flux_value : 0
-            colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-        reaction = new Reaction(reactionAttributes, @canvas.ctx)
-        @nodes.push(reaction)
-        linkAttr =
-            id        : "#{source.id}-#{reaction.id}"
-            source    : src
-            target    : reaction
-            fluxValue : 0
-            r         : @metaboliteRadius #why does this even need this? idc rn
-            linkScale : utilities.scaleRadius(null, 1, 5)
+        for node in @nodes
+            if node.id is source.id and node.name is node.name
+                src = node
+            else if node.id is target.id and node.name is node.name
+                tgt = node
+        if src is tgt
+            alert("No self linking!")
+        else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
+            linkAttr =
+                id        : "#{src.id}-#{tgt.id}"
+                source    : src
+                target    : tgt
+                fluxValue : 0
+                r         : @metaboliteRadius #why does this even need this? idc rn
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, @canvas.ctx))
+        else if src.type is "m" and tgt.type is "m"
+            reactionAttributes =
+                x          : utilities.rand(@W)
+                y          : utilities.rand(@H)
+                r          : 5 #hardcoded right now
+                name       : name
+                id         : name
+                type       : "r"
+                flux_value : 0
+                colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+            reaction = new Reaction(reactionAttributes, @canvas.ctx)
+            @nodes.push(reaction)
+            linkAttr =
+                id        : "#{source.id}-#{reaction.id}"
+                source    : src
+                target    : reaction
+                fluxValue : 0
+                r         : @metaboliteRadius #why does this even need this? idc rn
+                linkScale : utilities.scaleRadius(null, 1, 5)
 
-        @links.push(new Link(linkAttr, @canvas.ctx))
-        linkAttr =
-            id        : "#{reaction.id}-#{target.id}"
-            source    : reaction
-            target    : tgt
-            fluxValue : 0
-            r         : @metaboliteRadius #why does this even need this? idc rn
-            linkScale : utilities.scaleRadius(null, 1, 5)
-        @links.push(new Link(linkAttr, @canvas.ctx))
-
+            @links.push(new Link(linkAttr, @canvas.ctx))
+            linkAttr =
+                id        : "#{reaction.id}-#{target.id}"
+                source    : reaction
+                target    : tgt
+                fluxValue : 0
+                r         : @metaboliteRadius #why does this even need this? idc rn
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, @canvas.ctx))
+        else
+            alert("Invalid linkage")
 
 
     initalizeForce: () ->
