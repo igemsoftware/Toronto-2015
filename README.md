@@ -46,6 +46,7 @@ $ gulp
 * Integration of d3 with custom canvas rendering for improved performance
 * Basic dragging of nodes working
 * Panning and zooming of canvas working
+* Added deletion and adding, beta and WIP
 
 ## ToDos
 
