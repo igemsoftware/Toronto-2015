@@ -427,7 +427,6 @@ System = (function() {
         source: src,
         target: tgt,
         fluxValue: 0,
-        r: this.metaboliteRadius,
         linkScale: utilities.scaleRadius(null, 1, 5)
       };
       return this.links.push(new Link(linkAttr, this.canvas.ctx));
@@ -589,11 +588,12 @@ System = (function() {
         return $(d).remove();
       }
     });
-    return d3.select("#target").selectAll("option")[0].forEach(function(d) {
+    d3.select("#target").selectAll("option")[0].forEach(function(d) {
       if ($(d).val() === node.id && $(d).text() === node.name) {
         return $(d).remove();
       }
     });
+    return $('#nodetext').removeClass('showing');
   };
 
   mousedownHandler = function(e) {
@@ -603,6 +603,7 @@ System = (function() {
     tPt = this.canvas.transformedPoint(e.clientX, e.clientY);
     this.checkCollisions(tPt.x, tPt.y, e);
     if (this.currentActiveNode != null) {
+      $('#nodetext').removeClass('showing');
       return window.fba.isDraggingNode = true;
     }
   };

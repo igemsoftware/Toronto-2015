@@ -99,7 +99,6 @@ class System
                 source    : src
                 target    : tgt
                 fluxValue : 0
-                r         : @metaboliteRadius #why does this even need this? idc rn
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, @canvas.ctx))
         else if src.type is "m" and tgt.type is "m"
@@ -246,8 +245,8 @@ class System
                 if  $(d).val() is node.id and $(d).text() is node.name
                     $(d).remove()
             )
-
-
+        #remove text
+        $('#nodetext').removeClass('showing');
 
     mousedownHandler = (e) ->
         @clientX = e.clientX
@@ -255,6 +254,7 @@ class System
         tPt = @canvas.transformedPoint(e.clientX, e.clientY)
         @checkCollisions(tPt.x, tPt.y, e)
         if @currentActiveNode?
+            $('#nodetext').removeClass('showing');
             window.fba.isDraggingNode = true
 
     mouseupHandler = (e) ->
