@@ -375,17 +375,7 @@ System = (function() {
       nodeIndex = outNeighbour.inNeighbours.indexOf(node);
       outNeighbour.inNeighbours.splice(nodeIndex, 1);
     }
-    d3.select("#source").selectAll("option")[0].forEach(function(d) {
-      if ($(d).val() === node.id && $(d).text() === node.name) {
-        return $(d).remove();
-      }
-    });
-    d3.select("#target").selectAll("option")[0].forEach(function(d) {
-      if ($(d).val() === node.id && $(d).text() === node.name) {
-        return $(d).remove();
-      }
-    });
-    return $('#nodetext').removeClass('showing');
+    return this.viewController.removeOption(node);
   };
 
   System.prototype.buildMetabolites = function(model) {
@@ -528,7 +518,6 @@ ViewController = (function() {
     });
     that = this;
     $('#nodetext').click(function() {
-      console.log(that);
       return that.system.deleteNode(that.currentActiveNode);
     });
     $('#addMetabolite').click(function() {
@@ -572,6 +561,20 @@ ViewController = (function() {
   ViewController.prototype.updateOptions = function(name, id) {
     d3.select("#source").append("option").attr("value", id).text(name);
     return d3.select("#target").append("option").attr("value", id).text(name);
+  };
+
+  ViewController.prototype.removeOption = function(node) {
+    d3.select("#source").selectAll("option")[0].forEach(function(d) {
+      if ($(d).val() === node.id && $(d).text() === node.name) {
+        return $(d).remove();
+      }
+    });
+    d3.select("#target").selectAll("option")[0].forEach(function(d) {
+      if ($(d).val() === node.id && $(d).text() === node.name) {
+        return $(d).remove();
+      }
+    });
+    return $('#nodetext').removeClass('showing');
   };
 
   ViewController.prototype.transformedPoint = function(x, y) {
@@ -764,7 +767,7 @@ systemAttributes = {
   hideObjective: true
 };
 
-system = new System(systemAttributes);
+system = new System(systemAttributes, data);
 
 
 },{"./System":5}],8:[function(require,module,exports){

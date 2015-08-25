@@ -39,7 +39,6 @@ class ViewController
         #temporary
         that = this
         $('#nodetext').click(->
-            console.log(that)
             that.system.deleteNode(that.currentActiveNode)
         )
         $('#addMetabolite').click(->
@@ -77,6 +76,17 @@ class ViewController
     updateOptions: (name, id) ->
         d3.select("#source").append("option").attr("value", id).text(name)
         d3.select("#target").append("option").attr("value", id).text(name)
+
+    removeOption: (node) ->
+        d3.select("#source").selectAll("option")[0].forEach((d)->
+                if  $(d).val() is node.id and $(d).text() is node.name
+                    $(d).remove()
+            )
+        d3.select("#target").selectAll("option")[0].forEach((d)->
+                if  $(d).val() is node.id and $(d).text() is node.name
+                    $(d).remove()
+            )
+        $('#nodetext').removeClass('showing');
 
     transformedPoint: (x, y) ->
         pt = @svg.createSVGPoint()

@@ -161,10 +161,6 @@ class System
             else
                 node.hover = false
         return nodeReturn
-    # else
-    #     if not @currentActiveNode.checkCollision(x,y)
-    #         @currentActiveNode = null
-    #         $('#nodetext').removeClass('showing');
 
     deleteNode : (node) ->
         @exclusions.push(node)
@@ -175,19 +171,8 @@ class System
         for outNeighbour in node.outNeighbours
             nodeIndex = outNeighbour.inNeighbours.indexOf(node)
             outNeighbour.inNeighbours.splice(nodeIndex, 1)
+        @viewController.removeOption(node)
 
-        #mix jquery and d3 lol....quick 'n' dirty
-        #removes from the options menu
-        d3.select("#source").selectAll("option")[0].forEach((d)->
-                if  $(d).val() is node.id and $(d).text() is node.name
-                    $(d).remove()
-            )
-        d3.select("#target").selectAll("option")[0].forEach((d)->
-                if  $(d).val() is node.id and $(d).text() is node.name
-                    $(d).remove()
-            )
-        #remove text
-        $('#nodetext').removeClass('showing');
 
 
     buildMetabolites: (model) ->
