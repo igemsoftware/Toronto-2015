@@ -28,35 +28,18 @@ class System
         # Handles zooming and panning
         @nodes = new Array()
         @links = new Array()
-
-        #Manipulates the view and the controller
-
-        # Event listeners. Bind so we preserve `this`
-        # @viewController.c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
-        # @viewController.c.addEventListener("mousedown", mousedownHandler.bind(this), false)
-        # @viewController.c.addEventListener("mouseup", mouseupHandler.bind(this), false)
-
-        @clientX = 0
-        @clientY = 0
         @exclusions = new Array()
 
         @force = null
-        that = this
-
         #nodes to be exlcuded (Deleted)
         @viewController = new ViewController("canvas", @W, @H, @BG, this)
         if @data?
             @buildMetabolites(@data)
             @buildReactions(@data)
-            @populateOptions(@nodes)
+            @viewController.populateOptions(@nodes)
         @initalizeForce()
 
-    populateOptions: (nodes) ->
-        source = d3.select("#source")
-        target = d3.select("#target")
-        for node in nodes
-            source.append("option").attr("value", node.id).text(node.name)
-            target.append("option").attr("value", node.id).text(node.name)
+
     addMetabolite: (id, name, type) ->
         nodeAttributes =
             x    : utilities.rand(@W)
@@ -66,8 +49,8 @@ class System
             id   : id
             type : type
         metabolite = new Metabolite(nodeAttributes, @viewController.ctx)
-        d3.select("#sou rce").append("option").attr("value", id).text(name)
-        d3.select("#target").append("option").attr("value", id).text(name)
+        @viewController.updateOptions(name, id)
+
         @nodes.push(metabolite)
         @force.start()
 
@@ -118,7 +101,7 @@ class System
             @links.push(new Link(linkAttr, @viewController.ctx))
         else
             alert("Invalid linkage")
-
+        @force.start()
 
     initalizeForce: () ->
 
@@ -167,12 +150,6 @@ class System
 
         return factor * -100
 
-    tick: () ->
-        # if @currentActiveNode? and window.fba.isDraggingNode
-        #     tPt = @viewController.transformedPoint(@clientX, @clientY)
-        #     @currentActiveNode.x = tPt.x
-        #     @currentActiveNode.y = tPt.y
-
     # *checkCollisions*
     checkCollisions: (x, y) ->
         nodeReturn = null
@@ -212,36 +189,6 @@ class System
         #remove text
         $('#nodetext').removeClass('showing');
 
-    mousedownHandler = (e) ->
-        @clientX = e.clientX
-        @clientY = e.clientY
-        tPt = @viewController.transformedPoint(e.clientX, e.clientY)
-        @checkCollisions(tPt.x, tPt.y, e)
-        if @currentActiveNode?
-            $('#nodetext').removeClass('showing');
-            window.fba.isDraggingNode = true
-
-    mouseupHandler = (e) ->
-        @clientX = e.clientX
-        @clientY = e.clientY
-        window.fba.isDraggingNode = false
-        @currentActiveNode = null
-    mousemoveHandler = (e) ->
-        e.preventDefault()
-        @clientX = e.clientX
-        @clientY = e.clientY
-        tPt = @viewController.transformedPoint(e.clientX, e.clientY)
-
-        if window.fba.isDraggingNode
-            @currentActiveNode.x = tPt.x
-            @currentActiveNode.y = tPt.y
-            @nodetext.css({
-                'left': e.clientX,
-                'top': e.clientY
-
-            })
-        else
-            @checkCollisions(tPt.x, tPt.y, e)
 
     buildMetabolites: (model) ->
         for metabolite in model.metabolites

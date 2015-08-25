@@ -214,10 +214,7 @@ Link = require("./Link");
 utilities = require("./utilities");
 
 System = (function() {
-  var mousedownHandler, mousemoveHandler, mouseupHandler;
-
   function System(attr, data) {
-    var that;
     this.data = data;
     this.W = attr.width;
     this.H = attr.height;
@@ -229,32 +226,16 @@ System = (function() {
     this.currentActiveNode = null;
     this.nodes = new Array();
     this.links = new Array();
-    this.clientX = 0;
-    this.clientY = 0;
     this.exclusions = new Array();
     this.force = null;
-    that = this;
     this.viewController = new ViewController("canvas", this.W, this.H, this.BG, this);
     if (this.data != null) {
       this.buildMetabolites(this.data);
       this.buildReactions(this.data);
-      this.populateOptions(this.nodes);
+      this.viewController.populateOptions(this.nodes);
     }
     this.initalizeForce();
   }
-
-  System.prototype.populateOptions = function(nodes) {
-    var j, len, node, results, source, target;
-    source = d3.select("#source");
-    target = d3.select("#target");
-    results = [];
-    for (j = 0, len = nodes.length; j < len; j++) {
-      node = nodes[j];
-      source.append("option").attr("value", node.id).text(node.name);
-      results.push(target.append("option").attr("value", node.id).text(node.name));
-    }
-    return results;
-  };
 
   System.prototype.addMetabolite = function(id, name, type) {
     var metabolite, nodeAttributes;
@@ -267,8 +248,7 @@ System = (function() {
       type: type
     };
     metabolite = new Metabolite(nodeAttributes, this.viewController.ctx);
-    d3.select("#sou rce").append("option").attr("value", id).text(name);
-    d3.select("#target").append("option").attr("value", id).text(name);
+    this.viewController.updateOptions(name, id);
     this.nodes.push(metabolite);
     return this.force.start();
   };
@@ -285,7 +265,7 @@ System = (function() {
       }
     }
     if ((src == null) || (tgt == null)) {
-      return alert("No self linking!");
+      alert("No self linking!");
     } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
       linkAttr = {
         id: src.id + "-" + tgt.id,
@@ -294,7 +274,7 @@ System = (function() {
         fluxValue: 0,
         linkScale: utilities.scaleRadius(null, 1, 5)
       };
-      return this.links.push(new Link(linkAttr, this.viewController.ctx));
+      this.links.push(new Link(linkAttr, this.viewController.ctx));
     } else if (src.type === "m" && tgt.type === "m") {
       reactionAttributes = {
         x: utilities.rand(this.W),
@@ -325,10 +305,11 @@ System = (function() {
         r: this.metaboliteRadius,
         linkScale: utilities.scaleRadius(null, 1, 5)
       };
-      return this.links.push(new Link(linkAttr, this.viewController.ctx));
+      this.links.push(new Link(linkAttr, this.viewController.ctx));
     } else {
-      return alert("Invalid linkage");
+      alert("Invalid linkage");
     }
+    return this.force.start();
   };
 
   System.prototype.initalizeForce = function() {
@@ -360,8 +341,6 @@ System = (function() {
     factor = node.inNeighbours.length + node.outNeighbours.length + 1;
     return factor * -100;
   };
-
-  System.prototype.tick = function() {};
 
   System.prototype.checkCollisions = function(x, y) {
     var j, len, node, nodeReturn, ref;
@@ -407,43 +386,6 @@ System = (function() {
       }
     });
     return $('#nodetext').removeClass('showing');
-  };
-
-  mousedownHandler = function(e) {
-    var tPt;
-    this.clientX = e.clientX;
-    this.clientY = e.clientY;
-    tPt = this.viewController.transformedPoint(e.clientX, e.clientY);
-    this.checkCollisions(tPt.x, tPt.y, e);
-    if (this.currentActiveNode != null) {
-      $('#nodetext').removeClass('showing');
-      return window.fba.isDraggingNode = true;
-    }
-  };
-
-  mouseupHandler = function(e) {
-    this.clientX = e.clientX;
-    this.clientY = e.clientY;
-    window.fba.isDraggingNode = false;
-    return this.currentActiveNode = null;
-  };
-
-  mousemoveHandler = function(e) {
-    var tPt;
-    e.preventDefault();
-    this.clientX = e.clientX;
-    this.clientY = e.clientY;
-    tPt = this.viewController.transformedPoint(e.clientX, e.clientY);
-    if (window.fba.isDraggingNode) {
-      this.currentActiveNode.x = tPt.x;
-      this.currentActiveNode.y = tPt.y;
-      return this.nodetext.css({
-        'left': e.clientX,
-        'top': e.clientY
-      });
-    } else {
-      return this.checkCollisions(tPt.x, tPt.y, e);
-    }
   };
 
   System.prototype.buildMetabolites = function(model) {
@@ -555,9 +497,9 @@ var ViewController;
 ViewController = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler, mousewheelHandler;
 
-  function ViewController(id, width, height, BG, system) {
+  function ViewController(id1, width, height, BG, system) {
     var that;
-    this.id = id;
+    this.id = id1;
     this.width = width;
     this.height = height;
     this.BG = BG;
@@ -586,10 +528,11 @@ ViewController = (function() {
     });
     that = this;
     $('#nodetext').click(function() {
-      return this.system.deleteNode(that.currentActiveNode);
+      console.log(that);
+      return that.system.deleteNode(that.currentActiveNode);
     });
     $('#addMetabolite').click(function() {
-      return this.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m");
+      return that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m");
     });
     $("#addReaction").click(function() {
       var source, target;
@@ -601,7 +544,7 @@ ViewController = (function() {
         id: $('#target').val().trim(),
         name: $('#target :selected').text()
       };
-      return this.system.addReaction(source, target, $("#reaction_name").val());
+      return that.system.addReaction(source, target, $("#reaction_name").val());
     });
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -612,6 +555,24 @@ ViewController = (function() {
     this.lastY = Math.floor(this.width / 2);
     this.startAnimate();
   }
+
+  ViewController.prototype.populateOptions = function(nodes) {
+    var i, len, node, results, source, target;
+    source = d3.select("#source");
+    target = d3.select("#target");
+    results = [];
+    for (i = 0, len = nodes.length; i < len; i++) {
+      node = nodes[i];
+      source.append("option").attr("value", node.id).text(node.name);
+      results.push(target.append("option").attr("value", node.id).text(node.name));
+    }
+    return results;
+  };
+
+  ViewController.prototype.updateOptions = function(name, id) {
+    d3.select("#source").append("option").attr("value", id).text(name);
+    return d3.select("#target").append("option").attr("value", id).text(name);
+  };
 
   ViewController.prototype.transformedPoint = function(x, y) {
     var pt;
@@ -654,7 +615,12 @@ ViewController = (function() {
       this.currentActiveNode.x = tPt.x;
       return this.currentActiveNode.y = tPt.y;
     } else {
-      return this.currentActiveNode = this.system.checkCollisions(tPt.x, tPt.y);
+      this.currentActiveNode = this.system.checkCollisions(tPt.x, tPt.y);
+      if (this.currentActiveNode != null) {
+        return this.appendText(this.currentActiveNode, e);
+      } else {
+        return $('#nodetext').removeClass('showing');
+      }
     }
   };
 
@@ -701,7 +667,7 @@ ViewController = (function() {
     }
   };
 
-  ViewController.prototype.appendText = function(node) {
+  ViewController.prototype.appendText = function(node, e) {
     var product, products, substrate, substrates;
     this.nodetext.addClass('showing');
     this.nodetext.css({
@@ -798,7 +764,7 @@ systemAttributes = {
   hideObjective: true
 };
 
-system = new System(systemAttributes, data);
+system = new System(systemAttributes);
 
 
 },{"./System":5}],8:[function(require,module,exports){

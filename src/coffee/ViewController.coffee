@@ -39,10 +39,11 @@ class ViewController
         #temporary
         that = this
         $('#nodetext').click(->
-            @system.deleteNode(that.currentActiveNode)
+            console.log(that)
+            that.system.deleteNode(that.currentActiveNode)
         )
         $('#addMetabolite').click(->
-            @system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
+            that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
         )
         $("#addReaction").click(->
             source =
@@ -51,7 +52,7 @@ class ViewController
             target =
                 id:  $('#target').val().trim()
                 name: $('#target :selected').text()
-            @system.addReaction(source, target, $("#reaction_name").val())
+            that.system.addReaction(source, target, $("#reaction_name").val())
         )
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
@@ -66,6 +67,16 @@ class ViewController
         @startAnimate()
 
 
+    populateOptions: (nodes) ->
+        source = d3.select("#source")
+        target = d3.select("#target")
+        for node in nodes
+            source.append("option").attr("value", node.id).text(node.name)
+            target.append("option").attr("value", node.id).text(node.name)
+
+    updateOptions: (name, id) ->
+        d3.select("#source").append("option").attr("value", id).text(name)
+        d3.select("#target").append("option").attr("value", id).text(name)
 
     transformedPoint: (x, y) ->
         pt = @svg.createSVGPoint()
@@ -110,18 +121,11 @@ class ViewController
         #Collision detection for non-active nodes
         else
             @currentActiveNode = @system.checkCollisions(tPt.x, tPt.y)
+            if @currentActiveNode?
+                @appendText(@currentActiveNode, e)
+            else
+                $('#nodetext').removeClass('showing');
 
-        # else if not @dragStart? and @currentActiveNode?
-        #     @currentActiveNode.x = tPt.x
-        #     @currentActiveNode.y = tPt.y
-        #     #@appendText(@currentActiveNode)
-        #     @nodetext.css({
-        #         'left': e.clientX,
-        #         'top': e.clientY
-        #
-        #     })
-        # else
-        #     @checkCollisions(tPt.x, tPt.y, e)
 
     # **mouseup**
     mouseupHandler = (e) ->
@@ -166,7 +170,7 @@ class ViewController
             @currentActiveNode.x = tPt.x
             @currentActiveNode.y = tPt.y
 
-    appendText : (node) ->
+    appendText : (node, e) ->
         @nodetext.addClass('showing')
         @nodetext.css({
             'left': e.clientX,
@@ -184,7 +188,6 @@ class ViewController
         # Setup [AnimationFrame](https://github.com/kof/animation-frame)
         AnimationFrame = window.AnimationFrame
         AnimationFrame.shim()
-
         # Render: to cause to be or become
         @render()
     clear: ->
@@ -200,12 +203,9 @@ class ViewController
 
     render: ->
         stats.begin()
-
         @clear()
         @draw()
-
         stats.end()
-
         # Request next frame
         requestAnimationFrame(@render.bind(this))
 
