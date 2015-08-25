@@ -1,5 +1,5 @@
 # **Classes**
-Canvas     = require "./Canvas"
+ViewController  = require "./ViewController"
 Node       = require "./Node"
 Metabolite = require "./Metabolite"
 Reaction   = require "./Reaction"
@@ -18,7 +18,7 @@ class System
         @everything       = attr.everything
         @hideObjective    = attr.hideObjective
 
-        @nodetext =  $('#nodetext')
+
 
 
         # Modified by `checkCollisions`, enables O(1) runtime when a node is already hovered
@@ -26,44 +26,30 @@ class System
 
         # Create Canvas Object
         # Handles zooming and panning
-        @canvas = new Canvas("canvas", @W, @H, @BG)
+        @nodes = new Array()
+        @links = new Array()
+
+        #Manipulates the view and the controller
+
         # Event listeners. Bind so we preserve `this`
-        @canvas.c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
-        @canvas.c.addEventListener("mousedown", mousedownHandler.bind(this), false)
-        @canvas.c.addEventListener("mouseup", mouseupHandler.bind(this), false)
+        # @viewController.c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
+        # @viewController.c.addEventListener("mousedown", mousedownHandler.bind(this), false)
+        # @viewController.c.addEventListener("mouseup", mouseupHandler.bind(this), false)
 
         @clientX = 0
         @clientY = 0
         @exclusions = new Array()
 
-        @nodes = new Array()
-        @links = new Array()
         @force = null
         that = this
-        $('#nodetext').click(->
-            that.deleteNode(that.currentActiveNode)
-        )
-        $('#addMetabolite').click(->
-            that.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
-        )
-        $("#addReaction").click(->
-            source =
-                id : $('#source').val().trim()
-                name : $('#source :selected').text()
-            target =
-                id:  $('#target').val().trim()
-                name: $('#target :selected').text()
-            that.addReaction(source, target, $("#reaction_name").val())
-        )
+
         #nodes to be exlcuded (Deleted)
+        @viewController = new ViewController("canvas", @W, @H, @BG, this)
         if @data?
             @buildMetabolites(@data)
             @buildReactions(@data)
             @populateOptions(@nodes)
-
         @initalizeForce()
-
-        @startAnimate()
 
     populateOptions: (nodes) ->
         source = d3.select("#source")
@@ -79,11 +65,11 @@ class System
             name : name
             id   : id
             type : type
-        metabolite = new Metabolite(nodeAttributes, @canvas.ctx)
-        d3.select("#source").append("option").attr("value", id).text(name)
+        metabolite = new Metabolite(nodeAttributes, @viewController.ctx)
+        d3.select("#sou rce").append("option").attr("value", id).text(name)
         d3.select("#target").append("option").attr("value", id).text(name)
         @nodes.push(metabolite)
-
+        @force.start()
 
     addReaction: (source, target, name) ->
         for node in @nodes
@@ -100,7 +86,7 @@ class System
                 target    : tgt
                 fluxValue : 0
                 linkScale : utilities.scaleRadius(null, 1, 5)
-            @links.push(new Link(linkAttr, @canvas.ctx))
+            @links.push(new Link(linkAttr, @viewController.ctx))
         else if src.type is "m" and tgt.type is "m"
             reactionAttributes =
                 x          : utilities.rand(@W)
@@ -111,7 +97,7 @@ class System
                 type       : "r"
                 flux_value : 0
                 colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-            reaction = new Reaction(reactionAttributes, @canvas.ctx)
+            reaction = new Reaction(reactionAttributes, @viewController.ctx)
             @nodes.push(reaction)
             linkAttr =
                 id        : "#{source.id}-#{reaction.id}"
@@ -121,7 +107,7 @@ class System
                 r         : @metaboliteRadius #why does this even need this? idc rn
                 linkScale : utilities.scaleRadius(null, 1, 5)
 
-            @links.push(new Link(linkAttr, @canvas.ctx))
+            @links.push(new Link(linkAttr, @viewController.ctx))
             linkAttr =
                 id        : "#{reaction.id}-#{target.id}"
                 source    : reaction
@@ -129,7 +115,7 @@ class System
                 fluxValue : 0
                 r         : @metaboliteRadius #why does this even need this? idc rn
                 linkScale : utilities.scaleRadius(null, 1, 5)
-            @links.push(new Link(linkAttr, @canvas.ctx))
+            @links.push(new Link(linkAttr, @viewController.ctx))
         else
             alert("Invalid linkage")
 
@@ -160,21 +146,13 @@ class System
             # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
             .alpha(0.1)
             # Let's get this party start()ed
-            .on("tick", @tick.bind(this))
+            .on("tick", @viewController.tick.bind(this))
             .start()
 
         if @useStatic
             @force.tick() for n in @nodes
             @force.stop()
 
-
-    startAnimate: () ->
-        # Setup [AnimationFrame](https://github.com/kof/animation-frame)
-        AnimationFrame = window.AnimationFrame
-        AnimationFrame.shim()
-
-        # Render: to cause to be or become
-        @render()
     linkDistanceHandler: (link, i) ->
         factor = 0
         if link.target.type is 'r'
@@ -190,40 +168,26 @@ class System
         return factor * -100
 
     tick: () ->
-        if @currentActiveNode? and window.fba.isDraggingNode
-            tPt = @canvas.transformedPoint(@clientX, @clientY)
-            @currentActiveNode.x = tPt.x
-            @currentActiveNode.y = tPt.y
+        # if @currentActiveNode? and window.fba.isDraggingNode
+        #     tPt = @viewController.transformedPoint(@clientX, @clientY)
+        #     @currentActiveNode.x = tPt.x
+        #     @currentActiveNode.y = tPt.y
 
     # *checkCollisions*
-    checkCollisions: (x, y, e) ->
-        if not @currentActiveNode?
-            for node in @nodes
-                if node.checkCollision(x,y)
-                    node.hover = true
-                    @nodetext.addClass('showing')
-                    @nodetext.css({
-                        'left': e.clientX,
-                        'top': e.clientY
-
-                    })
-                    if node.type is 'r'
-                        substrates = (substrate.name for substrate in node.substrates)
-                        products = (product.name for product in node.products)
-                        @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
-                    else
-                        @nodetext.html("#{node.name}<br>")
-                    @nodetext.append("Click above text to delete node (WIP)")
-                    that = this
-
-
-                    @currentActiveNode = node
-                else
-                    node.hover = false
-        else
-            if not @currentActiveNode.checkCollision(x,y)
-                @currentActiveNode = null
-                $('#nodetext').removeClass('showing');
+    checkCollisions: (x, y) ->
+        nodeReturn = null
+        for node in @nodes
+            if node.checkCollision(x,y)
+                nodeReturn = node
+                node.hover = true
+                break
+            else
+                node.hover = false
+        return nodeReturn
+    # else
+    #     if not @currentActiveNode.checkCollision(x,y)
+    #         @currentActiveNode = null
+    #         $('#nodetext').removeClass('showing');
 
     deleteNode : (node) ->
         @exclusions.push(node)
@@ -251,7 +215,7 @@ class System
     mousedownHandler = (e) ->
         @clientX = e.clientX
         @clientY = e.clientY
-        tPt = @canvas.transformedPoint(e.clientX, e.clientY)
+        tPt = @viewController.transformedPoint(e.clientX, e.clientY)
         @checkCollisions(tPt.x, tPt.y, e)
         if @currentActiveNode?
             $('#nodetext').removeClass('showing');
@@ -266,7 +230,7 @@ class System
         e.preventDefault()
         @clientX = e.clientX
         @clientY = e.clientY
-        tPt = @canvas.transformedPoint(e.clientX, e.clientY)
+        tPt = @viewController.transformedPoint(e.clientX, e.clientY)
 
         if window.fba.isDraggingNode
             @currentActiveNode.x = tPt.x
@@ -294,7 +258,7 @@ class System
                 id   : metabolite.id
                 type : "m"
 
-            @nodes.push(new Metabolite(nodeAttributes, @canvas.ctx))
+            @nodes.push(new Metabolite(nodeAttributes, @viewController.ctx))
 
 
 
@@ -321,7 +285,7 @@ class System
                     if reactionAttributes.name.indexOf('objective function') isnt -1
                         continue
 
-                @nodes.push(new Reaction(reactionAttributes, @canvas.ctx))
+                @nodes.push(new Reaction(reactionAttributes, @viewController.ctx))
 
                 # Assign metabolite source and target for each reaction
 
@@ -355,22 +319,9 @@ class System
                 r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(model, 1, 5)
 
-            @links.push(new Link(linkAttr, @canvas.ctx))
+            @links.push(new Link(linkAttr, @viewController.ctx))
 
-    draw: ->
-        link.draw() for link in @links
-        node.draw() for node in @nodes
 
-    render: ->
-        stats.begin()
-
-        @canvas.clear()
-        @draw()
-
-        stats.end()
-
-        # Request next frame
-        requestAnimationFrame(@render.bind(this))
 
 window.FBA =
     System: System
