@@ -1,6 +1,6 @@
 ![logo](http://45.55.193.224/logo_grey.png) 
 
-#Flux Balance Analysis Application
+#Flux Balance Analysis API
 
 Backend code for our [FBA-Interface Web App](https://github.com/igemuoftATG/fba-webapp)
 
@@ -35,13 +35,6 @@ $ sudo pip-3.2 install virtualenv
 $ curl https://nodejs.org/dist/v0.12.6/node-v0.12.6.tar.gz | tar node-v0.12.6.tar.gz 
 $ cd node-v0.12.6.tar.gz
 $ ./configure && make && sudo make install
-```
-
-**Setting up an Isolated Python Environment**
-
-From this point on, things should be installed in virtualenv. ```libsml``` is rather tricky
-```bash
-julian help, I don't know how to get to venv
 ```
 
 **Sciypy & Numpy Stack:**
