@@ -328,7 +328,7 @@ System = (function() {
       };
       m = Object.keys(reaction.metabolites);
       results.push((function() {
-        var l, len2, len3, len4, len5, o, p, q, ref2, ref3, ref4, results1;
+        var l, len2, len3, len4, len5, len6, o, p, q, r, ref2, ref3, ref4, ref5, results1;
         results1 = [];
         for (l = 0, len2 = m.length; l < len2; l++) {
           key = m[l];
@@ -379,7 +379,6 @@ System = (function() {
               results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
             }
           } else {
-            console.log(reaction.metabolites[key]);
             if (reaction.metabolites[key] > 0) {
               source = null;
               target = null;
@@ -405,7 +404,29 @@ System = (function() {
               };
               results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
             } else {
-              results1.push(void 0);
+              source = null;
+              target = null;
+              ref5 = this.nodes;
+              for (r = 0, len6 = ref5.length; r < len6; r++) {
+                n = ref5[r];
+                if (n.id === key) {
+                  source = n;
+                } else if (n.id === reaction.id) {
+                  target = n;
+                }
+              }
+              if ((source == null) || (target == null)) {
+                continue;
+              }
+              linkAttr = {
+                id: source.id + "-" + target.id,
+                source: source,
+                target: target,
+                fluxValue: 0,
+                linkScale: utilities.scaleRadius(null, 1, 5),
+                r: this.metaboliteRadius
+              };
+              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
             }
           }
         }
@@ -414,8 +435,6 @@ System = (function() {
     }
     return results;
   };
-
-  System.prototype.linkToSpecies = function() {};
 
   System.prototype.addMetabolite = function(id, name, type) {
     var metabolite, nodeAttributes;

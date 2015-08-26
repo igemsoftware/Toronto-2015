@@ -126,7 +126,6 @@ class System
                             r         : @metaboliteRadius
                         @links.push(new Link(linkAttr, @viewController.ctx))
                 else
-                    console.log(reaction.metabolites[key])
                     if reaction.metabolites[key] > 0
                         source = null
                         target = null
@@ -146,27 +145,37 @@ class System
                             r         : @metaboliteRadius
                         @links.push(new Link(linkAttr, @viewController.ctx))
 
-                    # else
-                    #     source = null
-                    #     target = null
-                    #     for n in @nodes
-                    #         if n.id is key
-                    #             source = n
-                    #         else if n.id is reaction.id
-                    #             target = n
-                    #     linkAttr =
-                    #         id        : "#{source.id}-#{target.id}"
-                    #         source    : source
-                    #         target    : target
-                    #         fluxValue : 0
-                    #         linkScale : utilities.scaleRadius(null, 1, 5)
-                    #         r         : @metaboliteRadius
-                    #     @links.push(new Link(linkAttr, @viewController.ctx))
+                    else
+                        source = null
+                        target = null
+                        for n in @nodes
+                            if n.id is key
+                                source = n
+                            else if n.id is reaction.id
+                                target = n
+                        if not source? or not target?
+                            continue
+                        linkAttr =
+                            id        : "#{source.id}-#{target.id}"
+                            source    : source
+                            target    : target
+                            fluxValue : 0
+                            linkScale : utilities.scaleRadius(null, 1, 5)
+                            r         : @metaboliteRadius
+                        @links.push(new Link(linkAttr, @viewController.ctx))
+            # @linkToSpecies(compartments)
 
 
     #tempfunction
-    linkToSpecies: () ->
-        
+    # linkToSpecies: (compartments) ->
+    #     console.log @data.metabolites
+    #     for metabolite, i in @data.reactions.metabolites
+    #         if metabolite.compartment is not "e"
+    #             for j in [i...@data.reactions.metabolites.length]
+    #                 if @data.reactions.metabolites[j].compartment is "c"
+    #                     console.log compartments[@data.reactions.metabolites[j].id]
+
+
 
     addMetabolite: (id, name, type) ->
         nodeAttributes =

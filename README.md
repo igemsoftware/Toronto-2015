@@ -40,7 +40,7 @@ $ gulp
 
 ## Changelog
 
-### 1.2.0
+### 1.3.0
 
 * Renders metabolic network as a set of *nodes* and *links*
 * Integration of d3 with custom canvas rendering for improved performance
@@ -51,6 +51,8 @@ $ gulp
     * Error handling
     * Significant performance increases
 * (1.2.x) Re factored code for an MVC model, significant overhaul changes
+* (1.3.x)
+    * Added the specie extracellular network and added new specie class that extends node
 
 ## ToDos
 
