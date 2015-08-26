@@ -101,5 +101,36 @@ version. Each task completion warrants a *micro* versioning.
     * Construct a single metabolic model representing the entire community. Each species will be assigned a 'compartment'. The upper and lower bounds of each reaction in each specie will be modified as per that specie's relative biomass. In this way, reactions belonging to a less important specie will have less effect (or more) on the optimization of the objective function, which will be biomass. The results of this cFBA analysis should coincide (to a degree) with experimentally observed community dynamics.
 
 
+## Dank Hackathon \#1 Goals
+
+First off, this is from the following paper,
+
+```
+Henson M, Hanly T. Dynamic flux balance analysis for synthetic microbial
+communities. 2014. IET Syst. Biol. (8):5 214-229.
+```
+
+![goals](http://45.55.193.224/goals.jpg)
+
+Although we will not doing any dFBA since it requires substrate uptake kinetics
+data, I think this outlines some of the grander goals that we will like to
+achieve with MetaFlux. A platform for viewing genome scale metabolic models,
+interacting with it live in an intuitive manner, and strong tools for analyzing
+results. Anyways, things to do tonight:
+
+* Albert C., Sean
+    * Are currently working on creating separate d3 force data sets so that you can display the entire cell as one node connected to extracellulars, and that once activated (perhaps via click or otherwise), the underlying data being drawn will change to reflect the intracellular reactions
+* Albert X., Eric, Mark?
+    * Working with MySQL, building the basics for flux value comparisons. Our data will have `reaction` objects, and those have a `flux_value` attribute. We need to store these flux values for each reaction, and then when another experiment is performed, quantitatively return the changes. For example, I run experiment 1 and get a flux of 2 for reaction A. Then I add/remove a reaction via the web interface, click "analyze" or have it run automatically or whatever, and then now the flux for reaction A is 3. So A should give me a delta of +1 between experiment 1 and 2. An experiment will be defined as an analysis on a model with a specific set of reactions/metabolites. But you can ignore all that for now, and just use random data. Perhaps drop some `Math.rand()` up in that shit. Essentially, given a mapping of objects and their numerical values, compute deltas for each number. We will integrate this with actual FBA later. This is necessary because only changing the thickness of arrows is quantitatively useless.
+* Ghazal, Waleed
+    * Anthony's gonna hate me for this kek, but I can't think of anything related to the core code base for you guys ATM, but.. I think it would be better if we provide the ability to use a cFBA approach that has already been developed in the literature in addition to our novel 'acFBA' framework. OptCom is a option, but is hella math heavy, and no code provided in the supplementary. If you guys could download the supplementary for the following article, and get it producing the data as it should, that would be useful. If you could make it work with data we have in our fba-database repo that would be hella hype. Though, as mentionned, we need to standardize ID's. So maybe just try to understand the data format their framework wants as input. The paper:
+
+```
+Khandelwal R, Olivier B, Roling W, et al. Community Flux Balance Analysis
+for Microbial Consortia at Balanced Growth. 2013. PloS ONE 8(5).
+```
+
+If there is anything else you guys want to do instead, go ahead :)
+
 ## License
 MIT License
