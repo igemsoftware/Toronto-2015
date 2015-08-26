@@ -9,7 +9,7 @@ var App = global.App = require('./lib/App');
 
 // ==== DB Connection ====
 connection = App.Lib('connection')
-connection.mongodb();
+connection.mongodb(); //wat 
 mysqlConn = connection.mysql();
 
 // ==== Apply global middleware ====

@@ -35,7 +35,7 @@ module.exports = {
         mysql: {
             host     : 'localhost',
             user     : 'root',
-            password : '',
+            password : 'secret',
             database : 'fba'
         }
     }
