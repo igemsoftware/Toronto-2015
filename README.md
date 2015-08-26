@@ -40,12 +40,17 @@ $ gulp
 
 ## Changelog
 
-### 1.0.0
+### 1.2.0
 
 * Renders metabolic network as a set of *nodes* and *links*
 * Integration of d3 with custom canvas rendering for improved performance
 * Basic dragging of nodes working
 * Panning and zooming of canvas working
+* (1.1.x) Added deletion and adding, beta and WIP
+    * removal of nodes from target/source when trying to create a reaction is now removed from the options menu
+    * Error handling
+    * Significant performance increases
+* (1.2.x) Re factored code for an MVC model, significant overhaul changes
 
 ## ToDos
 
@@ -53,15 +58,12 @@ As these items are completed, add them to the changelog with the appropriate
 version. Each task completion warrants a *micro* versioning.
 (`major.minor.micro`). When a set of tasks warrants a feature completion, that will warrant a *minor* versioning. Major versioning changes will only occur under the condition that the API has change, that is, `2.0.0` implies that API calls from `1.X.X` may be deprecated and no longer guaranteed to work.
 
+
 ### Front-End
 
 * Add node
-    * A `node` can either be a `Metabolite` or a `Reaction`
-    * If metabolite, can either be alone, as a substrate, or as a product
-    * If reaction, requires at least one substrate or one reaction, can have both
     * Ability to fill in all properties so that it can be stored as a valid COBRApy `Metabolite` or `Reaction` in JSON format
 * Delete node
-    * Should visually hide node while keeping track that it is hidden
     * Prepare a *model*, that is, the object representing the array of `Metabolite`'s and `Reaction`'s without the node, to be sent off the back-end for FBA
 * Add/Delete `Reaction`
     * See above. Must follow COBRApy standards.
@@ -70,7 +72,8 @@ version. Each task completion warrants a *micro* versioning.
     * Need to visually seperate compartments such as cytosol (`c`), periplasm (`p`) and extracellular (`e`)
     * Furthermore, individual species need to seperated in the same manneru
     * Include ability to hide inner subspaces (for example, hide intracellular when doing a community view)
-
+* Dragging nodes:
+    * Create seperate force layout for neighbourhood to be activated on drag [Visual]
 
 ### Back-end
 

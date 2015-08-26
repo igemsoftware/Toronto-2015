@@ -15,8 +15,8 @@
 </head>
 
 <body>
-    <script src="iJO1366.js"></script>
-    <!-- <script src="toydata.js"></script> -->
+    <!-- <script src="iJO1366.js"></script>  --> 
+    <script src="toydata.js"></script>
 
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -35,21 +35,32 @@
         <!-- <form> -->
             <input type="text" id="metab_id" placeholder="metabolite id"></input>
             <input type="text" id="metab_name" placeholder="metabolite name"></input>
-            <input type="text" id="metab_compartment" placeholder="metabolite comp."></input>
 
-            
-            <button type="submit" id="submit">Submit</button>
+
+
+            <button type="submit" id="addMetabolite">Submit</button>
+            <br>
+            <br>
+            <br>
+            Add reaction:
+            <input type="text" id="reaction_name" placeholder="reaction name"></input>
+            <br>
+            source:
+            <br>
+            <select id="source">
+            </select>
+            <br>
+            target:
+            <br>
+            <select id="target">
+            </select>
+            <br>
+            <button type="submit" id="addReaction">Submit</button>
         <!-- </form> -->
 
     </div>
 
-    <script>
-        var n=0
-        $('#submit').click(function() {
-            console.log('clicked ' + n)
-            n+= 1
-        })
-    </script>
+
 
     <script>
         var stats = new Stats();
