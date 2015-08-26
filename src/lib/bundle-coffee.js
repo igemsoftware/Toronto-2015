@@ -199,11 +199,48 @@ module.exports = Reaction;
 
 
 },{"./Node":3}],5:[function(require,module,exports){
-var Link, Metabolite, Node, Reaction, System, ViewController, utilities;
+var Node, Specie,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+Node = require("./Node");
+
+Specie = (function(superClass) {
+  extend(Specie, superClass);
+
+  function Specie() {
+    return Specie.__super__.constructor.apply(this, arguments);
+  }
+
+  Specie.prototype.draw = function() {
+    if (!this.deleted) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x, this.y);
+      this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+      this.ctx.closePath();
+      this.ctx.fillStyle = "orange";
+      if (this.hover) {
+        this.ctx.fillStyle = "green";
+      }
+      return this.ctx.fill();
+    }
+  };
+
+  return Specie;
+
+})(Node);
+
+module.exports = Specie;
+
+
+},{"./Node":3}],6:[function(require,module,exports){
+var Link, Metabolite, Node, Reaction, Specie, System, ViewController, utilities;
 
 ViewController = require("./ViewController");
 
 Node = require("./Node");
+
+Specie = require("./Specie");
 
 Metabolite = require("./Metabolite");
 
@@ -214,8 +251,8 @@ Link = require("./Link");
 utilities = require("./utilities");
 
 System = (function() {
-  function System(attr, data) {
-    this.data = data;
+  function System(attr, data1) {
+    this.data = data1;
     this.W = attr.width;
     this.H = attr.height;
     this.BG = attr.backgroundColour;
@@ -227,15 +264,158 @@ System = (function() {
     this.nodes = new Array();
     this.links = new Array();
     this.exclusions = new Array();
+    this.compartments = new Object();
+    this.species = new Object();
     this.force = null;
     this.viewController = new ViewController("canvas", this.W, this.H, this.BG, this);
     if (this.data != null) {
-      this.buildMetabolites(this.data);
-      this.buildReactions(this.data);
+      this.createNetwork(this.data);
       this.viewController.populateOptions(this.nodes);
     }
     this.initalizeForce();
   }
+
+  System.prototype.createNetwork = function(data) {
+    var compartments, i, j, k, key, len, len1, linkAttr, m, metabolite, n, nodeAttributes, ns, rct, reaction, ref, ref1, results, source, species, target, templinks;
+    ns = [];
+    compartments = new Object();
+    species = new Object();
+    ref = data.metabolites;
+    for (i = j = 0, len = ref.length; j < len; i = ++j) {
+      metabolite = ref[i];
+      m = data.metabolites[i];
+      species[m.id] = m.species;
+      if (ns.indexOf(m.species) < 0) {
+        nodeAttributes = {
+          x: utilities.rand(this.W),
+          y: utilities.rand(this.H),
+          r: this.metaboliteRadius + 15,
+          name: m.species,
+          id: m.species,
+          type: "s"
+        };
+        this.nodes.push(new Specie(nodeAttributes, this.viewController.ctx));
+        ns.push(m.species);
+      }
+      compartments[m.id] = m.compartment;
+      if (m.compartment === "e" && ns.indexOf(m.id) < 0) {
+        nodeAttributes = {
+          x: utilities.rand(this.W),
+          y: utilities.rand(this.H),
+          r: this.metaboliteRadius,
+          name: m.name,
+          id: m.id,
+          type: "m"
+        };
+        this.nodes.push(new Metabolite(nodeAttributes, this.viewController.ctx));
+        ns.push(m.id);
+        species[m.id] = m.species;
+      }
+    }
+    templinks = [];
+    rct = [];
+    ref1 = data.reactions;
+    results = [];
+    for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
+      reaction = ref1[i];
+      nodeAttributes = {
+        x: utilities.rand(this.W),
+        y: utilities.rand(this.H),
+        r: this.metaboliteRadius,
+        name: reaction.name,
+        id: reaction.id,
+        type: "r"
+      };
+      m = Object.keys(reaction.metabolites);
+      results.push((function() {
+        var l, len2, len3, len4, len5, o, p, q, ref2, ref3, ref4, results1;
+        results1 = [];
+        for (l = 0, len2 = m.length; l < len2; l++) {
+          key = m[l];
+          if (compartments[key] === "e" && rct.indexOf(reaction.id) < 0) {
+            this.nodes.push(new Reaction(nodeAttributes, this.viewController.ctx));
+            rct.push(reaction.id);
+            if (reaction.metabolites[key] > 0) {
+              source = null;
+              target = null;
+              ref2 = this.nodes;
+              for (o = 0, len3 = ref2.length; o < len3; o++) {
+                n = ref2[o];
+                if (n.id === reaction.id) {
+                  source = n;
+                } else if (n.id === key) {
+                  target = n;
+                }
+              }
+              linkAttr = {
+                id: source.id + "-" + target.id,
+                source: source,
+                target: target,
+                fluxValue: 0,
+                linkScale: utilities.scaleRadius(null, 1, 5),
+                r: this.metaboliteRadius
+              };
+              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
+            } else {
+              source = null;
+              target = null;
+              ref3 = this.nodes;
+              for (p = 0, len4 = ref3.length; p < len4; p++) {
+                n = ref3[p];
+                if (n.id === key) {
+                  source = n;
+                } else if (n.id === reaction.id) {
+                  target = n;
+                }
+              }
+              linkAttr = {
+                id: source.id + "-" + target.id,
+                source: source,
+                target: target,
+                fluxValue: 0,
+                linkScale: utilities.scaleRadius(null, 1, 5),
+                r: this.metaboliteRadius
+              };
+              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
+            }
+          } else {
+            console.log(reaction.metabolites[key]);
+            if (reaction.metabolites[key] > 0) {
+              source = null;
+              target = null;
+              ref4 = this.nodes;
+              for (q = 0, len5 = ref4.length; q < len5; q++) {
+                n = ref4[q];
+                if (n.id === reaction.id) {
+                  source = n;
+                } else if (n.id === key) {
+                  target = n;
+                }
+              }
+              if ((source == null) || (target == null)) {
+                continue;
+              }
+              linkAttr = {
+                id: source.id + "-" + target.id,
+                source: source,
+                target: target,
+                fluxValue: 0,
+                linkScale: utilities.scaleRadius(null, 1, 5),
+                r: this.metaboliteRadius
+              };
+              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
+            } else {
+              results1.push(void 0);
+            }
+          }
+        }
+        return results1;
+      }).call(this));
+    }
+    return results;
+  };
+
+  System.prototype.linkToSpecies = function() {};
 
   System.prototype.addMetabolite = function(id, name, type) {
     var metabolite, nodeAttributes;
@@ -481,7 +661,7 @@ window.FBA = {
 module.exports = System;
 
 
-},{"./Link":1,"./Metabolite":2,"./Node":3,"./Reaction":4,"./ViewController":6,"./utilities":8}],6:[function(require,module,exports){
+},{"./Link":1,"./Metabolite":2,"./Node":3,"./Reaction":4,"./Specie":5,"./ViewController":7,"./utilities":9}],7:[function(require,module,exports){
 var ViewController;
 
 ViewController = (function() {
@@ -752,7 +932,7 @@ ViewController = (function() {
 module.exports = ViewController;
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var System, system, systemAttributes;
 
 System = require("./System");
@@ -770,7 +950,7 @@ systemAttributes = {
 system = new System(systemAttributes, data);
 
 
-},{"./System":5}],8:[function(require,module,exports){
+},{"./System":6}],9:[function(require,module,exports){
 var nodeMap, rand, scaleRadius;
 
 rand = function(range) {
@@ -813,7 +993,7 @@ module.exports = {
 };
 
 
-},{}]},{},[1,2,3,4,5,6,7,8])
+},{}]},{},[1,2,3,4,5,6,7,8,9])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map

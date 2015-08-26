@@ -32,7 +32,6 @@ class Link
     draw: ->
         if not @target.deleted and not @source.deleted
             lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x) + Math.PI
-
             #h is the hypotonous length of the arrow
             h = 10
             #theta is the angle from the line to the arrow
@@ -44,6 +43,7 @@ class Link
             else
                 targetx = @target.x + @r*Math.cos(lineAngle)
                 targety = @target.y + @r*Math.sin(lineAngle)
+
             @ctx.moveTo(@source.x, @source.y)
             @ctx.lineTo(targetx, targety)
             #create arrow

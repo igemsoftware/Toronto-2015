@@ -1,6 +1,7 @@
 # **Classes**
 ViewController  = require "./ViewController"
 Node       = require "./Node"
+Specie = require "./Specie"
 Metabolite = require "./Metabolite"
 Reaction   = require "./Reaction"
 Link       = require "./Link"
@@ -30,15 +31,142 @@ class System
         @links = new Array()
         @exclusions = new Array()
 
+        @compartments = new Object()
+        @species = new Object()
+
         @force = null
         #nodes to be exlcuded (Deleted)
         @viewController = new ViewController("canvas", @W, @H, @BG, this)
         if @data?
-            @buildMetabolites(@data)
-            @buildReactions(@data)
+            @createNetwork(@data)
+            #building metabolites will be later when zoomed in
+            #@buildMetabolites(@data)
+            #@buildReactions(@data)
             @viewController.populateOptions(@nodes)
         @initalizeForce()
 
+    createNetwork: (data) ->
+        ns = []
+        compartments = new Object()
+        species = new Object()
+
+        for metabolite, i in data.metabolites
+            m = data.metabolites[i]
+            species[m.id] = m.species
+            if ns.indexOf(m.species) < 0
+             nodeAttributes =
+                 x    : utilities.rand(@W)
+                 y    : utilities.rand(@H)
+                 r    : @metaboliteRadius + 15
+                 name : m.species
+                 id   : m.species
+                 type : "s"
+             @nodes.push(new Specie(nodeAttributes, @viewController.ctx))
+             ns.push(m.species)
+            compartments[m.id] = m.compartment
+
+            if m.compartment is "e" and ns.indexOf(m.id) < 0
+                nodeAttributes =
+                    x    : utilities.rand(@W)
+                    y    : utilities.rand(@H)
+                    r    : @metaboliteRadius
+                    name : m.name
+                    id   : m.id
+                    type : "m"
+                @nodes.push(new Metabolite(nodeAttributes, @viewController.ctx))
+                ns.push(m.id)
+                species[m.id] = m.species
+        templinks = []
+        rct = []
+        for reaction, i in data.reactions
+            nodeAttributes =
+                x    : utilities.rand(@W)
+                y    : utilities.rand(@H)
+                r    : @metaboliteRadius
+                name : reaction.name
+                id   : reaction.id
+                type : "r"
+            m = Object.keys(reaction.metabolites)
+
+            for key in m
+                if compartments[key] is "e" and rct.indexOf(reaction.id) < 0
+                    @nodes.push(new Reaction(nodeAttributes, @viewController.ctx))
+                    rct.push(reaction.id)
+                    if reaction.metabolites[key] > 0
+                        source = null
+                        target = null
+                        for n in @nodes
+                            if n.id is reaction.id
+                                source = n
+                            else if n.id is key
+                                target = n
+                        linkAttr =
+                            id        : "#{source.id}-#{target.id}"
+                            source    : source
+                            target    : target
+                            fluxValue : 0
+                            linkScale : utilities.scaleRadius(null, 1, 5)
+                            r         : @metaboliteRadius
+                        @links.push(new Link(linkAttr, @viewController.ctx))
+
+                    else
+                        source = null
+                        target = null
+                        for n in @nodes
+                            if n.id is key
+                                source = n
+                            else if n.id is reaction.id
+                                target = n
+                        linkAttr =
+                            id        : "#{source.id}-#{target.id}"
+                            source    : source
+                            target    : target
+                            fluxValue : 0
+                            linkScale : utilities.scaleRadius(null, 1, 5)
+                            r         : @metaboliteRadius
+                        @links.push(new Link(linkAttr, @viewController.ctx))
+                else
+                    console.log(reaction.metabolites[key])
+                    if reaction.metabolites[key] > 0
+                        source = null
+                        target = null
+                        for n in @nodes
+                            if n.id is reaction.id
+                                source = n
+                            else if n.id is key
+                                target = n
+                        if not source? or not target?
+                            continue
+                        linkAttr =
+                            id        : "#{source.id}-#{target.id}"
+                            source    : source
+                            target    : target
+                            fluxValue : 0
+                            linkScale : utilities.scaleRadius(null, 1, 5)
+                            r         : @metaboliteRadius
+                        @links.push(new Link(linkAttr, @viewController.ctx))
+
+                    # else
+                    #     source = null
+                    #     target = null
+                    #     for n in @nodes
+                    #         if n.id is key
+                    #             source = n
+                    #         else if n.id is reaction.id
+                    #             target = n
+                    #     linkAttr =
+                    #         id        : "#{source.id}-#{target.id}"
+                    #         source    : source
+                    #         target    : target
+                    #         fluxValue : 0
+                    #         linkScale : utilities.scaleRadius(null, 1, 5)
+                    #         r         : @metaboliteRadius
+                    #     @links.push(new Link(linkAttr, @viewController.ctx))
+
+
+    #tempfunction
+    linkToSpecies: () ->
+        
 
     addMetabolite: (id, name, type) ->
         nodeAttributes =
@@ -87,7 +215,7 @@ class System
                 source    : src
                 target    : reaction
                 fluxValue : 0
-                r         : @metaboliteRadius #why does this even need this? idc rn
+                r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(null, 1, 5)
 
             @links.push(new Link(linkAttr, @viewController.ctx))
@@ -96,7 +224,7 @@ class System
                 source    : reaction
                 target    : tgt
                 fluxValue : 0
-                r         : @metaboliteRadius #why does this even need this? idc rn
+                r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, @viewController.ctx))
         else
