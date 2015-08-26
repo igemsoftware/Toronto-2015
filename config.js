@@ -31,6 +31,12 @@ module.exports = {
             password : '',
             port     : '',
             database : 'fba'
+        },
+        mysql: {
+            host     : 'localhost',
+            user     : 'root',
+            password : '',
+            database : 'fba'
         }
     }
 };

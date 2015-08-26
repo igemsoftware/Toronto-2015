@@ -8,7 +8,9 @@ var app = express();
 var App = global.App = require('./lib/App');
 
 // ==== DB Connection ====
-App.Lib('connection').init();
+connection = App.Lib('connection')
+connection.mongodb();
+mysqlConn = connection.mysql();
 
 // ==== Apply global middleware ====
 App.MW('global-middleware').apply(app);
