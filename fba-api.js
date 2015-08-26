@@ -9,8 +9,13 @@ var App = global.App = require('./lib/App');
 
 // ==== DB Connection ====
 connection = App.Lib('connection')
-connection.mongodb(); //wat 
-mysqlConn = connection.mysql();
+connection.mongodb(); //wat
+mysqlConn = new Object();
+connection.mysql(function(connection) {
+	mysqlConn = connection;
+});
+// above hasn't finished yet which is this is still {}. #callbacks #yolo
+console.log(mysqlConn)
 
 // ==== Apply global middleware ====
 App.MW('global-middleware').apply(app);
