@@ -40,7 +40,7 @@ $ gulp
 
 ## Changelog
 
-### 1.3.0
+### 1.3.1
 
 * Renders metabolic network as a set of *nodes* and *links*
 * Integration of d3 with custom canvas rendering for improved performance
@@ -48,11 +48,12 @@ $ gulp
 * Panning and zooming of canvas working
 * (1.1.x) Added deletion and adding, beta and WIP
     * removal of nodes from target/source when trying to create a reaction is now removed from the options menu
-    * Error handling
-    * Significant performance increases
+    * (1.1.1) Error handling
+    * (1.1.2) Significant performance increases
 * (1.2.x) Re factored code for an MVC model, significant overhaul changes
 * (1.3.x)
     * Added the specie extracellular network and added new specie class that extends node
+    * (1.3.1) Fixed reaction visual bug
 
 ## ToDos
 

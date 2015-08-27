@@ -18,6 +18,7 @@ class Reaction extends Node
             # @ctx.strokeStyle = "rgb(120,120,120)"
             # @ctx.stroke()
             @ctx.fillStyle = @colour
+            console.log(@colour)
             @ctx.closePath()
 
             @ctx.fill()

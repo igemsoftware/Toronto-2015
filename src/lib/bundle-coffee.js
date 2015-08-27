@@ -175,6 +175,7 @@ Reaction = (function(superClass) {
       this.ctx.lineTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
       this.ctx.lineTo(this.x + this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + this.r * Math.sin(1 * (2 * Math.PI / nos)));
       this.ctx.fillStyle = this.colour;
+      console.log(this.colour);
       this.ctx.closePath();
       this.ctx.fill();
       factor = 1.2;
@@ -324,7 +325,9 @@ System = (function() {
         r: this.metaboliteRadius,
         name: reaction.name,
         id: reaction.id,
-        type: "r"
+        type: "r",
+        flux_value: 0,
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
       };
       m = Object.keys(reaction.metabolites);
       results.push((function() {

@@ -86,6 +86,8 @@ class System
                 name : reaction.name
                 id   : reaction.id
                 type : "r"
+                flux_value : 0
+                colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
             m = Object.keys(reaction.metabolites)
 
             for key in m
@@ -359,8 +361,6 @@ class System
                 # Assign metabolite source and target for each reaction
 
                 for metabolite in Object.keys(reaction.metabolites)
-
-
                     source = null
                     target = null
 
