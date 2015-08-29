@@ -1,4 +1,4 @@
-var data = {
+var networkData = {
               "id": "Model 1",
               "id": "1",
               "genes": [],

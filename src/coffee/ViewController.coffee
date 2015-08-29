@@ -3,14 +3,14 @@
 
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG, @system) ->
+    constructor: (@id, @width, @height, @BG, @network) ->
         # Create our `<canvas>` DOM element
         @c = document.createElement("canvas")
+        @system = @network
         # Set some attributes
         @c.id     = @id
         @c.width  = @width
         @c.height = @height
-
         @currentActiveNode = null
         @isDraggingNode = false
         #current mouse position
@@ -38,21 +38,18 @@ class ViewController
         })
         #temporary
         that = this
-        $('#nodetext').click(->
-            that.system.deleteNode(that.currentActiveNode)
-        )
-        $('#addMetabolite').click(->
-            that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
-        )
-        $("#addReaction").click(->
-            source =
-                id : $('#source').val().trim()
-                name : $('#source :selected').text()
-            target =
-                id:  $('#target').val().trim()
-                name: $('#target :selected').text()
-            that.system.addReaction(source, target, $("#reaction_name").val())
-        )
+        # $('#addMetabolite').click(->
+        #     that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
+        # )
+        # $("#addReaction").click(->
+        #     source =
+        #         id : $('#source').val().trim()
+        #         name : $('#source :selected').text()
+        #     target =
+        #         id:  $('#target').val().trim()
+        #         name: $('#target :selected').text()
+        #     that.network.addReaction(source, target, $("#reaction_name").val())
+        # )
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
 
@@ -101,6 +98,7 @@ class ViewController
         @lastY = e.clientY - @c.offsetTop
 
         tPt = @transformedPoint(e.clientX, e.clientY)
+
         @system.checkCollisions(tPt.x, tPt.y)
         #pan screen if not dragging node
         if not @currentActiveNode?
@@ -187,13 +185,33 @@ class ViewController
             'top': e.clientY
 
         })
+        that = this
         if node.type is 'r'
             substrates = (substrate.name for substrate in node.substrates)
             products = (product.name for product in node.products)
             @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
+            @nodetext.append("<button id='delete'>Delete Reaction</button><br>")
         else
             @nodetext.html("#{node.name}<br>")
-        @nodetext.append("Click above text to delete node (WIP)")
+            @nodetext.append("<button id='delete'>Delete Node</button><br>")
+            if node.type is 's'
+                @nodetext.append("<button id='enter'>Enter Specie</button><br>")
+                $("#enter").click(->
+                    that.system.enterSpecie(node)
+                )
+        $("#delete").click(->
+            that.system.deleteNode(node)
+        )
+
+    setActiveGraph: (graph) ->
+        @network.force = null
+        @system = graph
+        @nodes = graph.nodes
+        @links = graph.links
+        @system.initalizeForce()
+        @system.force.on("tick", @tick.bind(this)).start()
+        @system.force.start()
+
     startAnimate: () ->
         # Setup [AnimationFrame](https://github.com/kof/animation-frame)
         AnimationFrame = window.AnimationFrame

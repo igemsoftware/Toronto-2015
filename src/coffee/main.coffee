@@ -1,4 +1,5 @@
 System = require "./System"
+Network = require "./Network"
 
 systemAttributes =
     width            : window.innerWidth
@@ -9,4 +10,6 @@ systemAttributes =
     everything       : false
     hideObjective    : true
 
-system = new System(systemAttributes, data)
+#system = new System(systemAttributes, data)
+
+network = new Network(systemAttributes, networkData)

@@ -15,7 +15,6 @@ class Node
         @type = attr.type
         @colour = attr.colour
         @keepStatic = false
-    
 
         # Reaction properties
         # In neighbours

@@ -54,6 +54,7 @@ $ gulp
 * (1.3.x)
     * Added the specie extracellular network and added new specie class that extends node
     * (1.3.1) Fixed reaction visual bug
+* (1.4.x) You can now enter a specie from a network
 
 ## ToDos
 

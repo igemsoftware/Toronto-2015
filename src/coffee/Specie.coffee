@@ -12,4 +12,5 @@ class Specie extends Node
             @ctx.fillStyle = "green" if @hover
 
             @ctx.fill()
+    
 module.exports = Specie
