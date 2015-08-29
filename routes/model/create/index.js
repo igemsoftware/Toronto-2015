@@ -2,7 +2,7 @@ var router = require('express').Router();
 
 var MetabolicModel = App.Model('metabolicmodel');
 
-// turn all {}'s into emptry strings
+// turn all {}'s into empty strings
 function stringify(object) {
 	Object.keys(object).forEach(function(key) {
 		if ( typeof(object[key]) === 'object' && Object.keys(object[key]).length > 0 ) {
@@ -13,7 +13,33 @@ function stringify(object) {
 	});
 }
 
-var saveModel = function(req, res, next) {
+function verifyModelNonExistence(req, res, next) {
+	var model = req.body;
+
+	if ( model.id === '' ) {
+		res.send('Cannot create model with empty string id\n');
+		return;
+	}
+
+	MetabolicModel.find({id: model.id}, function(err, foundModel) {
+		if (err) {
+			res.status(500).send('500 Internal Server Error\n');
+			return;
+		}
+
+		if (foundModel.length === 0) {
+			next()
+		} else if (foundModel.length > 1) {
+			res.send('Something is wrong. Multiple models with same id.\n');
+			return;
+		} else {
+			res.send('Cannot create model with existing id\n');
+			return;
+		}
+	})
+}
+
+function saveModel(req, res, next) {
 
 	stringify(req.body);
 
@@ -35,14 +61,16 @@ var saveModel = function(req, res, next) {
 	model.save(function(err, savedModel) {
 		if (err) {
 			console.log(err)
-			res.status(500).send('500 Internal Server Error');
+			res.status(500).send('500 Internal Server Error\n');
 		}
 
-		console.log(savedModel);
-		res.send('Saved a Model\n');
+		res.send('Saved a MetabolicModel with id ' + savedModel.id + '\n');
 	});
 }
 
-router.post('/create', saveModel);
+router.post('/', [
+	verifyModelNonExistence,
+	saveModel
+]);
 
 module.exports = router;
