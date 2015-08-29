@@ -1,6 +1,0 @@
-To create a MySQL database in Ubuntu:
-
-	1) sudo apt-get install mysql-client mysql-server
-	2) mysqladmin -h localhost -u root -p create <NAME OF DB>
-
-++1 this will ease install on server.
