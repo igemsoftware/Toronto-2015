@@ -40,7 +40,7 @@ $ gulp
 
 ## Changelog
 
-### 1.4.2
+### 1.4.3
 
 * Renders metabolic network as a set of *nodes* and *links*
 * Integration of d3 with custom canvas rendering for improved performance
@@ -57,6 +57,7 @@ $ gulp
 * (1.4.x) You can now enter a specie from a network
     * (1.4.1) Fixed broken adding/populate options.  Few more modular improvments
     * (1.4.2) Made it more modular when it comes to adding new systems
+    * (1.4.3) Added the ability to return to the network
 
 ## ToDos
 

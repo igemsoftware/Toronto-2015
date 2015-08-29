@@ -3,10 +3,11 @@
 
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG, @network) ->
+    constructor: (@id, @width, @height, @BG, network) ->
         # Create our `<canvas>` DOM element
         @c = document.createElement("canvas")
-        @activeGraph = @network
+        @activeGraph = network
+        @network = network
         # Set some attributes
         @c.id     = @id
         @c.width  = @width
@@ -201,12 +202,17 @@ class ViewController
                 $("#enter").click(->
                     that.network.enterSpecie(node)
                 )
+        if @network isnt @activeGraph
+            @nodetext.append("<button id='network'>Return to network</button><br>")
+            $("#network").click(->
+                that.network.exitSpecie()
+            )
         $("#delete").click(->
             that.system.deleteNode(node)
         )
 
     setActiveGraph: (graph) ->
-        @network.force.stop()
+        @activeGraph.force.stop()
         @activeGraph = graph
         @nodes = @activeGraph.nodes
         @links = @activeGraph.links

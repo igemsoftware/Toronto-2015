@@ -343,6 +343,11 @@ Network = (function(superClass) {
     return this.systems[name];
   };
 
+  Network.prototype.exitSpecie = function() {
+    this.activeSpecie = null;
+    return this.viewController.setActiveGraph(this.viewController.network);
+  };
+
   Network.prototype.enterSpecie = function(specie) {
     this.activeSpecie = this.getSystem(specie.name);
     return this.viewController.setActiveGraph(this.activeSpecie);
@@ -783,9 +788,9 @@ ViewController = (function() {
     this.width = width;
     this.height = height;
     this.BG = BG;
-    this.network = network;
     this.c = document.createElement("canvas");
-    this.activeGraph = this.network;
+    this.activeGraph = network;
+    this.network = network;
     this.c.id = this.id;
     this.c.width = this.width;
     this.c.height = this.height;
@@ -1001,13 +1006,19 @@ ViewController = (function() {
         });
       }
     }
+    if (this.network !== this.activeGraph) {
+      this.nodetext.append("<button id='network'>Return to network</button><br>");
+      $("#network").click(function() {
+        return that.network.exitSpecie();
+      });
+    }
     return $("#delete").click(function() {
       return that.system.deleteNode(node);
     });
   };
 
   ViewController.prototype.setActiveGraph = function(graph) {
-    this.network.force.stop();
+    this.activeGraph.force.stop();
     this.activeGraph = graph;
     this.nodes = this.activeGraph.nodes;
     this.links = this.activeGraph.links;

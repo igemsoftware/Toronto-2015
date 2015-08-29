@@ -35,6 +35,9 @@ class Network extends Graph
         @nodes.push(new Specie(nodeAttributes, @viewController.ctx))
     getSystem: (name) ->
         return @systems[name]
+    exitSpecie: () ->
+        @activeSpecie = null
+        @viewController.setActiveGraph(@viewController.network)
     enterSpecie: (specie) ->
         @activeSpecie = @getSystem(specie.name)
         @viewController.setActiveGraph(@activeSpecie)
