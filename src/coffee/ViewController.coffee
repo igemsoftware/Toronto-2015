@@ -6,7 +6,7 @@ class ViewController
     constructor: (@id, @width, @height, @BG, @network) ->
         # Create our `<canvas>` DOM element
         @c = document.createElement("canvas")
-        @system = @network
+        @activeGraph = @network
         # Set some attributes
         @c.id     = @id
         @c.width  = @width
@@ -39,7 +39,7 @@ class ViewController
         #temporary
         that = this
         $('#addMetabolite').click(->
-            that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx)
+            that.activeGraph.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx)
         )
         $("#addReaction").click(->
             source =
@@ -48,7 +48,7 @@ class ViewController
             target =
                 id:  $('#target').val().trim()
                 name: $('#target :selected').text()
-            that.network.addReaction(source, target, $("#reaction_name").val(), that.ctx)
+            that.activeGraph.addReaction(source, target, $("#reaction_name").val(), that.ctx)
         )
         # Get 2d context
 
@@ -101,7 +101,7 @@ class ViewController
 
         tPt = @transformedPoint(e.clientX, e.clientY)
 
-        @system.checkCollisions(tPt.x, tPt.y)
+        @activeGraph.checkCollisions(tPt.x, tPt.y)
         #pan screen if not dragging node
         if not @currentActiveNode?
             @dragStart = @transformedPoint(@lastX, @lastY)
@@ -130,7 +130,7 @@ class ViewController
             @currentActiveNode.y = tPt.y
         #Collision detection for non-active nodes
         else
-            @currentActiveNode = @system.checkCollisions(tPt.x, tPt.y)
+            @currentActiveNode = @activeGraph.checkCollisions(tPt.x, tPt.y)
             if @currentActiveNode?
                 @appendText(@currentActiveNode, e)
             else
@@ -199,22 +199,21 @@ class ViewController
             if node.type is 's'
                 @nodetext.append("<button id='enter'>Enter Specie</button><br>")
                 $("#enter").click(->
-                    that.system.enterSpecie(node)
+                    that.network.enterSpecie(node)
                 )
         $("#delete").click(->
             that.system.deleteNode(node)
         )
 
     setActiveGraph: (graph) ->
-        @network.force = null
-        @system = graph
-        @nodes = graph.nodes
-        @links = graph.links
-        @system.initalizeForce()
-        @populateOptions(@system.nodes)
-        @system.force.on("tick", @tick.bind(this)).start()
-        @system.force.start()
-
+        @network.force.stop()
+        @activeGraph = graph
+        @nodes = @activeGraph.nodes
+        @links = @activeGraph.links
+        @activeGraph.initalizeForce()
+        @populateOptions(@activeGraph.nodes)
+        @activeGraph.force.on("tick", @tick.bind(this)).start()
+        @activeGraph.force.resume()
 
     startAnimate: () ->
         # Setup [AnimationFrame](https://github.com/kof/animation-frame)
@@ -230,8 +229,8 @@ class ViewController
         @ctx.fill()
 
     draw: ->
-        link.draw() for link in @system.links
-        node.draw() for node in @system.nodes
+        link.draw() for link in @activeGraph.links
+        node.draw() for node in @activeGraph.nodes
 
     render: ->
         stats.begin()

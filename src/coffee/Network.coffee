@@ -13,7 +13,7 @@ class Network extends Graph
     constructor: (@attr, @data) ->
         super(@attr, @data)
 
-        @systems = new Array()
+        @systems = new Object()
 
         @viewController = new ViewController('canvas', @W, @H, @BG, this)
         @attr.ctx = @viewController.ctx
@@ -23,10 +23,20 @@ class Network extends Graph
         @viewController.populateOptions(@nodes)
         @force.on("tick", @viewController.tick.bind(this)).start()
 
-
+    addSystem: (name, data) ->
+        @systems[name] = new System(@attr, data)
+        nodeAttributes =
+             x    : utilities.rand(@W)
+             y    : utilities.rand(@H)
+             r    : @metaboliteRadius + 15
+             name : name
+             id   : name
+             type : "s"
+        @nodes.push(new Specie(nodeAttributes, @viewController.ctx))
+    getSystem: (name) ->
+        return @systems[name]
     enterSpecie: (specie) ->
-        #to be fixed later
-        @activeSpecie = @systems[0]
+        @activeSpecie = @getSystem(specie.name)
         @viewController.setActiveGraph(@activeSpecie)
 
     createNetwork: () ->
@@ -38,15 +48,9 @@ class Network extends Graph
             m = @data.metabolites[i]
             species[m.id] = m.species
             if ns.indexOf(m.species) < 0
-             nodeAttributes =
-                 x    : utilities.rand(@W)
-                 y    : utilities.rand(@H)
-                 r    : @metaboliteRadius + 15
-                 name : m.species
-                 id   : m.species
-                 type : "s"
-             @nodes.push(new Specie(nodeAttributes, @viewController.ctx))
-             @systems.push(new System(@attr, data))
+            #the ecolie 'data' is hardcoded right now, we expect to retrieve it from the back end
+            #given the name of the specie, and thne we pass the data to be parsed
+             @addSystem(m.species, data)
              ns.push(m.species)
             compartments[m.id] = m.compartment
 

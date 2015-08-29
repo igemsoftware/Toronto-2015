@@ -315,7 +315,7 @@ Network = (function(superClass) {
     this.attr = attr;
     this.data = data1;
     Network.__super__.constructor.call(this, this.attr, this.data);
-    this.systems = new Array();
+    this.systems = new Object();
     this.viewController = new ViewController('canvas', this.W, this.H, this.BG, this);
     this.attr.ctx = this.viewController.ctx;
     this.activeSpecie = null;
@@ -325,8 +325,26 @@ Network = (function(superClass) {
     this.force.on("tick", this.viewController.tick.bind(this)).start();
   }
 
+  Network.prototype.addSystem = function(name, data) {
+    var nodeAttributes;
+    this.systems[name] = new System(this.attr, data);
+    nodeAttributes = {
+      x: utilities.rand(this.W),
+      y: utilities.rand(this.H),
+      r: this.metaboliteRadius + 15,
+      name: name,
+      id: name,
+      type: "s"
+    };
+    return this.nodes.push(new Specie(nodeAttributes, this.viewController.ctx));
+  };
+
+  Network.prototype.getSystem = function(name) {
+    return this.systems[name];
+  };
+
   Network.prototype.enterSpecie = function(specie) {
-    this.activeSpecie = this.systems[0];
+    this.activeSpecie = this.getSystem(specie.name);
     return this.viewController.setActiveGraph(this.activeSpecie);
   };
 
@@ -341,16 +359,7 @@ Network = (function(superClass) {
       m = this.data.metabolites[i];
       species[m.id] = m.species;
       if (ns.indexOf(m.species) < 0) {
-        nodeAttributes = {
-          x: utilities.rand(this.W),
-          y: utilities.rand(this.H),
-          r: this.metaboliteRadius + 15,
-          name: m.species,
-          id: m.species,
-          type: "s"
-        };
-        this.nodes.push(new Specie(nodeAttributes, this.viewController.ctx));
-        this.systems.push(new System(this.attr, data));
+        this.addSystem(m.species, data);
         ns.push(m.species);
       }
       compartments[m.id] = m.compartment;
@@ -776,7 +785,7 @@ ViewController = (function() {
     this.BG = BG;
     this.network = network;
     this.c = document.createElement("canvas");
-    this.system = this.network;
+    this.activeGraph = this.network;
     this.c.id = this.id;
     this.c.width = this.width;
     this.c.height = this.height;
@@ -801,7 +810,7 @@ ViewController = (function() {
     });
     that = this;
     $('#addMetabolite').click(function() {
-      return that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx);
+      return that.activeGraph.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx);
     });
     $("#addReaction").click(function() {
       var source, target;
@@ -813,7 +822,7 @@ ViewController = (function() {
         id: $('#target').val().trim(),
         name: $('#target :selected').text()
       };
-      return that.network.addReaction(source, target, $("#reaction_name").val(), that.ctx);
+      return that.activeGraph.addReaction(source, target, $("#reaction_name").val(), that.ctx);
     });
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.xform = this.svg.createSVGMatrix();
@@ -873,7 +882,7 @@ ViewController = (function() {
     this.lastX = e.clientX - this.c.offsetLeft;
     this.lastY = e.clientY - this.c.offsetTop;
     tPt = this.transformedPoint(e.clientX, e.clientY);
-    this.system.checkCollisions(tPt.x, tPt.y);
+    this.activeGraph.checkCollisions(tPt.x, tPt.y);
     if (this.currentActiveNode == null) {
       return this.dragStart = this.transformedPoint(this.lastX, this.lastY);
     } else {
@@ -899,7 +908,7 @@ ViewController = (function() {
       this.currentActiveNode.x = tPt.x;
       return this.currentActiveNode.y = tPt.y;
     } else {
-      this.currentActiveNode = this.system.checkCollisions(tPt.x, tPt.y);
+      this.currentActiveNode = this.activeGraph.checkCollisions(tPt.x, tPt.y);
       if (this.currentActiveNode != null) {
         return this.appendText(this.currentActiveNode, e);
       } else {
@@ -988,7 +997,7 @@ ViewController = (function() {
       if (node.type === 's') {
         this.nodetext.append("<button id='enter'>Enter Specie</button><br>");
         $("#enter").click(function() {
-          return that.system.enterSpecie(node);
+          return that.network.enterSpecie(node);
         });
       }
     }
@@ -998,14 +1007,14 @@ ViewController = (function() {
   };
 
   ViewController.prototype.setActiveGraph = function(graph) {
-    this.network.force = null;
-    this.system = graph;
-    this.nodes = graph.nodes;
-    this.links = graph.links;
-    this.system.initalizeForce();
-    this.populateOptions(this.system.nodes);
-    this.system.force.on("tick", this.tick.bind(this)).start();
-    return this.system.force.start();
+    this.network.force.stop();
+    this.activeGraph = graph;
+    this.nodes = this.activeGraph.nodes;
+    this.links = this.activeGraph.links;
+    this.activeGraph.initalizeForce();
+    this.populateOptions(this.activeGraph.nodes);
+    this.activeGraph.force.on("tick", this.tick.bind(this)).start();
+    return this.activeGraph.force.resume();
   };
 
   ViewController.prototype.startAnimate = function() {
@@ -1026,12 +1035,12 @@ ViewController = (function() {
 
   ViewController.prototype.draw = function() {
     var i, j, len, len1, link, node, ref, ref1, results;
-    ref = this.system.links;
+    ref = this.activeGraph.links;
     for (i = 0, len = ref.length; i < len; i++) {
       link = ref[i];
       link.draw();
     }
-    ref1 = this.system.nodes;
+    ref1 = this.activeGraph.nodes;
     results = [];
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       node = ref1[j];
