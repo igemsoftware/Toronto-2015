@@ -1,3 +1,9 @@
+utilities = require "./utilities"
+Specie = require "./Specie"
+Metabolite = require "./Metabolite"
+Reaction   = require "./Reaction"
+Link       = require "./Link"
+
 class Graph
     constructor: (attr, @data) ->
         if attr?
@@ -15,6 +21,18 @@ class Graph
         @links = new Array()
         @exclusions = new Array()
 
+    addMetabolite: (id, name, type, ctx) ->
+        nodeAttributes =
+            x    : utilities.rand(@W)
+            y    : utilities.rand(@H)
+            r    : @metaboliteRadius
+            name : name
+            id   : id
+            type : type
+        metabolite = new Metabolite(nodeAttributes, ctx)
+        @viewController.updateOptions(name, id)
+
+        @nodes.push(metabolite)
 
     linkDistanceHandler: (link, i) ->
         factor = 0
@@ -83,5 +101,54 @@ class Graph
             nodeIndex = outNeighbour.inNeighbours.indexOf(node)
             outNeighbour.inNeighbours.splice(nodeIndex, 1)
         @viewController.removeOption(node)
+
+    addReaction: (source, target, name, ctx) ->
+        for node in @nodes
+            if node.id is source.id and node.name is node.name
+                src = node
+            else if node.id is target.id and node.name is node.name
+                tgt = node
+        if not src? or not tgt?
+            alert("No self linking!")
+        else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
+            linkAttr =
+                id        : "#{src.id}-#{tgt.id}"
+                source    : src
+                target    : tgt
+                fluxValue : 0
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, ctx))
+        else if src.type is "m" and tgt.type is "m"
+            reactionAttributes =
+                x          : utilities.rand(@W)
+                y          : utilities.rand(@H)
+                r          : 5 #hardcoded right now
+                name       : name
+                id         : name
+                type       : "r"
+                flux_value : 0
+                colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+            reaction = new Reaction(reactionAttributes, ctx)
+            @nodes.push(reaction)
+            linkAttr =
+                id        : "#{source.id}-#{reaction.id}"
+                source    : src
+                target    : reaction
+                fluxValue : 0
+                r         : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+
+            @links.push(new Link(linkAttr, ctx))
+            linkAttr =
+                id        : "#{reaction.id}-#{target.id}"
+                source    : reaction
+                target    : tgt
+                fluxValue : 0
+                r         : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, ctx))
+        else
+            alert("Invalid linkage")
+
 
 module.exports = Graph

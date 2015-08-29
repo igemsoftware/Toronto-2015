@@ -1,5 +1,15 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Graph;
+var Graph, Link, Metabolite, Reaction, Specie, utilities;
+
+utilities = require("./utilities");
+
+Specie = require("./Specie");
+
+Metabolite = require("./Metabolite");
+
+Reaction = require("./Reaction");
+
+Link = require("./Link");
 
 Graph = (function() {
   function Graph(attr, data) {
@@ -19,6 +29,21 @@ Graph = (function() {
     this.links = new Array();
     this.exclusions = new Array();
   }
+
+  Graph.prototype.addMetabolite = function(id, name, type, ctx) {
+    var metabolite, nodeAttributes;
+    nodeAttributes = {
+      x: utilities.rand(this.W),
+      y: utilities.rand(this.H),
+      r: this.metaboliteRadius,
+      name: name,
+      id: id,
+      type: type
+    };
+    metabolite = new Metabolite(nodeAttributes, ctx);
+    this.viewController.updateOptions(name, id);
+    return this.nodes.push(metabolite);
+  };
 
   Graph.prototype.linkDistanceHandler = function(link, i) {
     var factor;
@@ -86,6 +111,64 @@ Graph = (function() {
     return this.viewController.removeOption(node);
   };
 
+  Graph.prototype.addReaction = function(source, target, name, ctx) {
+    var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
+      if (node.id === source.id && node.name === node.name) {
+        src = node;
+      } else if (node.id === target.id && node.name === node.name) {
+        tgt = node;
+      }
+    }
+    if ((src == null) || (tgt == null)) {
+      return alert("No self linking!");
+    } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: 0,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, ctx));
+    } else if (src.type === "m" && tgt.type === "m") {
+      reactionAttributes = {
+        x: utilities.rand(this.W),
+        y: utilities.rand(this.H),
+        r: 5,
+        name: name,
+        id: name,
+        type: "r",
+        flux_value: 0,
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+      };
+      reaction = new Reaction(reactionAttributes, ctx);
+      this.nodes.push(reaction);
+      linkAttr = {
+        id: source.id + "-" + reaction.id,
+        source: src,
+        target: reaction,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      this.links.push(new Link(linkAttr, ctx));
+      linkAttr = {
+        id: reaction.id + "-" + target.id,
+        source: reaction,
+        target: tgt,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, ctx));
+    } else {
+      return alert("Invalid linkage");
+    }
+  };
+
   return Graph;
 
 })();
@@ -93,7 +176,7 @@ Graph = (function() {
 module.exports = Graph;
 
 
-},{}],2:[function(require,module,exports){
+},{"./Link":2,"./Metabolite":3,"./Reaction":6,"./Specie":7,"./utilities":11}],2:[function(require,module,exports){
 var Link;
 
 Link = (function() {
@@ -238,6 +321,7 @@ Network = (function(superClass) {
     this.activeSpecie = null;
     this.createNetwork(this.data);
     this.initalizeForce();
+    this.viewController.populateOptions(this.nodes);
     this.force.on("tick", this.viewController.tick.bind(this)).start();
   }
 
@@ -575,79 +659,6 @@ System = (function(superClass) {
     this.buildReactions(this.data);
   }
 
-  System.prototype.addMetabolite = function(id, name, type) {
-    var metabolite, nodeAttributes;
-    nodeAttributes = {
-      x: utilities.rand(this.W),
-      y: utilities.rand(this.H),
-      r: this.metaboliteRadius,
-      name: name,
-      id: id,
-      type: type
-    };
-    metabolite = new Metabolite(nodeAttributes, this.ctx);
-    this.viewController.updateOptions(name, id);
-    return this.nodes.push(metabolite);
-  };
-
-  System.prototype.addReaction = function(source, target, name) {
-    var i, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
-    ref = this.nodes;
-    for (i = 0, len = ref.length; i < len; i++) {
-      node = ref[i];
-      if (node.id === source.id && node.name === node.name) {
-        src = node;
-      } else if (node.id === target.id && node.name === node.name) {
-        tgt = node;
-      }
-    }
-    if ((src == null) || (tgt == null)) {
-      return alert("No self linking!");
-    } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
-      linkAttr = {
-        id: src.id + "-" + tgt.id,
-        source: src,
-        target: tgt,
-        fluxValue: 0,
-        linkScale: utilities.scaleRadius(null, 1, 5)
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
-    } else if (src.type === "m" && tgt.type === "m") {
-      reactionAttributes = {
-        x: utilities.rand(this.W),
-        y: utilities.rand(this.H),
-        r: 5,
-        name: name,
-        id: name,
-        type: "r",
-        flux_value: 0,
-        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
-      };
-      reaction = new Reaction(reactionAttributes, this.ctx);
-      this.nodes.push(reaction);
-      linkAttr = {
-        id: source.id + "-" + reaction.id,
-        source: src,
-        target: reaction,
-        fluxValue: 0,
-        r: this.metaboliteRadius,
-        linkScale: utilities.scaleRadius(null, 1, 5)
-      };
-      this.links.push(new Link(linkAttr, this.ctx));
-      linkAttr = {
-        id: reaction.id + "-" + target.id,
-        source: reaction,
-        target: tgt,
-        fluxValue: 0,
-        r: this.metaboliteRadius,
-        linkScale: utilities.scaleRadius(null, 1, 5)
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
-    } else {
-      return alert("Invalid linkage");
-    }
-  };
-
   System.prototype.buildMetabolites = function(model) {
     var exclusion, i, j, len, len1, metabolite, nodeAttributes, ref, ref1, results;
     ref = model.metabolites;
@@ -778,6 +789,7 @@ ViewController = (function() {
     this.c.addEventListener("mouseup", mouseupHandler.bind(this), false);
     this.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
     document.body.appendChild(this.c);
+    this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
     $(this.id).css({
       "-moz-user-select": "none",
@@ -788,7 +800,21 @@ ViewController = (function() {
       "unselectable": "on"
     });
     that = this;
-    this.ctx = document.getElementById(this.id).getContext("2d");
+    $('#addMetabolite').click(function() {
+      return that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx);
+    });
+    $("#addReaction").click(function() {
+      var source, target;
+      source = {
+        id: $('#source').val().trim(),
+        name: $('#source :selected').text()
+      };
+      target = {
+        id: $('#target').val().trim(),
+        name: $('#target :selected').text()
+      };
+      return that.network.addReaction(source, target, $("#reaction_name").val(), that.ctx);
+    });
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.xform = this.svg.createSVGMatrix();
     this.dragStart = null;
@@ -800,6 +826,8 @@ ViewController = (function() {
 
   ViewController.prototype.populateOptions = function(nodes) {
     var i, len, node, results, source, target;
+    $("#source").html("");
+    $("#target").html("");
     source = d3.select("#source");
     target = d3.select("#target");
     results = [];
@@ -975,6 +1003,7 @@ ViewController = (function() {
     this.nodes = graph.nodes;
     this.links = graph.links;
     this.system.initalizeForce();
+    this.populateOptions(this.system.nodes);
     this.system.force.on("tick", this.tick.bind(this)).start();
     return this.system.force.start();
   };

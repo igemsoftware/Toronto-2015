@@ -20,6 +20,7 @@ class Network extends Graph
         @activeSpecie = null
         @createNetwork(@data)
         @initalizeForce()
+        @viewController.populateOptions(@nodes)
         @force.on("tick", @viewController.tick.bind(this)).start()
 
 

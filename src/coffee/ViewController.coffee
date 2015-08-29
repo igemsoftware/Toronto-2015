@@ -25,7 +25,7 @@ class ViewController
         # Append it to the DOM
         #tried to disable select, failed misribly.
         document.body.appendChild(@c)
-
+        @ctx = document.getElementById(@id).getContext("2d")
         @nodetext =  $('#nodetext')
         #disable highlighting (Still doesnt work WIP)
         $(@id).css({
@@ -38,20 +38,20 @@ class ViewController
         })
         #temporary
         that = this
-        # $('#addMetabolite').click(->
-        #     that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m")
-        # )
-        # $("#addReaction").click(->
-        #     source =
-        #         id : $('#source').val().trim()
-        #         name : $('#source :selected').text()
-        #     target =
-        #         id:  $('#target').val().trim()
-        #         name: $('#target :selected').text()
-        #     that.network.addReaction(source, target, $("#reaction_name").val())
-        # )
+        $('#addMetabolite').click(->
+            that.system.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx)
+        )
+        $("#addReaction").click(->
+            source =
+                id : $('#source').val().trim()
+                name : $('#source :selected').text()
+            target =
+                id:  $('#target').val().trim()
+                name: $('#target :selected').text()
+            that.network.addReaction(source, target, $("#reaction_name").val(), that.ctx)
+        )
         # Get 2d context
-        @ctx = document.getElementById(@id).getContext("2d")
+
 
         # SVG Matrix for zooming/panning
         @svg = document.createElementNS("http://www.w3.org/2000/svg","svg")
@@ -64,6 +64,8 @@ class ViewController
 
 
     populateOptions: (nodes) ->
+        $("#source").html("")
+        $("#target").html("")
         source = d3.select("#source")
         target = d3.select("#target")
         for node in nodes
@@ -209,8 +211,10 @@ class ViewController
         @nodes = graph.nodes
         @links = graph.links
         @system.initalizeForce()
+        @populateOptions(@system.nodes)
         @system.force.on("tick", @tick.bind(this)).start()
         @system.force.start()
+
 
     startAnimate: () ->
         # Setup [AnimationFrame](https://github.com/kof/animation-frame)
