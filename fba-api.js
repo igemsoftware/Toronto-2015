@@ -14,6 +14,7 @@ mysqlConn = new Object();
 connection.mysql(function(connection) {
 	mysqlConn = connection;
 });
+
 // above hasn't finished yet which is this is still {}. #callbacks #yolo
 console.log(mysqlConn)
 
