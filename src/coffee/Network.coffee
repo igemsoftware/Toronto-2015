@@ -14,7 +14,7 @@ class Network extends Graph
         super(@attr, @data)
 
         @systems = new Object()
-
+        @species = new Array()
         @viewController = new ViewController('canvas', @W, @H, @BG, this)
         @attr.ctx = @viewController.ctx
         @activeSpecie = null
@@ -32,14 +32,17 @@ class Network extends Graph
              name : name
              id   : name
              type : "s"
-        @nodes.push(new Specie(nodeAttributes, @viewController.ctx))
+        specie = new Specie(nodeAttributes, @viewController.ctx)
+        @nodes.push(specie)
+        #reminder to remove when deleted
+        @species.push(specie)
     getSystem: (name) ->
         return @systems[name]
     exitSpecie: () ->
         @activeSpecie = null
         @viewController.setActiveGraph(@viewController.network)
-    enterSpecie: (specie) ->
-        @activeSpecie = @getSystem(specie.name)
+    enterSpecie: (node) ->
+        @activeSpecie = @getSystem(node.name)
         @viewController.setActiveGraph(@activeSpecie)
 
     createNetwork: () ->

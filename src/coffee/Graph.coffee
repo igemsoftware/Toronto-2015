@@ -20,7 +20,7 @@ class Graph
         @nodes = new Array()
         @links = new Array()
         @exclusions = new Array()
-
+        
     addMetabolite: (id, name, type, ctx) ->
         nodeAttributes =
             x    : utilities.rand(@W)

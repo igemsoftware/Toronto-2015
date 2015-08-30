@@ -316,6 +316,7 @@ Network = (function(superClass) {
     this.data = data1;
     Network.__super__.constructor.call(this, this.attr, this.data);
     this.systems = new Object();
+    this.species = new Array();
     this.viewController = new ViewController('canvas', this.W, this.H, this.BG, this);
     this.attr.ctx = this.viewController.ctx;
     this.activeSpecie = null;
@@ -326,7 +327,7 @@ Network = (function(superClass) {
   }
 
   Network.prototype.addSystem = function(name, data) {
-    var nodeAttributes;
+    var nodeAttributes, specie;
     this.systems[name] = new System(this.attr, data);
     nodeAttributes = {
       x: utilities.rand(this.W),
@@ -336,7 +337,9 @@ Network = (function(superClass) {
       id: name,
       type: "s"
     };
-    return this.nodes.push(new Specie(nodeAttributes, this.viewController.ctx));
+    specie = new Specie(nodeAttributes, this.viewController.ctx);
+    this.nodes.push(specie);
+    return this.species.push(specie);
   };
 
   Network.prototype.getSystem = function(name) {
@@ -348,8 +351,8 @@ Network = (function(superClass) {
     return this.viewController.setActiveGraph(this.viewController.network);
   };
 
-  Network.prototype.enterSpecie = function(specie) {
-    this.activeSpecie = this.getSystem(specie.name);
+  Network.prototype.enterSpecie = function(node) {
+    this.activeSpecie = this.getSystem(node.name);
     return this.viewController.setActiveGraph(this.activeSpecie);
   };
 
@@ -932,7 +935,7 @@ ViewController = (function() {
   };
 
   mousewheelHandler = function(e) {
-    var delta, factor, pt, wheel, zoom;
+    var delta, factor, i, len, pt, ref, specie, wheel, zoom;
     this.clientX = e.clientX;
     this.clientY = e.clientY;
     e.preventDefault();
@@ -952,6 +955,21 @@ ViewController = (function() {
     this.xform = this.xform.translate(pt.x, pt.y);
     this.ctx.scale(factor, factor);
     this.xform = this.xform.scaleNonUniform(factor, factor);
+    if (this.activeGraph === this.network) {
+      ref = this.network.species;
+      for (i = 0, len = ref.length; i < len; i++) {
+        specie = ref[i];
+        if (specie.checkCollision(pt.x, pt.y)) {
+          if (specie.r * this.xform.a >= this.c.width && specie.r * this.xform.a >= this.c.height) {
+            this.network.enterSpecie(specie);
+          }
+        }
+      }
+    } else {
+      if (this.xform.a <= 0.02) {
+        this.network.exitSpecie();
+      }
+    }
     this.ctx.translate(-pt.x, -pt.y);
     return this.xform = this.xform.translate(-pt.x, -pt.y);
   };
@@ -1018,12 +1036,22 @@ ViewController = (function() {
   };
 
   ViewController.prototype.setActiveGraph = function(graph) {
+    var scale;
     this.activeGraph.force.stop();
     this.activeGraph = graph;
     this.nodes = this.activeGraph.nodes;
     this.links = this.activeGraph.links;
-    this.activeGraph.initalizeForce();
+    this.xform = this.svg.createSVGMatrix();
+    scale = 0.25;
+    if (this.network === this.activeGraph) {
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    } else {
+      this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
+      this.xform.a = scale;
+      this.xform.d = scale;
+    }
     this.populateOptions(this.activeGraph.nodes);
+    this.activeGraph.initalizeForce();
     this.activeGraph.force.on("tick", this.tick.bind(this)).start();
     return this.activeGraph.force.resume();
   };

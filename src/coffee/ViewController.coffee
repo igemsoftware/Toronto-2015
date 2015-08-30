@@ -5,6 +5,7 @@ class ViewController
     # **Constructor**
     constructor: (@id, @width, @height, @BG, network) ->
         # Create our `<canvas>` DOM element
+
         @c = document.createElement("canvas")
         @activeGraph = network
         @network = network
@@ -172,9 +173,19 @@ class ViewController
         # scale,
         @ctx.scale(factor, factor)
         @xform = @xform.scaleNonUniform(factor, factor)
+        if @activeGraph is @network
+            for specie in @network.species
+                if specie.checkCollision(pt.x, pt.y)
+                    #a or d works doesnt matter since we're not doing complicated transofmrations
+                    if specie.r*@xform.a >= @c.width and specie.r*@xform.a >=@c.height
+                        @network.enterSpecie(specie)
+        else
+            if @xform.a <= 0.02
+                @network.exitSpecie()
         # and translate again.
         @ctx.translate(-pt.x, -pt.y)
         @xform = @xform.translate(-pt.x, -pt.y)
+
     tick: () ->
         if @currentActiveNode? and @isDraggingNode
             tPt = @canvas.transformedPoint(@clientX, @clientY)
@@ -216,8 +227,23 @@ class ViewController
         @activeGraph = graph
         @nodes = @activeGraph.nodes
         @links = @activeGraph.links
-        @activeGraph.initalizeForce()
+        #reset Matrix
+        @xform = @svg.createSVGMatrix()
+        scale = 0.25 #zoomed out 4x for reset
+
+        if @network is @activeGraph
+            @ctx.setTransform(1,0,0,1,0,0)
+        else
+            @ctx.setTransform(scale,0,0,scale,0,0)
+            @xform.a = scale
+            @xform.d = scale
+            # @xform.translate(-@c.width/2, -@c.height/2)
+            # @ctx.translate(-@c.width/2, -@c.height/2)
         @populateOptions(@activeGraph.nodes)
+    
+        #we can check later if the force is not null so we dont re-initalize
+        @activeGraph.initalizeForce()
+
         @activeGraph.force.on("tick", @tick.bind(this)).start()
         @activeGraph.force.resume()
 
