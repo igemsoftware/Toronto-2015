@@ -10,10 +10,29 @@ function compareMetabolites(specieId, masterMetabolites) {
 		masterMetabolitesIds[metabolite.id] = metabolite;
 	});
 
+	// Build dict with name:metabolite
+	var masterMetabolitesNames = new Object();
+	masterMetabolites.forEach(function(metabolite) {
+		masterMetabolitesNames[metabolite.name] = metabolite;
+	});
+
 	MetabolicModel.findOne({id: specieId}, function(err, model) {
 		model.metabolites.forEach(function(metabolite) {
+
 			if (metabolite.id in masterMetabolitesIds) {
-				console.log(specieId, metabolite.id);
+				console.log('same id: ', specieId, metabolite.id);
+
+				if (metabolite.compartment === 'e') {
+					console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+				}
+			}
+
+			if (metabolite.name in masterMetabolitesNames) {
+				console.log('same name: ', specieId, metabolite.name, metabolite.id)
+
+				if (metabolite.compartment === 'e') {
+					console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+				}
 			}
 		})
 	});
@@ -26,12 +45,6 @@ function createCommunity(req, res, next) {
 			res.status(500).send('500 Internal Server Error');
 			return;
 		}
-
-		// var masterMetabolites = new Object();
-		//
-		// model.metabolites.forEach(function(metabolite) {
-		// 	masterMetabolites[metabolite.id] = metabolite;
-		// });
 
 		req.body.species.forEach(function(specie) {
 			// Compare everything but master with master
