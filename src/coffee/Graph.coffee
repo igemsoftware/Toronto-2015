@@ -6,33 +6,44 @@ Link       = require "./Link"
 
 class Graph
     constructor: (attr, @data) ->
-        if attr?
-            @W                = attr.width
-            @H                = attr.height
-            @BG               = attr.backgroundColour
-            @metaboliteRadius = attr.metaboliteRadius
-            @useStatic        = attr.useStatic
-            @everything       = attr.everything
-            @hideObjective    = attr.hideObjective
-
+        @W                = attr.width
+        @H                = attr.height
+        @BG               = attr.backgroundColour
+        @useStatic        = attr.useStatic
+        @everything       = attr.everything
+        @hideObjective    = attr.hideObjective
+        @metaboliteRadius = attr.metaboliteRadius
         @currentActiveNode = null
         @force = null
         @nodes = new Array()
         @links = new Array()
         @exclusions = new Array()
-        
-    addMetabolite: (id, name, type, ctx) ->
+
+    createReaction: (name, id, radius, flux, ctx) ->
+        reactionAttributes =
+            x          : utilities.rand(@W)
+            y          : utilities.rand(@H)
+            r          : radius
+            name       : name
+            id         : id
+            type       : "r"
+            flux_value : flux
+            colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+        return new Reaction(reactionAttributes, ctx)
+
+
+    createMetabolite: (name, id, updateOption, ctx) ->
         nodeAttributes =
             x    : utilities.rand(@W)
             y    : utilities.rand(@H)
             r    : @metaboliteRadius
             name : name
             id   : id
-            type : type
+            type : "m"
         metabolite = new Metabolite(nodeAttributes, ctx)
-        @viewController.updateOptions(name, id)
-
-        @nodes.push(metabolite)
+        if updateOption
+            @viewController.updateOptions(name, id)
+        return metabolite
 
     linkDistanceHandler: (link, i) ->
         factor = 0
@@ -102,7 +113,7 @@ class Graph
             outNeighbour.inNeighbours.splice(nodeIndex, 1)
         @viewController.removeOption(node)
 
-    addReaction: (source, target, name, ctx) ->
+    addLink: (source, target, name, flux, ctx) ->
         for node in @nodes
             if node.id is source.id and node.name is node.name
                 src = node
@@ -115,7 +126,7 @@ class Graph
                 id        : "#{src.id}-#{tgt.id}"
                 source    : src
                 target    : tgt
-                fluxValue : 0
+                fluxValue : flux
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, ctx))
         else if src.type is "m" and tgt.type is "m"
@@ -126,7 +137,7 @@ class Graph
                 name       : name
                 id         : name
                 type       : "r"
-                flux_value : 0
+                flux_value : flux
                 colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
             reaction = new Reaction(reactionAttributes, ctx)
             @nodes.push(reaction)
@@ -134,7 +145,7 @@ class Graph
                 id        : "#{source.id}-#{reaction.id}"
                 source    : src
                 target    : reaction
-                fluxValue : 0
+                fluxValue : flux
                 r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(null, 1, 5)
 
@@ -143,7 +154,7 @@ class Graph
                 id        : "#{reaction.id}-#{target.id}"
                 source    : reaction
                 target    : tgt
-                fluxValue : 0
+                fluxValue : flux
                 r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, ctx))

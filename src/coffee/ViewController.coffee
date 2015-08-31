@@ -41,7 +41,10 @@ class ViewController
         #temporary
         that = this
         $('#addMetabolite').click(->
-            that.activeGraph.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx)
+            that.activeGraph.nodes.push(
+                that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(),
+                                                    true, that.ctx)
+            )
         )
         $("#addReaction").click(->
             source =
@@ -50,7 +53,7 @@ class ViewController
             target =
                 id:  $('#target').val().trim()
                 name: $('#target :selected').text()
-            that.activeGraph.addReaction(source, target, $("#reaction_name").val(), that.ctx)
+            that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx)
         )
         # Get 2d context
 
@@ -240,7 +243,7 @@ class ViewController
             # @xform.translate(-@c.width/2, -@c.height/2)
             # @ctx.translate(-@c.width/2, -@c.height/2)
         @populateOptions(@activeGraph.nodes)
-    
+
         #we can check later if the force is not null so we dont re-initalize
         @activeGraph.initalizeForce()
 

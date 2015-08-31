@@ -14,15 +14,13 @@ Link = require("./Link");
 Graph = (function() {
   function Graph(attr, data) {
     this.data = data;
-    if (attr != null) {
-      this.W = attr.width;
-      this.H = attr.height;
-      this.BG = attr.backgroundColour;
-      this.metaboliteRadius = attr.metaboliteRadius;
-      this.useStatic = attr.useStatic;
-      this.everything = attr.everything;
-      this.hideObjective = attr.hideObjective;
-    }
+    this.W = attr.width;
+    this.H = attr.height;
+    this.BG = attr.backgroundColour;
+    this.useStatic = attr.useStatic;
+    this.everything = attr.everything;
+    this.hideObjective = attr.hideObjective;
+    this.metaboliteRadius = attr.metaboliteRadius;
     this.currentActiveNode = null;
     this.force = null;
     this.nodes = new Array();
@@ -30,7 +28,22 @@ Graph = (function() {
     this.exclusions = new Array();
   }
 
-  Graph.prototype.addMetabolite = function(id, name, type, ctx) {
+  Graph.prototype.createReaction = function(name, id, radius, flux, ctx) {
+    var reactionAttributes;
+    reactionAttributes = {
+      x: utilities.rand(this.W),
+      y: utilities.rand(this.H),
+      r: radius,
+      name: name,
+      id: id,
+      type: "r",
+      flux_value: flux,
+      colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+    };
+    return new Reaction(reactionAttributes, ctx);
+  };
+
+  Graph.prototype.createMetabolite = function(name, id, updateOption, ctx) {
     var metabolite, nodeAttributes;
     nodeAttributes = {
       x: utilities.rand(this.W),
@@ -38,11 +51,13 @@ Graph = (function() {
       r: this.metaboliteRadius,
       name: name,
       id: id,
-      type: type
+      type: "m"
     };
     metabolite = new Metabolite(nodeAttributes, ctx);
-    this.viewController.updateOptions(name, id);
-    return this.nodes.push(metabolite);
+    if (updateOption) {
+      this.viewController.updateOptions(name, id);
+    }
+    return metabolite;
   };
 
   Graph.prototype.linkDistanceHandler = function(link, i) {
@@ -111,7 +126,7 @@ Graph = (function() {
     return this.viewController.removeOption(node);
   };
 
-  Graph.prototype.addReaction = function(source, target, name, ctx) {
+  Graph.prototype.addLink = function(source, target, name, flux, ctx) {
     var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
     ref = this.nodes;
     for (j = 0, len = ref.length; j < len; j++) {
@@ -129,7 +144,7 @@ Graph = (function() {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        fluxValue: 0,
+        fluxValue: flux,
         linkScale: utilities.scaleRadius(null, 1, 5)
       };
       return this.links.push(new Link(linkAttr, ctx));
@@ -141,7 +156,7 @@ Graph = (function() {
         name: name,
         id: name,
         type: "r",
-        flux_value: 0,
+        flux_value: flux,
         colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
       };
       reaction = new Reaction(reactionAttributes, ctx);
@@ -150,7 +165,7 @@ Graph = (function() {
         id: source.id + "-" + reaction.id,
         source: src,
         target: reaction,
-        fluxValue: 0,
+        fluxValue: flux,
         r: this.metaboliteRadius,
         linkScale: utilities.scaleRadius(null, 1, 5)
       };
@@ -159,7 +174,7 @@ Graph = (function() {
         id: reaction.id + "-" + target.id,
         source: reaction,
         target: tgt,
-        fluxValue: 0,
+        fluxValue: flux,
         r: this.metaboliteRadius,
         linkScale: utilities.scaleRadius(null, 1, 5)
       };
@@ -357,7 +372,7 @@ Network = (function(superClass) {
   };
 
   Network.prototype.createNetwork = function() {
-    var compartments, i, j, k, key, len, len1, linkAttr, m, metabolite, n, nodeAttributes, ns, rct, reaction, ref, ref1, results, source, species, target, templinks;
+    var compartments, i, j, k, key, len, len1, m, metabolite, n, ns, rct, reaction, ref, ref1, results, source, species, target, templinks;
     ns = [];
     compartments = new Object();
     species = new Object();
@@ -372,15 +387,7 @@ Network = (function(superClass) {
       }
       compartments[m.id] = m.compartment;
       if (m.compartment === "e" && ns.indexOf(m.id) < 0) {
-        nodeAttributes = {
-          x: utilities.rand(this.W),
-          y: utilities.rand(this.H),
-          r: this.metaboliteRadius,
-          name: m.name,
-          id: m.id,
-          type: "m"
-        };
-        this.nodes.push(new Metabolite(nodeAttributes, this.viewController.ctx));
+        this.nodes.push(this.createMetabolite(m.name, m.id, false, this.viewController.ctx));
         ns.push(m.id);
         species[m.id] = m.species;
       }
@@ -391,16 +398,6 @@ Network = (function(superClass) {
     results = [];
     for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
       reaction = ref1[i];
-      nodeAttributes = {
-        x: utilities.rand(this.W),
-        y: utilities.rand(this.H),
-        r: this.metaboliteRadius,
-        name: reaction.name,
-        id: reaction.id,
-        type: "r",
-        flux_value: 0,
-        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
-      };
       m = Object.keys(reaction.metabolites);
       results.push((function() {
         var l, len2, len3, len4, len5, len6, o, p, q, r, ref2, ref3, ref4, ref5, results1;
@@ -408,7 +405,7 @@ Network = (function(superClass) {
         for (l = 0, len2 = m.length; l < len2; l++) {
           key = m[l];
           if (compartments[key] === "e" && rct.indexOf(reaction.id) < 0) {
-            this.nodes.push(new Reaction(nodeAttributes, this.viewController.ctx));
+            this.nodes.push(this.createReaction(reaction.name, reaction.id, this.metaboliteRadius, 0, this.viewController.ctx));
             rct.push(reaction.id);
             if (reaction.metabolites[key] > 0) {
               source = null;
@@ -422,15 +419,7 @@ Network = (function(superClass) {
                   target = n;
                 }
               }
-              linkAttr = {
-                id: source.id + "-" + target.id,
-                source: source,
-                target: target,
-                fluxValue: 0,
-                linkScale: utilities.scaleRadius(null, 1, 5),
-                r: this.metaboliteRadius
-              };
-              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
+              results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
             } else {
               source = null;
               target = null;
@@ -443,15 +432,7 @@ Network = (function(superClass) {
                   target = n;
                 }
               }
-              linkAttr = {
-                id: source.id + "-" + target.id,
-                source: source,
-                target: target,
-                fluxValue: 0,
-                linkScale: utilities.scaleRadius(null, 1, 5),
-                r: this.metaboliteRadius
-              };
-              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
+              results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
             }
           } else {
             if (reaction.metabolites[key] > 0) {
@@ -466,18 +447,11 @@ Network = (function(superClass) {
                   target = n;
                 }
               }
-              if ((source == null) || (target == null)) {
-                continue;
+              if ((source != null) && (target != null)) {
+                results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
+              } else {
+                results1.push(void 0);
               }
-              linkAttr = {
-                id: source.id + "-" + target.id,
-                source: source,
-                target: target,
-                fluxValue: 0,
-                linkScale: utilities.scaleRadius(null, 1, 5),
-                r: this.metaboliteRadius
-              };
-              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
             } else {
               source = null;
               target = null;
@@ -490,18 +464,11 @@ Network = (function(superClass) {
                   target = n;
                 }
               }
-              if ((source == null) || (target == null)) {
-                continue;
+              if ((source != null) && (target != null)) {
+                results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
+              } else {
+                results1.push(void 0);
               }
-              linkAttr = {
-                id: source.id + "-" + target.id,
-                source: source,
-                target: target,
-                fluxValue: 0,
-                linkScale: utilities.scaleRadius(null, 1, 5),
-                r: this.metaboliteRadius
-              };
-              results1.push(this.links.push(new Link(linkAttr, this.viewController.ctx)));
             }
           }
         }
@@ -528,6 +495,9 @@ rand = function(range) {
 Node = (function() {
   function Node(attr, ctx) {
     this.ctx = ctx;
+    if (attr == null) {
+      console.log(attr);
+    }
     this.x = attr.x;
     this.y = attr.y;
     this.r = attr.r;
@@ -677,58 +647,27 @@ System = (function(superClass) {
   }
 
   System.prototype.buildMetabolites = function(model) {
-    var exclusion, i, j, len, len1, metabolite, nodeAttributes, ref, ref1, results;
+    var i, len, metabolite, ref, results;
     ref = model.metabolites;
     results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       metabolite = ref[i];
-      if (metabolite.id.toString() === "Zn2tex") {
-        console.log("heress");
-      }
-      ref1 = this.exclusions;
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        exclusion = ref1[j];
-        if (metabolite.id.toString() === exclusion.id.toString()) {
-          console.log("here");
-        }
-      }
-      nodeAttributes = {
-        x: utilities.rand(this.W),
-        y: utilities.rand(this.H),
-        r: this.metaboliteRadius,
-        name: metabolite.name,
-        id: metabolite.id,
-        type: "m"
-      };
-      results.push(this.nodes.push(new Metabolite(nodeAttributes, this.ctx)));
+      results.push(this.nodes.push(this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx)));
     }
     return results;
   };
 
   System.prototype.buildReactions = function(model) {
-    var i, j, k, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, reactionAttributes, ref, ref1, results, source, target, tempLinks;
+    var i, j, k, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, ref, ref1, results, source, target, tempLinks;
     radiusScale = utilities.scaleRadius(model, 5, 15);
     tempLinks = new Array();
     ref = model.reactions;
     for (i = 0, len = ref.length; i < len; i++) {
       reaction = ref[i];
-      if (this.everything || reaction.flux_value > 0) {
-        reactionAttributes = {
-          x: utilities.rand(this.W),
-          y: utilities.rand(this.H),
-          r: radiusScale(reaction.flux_value),
-          name: reaction.name,
-          id: reaction.id,
-          type: "r",
-          flux_value: reaction.flux_value,
-          colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
-        };
-        if (this.hideObjective) {
-          if (reactionAttributes.name.indexOf('objective function') !== -1) {
-            continue;
-          }
-        }
-        this.nodes.push(new Reaction(reactionAttributes, this.ctx));
+      if (this.hideObjective && reaction.name.indexOf('objective function') !== -1) {
+        continue;
+      } else if (this.everything || reaction.flux_value > 0) {
+        this.nodes.push(this.createReaction(reaction.name, reaction.id, radiusScale(reaction.flux_value), reaction.flux_value, this.ctx));
         ref1 = Object.keys(reaction.metabolites);
         for (j = 0, len1 = ref1.length; j < len1; j++) {
           metabolite = ref1[j];
@@ -818,7 +757,7 @@ ViewController = (function() {
     });
     that = this;
     $('#addMetabolite').click(function() {
-      return that.activeGraph.addMetabolite($('#metab_id').val().trim(), $('#metab_name').val().trim(), "m", that.ctx);
+      return that.activeGraph.nodes.push(that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(), true, that.ctx));
     });
     $("#addReaction").click(function() {
       var source, target;
@@ -830,7 +769,7 @@ ViewController = (function() {
         id: $('#target').val().trim(),
         name: $('#target :selected').text()
       };
-      return that.activeGraph.addReaction(source, target, $("#reaction_name").val(), that.ctx);
+      return that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx);
     });
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.xform = this.svg.createSVGMatrix();

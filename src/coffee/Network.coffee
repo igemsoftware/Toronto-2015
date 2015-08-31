@@ -54,40 +54,23 @@ class Network extends Graph
             m = @data.metabolites[i]
             species[m.id] = m.species
             if ns.indexOf(m.species) < 0
-            #the ecolie 'data' is hardcoded right now, we expect to retrieve it from the back end
-            #given the name of the specie, and thne we pass the data to be parsed
-             @addSystem(m.species, data)
-             ns.push(m.species)
+                #the ecolie 'data' is hardcoded right now, we expect to retrieve it from the back end
+                #given the name of the specie, and the we pass the data to be parsed
+                 @addSystem(m.species, data)
+                 ns.push(m.species)
             compartments[m.id] = m.compartment
 
             if m.compartment is "e" and ns.indexOf(m.id) < 0
-                nodeAttributes =
-                    x    : utilities.rand(@W)
-                    y    : utilities.rand(@H)
-                    r    : @metaboliteRadius
-                    name : m.name
-                    id   : m.id
-                    type : "m"
-                @nodes.push(new Metabolite(nodeAttributes, @viewController.ctx))
+                @nodes.push(@createMetabolite(m.name, m.id, false, @viewController.ctx))
                 ns.push(m.id)
                 species[m.id] = m.species
         templinks = []
         rct = []
         for reaction, i in @data.reactions
-            nodeAttributes =
-                x    : utilities.rand(@W)
-                y    : utilities.rand(@H)
-                r    : @metaboliteRadius
-                name : reaction.name
-                id   : reaction.id
-                type : "r"
-                flux_value : 0
-                colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
             m = Object.keys(reaction.metabolites)
-
             for key in m
                 if compartments[key] is "e" and rct.indexOf(reaction.id) < 0
-                    @nodes.push(new Reaction(nodeAttributes, @viewController.ctx))
+                    @nodes.push(@createReaction(reaction.name, reaction.id, @metaboliteRadius, 0, @viewController.ctx))
                     rct.push(reaction.id)
                     if reaction.metabolites[key] > 0
                         source = null
@@ -97,14 +80,7 @@ class Network extends Graph
                                 source = n
                             else if n.id is key
                                 target = n
-                        linkAttr =
-                            id        : "#{source.id}-#{target.id}"
-                            source    : source
-                            target    : target
-                            fluxValue : 0
-                            linkScale : utilities.scaleRadius(null, 1, 5)
-                            r         : @metaboliteRadius
-                        @links.push(new Link(linkAttr, @viewController.ctx))
+                        @addLink(source, target, 0, name, @viewController.ctx)
 
                     else
                         source = null
@@ -114,14 +90,7 @@ class Network extends Graph
                                 source = n
                             else if n.id is reaction.id
                                 target = n
-                        linkAttr =
-                            id        : "#{source.id}-#{target.id}"
-                            source    : source
-                            target    : target
-                            fluxValue : 0
-                            linkScale : utilities.scaleRadius(null, 1, 5)
-                            r         : @metaboliteRadius
-                        @links.push(new Link(linkAttr, @viewController.ctx))
+                        @addLink(source, target, 0, name, @viewController.ctx)
                 else
                     if reaction.metabolites[key] > 0
                         source = null
@@ -131,17 +100,8 @@ class Network extends Graph
                                 source = n
                             else if n.id is key
                                 target = n
-                        if not source? or not target?
-                            continue
-                        linkAttr =
-                            id        : "#{source.id}-#{target.id}"
-                            source    : source
-                            target    : target
-                            fluxValue : 0
-                            linkScale : utilities.scaleRadius(null, 1, 5)
-                            r         : @metaboliteRadius
-                        @links.push(new Link(linkAttr, @viewController.ctx))
-
+                        if source? and target?
+                            @addLink(source, target, 0, name, @viewController.ctx)
                     else
                         source = null
                         target = null
@@ -150,16 +110,8 @@ class Network extends Graph
                                 source = n
                             else if n.id is reaction.id
                                 target = n
-                        if not source? or not target?
-                            continue
-                        linkAttr =
-                            id        : "#{source.id}-#{target.id}"
-                            source    : source
-                            target    : target
-                            fluxValue : 0
-                            linkScale : utilities.scaleRadius(null, 1, 5)
-                            r         : @metaboliteRadius
-                        @links.push(new Link(linkAttr, @viewController.ctx))
+                        if source? and target?
+                            @addLink(source, target, 0, name, @viewController.ctx)
             # @linkToSpecies(compartments)
 
 

@@ -17,53 +17,22 @@ class System extends Graph
         @buildReactions(@data)
 
 
-
     buildMetabolites: (model) ->
         for metabolite in model.metabolites
-            if metabolite.id.toString() is "Zn2tex"
-                console.log("heress")
-            for exclusion in @exclusions
-                if metabolite.id.toString() is exclusion.id.toString()
-                    console.log ("here")
-            nodeAttributes =
-                x    : utilities.rand(@W)
-                y    : utilities.rand(@H)
-                r    : @metaboliteRadius
-                name : metabolite.name
-                id   : metabolite.id
-                type : "m"
-
-            @nodes.push(new Metabolite(nodeAttributes, @ctx))
-
-
+            @nodes.push(@createMetabolite(metabolite.name, metabolite.id, false, @ctx))
 
     buildReactions: (model) ->
         radiusScale = utilities.scaleRadius(model, 5, 15)
         tempLinks = new Array()
 
         for reaction in model.reactions
-
-            if @everything or reaction.flux_value > 0
-                reactionAttributes =
-                    x          : utilities.rand(@W)
-                    y          : utilities.rand(@H)
-                    r          : radiusScale(reaction.flux_value)
-                    name       : reaction.name
-                    id         : reaction.id
-                    type       : "r"
-                    flux_value : reaction.flux_value
-                    colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-
-                # Hardcoded kinda
-                # Don't include biomass objective function reaction; skews drawing
-                if @hideObjective
-                    if reactionAttributes.name.indexOf('objective function') isnt -1
-                        continue
-
-                @nodes.push(new Reaction(reactionAttributes, @ctx))
-
+            # Don't include biomass objective function reaction; skews drawing
+            if @hideObjective and reaction.name.indexOf('objective function') isnt -1
+                continue
+            else if @everything or reaction.flux_value > 0
+                @nodes.push(@createReaction(reaction.name, reaction.id, radiusScale(reaction.flux_value),
+                                        reaction.flux_value, @ctx))
                 # Assign metabolite source and target for each reaction
-
                 for metabolite in Object.keys(reaction.metabolites)
                     source = null
                     target = null
@@ -79,7 +48,6 @@ class System extends Graph
                         source     : source
                         target     : target
                         flux_value : reaction.flux_value
-
                     tempLinks.push(link)
 
         nodesMap = utilities.nodeMap(@nodes)
