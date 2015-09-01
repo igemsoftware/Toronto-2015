@@ -43,7 +43,7 @@ class Link
             else
                 targetx = @target.x + @r*Math.cos(lineAngle)
                 targety = @target.y + @r*Math.sin(lineAngle)
-
+    
             @ctx.moveTo(@source.x, @source.y)
             @ctx.lineTo(targetx, targety)
             #create arrow

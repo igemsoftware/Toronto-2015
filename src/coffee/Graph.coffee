@@ -127,13 +127,14 @@ class Graph
                 source    : src
                 target    : tgt
                 fluxValue : flux
+                r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, ctx))
         else if src.type is "m" and tgt.type is "m"
             reactionAttributes =
                 x          : utilities.rand(@W)
                 y          : utilities.rand(@H)
-                r          : 5 #hardcoded right now
+                r          : @metaboliteRadius
                 name       : name
                 id         : name
                 type       : "r"

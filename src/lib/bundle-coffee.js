@@ -145,6 +145,7 @@ Graph = (function() {
         source: src,
         target: tgt,
         fluxValue: flux,
+        r: this.metaboliteRadius,
         linkScale: utilities.scaleRadius(null, 1, 5)
       };
       return this.links.push(new Link(linkAttr, ctx));
@@ -152,7 +153,7 @@ Graph = (function() {
       reactionAttributes = {
         x: utilities.rand(this.W),
         y: utilities.rand(this.H),
-        r: 5,
+        r: this.metaboliteRadius,
         name: name,
         id: name,
         type: "r",

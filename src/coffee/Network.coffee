@@ -45,6 +45,7 @@ class Network extends Graph
         @activeSpecie = @getSystem(node.name)
         @viewController.setActiveGraph(@activeSpecie)
 
+
     createNetwork: () ->
         ns = []
         compartments = new Object()
