@@ -20,7 +20,14 @@ class Link
             # Case 2: reaction -> product
             @target.inNeighbours.push(@source)
             @source.products.push(@target)
-
+        else if @source.type is 's' and @target.type is 'r'
+            #case 3: specie - reaction
+            @target.inNeighbours.push(@source)
+            @source.products.push(@target)
+        else if @source.type is 'r' and @target.type is 's'
+            @target.inNeighbours.push(@target)
+            @source.products.push(@source)
+            @r = @target.r
     y = (x1, y1, m) ->
         return (x)->
             return m*(x-x1)+y1
@@ -43,7 +50,7 @@ class Link
             else
                 targetx = @target.x + @r*Math.cos(lineAngle)
                 targety = @target.y + @r*Math.sin(lineAngle)
-    
+
             @ctx.moveTo(@source.x, @source.y)
             @ctx.lineTo(targetx, targety)
             #create arrow

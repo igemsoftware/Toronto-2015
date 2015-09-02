@@ -160,7 +160,14 @@ class Graph
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, ctx))
         else
-            alert("Invalid linkage")
+            linkAttr =
+                id        : "#{src.id}-#{tgt.id}"
+                source    : src
+                target    : tgt
+                fluxValue : flux
+                r         : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, ctx))
 
 
 module.exports = Graph

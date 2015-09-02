@@ -181,7 +181,15 @@ Graph = (function() {
       };
       return this.links.push(new Link(linkAttr, ctx));
     } else {
-      return alert("Invalid linkage");
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: flux,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, ctx));
     }
   };
 
@@ -218,6 +226,13 @@ Link = (function() {
     } else if (this.source.type === 'r' && this.target.type === 'm') {
       this.target.inNeighbours.push(this.source);
       return this.source.products.push(this.target);
+    } else if (this.source.type === 's' && this.target.type === 'r') {
+      this.target.inNeighbours.push(this.source);
+      return this.source.products.push(this.target);
+    } else if (this.source.type === 'r' && this.target.type === 's') {
+      this.target.inNeighbours.push(this.target);
+      this.source.products.push(this.source);
+      return this.r = this.target.r;
     }
   };
 
@@ -336,7 +351,7 @@ Network = (function(superClass) {
     this.viewController = new ViewController('canvas', this.W, this.H, this.BG, this);
     this.attr.ctx = this.viewController.ctx;
     this.activeSpecie = null;
-    this.createNetwork(this.data);
+    this.createNetwork2(networkData);
     this.initalizeForce();
     this.viewController.populateOptions(this.nodes);
     this.force.on("tick", this.viewController.tick.bind(this)).start();
@@ -372,8 +387,101 @@ Network = (function(superClass) {
     return this.viewController.setActiveGraph(this.activeSpecie);
   };
 
+  Network.prototype.checkSpecie = function(specieName, species) {
+    var j, key, keys, len;
+    keys = Object.keys(species);
+    for (j = 0, len = keys.length; j < len; j++) {
+      key = keys[j];
+      if (species[key] === specieName) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  Network.prototype.createNetwork2 = function(netdata) {
+    var i, inside, j, k, key, keys, l, len, len1, len2, metabolite, outside, r, rValue, reaction, reactions, ref, ref1, source, species, target;
+    outside = [];
+    inside = [];
+    species = [];
+    reactions = [];
+    ref = netdata.metabolites;
+    for (i = j = 0, len = ref.length; j < len; i = ++j) {
+      metabolite = ref[i];
+      if (species.indexOf(metabolite.species) < 0) {
+        this.addSystem(metabolite.species, data);
+        species.push(metabolite.species);
+      }
+      if (metabolite.compartment === "e" && outside.indexOf(metabolite.id) < 0) {
+        this.nodes.push(this.createMetabolite(metabolite.name, metabolite.id, false, this.viewController.ctx));
+        outside.push(metabolite.id);
+      } else if ((metabolite.compartment === "c" || metabolite.compartment === "p") && inside.indexOf(metabolite.id) < 0) {
+        inside.push(metabolite.id);
+      }
+    }
+    ref1 = netdata.reactions;
+    for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
+      reaction = ref1[i];
+      keys = Object.keys(reaction.metabolites);
+      source = null;
+      target = null;
+      for (l = 0, len2 = keys.length; l < len2; l++) {
+        key = keys[l];
+        rValue = reaction.metabolites[key];
+        if (outside.indexOf(key) >= 0) {
+          r = null;
+          if (reactions.indexOf(reaction.id) < 0) {
+            r = this.createReaction(reaction.name, reaction.id, this.metaboliteRadius, 0, this.viewController.ctx);
+            this.nodes.push(r);
+            reactions.push(reaction.id);
+          } else {
+            r = this.findNode(reaction.id);
+          }
+          if (rValue > 0) {
+            source = r;
+            target = this.findNode(key);
+          } else {
+            source = this.findNode(key);
+            target = r;
+          }
+          this.addLink(source, target, 0, source.id + "-->" + target.id, this.viewController.ctx);
+        }
+      }
+    }
+    this.addLink(this.species[0], this.findNode("v1"), 0, this.findNode("v1").name, this.viewController.ctx);
+    this.addLink(this.species[0], this.findNode("v2"), 0, this.findNode("v2").name, this.viewController.ctx);
+    return this.addLink(this.findNode("v3"), this.species[0], 0, this.findNode("v3").name, this.viewController.ctx);
+  };
+
+  Network.prototype.getSpecieFromMetabolite = function(metaboliteid) {
+    var j, k, len, len1, node, ref, ref1, system;
+    ref = this.systems;
+    for (j = 0, len = ref.length; j < len; j++) {
+      system = ref[j];
+      ref1 = system.nodes;
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        node = ref1[k];
+        if (metaboliteid === node.id) {
+          return system;
+        }
+      }
+    }
+    return null;
+  };
+
+  Network.prototype.findNode = function(sourceid) {
+    var j, len, n, ref;
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      n = ref[j];
+      if (sourceid === n.id) {
+        return n;
+      }
+    }
+  };
+
   Network.prototype.createNetwork = function() {
-    var compartments, i, j, k, key, len, len1, m, metabolite, n, ns, rct, reaction, ref, ref1, results, source, species, target, templinks;
+    var add, addLinks, compartments, i, inside, j, k, key, l, len, len1, len2, len3, len4, len5, len6, len7, len8, link, m, metabolite, n, node, ns, o, outside, p, q, rct, reaction, ref, ref1, ref2, ref3, ref4, ref5, ref6, results, s, source, species, t, target, tempLinks, templinks, u, v, w;
     ns = [];
     compartments = new Object();
     species = new Object();
@@ -400,78 +508,119 @@ Network = (function(superClass) {
     for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
       reaction = ref1[i];
       m = Object.keys(reaction.metabolites);
-      results.push((function() {
-        var l, len2, len3, len4, len5, len6, o, p, q, r, ref2, ref3, ref4, ref5, results1;
-        results1 = [];
-        for (l = 0, len2 = m.length; l < len2; l++) {
-          key = m[l];
-          if (compartments[key] === "e" && rct.indexOf(reaction.id) < 0) {
-            this.nodes.push(this.createReaction(reaction.name, reaction.id, this.metaboliteRadius, 0, this.viewController.ctx));
-            rct.push(reaction.id);
-            if (reaction.metabolites[key] > 0) {
-              source = null;
-              target = null;
-              ref2 = this.nodes;
-              for (o = 0, len3 = ref2.length; o < len3; o++) {
-                n = ref2[o];
-                if (n.id === reaction.id) {
-                  source = n;
-                } else if (n.id === key) {
-                  target = n;
-                }
+      for (l = 0, len2 = m.length; l < len2; l++) {
+        key = m[l];
+        if (compartments[key] === "e" && rct.indexOf(reaction.id) < 0) {
+          this.nodes.push(this.createReaction(reaction.name, reaction.id, this.metaboliteRadius, 0, this.viewController.ctx));
+          rct.push(reaction.id);
+          if (reaction.metabolites[key] > 0) {
+            source = null;
+            target = null;
+            ref2 = this.nodes;
+            for (o = 0, len3 = ref2.length; o < len3; o++) {
+              n = ref2[o];
+              if (n.id === reaction.id) {
+                source = n;
+              } else if (n.id === key) {
+                target = n;
               }
-              results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
-            } else {
-              source = null;
-              target = null;
-              ref3 = this.nodes;
-              for (p = 0, len4 = ref3.length; p < len4; p++) {
-                n = ref3[p];
-                if (n.id === key) {
-                  source = n;
-                } else if (n.id === reaction.id) {
-                  target = n;
-                }
+            }
+            this.addLink(source, target, 0, name, this.viewController.ctx);
+          } else {
+            source = null;
+            target = null;
+            ref3 = this.nodes;
+            for (p = 0, len4 = ref3.length; p < len4; p++) {
+              n = ref3[p];
+              if (n.id === key) {
+                source = n;
+              } else if (n.id === reaction.id) {
+                target = n;
               }
-              results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
+            }
+            this.addLink(source, target, 0, name, this.viewController.ctx);
+          }
+        } else {
+          if (reaction.metabolites[key] > 0) {
+            source = null;
+            target = null;
+            ref4 = this.nodes;
+            for (q = 0, len5 = ref4.length; q < len5; q++) {
+              n = ref4[q];
+              if (n.id === reaction.id) {
+                source = n;
+              } else if (n.id === key) {
+                target = n;
+              }
+            }
+            if ((source != null) && (target != null)) {
+              this.addLink(source, target, 0, name, this.viewController.ctx);
             }
           } else {
-            if (reaction.metabolites[key] > 0) {
-              source = null;
-              target = null;
-              ref4 = this.nodes;
-              for (q = 0, len5 = ref4.length; q < len5; q++) {
-                n = ref4[q];
-                if (n.id === reaction.id) {
-                  source = n;
-                } else if (n.id === key) {
-                  target = n;
-                }
-              }
-              if ((source != null) && (target != null)) {
-                results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
-              } else {
-                results1.push(void 0);
-              }
-            } else {
-              source = null;
-              target = null;
-              ref5 = this.nodes;
-              for (r = 0, len6 = ref5.length; r < len6; r++) {
-                n = ref5[r];
-                if (n.id === key) {
-                  source = n;
-                } else if (n.id === reaction.id) {
-                  target = n;
-                }
-              }
-              if ((source != null) && (target != null)) {
-                results1.push(this.addLink(source, target, 0, name, this.viewController.ctx));
-              } else {
-                results1.push(void 0);
+            source = null;
+            target = null;
+            ref5 = this.nodes;
+            for (u = 0, len6 = ref5.length; u < len6; u++) {
+              n = ref5[u];
+              if (n.id === key) {
+                source = n;
+              } else if (n.id === reaction.id) {
+                target = n;
               }
             }
+            if ((source != null) && (target != null)) {
+              this.addLink(source, target, 0, name, this.viewController.ctx);
+            }
           }
+        }
+      }
+      tempLinks = [];
+      outside = [];
+      inside = [];
+      addLinks = [];
+      ref6 = data.reactions;
+      for (v = 0, len7 = ref6.length; v < len7; v++) {
+        reaction = ref6[v];
+        m = Object.keys(reaction.metabolites);
+        add = false;
+        for (w = 0, len8 = m.length; w < len8; w++) {
+          key = m[w];
+          if (compartments[key] === "c") {
+            if (reaction.metabolites[key] < 0) {
+              s = species[key];
+              t = reaction.id;
+              addLinks.push({
+                id: s + "-->" + t,
+                source: s,
+                target: t
+              });
+            } else {
+              s = reaction.id;
+              t = species[key];
+              addLinks.push({
+                id: s + "-->" + t,
+                source: s,
+                target: t
+              });
+            }
+          }
+        }
+      }
+      results.push((function() {
+        var len10, len9, ref7, results1, x, y;
+        results1 = [];
+        for (x = 0, len9 = addLinks.length; x < len9; x++) {
+          link = addLinks[x];
+          ref7 = this.nodes;
+          for (y = 0, len10 = ref7.length; y < len10; y++) {
+            node = ref7[y];
+            if (node.id === link.source) {
+              s = node;
+            } else if (node.id === link.target) {
+              t = node;
+            }
+          }
+          results1.push(this.addLink(s, t, 0, s.id + "-->" + t.id, this.viewController.view));
         }
         return results1;
       }).call(this));
