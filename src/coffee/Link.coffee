@@ -25,8 +25,8 @@ class Link
             @target.inNeighbours.push(@source)
             @source.products.push(@target)
         else if @source.type is 'r' and @target.type is 's'
-            @target.inNeighbours.push(@target)
-            @source.products.push(@source)
+            @target.inNeighbours.push(@source)
+            @source.products.push(@target)
             @r = @target.r
     y = (x1, y1, m) ->
         return (x)->

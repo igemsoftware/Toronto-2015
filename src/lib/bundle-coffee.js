@@ -230,8 +230,8 @@ Link = (function() {
       this.target.inNeighbours.push(this.source);
       return this.source.products.push(this.target);
     } else if (this.source.type === 'r' && this.target.type === 's') {
-      this.target.inNeighbours.push(this.target);
-      this.source.products.push(this.source);
+      this.target.inNeighbours.push(this.source);
+      this.source.products.push(this.target);
       return this.r = this.target.r;
     }
   };
