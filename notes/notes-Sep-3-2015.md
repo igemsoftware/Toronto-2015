@@ -33,9 +33,9 @@
 ### General presentation structure
 
 *note: presentation is 20mins, with time for questions afterwards. We can use
-*question time sneak in more details that are not included in the presentation.
-*The judges will use our wiki to found out more, so the presentation should be
-*snappy, effective, and leave you wanting more (FBA)*
+question time to sneak in more details that are not included in the presentation.
+The judges will use our wiki to found out more, so the presentation should be
+snappy, effective, and leave you wanting more (FBA)*
 
 1. Problem statement
     * why their needs to be this tool vs. old which was "bioremediation of tailings ponds" (but don't worry, we'll get to that)
@@ -64,7 +64,7 @@ We have:
     * can view and entire species as one metabolite, and zoom into it to see internal reactions
     * need to have this sort of structure on multiple levels, using **compartments** and **subsystems**. This is to balance the eternal fight between 'showing too much data' and 'showing data in a meaningful way'
 * currently, there is no optimize button. Add a backend route to take the new modify model (POST request with Content-Type:application/json) and optimize using COBRApy.
-* improve UI. right now its pretty bad. Can someone can make some mockups for this using [https://balsamiq.com/products/mockups/](https://balsamiq.com/products/mockups/) or Photoshop. Getting screenshots of nice lookings sites helps a lot too.
+* improve UI. right now its pretty bad. Can someone can make some mockups for this using [Balsamiq mockups](https://balsamiq.com/products/mockups/) or Photoshop. Getting screenshots of nice lookings sites helps a lot too.
 * improve usability. tutorials, legend, tooltips. etc.
 * write backend routes to employ our acFBA pipeline
 
