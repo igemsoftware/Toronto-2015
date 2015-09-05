@@ -13,69 +13,80 @@ class System extends Graph
     constructor: (attr, @data) ->
         super(attr, @data)
         @ctx = attr.ctx
-        [@nodes, @links] = @buildReactionsAndMetabolites(@data)
-        # @buildReactions(@data)
+        # [@nodes, @links] = @buildReactionsAndMetabolites(@data)
 
         # After Metabolites and Reactions built
-        # @compartmentalize()
+        @compartmentalize()
 
     compartmentalize: ->
         subgraphTypes = new Object()
 
-        nodes = new Array()
-        links = new Array()
+        [nodes, links] = @buildReactionsAndMetabolites(@data)
 
         for metabolite in @data.metabolites
             # todo: give compartment on back-end
             compartmentType = metabolite.id.split('_')[metabolite.id.split('_').length - 1]
-            if not subgraphTypes[compartmentType]?
-                subgraphTypes[compartmentType] = null
-
-        console.log(subgraphTypes)
+            if not subgraphTypes[compartmentType]? and compartmentType isnt 'e'
+                subgraphTypes[compartmentType] = new Object()
 
 
+        # for link in links
+        #     if link.source.type is 'r' and link.target.compartment is 'e'
+        #         console.log(link)
 
-        # for node in @nodes
-        #     if node.type is 'm' and node.compartment isnt 'e'
-        #         if not subgraphTypes[node.compartment]?
-        #             subgraphTypes[node.compartment] = [node]
-        #         else
-        #             subgraphTypes[node.compartment].push(node)
-        #
-        #
-        # # for subgraphType of subgraphTypes
-        # #
-        #
-        #
-        #
-        # for subgraphType of subgraphTypes
-        #     console.log(subgraphType)
-        #
-        #     nameMappings =
-        #         c: 'cytosol'
-        #         p: 'periplasm'
-        #
-        #     subgraph = @createMetabolite(
-        #         nameMappings[subgraphType],
-        #         subgraphType,
-        #         false,
-        #         @ctx
-        #     )
-        #
-        #     subgraph.r = 200
-        #
-        #     @nodes.push(subgraph)
-        #
-        #     for link in @links
-        #         if link.source.type is 'm' and link.source.compartment is subgraphType
-        #             link.source = subgraph
-        #
-        #
-        #
-        # console.log(@nodes[0])
-        # console.log('sdsdsd', @nodes[@nodes.length - 1])
-        # console.log(@links[0])
-        # console.log(subgraphTypes)
+        for subgraphType of subgraphTypes
+            nameMappings =
+                c: 'cytosol'
+                p: 'periplasm'
+
+            subgraph = @createMetabolite(
+                nameMappings[subgraphType],
+                subgraphType,
+                false,
+                @ctx
+            )
+
+            subgraph.r = 50
+
+            @nodes.push(subgraph)
+
+            for link in links
+                if link.source.type is 'm'
+                    # case 1: m -> r
+                    if link.source.compartment is subgraphType
+                        # SG -> r
+                        # if subgraphType is 'c'
+                        #     console.log(subgraph)
+                        link.source = subgraph
+                        @nodes.push(link.target)
+                        @links.push(link)
+                else if link.source.type is 'r'
+                    # case 2: r -> m
+                    console.log('links')
+
+
+
+
+                # 'c' -> X goes into 'c' blob
+                # if link.source.type is 'm' and link.source.compartment is subgraphType
+                #     link.source = subgraph
+                #     @nodes.push(link.target)
+                #     @links.push(link)
+
+                # X -> 'c' goes into 'c' blob
+                # if link.source.type is 'm'
+                #     link.target = subgraph
+                #     @nodes.push(link.source)
+                #     @links.push(link)
+
+                # if link.source.type is 'r' and link.target.type is 'm' and link.target.compartment is 'e'
+                #     @nodes.push(link.target)
+                #     @links.push(link)
+
+
+                # if link.source.type is 'p' and
+
+
 
 
     buildReactionsAndMetabolites: (model) ->

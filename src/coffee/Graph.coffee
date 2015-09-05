@@ -24,7 +24,7 @@ class Graph
         reactionAttributes =
             x          : utilities.rand(@W)
             y          : utilities.rand(@H)
-            r          : radius
+            r          : 5
             name       : name
             id         : id
             type       : "r"

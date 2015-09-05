@@ -33,7 +33,7 @@ Graph = (function() {
     reactionAttributes = {
       x: utilities.rand(this.W),
       y: utilities.rand(this.H),
-      r: radius,
+      r: 5,
       name: name,
       id: id,
       type: "r",
@@ -262,7 +262,7 @@ Link = (function() {
       }
       this.ctx.moveTo(this.source.x, this.source.y);
       this.ctx.lineTo(targetx, targety);
-      if (this.source.type === "r") {
+      if (this.source.type === "r" || this.source.id === 'c') {
         this.ctx.lineTo(targetx + h * Math.cos(theta + lineAngle), targety + h * Math.sin(theta + lineAngle));
         this.ctx.moveTo(targetx, targety);
         this.ctx.lineTo(targetx + h * Math.cos(-theta + lineAngle), targety + h * Math.sin(-theta + lineAngle));
@@ -645,27 +645,56 @@ System = (function(superClass) {
   extend(System, superClass);
 
   function System(attr, data) {
-    var ref;
     this.data = data;
     System.__super__.constructor.call(this, attr, this.data);
     this.ctx = attr.ctx;
-    ref = this.buildReactionsAndMetabolites(this.data), this.nodes = ref[0], this.links = ref[1];
+    this.compartmentalize();
   }
 
   System.prototype.compartmentalize = function() {
-    var compartmentType, i, len, links, metabolite, nodes, ref, subgraphTypes;
+    var compartmentType, i, len, link, links, metabolite, nameMappings, nodes, ref, ref1, results, subgraph, subgraphType, subgraphTypes;
     subgraphTypes = new Object();
-    nodes = new Array();
-    links = new Array();
-    ref = this.data.metabolites;
-    for (i = 0, len = ref.length; i < len; i++) {
-      metabolite = ref[i];
+    ref = this.buildReactionsAndMetabolites(this.data), nodes = ref[0], links = ref[1];
+    ref1 = this.data.metabolites;
+    for (i = 0, len = ref1.length; i < len; i++) {
+      metabolite = ref1[i];
       compartmentType = metabolite.id.split('_')[metabolite.id.split('_').length - 1];
-      if (subgraphTypes[compartmentType] == null) {
-        subgraphTypes[compartmentType] = null;
+      if ((subgraphTypes[compartmentType] == null) && compartmentType !== 'e') {
+        subgraphTypes[compartmentType] = new Object();
       }
     }
-    return console.log(subgraphTypes);
+    results = [];
+    for (subgraphType in subgraphTypes) {
+      nameMappings = {
+        c: 'cytosol',
+        p: 'periplasm'
+      };
+      subgraph = this.createMetabolite(nameMappings[subgraphType], subgraphType, false, this.ctx);
+      subgraph.r = 50;
+      this.nodes.push(subgraph);
+      results.push((function() {
+        var j, len1, results1;
+        results1 = [];
+        for (j = 0, len1 = links.length; j < len1; j++) {
+          link = links[j];
+          if (link.source.type === 'm') {
+            if (link.source.compartment === subgraphType) {
+              link.source = subgraph;
+              this.nodes.push(link.target);
+              results1.push(this.links.push(link));
+            } else {
+              results1.push(void 0);
+            }
+          } else if (link.source.type === 'r') {
+            results1.push(console.log('links'));
+          } else {
+            results1.push(void 0);
+          }
+        }
+        return results1;
+      }).call(this));
+    }
+    return results;
   };
 
   System.prototype.buildReactionsAndMetabolites = function(model) {

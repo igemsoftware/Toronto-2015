@@ -11,7 +11,7 @@ class Link
         @appendSubstratesAndProducts()
 
     appendSubstratesAndProducts: ->
-
+        #update this
         if @source.type is 'm' and @target.type is 'r'
             # Case 1: substrate - reaction
             @source.outNeighbours.push(@target)
@@ -54,10 +54,13 @@ class Link
             @ctx.moveTo(@source.x, @source.y)
             @ctx.lineTo(targetx, targety)
             #create arrow
-            if @source.type is "r"
+
+            if @source.type is "r" or @source.id is 'c'
                 @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
                 @ctx.moveTo(targetx, targety)
                 @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
+
+
             @ctx.lineWidth = @thickness
             @ctx.closePath()
             @ctx.strokeStyle = "black"
