@@ -291,8 +291,10 @@ Node = require("./Node");
 Metabolite = (function(superClass) {
   extend(Metabolite, superClass);
 
-  function Metabolite() {
-    return Metabolite.__super__.constructor.apply(this, arguments);
+  function Metabolite(attr, ctx) {
+    this.ctx = ctx;
+    Metabolite.__super__.constructor.call(this, attr, this.ctx);
+    this.specie = attr.specie;
   }
 
   Metabolite.prototype.draw = function() {
@@ -355,6 +357,7 @@ Network = (function(superClass) {
     this.initalizeForce();
     this.viewController.populateOptions(this.nodes);
     this.force.on("tick", this.viewController.tick.bind(this)).start();
+    this.viewController.setActiveGraph(this.systems['Ecoli']);
   }
 
   Network.prototype.addSystem = function(name, data) {
@@ -401,10 +404,10 @@ Network = (function(superClass) {
 
   Network.prototype.createNetwork = function(netdata) {
     var i, inside, j, k, key, keys, l, len, len1, len2, metabolite, outside, r, rValue, reaction, reactions, ref, ref1, source, species, target;
-    outside = [];
-    inside = [];
-    species = [];
-    reactions = [];
+    outside = new Array();
+    inside = new Array();
+    species = new Array();
+    reactions = new Array();
     ref = netdata.metabolites;
     for (i = j = 0, len = ref.length; j < len; i = ++j) {
       metabolite = ref[i];
@@ -509,6 +512,7 @@ Node = (function() {
     this.type = attr.type;
     this.colour = attr.colour;
     this.keepStatic = false;
+    this.compartment = this.id.split('_')[this.id.split('_').length - 1];
     this.substrates = this.inNeighbours = new Array();
     this.products = this.outNeighbours = new Array();
     this.deleted = false;
@@ -641,38 +645,50 @@ System = (function(superClass) {
   extend(System, superClass);
 
   function System(attr, data) {
+    var ref;
     this.data = data;
     System.__super__.constructor.call(this, attr, this.data);
     this.ctx = attr.ctx;
-    this.buildMetabolites(this.data);
-    this.buildReactions(this.data);
+    ref = this.buildReactionsAndMetabolites(this.data), this.nodes = ref[0], this.links = ref[1];
   }
 
-  System.prototype.buildMetabolites = function(model) {
-    var i, len, metabolite, ref, results;
-    ref = model.metabolites;
-    results = [];
+  System.prototype.compartmentalize = function() {
+    var compartmentType, i, len, links, metabolite, nodes, ref, subgraphTypes;
+    subgraphTypes = new Object();
+    nodes = new Array();
+    links = new Array();
+    ref = this.data.metabolites;
     for (i = 0, len = ref.length; i < len; i++) {
       metabolite = ref[i];
-      results.push(this.nodes.push(this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx)));
+      compartmentType = metabolite.id.split('_')[metabolite.id.split('_').length - 1];
+      if (subgraphTypes[compartmentType] == null) {
+        subgraphTypes[compartmentType] = null;
+      }
     }
-    return results;
+    return console.log(subgraphTypes);
   };
 
-  System.prototype.buildReactions = function(model) {
-    var i, j, k, len, len1, len2, link, linkAttr, metabolite, nodesMap, radiusScale, reaction, ref, ref1, results, source, target, tempLinks;
+  System.prototype.buildReactionsAndMetabolites = function(model) {
+    var i, j, k, l, len, len1, len2, len3, link, linkAttr, links, metabolite, nodes, nodesMap, radiusScale, reaction, ref, ref1, ref2, source, target, tempLinks;
+    nodes = new Array();
+    links = new Array();
+    ref = model.metabolites;
+    for (i = 0, len = ref.length; i < len; i++) {
+      metabolite = ref[i];
+      nodes.push(this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx));
+    }
     radiusScale = utilities.scaleRadius(model, 5, 15);
     tempLinks = new Array();
-    ref = model.reactions;
-    for (i = 0, len = ref.length; i < len; i++) {
-      reaction = ref[i];
+    ref1 = model.reactions;
+    for (j = 0, len1 = ref1.length; j < len1; j++) {
+      reaction = ref1[j];
       if (this.hideObjective && reaction.name.indexOf('objective function') !== -1) {
         continue;
       } else if (this.everything || reaction.flux_value > 0) {
-        this.nodes.push(this.createReaction(reaction.name, reaction.id, radiusScale(reaction.flux_value), reaction.flux_value, this.ctx));
-        ref1 = Object.keys(reaction.metabolites);
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          metabolite = ref1[j];
+        nodes.push(this.createReaction(reaction.name, reaction.id, radiusScale(reaction.flux_value), reaction.flux_value, this.ctx));
+        ref2 = Object.keys(reaction.metabolites);
+        for (k = 0, len2 = ref2.length; k < len2; k++) {
+          metabolite = ref2[k];
           source = null;
           target = null;
           if (reaction.metabolites[metabolite] > 0) {
@@ -692,21 +708,20 @@ System = (function(superClass) {
         }
       }
     }
-    nodesMap = utilities.nodeMap(this.nodes);
-    results = [];
-    for (k = 0, len2 = tempLinks.length; k < len2; k++) {
-      link = tempLinks[k];
+    nodesMap = utilities.nodeMap(nodes);
+    for (l = 0, len3 = tempLinks.length; l < len3; l++) {
+      link = tempLinks[l];
       linkAttr = {
         id: link.id,
-        source: this.nodes[nodesMap[link.source]],
-        target: this.nodes[nodesMap[link.target]],
+        source: nodes[nodesMap[link.source]],
+        target: nodes[nodesMap[link.target]],
         fluxValue: link.flux_value,
         r: this.metaboliteRadius,
         linkScale: utilities.scaleRadius(model, 1, 5)
       };
-      results.push(this.links.push(new Link(linkAttr, this.ctx)));
+      links.push(new Link(linkAttr, this.ctx));
     }
-    return results;
+    return [nodes, links];
   };
 
   return System;

@@ -8,7 +8,6 @@ utilities      = require "./utilities"
 System         = require "./System"
 Graph          = require "./Graph"
 
-
 class Network extends Graph
     constructor: (@attr, @data) ->
         super(@attr, @data)
@@ -22,6 +21,8 @@ class Network extends Graph
         @initalizeForce()
         @viewController.populateOptions(@nodes)
         @force.on("tick", @viewController.tick.bind(this)).start()
+        #temp
+        @viewController.setActiveGraph(@systems['Ecoli'])
 
     addSystem: (name, data) ->
         @systems[name] = new System(@attr, data)
@@ -53,10 +54,11 @@ class Network extends Graph
         return false
 
     createNetwork: (netdata) ->
-        outside = []
-        inside = []
-        species = []
-        reactions = []
+        outside   = new Array()
+        inside    = new Array()
+        species   = new Array()
+        reactions = new Array()
+
         #metabolites built
         for metabolite, i in netdata.metabolites
             if species.indexOf(metabolite.species) < 0
@@ -67,6 +69,7 @@ class Network extends Graph
                 outside.push(metabolite.id)
             else if (metabolite.compartment is "c" or metabolite.compartment is "p") and inside.indexOf(metabolite.id) < 0
                 inside.push(metabolite.id)
+
         for reaction, i in netdata.reactions
             keys = Object.keys(reaction.metabolites)
             source = null

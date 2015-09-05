@@ -1,6 +1,11 @@
 Node = require "./Node"
 
 class Metabolite extends Node
+    constructor: (attr, @ctx) ->
+        super(attr, @ctx)
+
+        @specie = attr.specie
+
     draw: ->
         if not @deleted
             @ctx.beginPath()
