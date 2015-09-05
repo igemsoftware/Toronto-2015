@@ -351,7 +351,7 @@ Network = (function(superClass) {
     this.viewController = new ViewController('canvas', this.W, this.H, this.BG, this);
     this.attr.ctx = this.viewController.ctx;
     this.activeSpecie = null;
-    this.createNetwork2(networkData);
+    this.createNetwork(networkData);
     this.initalizeForce();
     this.viewController.populateOptions(this.nodes);
     this.force.on("tick", this.viewController.tick.bind(this)).start();
@@ -399,7 +399,7 @@ Network = (function(superClass) {
     return false;
   };
 
-  Network.prototype.createNetwork2 = function(netdata) {
+  Network.prototype.createNetwork = function(netdata) {
     var i, inside, j, k, key, keys, l, len, len1, len2, metabolite, outside, r, rValue, reaction, reactions, ref, ref1, source, species, target;
     outside = [];
     inside = [];
@@ -478,154 +478,6 @@ Network = (function(superClass) {
         return n;
       }
     }
-  };
-
-  Network.prototype.createNetwork = function() {
-    var add, addLinks, compartments, i, inside, j, k, key, l, len, len1, len2, len3, len4, len5, len6, len7, len8, link, m, metabolite, n, node, ns, o, outside, p, q, rct, reaction, ref, ref1, ref2, ref3, ref4, ref5, ref6, results, s, source, species, t, target, tempLinks, templinks, u, v, w;
-    ns = [];
-    compartments = new Object();
-    species = new Object();
-    ref = this.data.metabolites;
-    for (i = j = 0, len = ref.length; j < len; i = ++j) {
-      metabolite = ref[i];
-      m = this.data.metabolites[i];
-      species[m.id] = m.species;
-      if (ns.indexOf(m.species) < 0) {
-        this.addSystem(m.species, data);
-        ns.push(m.species);
-      }
-      compartments[m.id] = m.compartment;
-      if (m.compartment === "e" && ns.indexOf(m.id) < 0) {
-        this.nodes.push(this.createMetabolite(m.name, m.id, false, this.viewController.ctx));
-        ns.push(m.id);
-        species[m.id] = m.species;
-      }
-    }
-    templinks = [];
-    rct = [];
-    ref1 = this.data.reactions;
-    results = [];
-    for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
-      reaction = ref1[i];
-      m = Object.keys(reaction.metabolites);
-      for (l = 0, len2 = m.length; l < len2; l++) {
-        key = m[l];
-        if (compartments[key] === "e" && rct.indexOf(reaction.id) < 0) {
-          this.nodes.push(this.createReaction(reaction.name, reaction.id, this.metaboliteRadius, 0, this.viewController.ctx));
-          rct.push(reaction.id);
-          if (reaction.metabolites[key] > 0) {
-            source = null;
-            target = null;
-            ref2 = this.nodes;
-            for (o = 0, len3 = ref2.length; o < len3; o++) {
-              n = ref2[o];
-              if (n.id === reaction.id) {
-                source = n;
-              } else if (n.id === key) {
-                target = n;
-              }
-            }
-            this.addLink(source, target, 0, name, this.viewController.ctx);
-          } else {
-            source = null;
-            target = null;
-            ref3 = this.nodes;
-            for (p = 0, len4 = ref3.length; p < len4; p++) {
-              n = ref3[p];
-              if (n.id === key) {
-                source = n;
-              } else if (n.id === reaction.id) {
-                target = n;
-              }
-            }
-            this.addLink(source, target, 0, name, this.viewController.ctx);
-          }
-        } else {
-          if (reaction.metabolites[key] > 0) {
-            source = null;
-            target = null;
-            ref4 = this.nodes;
-            for (q = 0, len5 = ref4.length; q < len5; q++) {
-              n = ref4[q];
-              if (n.id === reaction.id) {
-                source = n;
-              } else if (n.id === key) {
-                target = n;
-              }
-            }
-            if ((source != null) && (target != null)) {
-              this.addLink(source, target, 0, name, this.viewController.ctx);
-            }
-          } else {
-            source = null;
-            target = null;
-            ref5 = this.nodes;
-            for (u = 0, len6 = ref5.length; u < len6; u++) {
-              n = ref5[u];
-              if (n.id === key) {
-                source = n;
-              } else if (n.id === reaction.id) {
-                target = n;
-              }
-            }
-            if ((source != null) && (target != null)) {
-              this.addLink(source, target, 0, name, this.viewController.ctx);
-            }
-          }
-        }
-      }
-      tempLinks = [];
-      outside = [];
-      inside = [];
-      addLinks = [];
-      ref6 = data.reactions;
-      for (v = 0, len7 = ref6.length; v < len7; v++) {
-        reaction = ref6[v];
-        m = Object.keys(reaction.metabolites);
-        add = false;
-        for (w = 0, len8 = m.length; w < len8; w++) {
-          key = m[w];
-          if (compartments[key] === "c") {
-            if (reaction.metabolites[key] < 0) {
-              s = species[key];
-              t = reaction.id;
-              addLinks.push({
-                id: s + "-->" + t,
-                source: s,
-                target: t
-              });
-            } else {
-              s = reaction.id;
-              t = species[key];
-              addLinks.push({
-                id: s + "-->" + t,
-                source: s,
-                target: t
-              });
-            }
-          }
-        }
-      }
-      results.push((function() {
-        var len10, len9, ref7, results1, x, y;
-        results1 = [];
-        for (x = 0, len9 = addLinks.length; x < len9; x++) {
-          link = addLinks[x];
-          ref7 = this.nodes;
-          for (y = 0, len10 = ref7.length; y < len10; y++) {
-            node = ref7[y];
-            if (node.id === link.source) {
-              s = node;
-            } else if (node.id === link.target) {
-              t = node;
-            }
-          }
-          results1.push(this.addLink(s, t, 0, s.id + "-->" + t.id, this.viewController.view));
-        }
-        return results1;
-      }).call(this));
-    }
-    return results;
   };
 
   return Network;

@@ -1,23 +1,24 @@
-utilities = require "./utilities"
-Specie = require "./Specie"
+utilities  = require "./utilities"
+Specie     = require "./Specie"
 Metabolite = require "./Metabolite"
 Reaction   = require "./Reaction"
 Link       = require "./Link"
 
 class Graph
     constructor: (attr, @data) ->
-        @W                = attr.width
-        @H                = attr.height
-        @BG               = attr.backgroundColour
-        @useStatic        = attr.useStatic
-        @everything       = attr.everything
-        @hideObjective    = attr.hideObjective
-        @metaboliteRadius = attr.metaboliteRadius
+        @W                 = attr.width
+        @H                 = attr.height
+        @BG                = attr.backgroundColour
+        @useStatic         = attr.useStatic
+        @everything        = attr.everything
+        @hideObjective     = attr.hideObjective
+        @metaboliteRadius  = attr.metaboliteRadius
+        # Initialize the remaining properties as empty for now
         @currentActiveNode = null
-        @force = null
-        @nodes = new Array()
-        @links = new Array()
-        @exclusions = new Array()
+        @force             = null
+        @nodes             = new Array()
+        @links             = new Array()
+        @exclusions        = new Array()
 
     createReaction: (name, id, radius, flux, ctx) ->
         reactionAttributes =
@@ -30,7 +31,6 @@ class Graph
             flux_value : flux
             colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
         return new Reaction(reactionAttributes, ctx)
-
 
     createMetabolite: (name, id, updateOption, ctx) ->
         nodeAttributes =
@@ -60,7 +60,6 @@ class Graph
         return factor * -100
 
     initalizeForce: () ->
-
         @force = d3.layout.force()
             # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
             .nodes(@nodes)
@@ -85,7 +84,6 @@ class Graph
             # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
             .alpha(0.1)
             # Let's get this party start()ed
-
 
         if @useStatic
             @force.tick() for n in @nodes
@@ -119,6 +117,7 @@ class Graph
                 src = node
             else if node.id is target.id and node.name is node.name
                 tgt = node
+
         if not src? or not tgt?
             alert("No self linking!")
         else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
@@ -168,6 +167,5 @@ class Graph
                 r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, ctx))
-
 
 module.exports = Graph
