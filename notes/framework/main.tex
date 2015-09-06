@@ -1,0 +1,41 @@
+% Preamble and some settings
+\input{tex/preamble}
+
+\graphicspath{{./figures/}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=cyan
+}
+
+% Title
+\title{MetaFlux: A Dank Framework}
+\author{iGEM UofT}
+\date{Julian Mazzitelli}
+
+% Remove title from table of contents
+\renewcommand*\contentsname{}
+
+% Link shortcuts
+\def\Blender{\href{https://www.blender.org/}{Blender}}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\begin{bottompar}
+\tableofcontents
+\end{bottompar}
+
+\newpage
+\setcounter{page}{1}
+
+\section{Problem Statement}
+
+Currently, there is no dank framework for visualizing genome scale metabolic
+models of microbial consortia.
+
+\end{document}

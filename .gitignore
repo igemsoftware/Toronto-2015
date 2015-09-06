@@ -3,3 +3,10 @@ bower_components
 .DS_Store
 *.swp
 *.js.map
+*.fdb_latexmk
+*.log
+*.aux
+*.fls
+*.out
+*.pyg
+*.toc
