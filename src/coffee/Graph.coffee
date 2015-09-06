@@ -19,6 +19,9 @@ class Graph
         @nodes             = new Array()
         @links             = new Array()
         @exclusions        = new Array()
+        @children = new Object()
+        @siblings = new Object()
+        @parents = new Object()
 
     createReaction: (name, id, radius, flux, ctx) ->
         reactionAttributes =
@@ -178,6 +181,7 @@ class Graph
                 fluxValue : flux
                 r         : @metaboliteRadius
                 linkScale : utilities.scaleRadius(null, 1, 5)
+
             return new Link(linkAttr, ctx)
         else if src.type is "m" and tgt.type is "r"
             # console.log(src.type)

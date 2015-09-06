@@ -26,6 +26,9 @@ Graph = (function() {
     this.nodes = new Array();
     this.links = new Array();
     this.exclusions = new Array();
+    this.children = new Object();
+    this.siblings = new Object();
+    this.parents = new Object();
   }
 
   Graph.prototype.createReaction = function(name, id, radius, flux, ctx) {
@@ -673,9 +676,7 @@ module.exports = Specie;
 
 
 },{"./Node":5}],8:[function(require,module,exports){
-var Graph, Link, Metabolite, Node, Reaction, Specie, System, ViewController, utilities,
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
+var Graph, Link, Metabolite, Node, Reaction, Specie, System, ViewController, utilities;
 
 ViewController = require("./ViewController");
 
@@ -693,24 +694,29 @@ Graph = require('./Graph');
 
 utilities = require("./utilities");
 
-System = (function(superClass) {
-  extend(System, superClass);
-
+System = (function() {
   function System(attr, data) {
+    this.attr = attr;
     this.data = data;
-    System.__super__.constructor.call(this, attr, this.data);
-    this.ctx = attr.ctx;
+    System.__super__.constructor.call(this, this.attr, this.data);
+    this.ctx = this.attr.ctx;
+    this.root = null;
     this.buildPeices(this.data);
   }
 
   System.prototype.buildPeices = function(model) {
-    var i, j, len, len1, metabolite, metaboliteId, nodes, reaction, reactions, ref, ref1, source, target;
+    var compartment, compartments, i, j, k, l, len, len1, len2, len3, metabolite, metaboliteId, nodes, reaction, reactions, ref, ref1, ref2, ref3, source, target;
     nodes = new Object();
     reactions = new Object();
+    compartments = new Object();
     ref = model.metabolites;
     for (i = 0, len = ref.length; i < len; i++) {
       metabolite = ref[i];
-      nodes[metabolite.id] = this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx);
+      metabolite = this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx);
+      nodes[metabolite.id] = metabolite;
+      if (compartments[metabolite.compartment] == null) {
+        compartments[metabolite.compartment] = new Graph(this.attr, null);
+      }
     }
     ref1 = model.reactions;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
@@ -727,8 +733,18 @@ System = (function(superClass) {
           reactions[reaction.id].addLink(this.createLink(nodes[source], reactions[target], reaction.name, reactions.flux, this.ctx));
         }
       }
+      ref2 = reactions[reaction.id].substrateCompartments;
+      for (k = 0, len2 = ref2.length; k < len2; k++) {
+        compartment = ref2[k];
+        compartments[compartment].children[reaction.id] = reactions[reaction.id];
+      }
+      ref3 = reactions[reaction.id].productCompartments;
+      for (l = 0, len3 = ref3.length; l < len3; l++) {
+        compartment = ref3[l];
+        compartments[compartment].parents[reaction.id] = reactions[reaction.id];
+      }
     }
-    return console.log(reactions);
+    return console.log(compartments);
   };
 
   System.prototype.compartmentalize = function() {
@@ -835,7 +851,7 @@ System = (function(superClass) {
 
   return System;
 
-})(Graph);
+})();
 
 window.FBA = {
   System: System
