@@ -12,4 +12,4 @@ systemAttributes =
 
 #system = new System(systemAttributes, data)
 
-network = new Network(systemAttributes, networkData)
+network = new System(systemAttributes, data)
