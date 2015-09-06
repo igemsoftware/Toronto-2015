@@ -16,52 +16,106 @@ class System
 
         # After Metabolites and Reactions built
         # @compartmentalize()
-        @root = null
-        @buildPeices(@data)
+        # @root = null
+        @buildGraph(@data, 'root', 'compartment')
 
 
-    buildPeices: (model) ->
-        nodes = new Object()
-        reactions = new Object()
-        compartments = new Object()
+    # model -> json model
+    # graphId -> Id for "current" root
+    # sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
+    buildGraph: (model, graphId, sorter) ->
+        graph = new Graph(graphId, new Object(), new Object())
+        # May not be needed
+        metabolites = new Object()
+        reactions   = new Object()
 
+        # Loop through each metabolites in the metabolic model provided
         for metabolite in model.metabolites
-            metabolite =  @createMetabolite(
-                metabolite.name,
-                metabolite.id,
-                false,
-                @ctx
-            )
-            nodes[metabolite.id] = metabolite
-            if not compartments[metabolite.compartment]?
-                compartments[metabolite.compartment] = new Graph(@attr, null) #no data
+            # Create a new Metabolite object using the current metabolite
+            metabolite =  @createMetabolite(metabolite.name, metabolite.id, false, @ctx)
 
+            # Store current Metabolite in metabolites dictionary
+            metabolites[metabolite.id] = metabolite
+            # If current Metabolite's compartment is not a child of `graph`, add it
+            if not graph.outNeighbours[metabolite[sorter]]?
+                # Create a new child with no outNeighbours or parents
+                graph.outNeighbours[metabolite[sorter]] = new Graph(metabolite[sorter], new Object(), new Object())
 
-
+        # At this point, there is a child for each type within the 'sorter'
+        # For example, a child for each compartment, that is 'c', 'e', 'p'
         for reaction in model.reactions
+            # Create fresh Reaction object
             reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
 
+            r = reactions[reaction.id]
+
+            # Push links into Reaction object
             for metaboliteId of reaction.metabolites
-                #add to c or p or e compartment in objects for children
+                #add to c or p or e compartment in objects for outNeighbours
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id
                     target = metaboliteId
-                    reactions[reaction.id].addLink(@createLink(reactions[source], nodes[target], reaction.name, reactions.flux, @ctx))
+                    r.addLink(@createLink(reactions[source], nodes[target], reaction.name, reactions.flux, @ctx))
                 else
                     source = metaboliteId
                     target = reaction.id
-                    reactions[reaction.id].addLink(@createLink(nodes[source], reactions[target], reaction.name, reactions.flux, @ctx))
-            for compartment in reactions[reaction.id].substrateCompartments
-                compartments[compartment].children[reaction.id] = reactions[reaction.id]
-            for compartment in reactions[reaction.id].productCompartments
-                compartments[compartment].parents[reaction.id] = reactions[reaction.id]
+                    r.addLink(@createLink(nodes[source], reactions[target], reaction.name, reactions.flux, @ctx))
 
 
-        console.log(compartments)
+            # todo, create new 'sortee' objects for each potential 'sorter' inside reaction
+            # for sortee in r[sorteeHolder]
+            # todo: generalizable
+            for cpt in r.substrateCompartments
+                leaf = graph.outNeighbours[cpt].outNeighbours[reaction.id]
 
-        # for reaction in reactions
-            # console.log(reaction) if reaction.productCompartments.length > 0
-            # consol
+                if leaf?
+                    # exists
+                    graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf
+                    leaf.inNeighbours[cpt] =  graph.outNeighbours[cpt]
+                else
+                    # create it
+                    leaf = new Graph(reaction.id, {r.id: r}, new Object())
+                    graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf
+                    graph.outNeighbours[cpt]
+
+            for cpt in r.productCompartments
+                for _cpt of r.substrateCompartments
+                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
+                    if potentialLeaf?
+                        leaf = potentialLeaf
+
+                if leaf?
+                    graph.outNeighbours[cpt].inNeighours[leaf.id] = leaf
+                    # leaf.inNeighours[cpt] = graph.outNeighbours[cpt]
+                else
+                    leaf = new Graph(reaction.id, {r.id: r}, new Object())
+                    graph.outNeighbours[cpt].inNeighours[leaf.id] = leaf
+
+
+
+
+        # for reaction in model.reactions
+        #     reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
+        #
+            # for metaboliteId of reaction.metabolites
+            #     #add to c or p or e compartment in objects for children
+            #     if reaction.metabolites[metaboliteId] > 0
+            #         source = reaction.id
+            #         target = metaboliteId
+            #         reactions[reaction.id].addLink(@createLink(reactions[source], nodes[target], reaction.name, reactions.flux, @ctx))
+            #     else
+            #         source = metaboliteId
+            #         target = reaction.id
+            #         reactions[reaction.id].addLink(@createLink(nodes[source], reactions[target], reaction.name, reactions.flux, @ctx))
+            #
+        #     for compartment in reactions[reaction.id].substrateCompartments
+        #         compartments[compartment].children[reaction.id] = reactions[reaction.id]
+        #
+        #     for compartment in reactions[reaction.id].productCompartments
+        #         compartments[compartment].parents[reaction.id] = reactions[reaction.id]
+
+
+        console.log(graph)
 
     compartmentalize: ->
         subgraphTypes = new Object()

@@ -12,23 +12,10 @@ Reaction = require("./Reaction");
 Link = require("./Link");
 
 Graph = (function() {
-  function Graph(attr, data) {
-    this.data = data;
-    this.W = attr.width;
-    this.H = attr.height;
-    this.BG = attr.backgroundColour;
-    this.useStatic = attr.useStatic;
-    this.everything = attr.everything;
-    this.hideObjective = attr.hideObjective;
-    this.metaboliteRadius = attr.metaboliteRadius;
-    this.currentActiveNode = null;
-    this.force = null;
-    this.nodes = new Array();
-    this.links = new Array();
-    this.exclusions = new Array();
-    this.children = new Object();
-    this.siblings = new Object();
-    this.parents = new Array();
+  function Graph(id, children, parents) {
+    this.id = id;
+    this.children = children;
+    this.parents = parents;
   }
 
   return Graph;
@@ -499,51 +486,23 @@ System = (function() {
     this.attr = attr;
     this.data = data;
     this.ctx = this.attr.ctx;
-    this.root = null;
-    this.buildPeices(this.data);
+    this.buildGraph(this.data, 'root', 'compartment');
   }
 
-  System.prototype.buildPeices = function(model) {
-    var compartment, compartments, j, k, l, len, len1, len2, len3, m, metabolite, metaboliteId, nodes, reaction, reactions, ref, ref1, ref2, ref3, source, target;
-    nodes = new Object();
-    reactions = new Object();
-    compartments = new Object();
+  System.prototype.buildGraph = function(model, graphId, sorter) {
+    var graph, j, len, metabolite, metabolites, ref;
+    graph = new Graph(graphId, new Object(), new Object());
+    metabolites = new Object();
     ref = model.metabolites;
     for (j = 0, len = ref.length; j < len; j++) {
       metabolite = ref[j];
       metabolite = this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx);
-      nodes[metabolite.id] = metabolite;
-      if (compartments[metabolite.compartment] == null) {
-        compartments[metabolite.compartment] = new Graph(this.attr, null);
+      metabolites[metabolite.id] = metabolite;
+      if (graph.children[metabolite[sorter]] == null) {
+        graph.children[metabolite[sorter]] = new Graph(metabolite[sorter], new Object(), new Object());
       }
     }
-    ref1 = model.reactions;
-    for (k = 0, len1 = ref1.length; k < len1; k++) {
-      reaction = ref1[k];
-      reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 9001, 0, this.ctx);
-      for (metaboliteId in reaction.metabolites) {
-        if (reaction.metabolites[metaboliteId] > 0) {
-          source = reaction.id;
-          target = metaboliteId;
-          reactions[reaction.id].addLink(this.createLink(reactions[source], nodes[target], reaction.name, reactions.flux, this.ctx));
-        } else {
-          source = metaboliteId;
-          target = reaction.id;
-          reactions[reaction.id].addLink(this.createLink(nodes[source], reactions[target], reaction.name, reactions.flux, this.ctx));
-        }
-      }
-      ref2 = reactions[reaction.id].substrateCompartments;
-      for (l = 0, len2 = ref2.length; l < len2; l++) {
-        compartment = ref2[l];
-        compartments[compartment].children[reaction.id] = reactions[reaction.id];
-      }
-      ref3 = reactions[reaction.id].productCompartments;
-      for (m = 0, len3 = ref3.length; m < len3; m++) {
-        compartment = ref3[m];
-        compartments[compartment].parents[reaction.id] = reactions[reaction.id];
-      }
-    }
-    return console.log(compartments);
+    return console.log(graph);
   };
 
   System.prototype.compartmentalize = function() {
