@@ -168,4 +168,35 @@ class Graph
                 linkScale : utilities.scaleRadius(null, 1, 5)
             @links.push(new Link(linkAttr, ctx))
 
+    createLink: (src, tgt, name, flux, ctx) ->
+        if src.type is "r" and tgt.type is "m"
+            # console.log('here')
+            linkAttr =
+                id        : "#{src.id}-#{tgt.id}"
+                source    : src
+                target    : tgt
+                fluxValue : flux
+                r         : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            return new Link(linkAttr, ctx)
+        else if src.type is "m" and tgt.type is "r"
+            # console.log(src.type)
+            linkAttr =
+                id        : "#{src.id}-#{tgt.id}"
+                source    : src
+                target    : tgt
+                fluxValue : flux
+                r         : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            return new Link(linkAttr, ctx)
+        else
+            linkAttr =
+                id        : "#{src.id}-#{tgt.id}"
+                source    : src
+                target    : tgt
+                fluxValue : flux
+                r         : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            return new Link(linkAttr, ctx)
+
 module.exports = Graph

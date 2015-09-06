@@ -123,7 +123,7 @@ buildPeices = (model) ->
         nodes[metabolite.id] = new Metabolite(metabolite, ...)
 
     for reaction in model.reactions
-        reactions[reaction.id] = new Reaction(metabolite, ...)
+        reactions[reaction.id] = new Reaction(reaction, ...)
 
         for metabolite of reaction.metabolites
             if reaction.metabolites[metabolite] > 0

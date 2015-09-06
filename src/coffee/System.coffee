@@ -16,7 +16,42 @@ class System extends Graph
         # [@nodes, @links] = @buildReactionsAndMetabolites(@data)
 
         # After Metabolites and Reactions built
-        @compartmentalize()
+        # @compartmentalize()
+
+        @buildPeices(@data)
+
+
+    buildPeices: (model) ->
+        nodes = new Object()
+        reactions = new Object()
+
+        for metabolite in model.metabolites
+            nodes[metabolite.id] = @createMetabolite(
+                metabolite.name,
+                metabolite.id,
+                false,
+                @ctx
+            )
+
+        for reaction in model.reactions
+            reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
+
+            for metaboliteId of reaction.metabolites
+                if reaction.metabolites[metaboliteId] > 0
+                    source = reaction.id
+                    target = metaboliteId
+                    reactions[reaction.id].addLink(@createLink(reactions[source], nodes[target], reaction.name, reactions.flux, @ctx))
+                else
+                    source = metaboliteId
+                    target = reaction.id
+                    reactions[reaction.id].addLink(@createLink(nodes[source], reactions[target], reaction.name, reactions.flux, @ctx))
+
+
+        console.log(reactions)
+
+        # for reaction in reactions
+            # console.log(reaction) if reaction.productCompartments.length > 0
+            # consol
 
     compartmentalize: ->
         subgraphTypes = new Object()

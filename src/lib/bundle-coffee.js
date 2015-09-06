@@ -193,6 +193,41 @@ Graph = (function() {
     }
   };
 
+  Graph.prototype.createLink = function(src, tgt, name, flux, ctx) {
+    var linkAttr;
+    if (src.type === "r" && tgt.type === "m") {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: flux,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return new Link(linkAttr, ctx);
+    } else if (src.type === "m" && tgt.type === "r") {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: flux,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return new Link(linkAttr, ctx);
+    } else {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: flux,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return new Link(linkAttr, ctx);
+    }
+  };
+
   return Graph;
 
 })();
@@ -545,9 +580,26 @@ Node = require("./Node");
 Reaction = (function(superClass) {
   extend(Reaction, superClass);
 
-  function Reaction() {
-    return Reaction.__super__.constructor.apply(this, arguments);
+  function Reaction(attr, ctx) {
+    this.ctx = ctx;
+    Reaction.__super__.constructor.call(this, attr, this.ctx);
+    this.substrateCompartments = new Array();
+    this.productCompartments = new Array();
+    this.links = new Array();
   }
+
+  Reaction.prototype.addLink = function(link) {
+    this.links.push(link);
+    if (link.source.type === 'r') {
+      if (this.productCompartments.indexOf(link.target.compartment) === -1) {
+        return this.productCompartments.push(link.target.compartment);
+      }
+    } else if (link.target.type === 'r') {
+      if (this.substrateCompartments.indexOf(link.source.compartment) === -1) {
+        return this.substrateCompartments.push(link.source.compartment);
+      }
+    }
+  };
 
   Reaction.prototype.draw = function() {
     var factor, i, j, k, nos, ref, ref1, size;
@@ -648,8 +700,36 @@ System = (function(superClass) {
     this.data = data;
     System.__super__.constructor.call(this, attr, this.data);
     this.ctx = attr.ctx;
-    this.compartmentalize();
+    this.buildPeices(this.data);
   }
+
+  System.prototype.buildPeices = function(model) {
+    var i, j, len, len1, metabolite, metaboliteId, nodes, reaction, reactions, ref, ref1, source, target;
+    nodes = new Object();
+    reactions = new Object();
+    ref = model.metabolites;
+    for (i = 0, len = ref.length; i < len; i++) {
+      metabolite = ref[i];
+      nodes[metabolite.id] = this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx);
+    }
+    ref1 = model.reactions;
+    for (j = 0, len1 = ref1.length; j < len1; j++) {
+      reaction = ref1[j];
+      reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 9001, 0, this.ctx);
+      for (metaboliteId in reaction.metabolites) {
+        if (reaction.metabolites[metaboliteId] > 0) {
+          source = reaction.id;
+          target = metaboliteId;
+          reactions[reaction.id].addLink(this.createLink(reactions[source], nodes[target], reaction.name, reactions.flux, this.ctx));
+        } else {
+          source = metaboliteId;
+          target = reaction.id;
+          reactions[reaction.id].addLink(this.createLink(nodes[source], reactions[target], reaction.name, reactions.flux, this.ctx));
+        }
+      }
+    }
+    return console.log(reactions);
+  };
 
   System.prototype.compartmentalize = function() {
     var compartmentType, i, len, link, links, metabolite, nameMappings, nodes, ref, ref1, results, subgraph, subgraphType, subgraphTypes;
