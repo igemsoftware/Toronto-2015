@@ -26,6 +26,6 @@ class Graph
     # children are outNeighbours
     # inNeighours are graphs you are a parent of
     constructor: (@id, @outNeighbours, @inNeighbours) ->
-
+        @value = null
 
 module.exports = Graph

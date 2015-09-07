@@ -55,65 +55,37 @@ class System
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id
                     target = metaboliteId
-                    r.addLink(@createLink(reactions[source], nodes[target], reaction.name, reactions.flux, @ctx))
+                    r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reactions.flux, @ctx))
                 else
                     source = metaboliteId
                     target = reaction.id
-                    r.addLink(@createLink(nodes[source], reactions[target], reaction.name, reactions.flux, @ctx))
-
+                    r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, @ctx))
 
             # todo, create new 'sortee' objects for each potential 'sorter' inside reaction
             # for sortee in r[sorteeHolder]
             # todo: generalizable
+
             for cpt in r.substrateCompartments
                 leaf = graph.outNeighbours[cpt].outNeighbours[reaction.id]
 
-                if leaf?
-                    # exists
-                    graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf
-                    leaf.inNeighbours[cpt] =  graph.outNeighbours[cpt]
-                else
-                    # create it
-                    leaf = new Graph(reaction.id, {r.id: r}, new Object())
-                    graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf
-                    graph.outNeighbours[cpt]
+                if not leaf?
+                    leaf = new Graph(r.id, new Object(), new Object())
+                    leaf.value = r
+                leaf.inNeighbours[cpt] = graph.outNeighbours[cpt]
+                graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf
+
 
             for cpt in r.productCompartments
-                for _cpt of r.substrateCompartments
+                for _cpt in r.substrateCompartments
                     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
                     if potentialLeaf?
                         leaf = potentialLeaf
 
-                if leaf?
-                    graph.outNeighbours[cpt].inNeighours[leaf.id] = leaf
-                    # leaf.inNeighours[cpt] = graph.outNeighbours[cpt]
-                else
-                    leaf = new Graph(reaction.id, {r.id: r}, new Object())
-                    graph.outNeighbours[cpt].inNeighours[leaf.id] = leaf
-
-
-
-
-        # for reaction in model.reactions
-        #     reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
-        #
-            # for metaboliteId of reaction.metabolites
-            #     #add to c or p or e compartment in objects for children
-            #     if reaction.metabolites[metaboliteId] > 0
-            #         source = reaction.id
-            #         target = metaboliteId
-            #         reactions[reaction.id].addLink(@createLink(reactions[source], nodes[target], reaction.name, reactions.flux, @ctx))
-            #     else
-            #         source = metaboliteId
-            #         target = reaction.id
-            #         reactions[reaction.id].addLink(@createLink(nodes[source], reactions[target], reaction.name, reactions.flux, @ctx))
-            #
-        #     for compartment in reactions[reaction.id].substrateCompartments
-        #         compartments[compartment].children[reaction.id] = reactions[reaction.id]
-        #
-        #     for compartment in reactions[reaction.id].productCompartments
-        #         compartments[compartment].parents[reaction.id] = reactions[reaction.id]
-
+                if not leaf?
+                    leaf = new Graph(r.id, new Object(), new Object())
+                    leaf.value = r
+                leaf.outNeighbours[cpt] = graph.outNeighbours[cpt]
+                graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
 
         console.log(graph)
 

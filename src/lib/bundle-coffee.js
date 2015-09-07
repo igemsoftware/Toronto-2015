@@ -12,10 +12,11 @@ Reaction = require("./Reaction");
 Link = require("./Link");
 
 Graph = (function() {
-  function Graph(id, children, parents) {
+  function Graph(id, outNeighbours, inNeighbours) {
     this.id = id;
-    this.children = children;
-    this.parents = parents;
+    this.outNeighbours = outNeighbours;
+    this.inNeighbours = inNeighbours;
+    this.value = null;
   }
 
   return Graph;
@@ -490,16 +491,63 @@ System = (function() {
   }
 
   System.prototype.buildGraph = function(model, graphId, sorter) {
-    var graph, j, len, metabolite, metabolites, ref;
+    var _cpt, cpt, graph, j, k, l, leaf, len, len1, len2, len3, len4, m, metabolite, metaboliteId, metabolites, o, potentialLeaf, r, reaction, reactions, ref, ref1, ref2, ref3, ref4, source, target;
     graph = new Graph(graphId, new Object(), new Object());
     metabolites = new Object();
+    reactions = new Object();
     ref = model.metabolites;
     for (j = 0, len = ref.length; j < len; j++) {
       metabolite = ref[j];
       metabolite = this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx);
       metabolites[metabolite.id] = metabolite;
-      if (graph.children[metabolite[sorter]] == null) {
-        graph.children[metabolite[sorter]] = new Graph(metabolite[sorter], new Object(), new Object());
+      if (graph.outNeighbours[metabolite[sorter]] == null) {
+        graph.outNeighbours[metabolite[sorter]] = new Graph(metabolite[sorter], new Object(), new Object());
+      }
+    }
+    ref1 = model.reactions;
+    for (k = 0, len1 = ref1.length; k < len1; k++) {
+      reaction = ref1[k];
+      reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 9001, 0, this.ctx);
+      r = reactions[reaction.id];
+      for (metaboliteId in reaction.metabolites) {
+        if (reaction.metabolites[metaboliteId] > 0) {
+          source = reaction.id;
+          target = metaboliteId;
+          r.addLink(this.createLink(reactions[source], metabolites[target], reaction.name, reactions.flux, this.ctx));
+        } else {
+          source = metaboliteId;
+          target = reaction.id;
+          r.addLink(this.createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, this.ctx));
+        }
+      }
+      ref2 = r.substrateCompartments;
+      for (l = 0, len2 = ref2.length; l < len2; l++) {
+        cpt = ref2[l];
+        leaf = graph.outNeighbours[cpt].outNeighbours[reaction.id];
+        if (leaf == null) {
+          leaf = new Graph(r.id, new Object(), new Object());
+          leaf.value = r;
+        }
+        leaf.inNeighbours[cpt] = graph.outNeighbours[cpt];
+        graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf;
+      }
+      ref3 = r.productCompartments;
+      for (m = 0, len3 = ref3.length; m < len3; m++) {
+        cpt = ref3[m];
+        ref4 = r.substrateCompartments;
+        for (o = 0, len4 = ref4.length; o < len4; o++) {
+          _cpt = ref4[o];
+          potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id];
+          if (potentialLeaf != null) {
+            leaf = potentialLeaf;
+          }
+        }
+        if (leaf == null) {
+          leaf = new Graph(r.id, new Object(), new Object());
+          leaf.value = r;
+        }
+        leaf.outNeighbours[cpt] = graph.outNeighbours[cpt];
+        graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf;
       }
     }
     return console.log(graph);
