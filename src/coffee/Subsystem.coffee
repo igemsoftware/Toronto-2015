@@ -6,6 +6,7 @@ Reaction = require "./Reaction"
 Link = require "./Link"
 utilities = require "./utilities"
 Graph = require "./Graph"
+ReactionNode = require "./ReactionNode"
 
 class Subsystem
     # attr
@@ -24,26 +25,62 @@ class Subsystem
         @currentActiveNode = null
 
         @compartments = new Object()
+        @reactions = new Object()
         @nodes = new Array()
         @links = new Array()
+
+        @radiusScale = utilities.scaleRadius(null, 5, 15)
         #get rid of root
         for compartment of @graph.outNeighbours
             @buildNodesAndLinks(@graph.outNeighbours[compartment])
+        @initalizeForce()
         console.log(@nodes)
+
+
+    createLeaf: (graph) ->
+
+        for inNeighbour of graph.inNeighbours
+            for outNeighbour of graph.outNeighbours
+                if inNeighbour isnt outNeighbour
+                    @nodes.push(@createReaction(graph.value))
+
+
+
+    createReaction: (reaction) ->
+        r =  @reactions[reaction.id]
+        if not r?
+            reactionAttributes =
+                x : utilities.rand(@W)
+                y : utilities.rand(@H)
+                r : @radiusScale(reaction.flux_value)
+                name : reaction.name
+                id : reaction.id
+                type : "r"
+                flux_value : reaction.flux_value
+                colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+
+            r = new ReactionNode(reactionAttributes, @ctx)
+            @reactions[reaction.id] = r
+            for inNeighbour in reaction.inNeighbours
+                r.inNeighbours.push(inNeighbour.name)
+            for outNeighbour in reaction.outNeighbours
+                r.outNeighbours.push(outNeighbour.name)
+        return r
 
 
     buildNodesAndLinks: (graph)->
         #reached leaf
         if graph.value? and graph.value.type is "r"
-            console.log(graph)
+            #deal with leaf
+            @createLeaf(graph)
         else
         # for compartment of graph.outNeighbours
             nodeAttributes =
-                x    : utilities.rand(@W)
-                y    : utilities.rand(@H)
-                r    : 50
+                x : utilities.rand(@W)
+                y : utilities.rand(@H)
+                r : 50
                 name : graph.id
-                id   : graph.id
+                id : graph.id
                 type : "s"
             c = new Compartment(nodeAttributes, @ctx)
             @compartments[graph.id] = c

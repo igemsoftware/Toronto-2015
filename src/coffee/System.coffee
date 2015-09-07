@@ -17,6 +17,9 @@ class System
         # [@nodes, @links] = @buildReactionsAndMetabolites(@data)
         @attr.ctx = @viewController.ctx
         @ctx = @viewController.ctx
+        @everything = @attr.everything
+        @hideObjective = @attr.hideObjective
+
         # After Metabolites and Reactions built
         # @compartmentalize()
         # @root = null
@@ -24,6 +27,7 @@ class System
         @subsystems = new Object()
 
         @subsystems["ecoli"] = new Subsystem(@attr, @graph)
+        @viewController.startCanvas(@subsystems["ecoli"])
 
 
 
@@ -31,6 +35,7 @@ class System
     # graphId -> Id for "current" root
     # sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
     buildGraph: (model, graphId, sorter) ->
+        counter = 0
         graph = new Graph(graphId, new Object(), new Object())
         # May not be needed
         metabolites = new Object()
@@ -52,11 +57,12 @@ class System
         # For example, a child for each compartment, that is 'c', 'e', 'p'
         for reaction in model.reactions
             # Create fresh Reaction object
-            reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
 
-            r = reactions[reaction.id]
-
+            if (not @everything and reaction.flux_value is 0) or (@hideObjective and reaction.name.indexOf('objective function') isnt -1 )
+                continue
             # Push links into Reaction object
+            reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
+            r = reactions[reaction.id]
             for metaboliteId of reaction.metabolites
                 #add to c or p or e compartment in objects for outNeighbours
                 if reaction.metabolites[metaboliteId] > 0
@@ -72,25 +78,47 @@ class System
             # for sortee in r[sorteeHolder]
             # todo: generalizable
 
+
+            # if reaction.id is "COLIPAPabctex"
+            #     # console.log(reaction)
+
+
             for cpt in r.substrateCompartments
-                leaf = graph.outNeighbours[cpt].outNeighbours[reaction.id]
+                leaf = null
+                for _cpt in r.substrateCompartments
+                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
+                    if potentialLeaf?
+                        leaf = potentialLeaf
+                # for _cpt in r.productCompartments
+                #     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
+                #     if potentialLeaf?
+                #         leaf = potentialLeaf
 
                 if not leaf?
                     leaf = new Graph(r.id, new Object(), new Object())
+                    counter++
+
                     leaf.value = r
                 leaf.inNeighbours[cpt] = graph.outNeighbours[cpt]
                 graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf
 
 
+
             for cpt in r.productCompartments
+                leaf = null
                 for _cpt in r.substrateCompartments
                     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
                     if potentialLeaf?
                         leaf = potentialLeaf
+                # for _cpt in r.productCompartments
+                #     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
+                #     if potentialLeaf?
+                #         leaf = potentialLeaf
 
                 if not leaf?
                     leaf = new Graph(r.id, new Object(), new Object())
                     leaf.value = r
+                    counter++
 
                 leaf.outNeighbours[cpt] = graph.outNeighbours[cpt]
                 graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf

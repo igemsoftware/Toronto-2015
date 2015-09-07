@@ -3,12 +3,12 @@
 
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG, network) ->
+    constructor: (@id, @width, @height, @BG, system) ->
         # Create our `<canvas>` DOM element
 
         @c = document.createElement("canvas")
-        @activeGraph = network
-        @network = network
+        @activeGraph = system
+        @network = system
         # Set some attributes
         @c.id     = @id
         @c.width  = @width
@@ -29,48 +29,52 @@ class ViewController
         document.body.appendChild(@c)
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
-
         @nodetext =  $('#nodetext')
-        if @activeGraph?
-            #disable highlighting (Still doesnt work WIP)
-            $(@id).css({
-                "-moz-user-select": "none",
-                "-webkit-user-select": "none",
-                "-ms-user-select" : "none",
-                "user-select": "none",
-                "-o-user-select": "none",
-                "unselectable": "on"
-            })
-            #temporary
-            that = this
-            $('#addMetabolite').click(->
-                that.activeGraph.nodes.push(
-                    that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(),
-                                                        true, that.ctx)
-                )
+
+
+    startCanvas:(graph) ->
+        @activeGraph = graph
+        $(@id).css({
+            "-moz-user-select": "none",
+            "-webkit-user-select": "none",
+            "-ms-user-select" : "none",
+            "user-select": "none",
+            "-o-user-select": "none",
+            "unselectable": "on"
+        })
+        #temporary
+        that = this
+        $('#addMetabolite').click(->
+            that.activeGraph.nodes.push(
+                that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(),
+                                                    true, that.ctx)
             )
-            $("#addReaction").click(->
-                source =
-                    id : $('#source').val().trim()
-                    name : $('#source :selected').text()
-                target =
-                    id:  $('#target').val().trim()
-                    name: $('#target :selected').text()
-                that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx)
-            )
+        )
+        $("#addReaction").click(->
+            source =
+                id : $('#source').val().trim()
+                name : $('#source :selected').text()
+            target =
+                id:  $('#target').val().trim()
+                name: $('#target :selected').text()
+            that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx)
+        )
 
 
 
-            # SVG Matrix for zooming/panning
-            @svg = document.createElementNS("http://www.w3.org/2000/svg","svg")
-            @xform = @svg.createSVGMatrix()
-            @dragStart = null
-            @dragScaleFactor = 1.5
-            @lastX = @width // 2
-            @lastY = @width // 2
-
-            @startAnimate()
-
+        # SVG Matrix for zooming/panning
+        @svg = document.createElementNS("http://www.w3.org/2000/svg","svg")
+        @xform = @svg.createSVGMatrix()
+        @dragStart = null
+        @dragScaleFactor = 1.5
+        @lastX = @width // 2
+        @lastY = @width // 2
+        @activeGraph.force.start()
+        @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
+        @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
+        @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
+        @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
+        @startAnimate()
 
     populateOptions: (nodes) ->
         $("#source").html("")
@@ -208,8 +212,8 @@ class ViewController
         })
         that = this
         if node.type is 'r'
-            substrates = (substrate.name for substrate in node.substrates)
-            products = (product.name for product in node.products)
+            substrates = (substrate for substrate in node.inNeighbours)
+            products = (product for product in node.outNeighbours)
             @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
             @nodetext.append("<button id='delete'>Delete Reaction</button><br>")
         else
