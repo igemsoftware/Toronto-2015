@@ -57,15 +57,16 @@ class ViewController
         )
         # Get 2d context
 
+        if @activeGraph?
+            # SVG Matrix for zooming/panning
+            @svg = document.createElementNS("http://www.w3.org/2000/svg","svg")
+            @xform = @svg.createSVGMatrix()
+            @dragStart = null
+            @dragScaleFactor = 1.5
+            @lastX = @width // 2
+            @lastY = @width // 2
 
-        # SVG Matrix for zooming/panning
-        @svg = document.createElementNS("http://www.w3.org/2000/svg","svg")
-        @xform = @svg.createSVGMatrix()
-        @dragStart = null
-        @dragScaleFactor = 1.5
-        @lastX = @width // 2
-        @lastY = @width // 2
-        @startAnimate()
+            @startAnimate()
 
 
     populateOptions: (nodes) ->

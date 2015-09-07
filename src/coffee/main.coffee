@@ -1,5 +1,6 @@
 System = require "./System"
-Network = require "./Network"
+Subsystem = require "./Subsystem"
+
 
 systemAttributes =
     width            : window.innerWidth

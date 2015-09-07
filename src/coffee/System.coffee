@@ -1,4 +1,5 @@
 # **Classes**
+Subsystem      = require "./Subsystem"
 ViewController = require "./ViewController"
 Node           = require "./Node"
 Specie         = require "./Specie"
@@ -6,18 +7,24 @@ Metabolite     = require "./Metabolite"
 Reaction       = require "./Reaction"
 Link           = require "./Link"
 Graph          = require './Graph'
+
 # **Utility Functions**
 utilities = require("./utilities")
+console.log(Subsystem)
 
 class System
     constructor: (@attr, @data) ->
-        @ctx = @attr.ctx
+        @viewController = new ViewController("canvas", @attr.width, @attr.height, @attr.backgroundColour, null)
         # [@nodes, @links] = @buildReactionsAndMetabolites(@data)
-
+        @attr.ctx = @viewController.ctx
         # After Metabolites and Reactions built
         # @compartmentalize()
         # @root = null
         @buildGraph(@data, 'root', 'compartment')
+        @subsystems = new Object()
+        console.log(Subsystem)
+        @subsystems["ecoli"] = new Subsystem()
+
 
 
     # model -> json model
@@ -84,10 +91,15 @@ class System
                 if not leaf?
                     leaf = new Graph(r.id, new Object(), new Object())
                     leaf.value = r
+
                 leaf.outNeighbours[cpt] = graph.outNeighbours[cpt]
                 graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
 
-        console.log(graph)
+            if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
+                leaf.outNeighbours["e"] = graph.outNeighbours["e"]
+                graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
+
+
 
     compartmentalize: ->
         subgraphTypes = new Object()
