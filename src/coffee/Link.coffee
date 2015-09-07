@@ -20,13 +20,13 @@ class Link
             # Case 2: reaction -> product
             @target.inNeighbours.push(@source)
             @source.products.push(@target)
-        else if @source.type is 's' and @target.type is 'r'
+        else if @target.type is 'r' and @source.type is 'Compartment'#implies compartment
             #case 3: specie - reaction
-            @target.inNeighbours.push(@source)
+            #@target.inNeighbours.push(@source.name)
             @source.products.push(@target)
-        else if @source.type is 'r' and @target.type is 's'
+        else if @source.type is 'r' and @target.type is 'Compartment'
             @target.inNeighbours.push(@source)
-            @source.products.push(@target)
+            #@source.products.push(@target.name)
             @r = @target.r
     y = (x1, y1, m) ->
         return (x)->
@@ -44,21 +44,18 @@ class Link
             #theta is the angle from the line to the arrow
             theta = Math.PI/8
             @ctx.beginPath()
-            if @target.type is "r"
-                targetx = @target.x
-                targety = @target.y
-            else
-                targetx = @target.x + @r*Math.cos(lineAngle)
-                targety = @target.y + @r*Math.sin(lineAngle)
+            
+            targetx = @target.x + @r*Math.cos(lineAngle)
+            targety = @target.y + @r*Math.sin(lineAngle)
 
             @ctx.moveTo(@source.x, @source.y)
             @ctx.lineTo(targetx, targety)
             #create arrow
 
-            if @source.type is "r" or @source.id is 'c'
-                @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
-                @ctx.moveTo(targetx, targety)
-                @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
+
+            @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
+            @ctx.moveTo(targetx, targety)
+            @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
 
 
             @ctx.lineWidth = @thickness

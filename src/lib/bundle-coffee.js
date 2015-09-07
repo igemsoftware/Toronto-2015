@@ -8,8 +8,11 @@ Node = require("./Node");
 Compartment = (function(superClass) {
   extend(Compartment, superClass);
 
-  function Compartment() {
-    return Compartment.__super__.constructor.apply(this, arguments);
+  function Compartment(attr, ctx) {
+    this.attr = attr;
+    this.ctx = ctx;
+    Compartment.__super__.constructor.call(this, this.attr, this.ctx);
+    this.type = "Compartment";
   }
 
   Compartment.prototype.draw = function() {
@@ -18,7 +21,7 @@ Compartment = (function(superClass) {
       this.ctx.moveTo(this.x, this.y);
       this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
       this.ctx.closePath();
-      this.ctx.fillStyle = "orange";
+      this.ctx.fillStyle = this.colour;
       if (this.hover) {
         this.ctx.fillStyle = "green";
       }
@@ -85,12 +88,10 @@ Link = (function() {
     } else if (this.source.type === 'r' && this.target.type === 'm') {
       this.target.inNeighbours.push(this.source);
       return this.source.products.push(this.target);
-    } else if (this.source.type === 's' && this.target.type === 'r') {
-      this.target.inNeighbours.push(this.source);
+    } else if (this.target.type === 'r' && this.source.type === 'Compartment') {
       return this.source.products.push(this.target);
-    } else if (this.source.type === 'r' && this.target.type === 's') {
+    } else if (this.source.type === 'r' && this.target.type === 'Compartment') {
       this.target.inNeighbours.push(this.source);
-      this.source.products.push(this.target);
       return this.r = this.target.r;
     }
   };
@@ -112,20 +113,13 @@ Link = (function() {
       h = 10;
       theta = Math.PI / 8;
       this.ctx.beginPath();
-      if (this.target.type === "r") {
-        targetx = this.target.x;
-        targety = this.target.y;
-      } else {
-        targetx = this.target.x + this.r * Math.cos(lineAngle);
-        targety = this.target.y + this.r * Math.sin(lineAngle);
-      }
+      targetx = this.target.x + this.r * Math.cos(lineAngle);
+      targety = this.target.y + this.r * Math.sin(lineAngle);
       this.ctx.moveTo(this.source.x, this.source.y);
       this.ctx.lineTo(targetx, targety);
-      if (this.source.type === "r" || this.source.id === 'c') {
-        this.ctx.lineTo(targetx + h * Math.cos(theta + lineAngle), targety + h * Math.sin(theta + lineAngle));
-        this.ctx.moveTo(targetx, targety);
-        this.ctx.lineTo(targetx + h * Math.cos(-theta + lineAngle), targety + h * Math.sin(-theta + lineAngle));
-      }
+      this.ctx.lineTo(targetx + h * Math.cos(theta + lineAngle), targety + h * Math.sin(theta + lineAngle));
+      this.ctx.moveTo(targetx, targety);
+      this.ctx.lineTo(targetx + h * Math.cos(-theta + lineAngle), targety + h * Math.sin(-theta + lineAngle));
       this.ctx.lineWidth = this.thickness;
       this.ctx.closePath();
       this.ctx.strokeStyle = "black";
@@ -357,6 +351,7 @@ Subsystem = (function() {
       this.buildNodesAndLinks(this.graph.outNeighbours[compartment]);
     }
     this.initalizeForce();
+    console.log(this.nodes);
   }
 
   Subsystem.prototype.createLeaf = function(graph) {
@@ -422,7 +417,6 @@ Subsystem = (function() {
       };
       r = new ReactionNode(reactionAttributes, this.ctx);
       this.reactions[reaction.id] = r;
-      console.log(reaction);
       ref = reaction.inNeighbours;
       for (j = 0, len = ref.length; j < len; j++) {
         inNeighbour = ref[j];
@@ -459,10 +453,11 @@ Subsystem = (function() {
       nodeAttributes = {
         x: utilities.rand(this.W),
         y: utilities.rand(this.H),
-        r: 50,
+        r: 150,
         name: graph.id,
         id: graph.id,
-        type: "s"
+        type: "s",
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
       };
       c = new Compartment(nodeAttributes, this.ctx);
       this.compartments[graph.id] = c;
@@ -498,13 +493,14 @@ Subsystem = (function() {
     } else if (link.source.type === 'r') {
       factor = link.source.products.length;
     }
-    return factor * 25;
+    return factor * 100;
   };
 
   Subsystem.prototype.chargeHandler = function(node, i) {
     var factor;
     factor = node.inNeighbours.length + node.outNeighbours.length + 1;
-    return factor * -100;
+    factor = node.r * 2;
+    return factor * -800;
   };
 
   Subsystem.prototype.initalizeForce = function() {

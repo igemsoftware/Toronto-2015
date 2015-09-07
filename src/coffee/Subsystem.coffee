@@ -36,6 +36,7 @@ class Subsystem
         for compartment of @graph.outNeighbours
             @buildNodesAndLinks(@graph.outNeighbours[compartment])
         @initalizeForce()
+        console.log(@nodes)
 
 
     createLeaf: (graph) ->
@@ -89,7 +90,6 @@ class Subsystem
 
             r = new ReactionNode(reactionAttributes, @ctx)
             @reactions[reaction.id] = r
-            console.log(reaction)
             for inNeighbour in reaction.inNeighbours
                 r.inNeighbours.push(inNeighbour.name)
             for outNeighbour in reaction.outNeighbours
@@ -118,10 +118,11 @@ class Subsystem
             nodeAttributes =
                 x : utilities.rand(@W)
                 y : utilities.rand(@H)
-                r : 50
+                r : 150
                 name : graph.id
                 id : graph.id
                 type : "s"
+                colour: "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
             c = new Compartment(nodeAttributes, @ctx)
             @compartments[graph.id] = c
             @nodes.push(c)
@@ -151,12 +152,12 @@ class Subsystem
         else if link.source.type is 'r'
             factor = link.source.products.length
 
-        return factor*25
+        return factor*100
 
     chargeHandler: (node, i) ->
         factor = node.inNeighbours.length + node.outNeighbours.length + 1
-
-        return factor * -100
+        factor = node.r*2
+        return factor * -800
 
     initalizeForce: () ->
 
