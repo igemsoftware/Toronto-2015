@@ -1,6 +1,6 @@
 Node = require "./Node"
 
-class Specie extends Node
+class Compartment extends Node
     draw: ->
         if not @deleted
             @ctx.beginPath()
@@ -12,5 +12,5 @@ class Specie extends Node
             @ctx.fillStyle = "green" if @hover
 
             @ctx.fill()
-    
-module.exports = Specie
+
+module.exports = Compartment

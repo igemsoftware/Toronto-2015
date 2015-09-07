@@ -1,6 +1,6 @@
 ViewController = require "./ViewController"
 Node = require "./Node"
-Specie = require "./Specie"
+Compartment = require "./Compartment"
 Metabolite = require "./Metabolite"
 Reaction = require "./Reaction"
 Link = require "./Link"
@@ -23,13 +23,37 @@ class Subsystem
         @force = null
         @currentActiveNode = null
 
+        @compartments = new Object()
         @nodes = new Array()
         @links = new Array()
-        @buildNodesAndLinks()
+        #get rid of root
+        for compartment of @graph.outNeighbours
+            @buildNodesAndLinks(@graph.outNeighbours[compartment])
+        console.log(@nodes)
 
 
-    buildNodesAndLinks: () ->
-        console.log(graph)
+    buildNodesAndLinks: (graph)->
+        #reached leaf
+        if graph.value? and graph.value.type is "r"
+            console.log(graph)
+        else
+        # for compartment of graph.outNeighbours
+            nodeAttributes =
+                x    : utilities.rand(@W)
+                y    : utilities.rand(@H)
+                r    : 50
+                name : graph.id
+                id   : graph.id
+                type : "s"
+            c = new Compartment(nodeAttributes, @ctx)
+            @compartments[graph.id] = c
+            @nodes.push(c)
+            for compartment of graph.outNeighbours
+                @buildNodesAndLinks(graph.outNeighbours[compartment])
+            #console.log(graph.outNeighbours)
+            #@buildNodesAndLinks(graph.outNeighbours[])
+
+
 
 
     addMetabolite: (id, name, type, ctx) ->

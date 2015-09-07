@@ -1,9 +1,42 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Graph, Link, Metabolite, Reaction, Specie, utilities;
+var Compartment, Node,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+Node = require("./Node");
+
+Compartment = (function(superClass) {
+  extend(Compartment, superClass);
+
+  function Compartment() {
+    return Compartment.__super__.constructor.apply(this, arguments);
+  }
+
+  Compartment.prototype.draw = function() {
+    if (!this.deleted) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x, this.y);
+      this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+      this.ctx.closePath();
+      this.ctx.fillStyle = "orange";
+      if (this.hover) {
+        this.ctx.fillStyle = "green";
+      }
+      return this.ctx.fill();
+    }
+  };
+
+  return Compartment;
+
+})(Node);
+
+module.exports = Compartment;
+
+
+},{"./Node":5}],2:[function(require,module,exports){
+var Graph, Link, Metabolite, Reaction, utilities;
 
 utilities = require("./utilities");
-
-Specie = require("./Specie");
 
 Metabolite = require("./Metabolite");
 
@@ -26,7 +59,7 @@ Graph = (function() {
 module.exports = Graph;
 
 
-},{"./Link":2,"./Metabolite":3,"./Reaction":5,"./Specie":6,"./utilities":11}],2:[function(require,module,exports){
+},{"./Link":3,"./Metabolite":4,"./Reaction":6,"./utilities":11}],3:[function(require,module,exports){
 var Link;
 
 Link = (function() {
@@ -107,7 +140,7 @@ Link = (function() {
 module.exports = Link;
 
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var Metabolite, Node,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -144,7 +177,7 @@ Metabolite = (function(superClass) {
 module.exports = Metabolite;
 
 
-},{"./Node":4}],4:[function(require,module,exports){
+},{"./Node":5}],5:[function(require,module,exports){
 var Node, rand;
 
 rand = function(range) {
@@ -189,7 +222,7 @@ Node = (function() {
 module.exports = Node;
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var Node, Reaction,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -256,49 +289,14 @@ Reaction = (function(superClass) {
 module.exports = Reaction;
 
 
-},{"./Node":4}],6:[function(require,module,exports){
-var Node, Specie,
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
-
-Node = require("./Node");
-
-Specie = (function(superClass) {
-  extend(Specie, superClass);
-
-  function Specie() {
-    return Specie.__super__.constructor.apply(this, arguments);
-  }
-
-  Specie.prototype.draw = function() {
-    if (!this.deleted) {
-      this.ctx.beginPath();
-      this.ctx.moveTo(this.x, this.y);
-      this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-      this.ctx.closePath();
-      this.ctx.fillStyle = "orange";
-      if (this.hover) {
-        this.ctx.fillStyle = "green";
-      }
-      return this.ctx.fill();
-    }
-  };
-
-  return Specie;
-
-})(Node);
-
-module.exports = Specie;
-
-
-},{"./Node":4}],7:[function(require,module,exports){
-var Graph, Link, Metabolite, Node, Reaction, Specie, Subsystem, ViewController, utilities;
+},{"./Node":5}],7:[function(require,module,exports){
+var Compartment, Graph, Link, Metabolite, Node, Reaction, Subsystem, ViewController, utilities;
 
 ViewController = require("./ViewController");
 
 Node = require("./Node");
 
-Specie = require("./Specie");
+Compartment = require("./Compartment");
 
 Metabolite = require("./Metabolite");
 
@@ -312,6 +310,7 @@ Graph = require("./Graph");
 
 Subsystem = (function() {
   function Subsystem(attr, graph1) {
+    var compartment;
     this.graph = graph1;
     this.ctx = attr.ctx;
     this.W = attr.width;
@@ -323,13 +322,37 @@ Subsystem = (function() {
     this.hideObjective = attr.hideObjective;
     this.force = null;
     this.currentActiveNode = null;
+    this.compartments = new Object();
     this.nodes = new Array();
     this.links = new Array();
-    this.buildNodesAndLinks();
+    for (compartment in this.graph.outNeighbours) {
+      this.buildNodesAndLinks(this.graph.outNeighbours[compartment]);
+    }
+    console.log(this.nodes);
   }
 
-  Subsystem.prototype.buildNodesAndLinks = function() {
-    return console.log(graph);
+  Subsystem.prototype.buildNodesAndLinks = function(graph) {
+    var c, compartment, nodeAttributes, results;
+    if ((graph.value != null) && graph.value.type === "r") {
+      return console.log(graph);
+    } else {
+      nodeAttributes = {
+        x: utilities.rand(this.W),
+        y: utilities.rand(this.H),
+        r: 50,
+        name: graph.id,
+        id: graph.id,
+        type: "s"
+      };
+      c = new Compartment(nodeAttributes, this.ctx);
+      this.compartments[graph.id] = c;
+      this.nodes.push(c);
+      results = [];
+      for (compartment in graph.outNeighbours) {
+        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
+      }
+      return results;
+    }
   };
 
   Subsystem.prototype.addMetabolite = function(id, name, type, ctx) {
@@ -478,8 +501,8 @@ Subsystem = (function() {
 module.exports = Subsystem;
 
 
-},{"./Graph":1,"./Link":2,"./Metabolite":3,"./Node":4,"./Reaction":5,"./Specie":6,"./ViewController":9,"./utilities":11}],8:[function(require,module,exports){
-var Graph, Link, Metabolite, Node, Reaction, Specie, Subsystem, System, ViewController, utilities;
+},{"./Compartment":1,"./Graph":2,"./Link":3,"./Metabolite":4,"./Node":5,"./Reaction":6,"./ViewController":9,"./utilities":11}],8:[function(require,module,exports){
+var Compartment, Graph, Link, Metabolite, Node, Reaction, Subsystem, System, ViewController, utilities;
 
 Subsystem = require("./Subsystem");
 
@@ -487,7 +510,7 @@ ViewController = require("./ViewController");
 
 Node = require("./Node");
 
-Specie = require("./Specie");
+Compartment = require("./Compartment");
 
 Metabolite = require("./Metabolite");
 
@@ -499,22 +522,20 @@ Graph = require('./Graph');
 
 utilities = require("./utilities");
 
-console.log(Subsystem);
-
 System = (function() {
   function System(attr, data) {
     this.attr = attr;
     this.data = data;
     this.viewController = new ViewController("canvas", this.attr.width, this.attr.height, this.attr.backgroundColour, null);
     this.attr.ctx = this.viewController.ctx;
-    this.buildGraph(this.data, 'root', 'compartment');
+    this.ctx = this.viewController.ctx;
+    this.graph = this.buildGraph(this.data, 'root', 'compartment');
     this.subsystems = new Object();
-    console.log(Subsystem);
-    this.subsystems["ecoli"] = new Subsystem();
+    this.subsystems["ecoli"] = new Subsystem(this.attr, this.graph);
   }
 
   System.prototype.buildGraph = function(model, graphId, sorter) {
-    var _cpt, cpt, graph, j, k, l, leaf, len, len1, len2, len3, len4, m, metabolite, metaboliteId, metabolites, o, potentialLeaf, r, reaction, reactions, ref, ref1, ref2, ref3, ref4, results, source, target;
+    var _cpt, cpt, graph, j, k, l, leaf, len, len1, len2, len3, len4, m, metabolite, metaboliteId, metabolites, o, potentialLeaf, r, reaction, reactions, ref, ref1, ref2, ref3, ref4, source, target;
     graph = new Graph(graphId, new Object(), new Object());
     metabolites = new Object();
     reactions = new Object();
@@ -528,7 +549,6 @@ System = (function() {
       }
     }
     ref1 = model.reactions;
-    results = [];
     for (k = 0, len1 = ref1.length; k < len1; k++) {
       reaction = ref1[k];
       reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 9001, 0, this.ctx);
@@ -575,12 +595,10 @@ System = (function() {
       }
       if (r.outNeighbours.length === 0) {
         leaf.outNeighbours["e"] = graph.outNeighbours["e"];
-        results.push(graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf);
-      } else {
-        results.push(void 0);
+        graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf;
       }
     }
-    return results;
+    return graph;
   };
 
   System.prototype.compartmentalize = function() {
@@ -896,7 +914,7 @@ window.FBA = {
 module.exports = System;
 
 
-},{"./Graph":1,"./Link":2,"./Metabolite":3,"./Node":4,"./Reaction":5,"./Specie":6,"./Subsystem":7,"./ViewController":9,"./utilities":11}],9:[function(require,module,exports){
+},{"./Compartment":1,"./Graph":2,"./Link":3,"./Metabolite":4,"./Node":5,"./Reaction":6,"./Subsystem":7,"./ViewController":9,"./utilities":11}],9:[function(require,module,exports){
 var ViewController;
 
 ViewController = (function() {
@@ -918,38 +936,34 @@ ViewController = (function() {
     this.isDraggingNode = false;
     this.clientX = 0;
     this.clientY = 0;
-    this.c.addEventListener("mousewheel", mousewheelHandler.bind(this), false);
-    this.c.addEventListener("mousedown", mousedownHandler.bind(this), false);
-    this.c.addEventListener("mouseup", mouseupHandler.bind(this), false);
-    this.c.addEventListener("mousemove", mousemoveHandler.bind(this), false);
     document.body.appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
-    $(this.id).css({
-      "-moz-user-select": "none",
-      "-webkit-user-select": "none",
-      "-ms-user-select": "none",
-      "user-select": "none",
-      "-o-user-select": "none",
-      "unselectable": "on"
-    });
-    that = this;
-    $('#addMetabolite').click(function() {
-      return that.activeGraph.nodes.push(that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(), true, that.ctx));
-    });
-    $("#addReaction").click(function() {
-      var source, target;
-      source = {
-        id: $('#source').val().trim(),
-        name: $('#source :selected').text()
-      };
-      target = {
-        id: $('#target').val().trim(),
-        name: $('#target :selected').text()
-      };
-      return that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx);
-    });
     if (this.activeGraph != null) {
+      $(this.id).css({
+        "-moz-user-select": "none",
+        "-webkit-user-select": "none",
+        "-ms-user-select": "none",
+        "user-select": "none",
+        "-o-user-select": "none",
+        "unselectable": "on"
+      });
+      that = this;
+      $('#addMetabolite').click(function() {
+        return that.activeGraph.nodes.push(that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(), true, that.ctx));
+      });
+      $("#addReaction").click(function() {
+        var source, target;
+        source = {
+          id: $('#source').val().trim(),
+          name: $('#source :selected').text()
+        };
+        target = {
+          id: $('#target').val().trim(),
+          name: $('#target :selected').text()
+        };
+        return that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx);
+      });
       this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       this.xform = this.svg.createSVGMatrix();
       this.dragStart = null;

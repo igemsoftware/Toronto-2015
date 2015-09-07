@@ -2,7 +2,7 @@
 Subsystem      = require "./Subsystem"
 ViewController = require "./ViewController"
 Node           = require "./Node"
-Specie         = require "./Specie"
+Compartment         = require "./Compartment"
 Metabolite     = require "./Metabolite"
 Reaction       = require "./Reaction"
 Link           = require "./Link"
@@ -10,20 +10,20 @@ Graph          = require './Graph'
 
 # **Utility Functions**
 utilities = require("./utilities")
-console.log(Subsystem)
 
 class System
     constructor: (@attr, @data) ->
         @viewController = new ViewController("canvas", @attr.width, @attr.height, @attr.backgroundColour, null)
         # [@nodes, @links] = @buildReactionsAndMetabolites(@data)
         @attr.ctx = @viewController.ctx
+        @ctx = @viewController.ctx
         # After Metabolites and Reactions built
         # @compartmentalize()
         # @root = null
-        @buildGraph(@data, 'root', 'compartment')
+        @graph = @buildGraph(@data, 'root', 'compartment')
         @subsystems = new Object()
-        console.log(Subsystem)
-        @subsystems["ecoli"] = new Subsystem()
+
+        @subsystems["ecoli"] = new Subsystem(@attr, @graph)
 
 
 
@@ -99,7 +99,7 @@ class System
                 leaf.outNeighbours["e"] = graph.outNeighbours["e"]
                 graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
 
-
+        return graph
 
     compartmentalize: ->
         subgraphTypes = new Object()

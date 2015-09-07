@@ -1,5 +1,4 @@
 utilities  = require "./utilities"
-Specie     = require "./Specie"
 Metabolite = require "./Metabolite"
 Reaction   = require "./Reaction"
 Link       = require "./Link"

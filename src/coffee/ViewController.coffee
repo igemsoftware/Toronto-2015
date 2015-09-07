@@ -19,45 +19,48 @@ class ViewController
         @clientX = 0
         @clientY = 0
         # Add event listeners. Bind so we preserve `this`.
-        @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
-        @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
-        @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
-        @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
+        # @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
+        # @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
+        # @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
+        # @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
 
         # Append it to the DOM
         #tried to disable select, failed misribly.
         document.body.appendChild(@c)
-        @ctx = document.getElementById(@id).getContext("2d")
-        @nodetext =  $('#nodetext')
-        #disable highlighting (Still doesnt work WIP)
-        $(@id).css({
-            "-moz-user-select": "none",
-            "-webkit-user-select": "none",
-            "-ms-user-select" : "none",
-            "user-select": "none",
-            "-o-user-select": "none",
-            "unselectable": "on"
-        })
-        #temporary
-        that = this
-        $('#addMetabolite').click(->
-            that.activeGraph.nodes.push(
-                that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(),
-                                                    true, that.ctx)
-            )
-        )
-        $("#addReaction").click(->
-            source =
-                id : $('#source').val().trim()
-                name : $('#source :selected').text()
-            target =
-                id:  $('#target').val().trim()
-                name: $('#target :selected').text()
-            that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx)
-        )
         # Get 2d context
+        @ctx = document.getElementById(@id).getContext("2d")
 
+        @nodetext =  $('#nodetext')
         if @activeGraph?
+            #disable highlighting (Still doesnt work WIP)
+            $(@id).css({
+                "-moz-user-select": "none",
+                "-webkit-user-select": "none",
+                "-ms-user-select" : "none",
+                "user-select": "none",
+                "-o-user-select": "none",
+                "unselectable": "on"
+            })
+            #temporary
+            that = this
+            $('#addMetabolite').click(->
+                that.activeGraph.nodes.push(
+                    that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(),
+                                                        true, that.ctx)
+                )
+            )
+            $("#addReaction").click(->
+                source =
+                    id : $('#source').val().trim()
+                    name : $('#source :selected').text()
+                target =
+                    id:  $('#target').val().trim()
+                    name: $('#target :selected').text()
+                that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx)
+            )
+
+
+
             # SVG Matrix for zooming/panning
             @svg = document.createElementNS("http://www.w3.org/2000/svg","svg")
             @xform = @svg.createSVGMatrix()
