@@ -32,9 +32,10 @@ class Subsystem
         @radiusScale = utilities.scaleRadius(null, 5, 15)
         #get rid of root
         for compartment of @graph.outNeighbours
+            @buildCompartments(@graph.outNeighbours[compartment])
+        for compartment of @graph.outNeighbours
             @buildNodesAndLinks(@graph.outNeighbours[compartment])
         @initalizeForce()
-        console.log(@nodes)
 
 
     createLeaf: (graph) ->
@@ -42,7 +43,34 @@ class Subsystem
         for inNeighbour of graph.inNeighbours
             for outNeighbour of graph.outNeighbours
                 if inNeighbour isnt outNeighbour
-                    @nodes.push(@createReaction(graph.value))
+                    reactionNode = @createReaction(graph.value)
+                    @createLinks(inNeighbour, reactionNode, outNeighbour)
+
+
+
+
+
+    createLinks: (s1, reactionNode, s2) ->
+        source = @compartments[s1]
+        target = reactionNode
+        link =
+            id         : "#{source.name}-#{target.name}"
+            source     : source
+            target     : target
+            flux_value : reactionNode.flux_value
+            r         : @metaboliteRadius
+            linkScale : utilities.scaleRadius(null, 1, 5)
+        @links.push(new Link(link, @ctx))
+        source = reactionNode
+        target =  @compartments[s2]
+        link =
+            id         : "#{source.name}-#{target.name}"
+            source     : source
+            target     : target
+            flux_value : reactionNode.flux_value
+            r         : @metaboliteRadius
+            linkScale : utilities.scaleRadius(null, 1, 5)
+        @links.push(new Link(link, @ctx))
 
 
 
@@ -61,10 +89,12 @@ class Subsystem
 
             r = new ReactionNode(reactionAttributes, @ctx)
             @reactions[reaction.id] = r
+            console.log(reaction)
             for inNeighbour in reaction.inNeighbours
                 r.inNeighbours.push(inNeighbour.name)
             for outNeighbour in reaction.outNeighbours
                 r.outNeighbours.push(outNeighbour.name)
+            @nodes.push(r)
         return r
 
 
@@ -73,6 +103,16 @@ class Subsystem
         if graph.value? and graph.value.type is "r"
             #deal with leaf
             @createLeaf(graph)
+        else
+            for compartment of graph.outNeighbours
+                @buildNodesAndLinks(graph.outNeighbours[compartment])
+            #console.log(graph.outNeighbours)
+            #@buildNodesAndLinks(graph.outNeighbours[])
+
+    buildCompartments: (graph)->
+        #reached leaf
+        if graph.value? and graph.value.type is "r"
+            return
         else
         # for compartment of graph.outNeighbours
             nodeAttributes =
@@ -86,9 +126,7 @@ class Subsystem
             @compartments[graph.id] = c
             @nodes.push(c)
             for compartment of graph.outNeighbours
-                @buildNodesAndLinks(graph.outNeighbours[compartment])
-            #console.log(graph.outNeighbours)
-            #@buildNodesAndLinks(graph.outNeighbours[])
+                @buildCompartments(graph.outNeighbours[compartment])
 
 
 
@@ -113,7 +151,7 @@ class Subsystem
         else if link.source.type is 'r'
             factor = link.source.products.length
 
-        return factor * 100
+        return factor*25
 
     chargeHandler: (node, i) ->
         factor = node.inNeighbours.length + node.outNeighbours.length + 1

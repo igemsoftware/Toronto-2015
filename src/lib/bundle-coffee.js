@@ -351,14 +351,16 @@ Subsystem = (function() {
     this.links = new Array();
     this.radiusScale = utilities.scaleRadius(null, 5, 15);
     for (compartment in this.graph.outNeighbours) {
+      this.buildCompartments(this.graph.outNeighbours[compartment]);
+    }
+    for (compartment in this.graph.outNeighbours) {
       this.buildNodesAndLinks(this.graph.outNeighbours[compartment]);
     }
     this.initalizeForce();
-    console.log(this.nodes);
   }
 
   Subsystem.prototype.createLeaf = function(graph) {
-    var inNeighbour, outNeighbour, results;
+    var inNeighbour, outNeighbour, reactionNode, results;
     results = [];
     for (inNeighbour in graph.inNeighbours) {
       results.push((function() {
@@ -366,7 +368,8 @@ Subsystem = (function() {
         results1 = [];
         for (outNeighbour in graph.outNeighbours) {
           if (inNeighbour !== outNeighbour) {
-            results1.push(this.nodes.push(this.createReaction(graph.value)));
+            reactionNode = this.createReaction(graph.value);
+            results1.push(this.createLinks(inNeighbour, reactionNode, outNeighbour));
           } else {
             results1.push(void 0);
           }
@@ -375,6 +378,32 @@ Subsystem = (function() {
       }).call(this));
     }
     return results;
+  };
+
+  Subsystem.prototype.createLinks = function(s1, reactionNode, s2) {
+    var link, source, target;
+    source = this.compartments[s1];
+    target = reactionNode;
+    link = {
+      id: source.name + "-" + target.name,
+      source: source,
+      target: target,
+      flux_value: reactionNode.flux_value,
+      r: this.metaboliteRadius,
+      linkScale: utilities.scaleRadius(null, 1, 5)
+    };
+    this.links.push(new Link(link, this.ctx));
+    source = reactionNode;
+    target = this.compartments[s2];
+    link = {
+      id: source.name + "-" + target.name,
+      source: source,
+      target: target,
+      flux_value: reactionNode.flux_value,
+      r: this.metaboliteRadius,
+      linkScale: utilities.scaleRadius(null, 1, 5)
+    };
+    return this.links.push(new Link(link, this.ctx));
   };
 
   Subsystem.prototype.createReaction = function(reaction) {
@@ -393,6 +422,7 @@ Subsystem = (function() {
       };
       r = new ReactionNode(reactionAttributes, this.ctx);
       this.reactions[reaction.id] = r;
+      console.log(reaction);
       ref = reaction.inNeighbours;
       for (j = 0, len = ref.length; j < len; j++) {
         inNeighbour = ref[j];
@@ -403,14 +433,28 @@ Subsystem = (function() {
         outNeighbour = ref1[k];
         r.outNeighbours.push(outNeighbour.name);
       }
+      this.nodes.push(r);
     }
     return r;
   };
 
   Subsystem.prototype.buildNodesAndLinks = function(graph) {
-    var c, compartment, nodeAttributes, results;
+    var compartment, results;
     if ((graph.value != null) && graph.value.type === "r") {
       return this.createLeaf(graph);
+    } else {
+      results = [];
+      for (compartment in graph.outNeighbours) {
+        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
+      }
+      return results;
+    }
+  };
+
+  Subsystem.prototype.buildCompartments = function(graph) {
+    var c, compartment, nodeAttributes, results;
+    if ((graph.value != null) && graph.value.type === "r") {
+
     } else {
       nodeAttributes = {
         x: utilities.rand(this.W),
@@ -425,7 +469,7 @@ Subsystem = (function() {
       this.nodes.push(c);
       results = [];
       for (compartment in graph.outNeighbours) {
-        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
+        results.push(this.buildCompartments(graph.outNeighbours[compartment]));
       }
       return results;
     }
@@ -454,7 +498,7 @@ Subsystem = (function() {
     } else if (link.source.type === 'r') {
       factor = link.source.products.length;
     }
-    return factor * 100;
+    return factor * 25;
   };
 
   Subsystem.prototype.chargeHandler = function(node, i) {
