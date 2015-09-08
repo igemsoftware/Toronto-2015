@@ -20,19 +20,14 @@ class System
         @everything = @attr.everything
         @hideObjective = @attr.hideObjective
 
-        # After Metabolites and Reactions built
-        # @compartmentalize()
-        # @root = null
+        [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data)
 
-        # [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data)
-
-        # console.log(@reactions)
 
         @graph = @buildGraph('root', 'compartment')
-        console.log(@graph)
-        @subsystems = new Object()
 
+        @subsystems = new Object()
         @subsystems["ecoli"] = new Subsystem(@attr, @graph)
+
         @viewController.startCanvas(@subsystems["ecoli"])
 
     buildMetabolitesAndReactions: (model) ->
@@ -43,13 +38,10 @@ class System
         for metabolite in model.metabolites
             # Create a new Metabolite object using the current metabolite
             metabolite =  @createMetabolite(metabolite.name, metabolite.id, false, @ctx)
-
             # Store current Metabolite in metabolites dictionary
             metabolites[metabolite.id] = metabolite
 
-        # At this point, there is a child for each type within the 'sorter'
-        # For example, a child for each compartment, that is 'c', 'e', 'p'
-        # ^not true anymore
+        # Loop through each reaction
         for reaction in model.reactions
             # Create fresh Reaction object
 
@@ -71,13 +63,6 @@ class System
 
         return [metabolites, reactions]
 
-    # Takes in a Graph
-    # Returns Graphs based on sorter
-    # buildGraph2: (graph, sorter) ->
-
-
-
-    # model -> json model
     # graphId -> Id for "current" root
     # sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
     buildGraph: (graphId, sorter) ->
@@ -89,22 +74,16 @@ class System
         for metabolite of metabolites
             # If current Metabolite's compartment is not a child of `graph`, add it
             if not graph.outNeighbours[metabolites[metabolite][sorter]]?
-                # console.log(metabolite[sorter])
                 # Create a new child with no outNeighbours or parents
                 graph.outNeighbours[metabolites[metabolite][sorter]] = new Graph(metabolites[metabolite][sorter], new Object(), new Object())
-                # console.log(graph)
 
-        # probly wont work
+        # At this point, there is a child for each type within the 'sorter'
+        # For example, a child for each compartment, that is 'c', 'e', 'p'
         for reaction of reactions
             r = reactions[reaction]
             # todo, create new 'sortee' objects for each potential 'sorter' inside reaction
             # for sortee in r[sorteeHolder]
             # todo: generalizable
-
-
-            # if reaction.id is "COLIPAPabctex"
-            #     # console.log(reaction)
-
 
             for cpt in r.substrateCompartments
                 leaf = null
@@ -112,10 +91,6 @@ class System
                     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id]
                     if potentialLeaf?
                         leaf = potentialLeaf
-                # for _cpt in r.productCompartments
-                #     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
-                #     if potentialLeaf?
-                #         leaf = potentialLeaf
 
                 if not leaf?
                     leaf = new Graph(r.id, new Object(), new Object())
@@ -131,10 +106,6 @@ class System
                     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id]
                     if potentialLeaf?
                         leaf = potentialLeaf
-                # for _cpt in r.productCompartments
-                #     potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
-                #     if potentialLeaf?
-                #         leaf = potentialLeaf
 
                 if not leaf?
                     leaf = new Graph(r.id, new Object(), new Object())
@@ -150,137 +121,6 @@ class System
 
         return graph
 
-    compartmentalize: ->
-        subgraphTypes = new Object()
-
-        [nodes, links] = @buildReactionsAndMetabolites(@data)
-
-        for metabolite in @data.metabolites
-            # todo: give compartment on back-end
-            compartmentType = metabolite.id.split('_')[metabolite.id.split('_').length - 1]
-            if not subgraphTypes[compartmentType]? and compartmentType isnt 'e'
-                subgraphTypes[compartmentType] = new Object()
-
-
-        # for link in links
-        #     if link.source.type is 'r' and link.target.compartment is 'e'
-        #         console.log(link)
-
-        for subgraphType of subgraphTypes
-            nameMappings =
-                c: 'cytosol'
-                p: 'periplasm'
-
-            subgraph = @createMetabolite(
-                nameMappings[subgraphType],
-                subgraphType,
-                false,
-                @ctx
-            )
-
-            subgraph.r = 50
-
-            @nodes.push(subgraph)
-
-            for link in links
-                if link.source.type is 'm'
-                    # case 1: m -> r
-                    if link.source.compartment is subgraphType
-                        # SG -> r
-                        # if subgraphType is 'c'
-                        #     console.log(subgraph)
-                        link.source = subgraph
-                        @nodes.push(link.target)
-                        @links.push(link)
-                else if link.source.type is 'r'
-                    # case 2: r -> m
-                    console.log('links')
-
-
-
-
-                # 'c' -> X goes into 'c' blob
-                # if link.source.type is 'm' and link.source.compartment is subgraphType
-                #     link.source = subgraph
-                #     @nodes.push(link.target)
-                #     @links.push(link)
-
-                # X -> 'c' goes into 'c' blob
-                # if link.source.type is 'm'
-                #     link.target = subgraph
-                #     @nodes.push(link.source)
-                #     @links.push(link)
-
-                # if link.source.type is 'r' and link.target.type is 'm' and link.target.compartment is 'e'
-                #     @nodes.push(link.target)
-                #     @links.push(link)
-
-
-                # if link.source.type is 'p' and
-
-
-
-
-    buildReactionsAndMetabolites: (model) ->
-        nodes = new Array()
-        links = new Array()
-
-        for metabolite in model.metabolites
-            nodes.push(@createMetabolite(
-                metabolite.name,
-                metabolite.id,
-                false,
-                @ctx
-            ))
-
-
-        radiusScale = utilities.scaleRadius(model, 5, 15)
-        # Why tempLinks? source/target Reaction may not exist yet
-        tempLinks = new Array()
-
-        for reaction in model.reactions
-            # Don't include biomass objective function reaction; skews drawing
-            if @hideObjective and reaction.name.indexOf('objective function') isnt -1
-                continue
-            else if @everything or reaction.flux_value > 0
-                nodes.push(@createReaction(
-                    reaction.name,
-                    reaction.id,
-                    radiusScale(reaction.flux_value),
-                    reaction.flux_value,
-                    @ctx
-                ))
-                # Assign metabolite source and target for each reaction
-                for metabolite in Object.keys(reaction.metabolites)
-                    source = null
-                    target = null
-
-                    if reaction.metabolites[metabolite] > 0
-                        source = reaction.id
-                        target = metabolite
-                    else
-                        source = metabolite
-                        target = reaction.id
-                    link =
-                        id         : "#{source}-#{target}"
-                        source     : source
-                        target     : target
-                        flux_value : reaction.flux_value
-                    tempLinks.push(link)
-
-        nodesMap = utilities.nodeMap(nodes)
-        for link in tempLinks
-            linkAttr =
-                id        : link.id
-                source    : nodes[nodesMap[link.source]]
-                target    : nodes[nodesMap[link.target]]
-                fluxValue : link.flux_value
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(model, 1, 5)
-
-            links.push(new Link(linkAttr, @ctx))
-
-        return [nodes, links]
     createReaction: (name, id, radius, flux, ctx) ->
         reactionAttributes =
             x          : utilities.rand(@W)
@@ -306,61 +146,6 @@ class System
             @viewController.updateOptions(name, id)
         return metabolite
 
-    linkDistanceHandler: (link, i) ->
-        factor = 0
-        if link.target.type is 'r'
-            factor = link.target.substrates.length
-        else if link.source.type is 'r'
-            factor = link.source.products.length
-
-        return factor * 100
-
-    chargeHandler: (node, i) ->
-        factor = node.inNeighbours.length + node.outNeighbours.length + 1
-
-        return factor * -100
-
-    initalizeForce: () ->
-        @force = d3.layout.force()
-            # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
-            .nodes(@nodes)
-            # The links: mutates source, target
-            .links(@links)
-            # Affects gravitational center and initial random position
-            .size([@W, @H])
-            # Sets "rigidity" of links in range [0,1]; func(link, index), this -> force; evaluated at start()
-            .linkStrength(2)
-            # At each tick of the simulation, the particle velocity is scaled by the specified friction
-            .friction(0.9)
-            # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
-            .linkDistance(@linkDistanceHandler)
-            # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
-            .charge(@chargeHandler)
-            # Sets the maximum distance over which charge forces are applied; \infty if not specified
-            #.chargeDistance()
-            # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
-            .gravity(0.1)
-            # Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) < theta => treat quadrant as single large node
-            .theta(0.8)
-            # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
-            .alpha(0.1)
-            # Let's get this party start()ed
-
-        if @useStatic
-            @force.tick() for n in @nodes
-            @force.stop()
-
-    checkCollisions: (x, y) ->
-        nodeReturn = null
-        for node in @nodes
-            if node.checkCollision(x,y)
-                nodeReturn = node
-                node.hover = true
-                break
-            else
-                node.hover = false
-        return nodeReturn
-
     deleteNode : (node) ->
         @exclusions.push(node)
         node.deleted = true
@@ -372,13 +157,7 @@ class System
             outNeighbour.inNeighbours.splice(nodeIndex, 1)
         @viewController.removeOption(node)
 
-    addLink: (source, target, name, flux, ctx) ->
-        for node in @nodes
-            if node.id is source.id and node.name is node.name
-                src = node
-            else if node.id is target.id and node.name is node.name
-                tgt = node
-
+    addLink: (src, tgt, name, flux, ctx) ->
         if not src? or not tgt?
             alert("No self linking!")
         else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
