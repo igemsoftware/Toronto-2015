@@ -2,7 +2,7 @@
 Subsystem      = require "./Subsystem"
 ViewController = require "./ViewController"
 Node           = require "./Node"
-Compartment         = require "./Compartment"
+Compartment    = require "./Compartment"
 Metabolite     = require "./Metabolite"
 Reaction       = require "./Reaction"
 Link           = require "./Link"
@@ -23,21 +23,19 @@ class System
         # After Metabolites and Reactions built
         # @compartmentalize()
         # @root = null
-        @graph = @buildGraph(@data, 'root', 'compartment')
+
+        # [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data)
+
+        # console.log(@reactions)
+
+        @graph = @buildGraph('root', 'compartment')
+        console.log(@graph)
         @subsystems = new Object()
 
         @subsystems["ecoli"] = new Subsystem(@attr, @graph)
         @viewController.startCanvas(@subsystems["ecoli"])
 
-
-
-    # model -> json model
-    # graphId -> Id for "current" root
-    # sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
-    buildGraph: (model, graphId, sorter) ->
-        counter = 0
-        graph = new Graph(graphId, new Object(), new Object())
-        # May not be needed
+    buildMetabolitesAndReactions: (model) ->
         metabolites = new Object()
         reactions   = new Object()
 
@@ -48,23 +46,20 @@ class System
 
             # Store current Metabolite in metabolites dictionary
             metabolites[metabolite.id] = metabolite
-            # If current Metabolite's compartment is not a child of `graph`, add it
-            if not graph.outNeighbours[metabolite[sorter]]?
-                # Create a new child with no outNeighbours or parents
-                graph.outNeighbours[metabolite[sorter]] = new Graph(metabolite[sorter], new Object(), new Object())
 
         # At this point, there is a child for each type within the 'sorter'
         # For example, a child for each compartment, that is 'c', 'e', 'p'
+        # ^not true anymore
         for reaction in model.reactions
             # Create fresh Reaction object
 
             if (not @everything and reaction.flux_value is 0) or (@hideObjective and reaction.name.indexOf('objective function') isnt -1 )
                 continue
+
             # Push links into Reaction object
             reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
             r = reactions[reaction.id]
             for metaboliteId of reaction.metabolites
-                #add to c or p or e compartment in objects for outNeighbours
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id
                     target = metaboliteId
@@ -74,6 +69,34 @@ class System
                     target = reaction.id
                     r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, @ctx))
 
+        return [metabolites, reactions]
+
+    # Takes in a Graph
+    # Returns Graphs based on sorter
+    # buildGraph2: (graph, sorter) ->
+
+
+
+    # model -> json model
+    # graphId -> Id for "current" root
+    # sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
+    buildGraph: (graphId, sorter) ->
+        counter = 0
+        graph = new Graph(graphId, new Object(), new Object())
+        # May not be needed
+        [metabolites, reactions] = @buildMetabolitesAndReactions(@data)
+
+        for metabolite of metabolites
+            # If current Metabolite's compartment is not a child of `graph`, add it
+            if not graph.outNeighbours[metabolites[metabolite][sorter]]?
+                # console.log(metabolite[sorter])
+                # Create a new child with no outNeighbours or parents
+                graph.outNeighbours[metabolites[metabolite][sorter]] = new Graph(metabolites[metabolite][sorter], new Object(), new Object())
+                # console.log(graph)
+
+        # probly wont work
+        for reaction of reactions
+            r = reactions[reaction]
             # todo, create new 'sortee' objects for each potential 'sorter' inside reaction
             # for sortee in r[sorteeHolder]
             # todo: generalizable
@@ -86,7 +109,7 @@ class System
             for cpt in r.substrateCompartments
                 leaf = null
                 for _cpt in r.substrateCompartments
-                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
+                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id]
                     if potentialLeaf?
                         leaf = potentialLeaf
                 # for _cpt in r.productCompartments
@@ -100,14 +123,12 @@ class System
 
                     leaf.value = r
                 leaf.inNeighbours[cpt] = graph.outNeighbours[cpt]
-                graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf
-
-
+                graph.outNeighbours[cpt].outNeighbours[r.id] = leaf
 
             for cpt in r.productCompartments
                 leaf = null
                 for _cpt in r.substrateCompartments
-                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id]
+                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id]
                     if potentialLeaf?
                         leaf = potentialLeaf
                 # for _cpt in r.productCompartments

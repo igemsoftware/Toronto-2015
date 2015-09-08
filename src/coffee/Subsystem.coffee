@@ -40,7 +40,6 @@ class Subsystem
 
 
     createLeaf: (graph) ->
-
         for inNeighbour of graph.inNeighbours
             for outNeighbour of graph.outNeighbours
                 if inNeighbour isnt outNeighbour

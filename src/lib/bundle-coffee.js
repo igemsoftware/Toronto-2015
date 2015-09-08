@@ -647,16 +647,15 @@ System = (function() {
     this.ctx = this.viewController.ctx;
     this.everything = this.attr.everything;
     this.hideObjective = this.attr.hideObjective;
-    this.graph = this.buildGraph(this.data, 'root', 'compartment');
+    this.graph = this.buildGraph('root', 'compartment');
+    console.log(this.graph);
     this.subsystems = new Object();
     this.subsystems["ecoli"] = new Subsystem(this.attr, this.graph);
     this.viewController.startCanvas(this.subsystems["ecoli"]);
   }
 
-  System.prototype.buildGraph = function(model, graphId, sorter) {
-    var _cpt, counter, cpt, graph, j, k, l, leaf, len, len1, len2, len3, len4, len5, m, metabolite, metaboliteId, metabolites, o, p, potentialLeaf, r, reaction, reactions, ref, ref1, ref2, ref3, ref4, ref5, source, target;
-    counter = 0;
-    graph = new Graph(graphId, new Object(), new Object());
+  System.prototype.buildMetabolitesAndReactions = function(model) {
+    var j, k, len, len1, metabolite, metaboliteId, metabolites, r, reaction, reactions, ref, ref1, source, target;
     metabolites = new Object();
     reactions = new Object();
     ref = model.metabolites;
@@ -664,9 +663,6 @@ System = (function() {
       metabolite = ref[j];
       metabolite = this.createMetabolite(metabolite.name, metabolite.id, false, this.ctx);
       metabolites[metabolite.id] = metabolite;
-      if (graph.outNeighbours[metabolite[sorter]] == null) {
-        graph.outNeighbours[metabolite[sorter]] = new Graph(metabolite[sorter], new Object(), new Object());
-      }
     }
     ref1 = model.reactions;
     for (k = 0, len1 = ref1.length; k < len1; k++) {
@@ -687,14 +683,30 @@ System = (function() {
           r.addLink(this.createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, this.ctx));
         }
       }
-      ref2 = r.substrateCompartments;
-      for (l = 0, len2 = ref2.length; l < len2; l++) {
-        cpt = ref2[l];
+    }
+    return [metabolites, reactions];
+  };
+
+  System.prototype.buildGraph = function(graphId, sorter) {
+    var _cpt, counter, cpt, graph, j, k, l, leaf, len, len1, len2, len3, m, metabolite, metabolites, potentialLeaf, r, reaction, reactions, ref, ref1, ref2, ref3, ref4;
+    counter = 0;
+    graph = new Graph(graphId, new Object(), new Object());
+    ref = this.buildMetabolitesAndReactions(this.data), metabolites = ref[0], reactions = ref[1];
+    for (metabolite in metabolites) {
+      if (graph.outNeighbours[metabolites[metabolite][sorter]] == null) {
+        graph.outNeighbours[metabolites[metabolite][sorter]] = new Graph(metabolites[metabolite][sorter], new Object(), new Object());
+      }
+    }
+    for (reaction in reactions) {
+      r = reactions[reaction];
+      ref1 = r.substrateCompartments;
+      for (j = 0, len = ref1.length; j < len; j++) {
+        cpt = ref1[j];
         leaf = null;
-        ref3 = r.substrateCompartments;
-        for (m = 0, len3 = ref3.length; m < len3; m++) {
-          _cpt = ref3[m];
-          potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id];
+        ref2 = r.substrateCompartments;
+        for (k = 0, len1 = ref2.length; k < len1; k++) {
+          _cpt = ref2[k];
+          potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id];
           if (potentialLeaf != null) {
             leaf = potentialLeaf;
           }
@@ -705,16 +717,16 @@ System = (function() {
           leaf.value = r;
         }
         leaf.inNeighbours[cpt] = graph.outNeighbours[cpt];
-        graph.outNeighbours[cpt].outNeighbours[reaction.id] = leaf;
+        graph.outNeighbours[cpt].outNeighbours[r.id] = leaf;
       }
-      ref4 = r.productCompartments;
-      for (o = 0, len4 = ref4.length; o < len4; o++) {
-        cpt = ref4[o];
+      ref3 = r.productCompartments;
+      for (l = 0, len2 = ref3.length; l < len2; l++) {
+        cpt = ref3[l];
         leaf = null;
-        ref5 = r.substrateCompartments;
-        for (p = 0, len5 = ref5.length; p < len5; p++) {
-          _cpt = ref5[p];
-          potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[reaction.id];
+        ref4 = r.substrateCompartments;
+        for (m = 0, len3 = ref4.length; m < len3; m++) {
+          _cpt = ref4[m];
+          potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id];
           if (potentialLeaf != null) {
             leaf = potentialLeaf;
           }
