@@ -668,7 +668,10 @@ System = (function() {
     ref1 = model.reactions;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       reaction = ref1[j];
-      if ((!this.everything && reaction.flux_value === 0) || (this.hideObjective && reaction.name.indexOf('objective function') !== -1)) {
+      if (!this.everything && reaction.flux_value === 0) {
+        continue;
+      }
+      if (this.hideObjective && reaction.name.indexOf('objective function') !== -1) {
         continue;
       }
       reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 9001, 0, this.ctx);

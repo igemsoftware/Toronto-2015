@@ -22,7 +22,6 @@ class System
 
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data)
 
-
         @graph = @buildGraph('root', 'compartment')
 
         @subsystems = new Object()
@@ -43,11 +42,13 @@ class System
 
         # Loop through each reaction
         for reaction in model.reactions
-            # Create fresh Reaction object
-
-            if (not @everything and reaction.flux_value is 0) or (@hideObjective and reaction.name.indexOf('objective function') isnt -1 )
+            # Skip if flux is 0 or if reaction name containes 'objective function'
+            if (not @everything and reaction.flux_value is 0)
+                continue
+            if (@hideObjective and reaction.name.indexOf('objective function') isnt -1 )
                 continue
 
+            # Create fresh Reaction object
             # Push links into Reaction object
             reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
             r = reactions[reaction.id]
