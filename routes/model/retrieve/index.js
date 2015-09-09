@@ -23,7 +23,7 @@ router.get('/:id', function(req,res, next) {
 		}
 
 		if (!model) {
-			res.status(403).send('204 no content. That model does not exist.\n');
+			res.status(204).send('204 no content. That model does not exist.\n');
 		} else {
 			model.dictifyReactionMetabolites(function(model) {
 				res.send(model);
