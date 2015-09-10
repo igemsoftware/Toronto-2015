@@ -1,15 +1,12 @@
 # **Classes**
 Subsystem      = require "./Subsystem"
 ViewController = require "./ViewController"
-Node           = require "./Node"
 Compartment    = require "./Compartment"
-Metabolite     = require "./Metabolite"
-Reaction       = require "./Reaction"
-Link           = require "./Link"
 Graph          = require './Graph'
 
-# **Utility Functions**
-utilities = require("./utilities")
+creators = require './creators'
+deletors = require './deletors'
+addors   = require './addors'
 
 class System
     constructor: (@attr, data) ->
@@ -21,9 +18,11 @@ class System
         # Settings for hiding certain Reactions
         @everything = @attr.everything
         @hideObjective = @attr.hideObjective
+        # If this is too far below, not accessible for some reason
+        @metaboliteRadius = 5
 
         # The "full resolution" set of Metabolites and Reactions for this System
-        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data)
+        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions)
 
         # Construct the Graph for this System
         @graph = @buildGraph('root', 'compartment', ->
@@ -35,19 +34,23 @@ class System
 
         @viewController.startCanvas(@subsystems["ecoli"])
 
-    buildMetabolitesAndReactions: (model) ->
+        # Inject System into utility functions
+        # todo: remove need for injecting
+        deletors.deleteNode = deletors.deleteNode.bind(this)
+
+    buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()
         reactions   = new Object()
 
         # Loop through each metabolites in the metabolic model provided
-        for metabolite in model.metabolites
+        for metabolite in metaboliteData
             # Create a new Metabolite object using the current metabolite
-            metabolite =  @createMetabolite(metabolite.name, metabolite.id, false, @ctx)
+            metabolite =  @createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
             # Store current Metabolite in metabolites dictionary
             metabolites[metabolite.id] = metabolite
 
         # Loop through each reaction
-        for reaction in model.reactions
+        for reaction in reactionData
             # Skip if flux is 0 or if reaction name containes 'objective function'
             if (not @everything and reaction.flux_value is 0)
                 continue
@@ -56,17 +59,17 @@ class System
 
             # Create fresh Reaction object
             # Push links into Reaction object
-            reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 9001, 0, @ctx)
+            reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 20, 0,@ctx)
             r = reactions[reaction.id]
             for metaboliteId of reaction.metabolites
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id
                     target = metaboliteId
-                    r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reactions.flux, @ctx))
+                    r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reactions.flux, @metaboliteRadius, @ctx))
                 else
                     source = metaboliteId
                     target = reaction.id
-                    r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, @ctx))
+                    r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, @metaboliteRadius, @ctx))
 
         return [metabolites, reactions]
 
@@ -87,7 +90,6 @@ class System
 
         funky = funky.bind(this)
         funky()
-
 
         # At this point, there is a child for each type within the 'sorter'
         # For example, a child for each compartment, that is 'c', 'e', 'p'
@@ -133,128 +135,16 @@ class System
 
         return graph
 
-    createReaction: (name, id, radius, flux, ctx) ->
-        reactionAttributes =
-            x          : utilities.rand(@W)
-            y          : utilities.rand(@H)
-            r          : 5
-            name       : name
-            id         : id
-            type       : "r"
-            flux_value : flux
-            colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-        return new Reaction(reactionAttributes, ctx)
+    createReaction: creators.createReaction
 
-    createMetabolite: (name, id, updateOption, ctx) ->
-        nodeAttributes =
-            x    : utilities.rand(@W)
-            y    : utilities.rand(@H)
-            r    : @metaboliteRadius
-            name : name
-            id   : id
-            type : "m"
-        metabolite = new Metabolite(nodeAttributes, ctx)
-        if updateOption
-            @viewController.updateOptions(name, id)
-        return metabolite
+    createMetabolite: creators.createMetabolite
 
-    deleteNode : (node) ->
-        @exclusions.push(node)
-        node.deleted = true
-        for inNeighbour in node.inNeighbours
-            nodeIndex = inNeighbour.outNeighbours.indexOf(node)
-            inNeighbour.outNeighbours.splice(nodeIndex, 1)
-        for outNeighbour in node.outNeighbours
-            nodeIndex = outNeighbour.inNeighbours.indexOf(node)
-            outNeighbour.inNeighbours.splice(nodeIndex, 1)
-        @viewController.removeOption(node)
+    createLink: creators.createLink
 
-    addLink: (src, tgt, name, flux, ctx) ->
-        if not src? or not tgt?
-            alert("No self linking!")
-        else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-            @links.push(new Link(linkAttr, ctx))
-        else if src.type is "m" and tgt.type is "m"
-            reactionAttributes =
-                x          : utilities.rand(@W)
-                y          : utilities.rand(@H)
-                r          : @metaboliteRadius
-                name       : name
-                id         : name
-                type       : "r"
-                flux_value : flux
-                colour     : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-            reaction = new Reaction(reactionAttributes, ctx)
-            @nodes.push(reaction)
-            linkAttr =
-                id        : "#{source.id}-#{reaction.id}"
-                source    : src
-                target    : reaction
-                fluxValue : flux
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-
-            @links.push(new Link(linkAttr, ctx))
-            linkAttr =
-                id        : "#{reaction.id}-#{target.id}"
-                source    : reaction
-                target    : tgt
-                fluxValue : flux
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-            @links.push(new Link(linkAttr, ctx))
-        else
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-            @links.push(new Link(linkAttr, ctx))
-
-    createLink: (src, tgt, name, flux, ctx) ->
-        if src.type is "r" and tgt.type is "m"
-            # console.log('here')
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-
-            return new Link(linkAttr, ctx)
-        else if src.type is "m" and tgt.type is "r"
-            # console.log(src.type)
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-            return new Link(linkAttr, ctx)
-        else
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : @metaboliteRadius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-            return new Link(linkAttr, ctx)
-
-
-
-window.FBA =
-    System: System
+    deleteNode : deletors.deleteNode
 
 module.exports = System
+
+# Expose API to global namespace
+window.FBA =
+    System: System

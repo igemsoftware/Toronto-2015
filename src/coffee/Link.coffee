@@ -44,7 +44,7 @@ class Link
             #theta is the angle from the line to the arrow
             theta = Math.PI/8
             @ctx.beginPath()
-            
+
             targetx = @target.x + @r*Math.cos(lineAngle)
             targety = @target.y + @r*Math.sin(lineAngle)
 
