@@ -9,15 +9,15 @@ deletors = require './deletors'
 addors   = require './addors'
 
 class System
-    constructor: (@rootId, @attr, data) ->
+    constructor: (rootId, attr, data) ->
         # Setting up ViewController
-        @viewController = new ViewController("canvas", @attr.width, @attr.height, @attr.backgroundColour, null)
-        @attr.ctx = @viewController.ctx
+        @viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null)
+        attr.ctx = @viewController.ctx
         @ctx = @viewController.ctx
 
         # Settings for hiding certain Reactions
-        @everything = @attr.everything
-        @hideObjective = @attr.hideObjective
+        @everything = attr.everything
+        @hideObjective = attr.hideObjective
         # If this is too far below, not accessible for some reason
         @metaboliteRadius = 5
 
@@ -25,7 +25,7 @@ class System
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions)
 
         # @rootId = 'globalroot'
-        @graph = new Graph(@rootId)
+        @graph = new Graph(rootId)
 
         # Construct the Graph for this System
         sortor = ->
@@ -77,7 +77,7 @@ class System
         @buildGraph(compartmentor.bind(this), sortor.bind(this))
 
         @subsystems = new Object()
-        @subsystems["ecoli"] = new Subsystem(@attr, @graph)
+        @subsystems["ecoli"] = new Subsystem(attr, @graph)
 
         @viewController.startCanvas(@subsystems["ecoli"])
 
@@ -85,6 +85,9 @@ class System
         # todo: remove need for injecting
         creators.createLink = creators.createLink.bind(this)
         deletors.deleteNode = deletors.deleteNode.bind(this)
+
+        @renderable = new Object()
+        console.log(this)
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()

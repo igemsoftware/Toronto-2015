@@ -465,16 +465,14 @@ addors = require('./addors');
 System = (function() {
   function System(rootId, attr, data) {
     var compartmentor, ref, sortor;
-    this.rootId = rootId;
-    this.attr = attr;
-    this.viewController = new ViewController("canvas", this.attr.width, this.attr.height, this.attr.backgroundColour, null);
-    this.attr.ctx = this.viewController.ctx;
+    this.viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null);
+    attr.ctx = this.viewController.ctx;
     this.ctx = this.viewController.ctx;
-    this.everything = this.attr.everything;
-    this.hideObjective = this.attr.hideObjective;
+    this.everything = attr.everything;
+    this.hideObjective = attr.hideObjective;
     this.metaboliteRadius = 5;
     ref = this.buildMetabolitesAndReactions(data.metabolites, data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    this.graph = new Graph(this.rootId);
+    this.graph = new Graph(rootId);
     sortor = function() {
       var _cpt, cpt, i, j, k, l, leaf, len, len1, len2, len3, potentialLeaf, r, reaction, ref1, ref2, ref3, ref4, results;
       results = [];
@@ -543,10 +541,12 @@ System = (function() {
     };
     this.buildGraph(compartmentor.bind(this), sortor.bind(this));
     this.subsystems = new Object();
-    this.subsystems["ecoli"] = new Subsystem(this.attr, this.graph);
+    this.subsystems["ecoli"] = new Subsystem(attr, this.graph);
     this.viewController.startCanvas(this.subsystems["ecoli"]);
     creators.createLink = creators.createLink.bind(this);
     deletors.deleteNode = deletors.deleteNode.bind(this);
+    this.renderable = new Object();
+    console.log(this);
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
