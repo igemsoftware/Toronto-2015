@@ -22,7 +22,9 @@ class System
 
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data)
 
-        @graph = @buildGraph('root', 'compartment')
+        @graph = @buildGraph('root', 'compartment', ->
+            console.log(this)
+        )
 
         @subsystems = new Object()
         @subsystems["ecoli"] = new Subsystem(@attr, @graph)
@@ -66,22 +68,27 @@ class System
 
     # graphId -> Id for "current" root
     # sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
-    buildGraph: (graphId, sorter) ->
+    buildGraph: (graphId, sorter, funky) ->
         counter = 0
         graph = new Graph(graphId, new Object(), new Object())
         # May not be needed
-        [metabolites, reactions] = @buildMetabolitesAndReactions(@data)
+        # [metabolites, reactions] = @buildMetabolitesAndReactions(@data)
 
-        for metabolite of metabolites
+        for metabolite of @metabolites
+            m = @metabolites[metabolite]
             # If current Metabolite's compartment is not a child of `graph`, add it
-            if not graph.outNeighbours[metabolites[metabolite][sorter]]?
+            if not graph.outNeighbours[m[sorter]]?
                 # Create a new child with no outNeighbours or parents
-                graph.outNeighbours[metabolites[metabolite][sorter]] = new Graph(metabolites[metabolite][sorter], new Object(), new Object())
+                graph.outNeighbours[m[sorter]] = new Graph(@metabolites[metabolite][sorter], new Object(), new Object())
+
+        funky = funky.bind(this)
+        funky()
+
 
         # At this point, there is a child for each type within the 'sorter'
         # For example, a child for each compartment, that is 'c', 'e', 'p'
-        for reaction of reactions
-            r = reactions[reaction]
+        for reaction of @reactions
+            r = @reactions[reaction]
             # todo, create new 'sortee' objects for each potential 'sorter' inside reaction
             # for sortee in r[sorteeHolder]
             # todo: generalizable

@@ -649,7 +649,9 @@ System = (function() {
     this.everything = this.attr.everything;
     this.hideObjective = this.attr.hideObjective;
     ref = this.buildMetabolitesAndReactions(this.data), this.metabolites = ref[0], this.reactions = ref[1];
-    this.graph = this.buildGraph('root', 'compartment');
+    this.graph = this.buildGraph('root', 'compartment', function() {
+      return console.log(this);
+    });
     this.subsystems = new Object();
     this.subsystems["ecoli"] = new Subsystem(this.attr, this.graph);
     this.viewController.startCanvas(this.subsystems["ecoli"]);
@@ -691,25 +693,27 @@ System = (function() {
     return [metabolites, reactions];
   };
 
-  System.prototype.buildGraph = function(graphId, sorter) {
-    var _cpt, counter, cpt, graph, i, j, k, l, leaf, len, len1, len2, len3, metabolite, metabolites, potentialLeaf, r, reaction, reactions, ref, ref1, ref2, ref3, ref4;
+  System.prototype.buildGraph = function(graphId, sorter, funky) {
+    var _cpt, counter, cpt, graph, i, j, k, l, leaf, len, len1, len2, len3, m, metabolite, potentialLeaf, r, reaction, ref, ref1, ref2, ref3;
     counter = 0;
     graph = new Graph(graphId, new Object(), new Object());
-    ref = this.buildMetabolitesAndReactions(this.data), metabolites = ref[0], reactions = ref[1];
-    for (metabolite in metabolites) {
-      if (graph.outNeighbours[metabolites[metabolite][sorter]] == null) {
-        graph.outNeighbours[metabolites[metabolite][sorter]] = new Graph(metabolites[metabolite][sorter], new Object(), new Object());
+    for (metabolite in this.metabolites) {
+      m = this.metabolites[metabolite];
+      if (graph.outNeighbours[m[sorter]] == null) {
+        graph.outNeighbours[m[sorter]] = new Graph(this.metabolites[metabolite][sorter], new Object(), new Object());
       }
     }
-    for (reaction in reactions) {
-      r = reactions[reaction];
-      ref1 = r.substrateCompartments;
-      for (i = 0, len = ref1.length; i < len; i++) {
-        cpt = ref1[i];
+    funky = funky.bind(this);
+    funky();
+    for (reaction in this.reactions) {
+      r = this.reactions[reaction];
+      ref = r.substrateCompartments;
+      for (i = 0, len = ref.length; i < len; i++) {
+        cpt = ref[i];
         leaf = null;
-        ref2 = r.substrateCompartments;
-        for (j = 0, len1 = ref2.length; j < len1; j++) {
-          _cpt = ref2[j];
+        ref1 = r.substrateCompartments;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          _cpt = ref1[j];
           potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id];
           if (potentialLeaf != null) {
             leaf = potentialLeaf;
@@ -723,13 +727,13 @@ System = (function() {
         leaf.inNeighbours[cpt] = graph.outNeighbours[cpt];
         graph.outNeighbours[cpt].outNeighbours[r.id] = leaf;
       }
-      ref3 = r.productCompartments;
-      for (k = 0, len2 = ref3.length; k < len2; k++) {
-        cpt = ref3[k];
+      ref2 = r.productCompartments;
+      for (k = 0, len2 = ref2.length; k < len2; k++) {
+        cpt = ref2[k];
         leaf = null;
-        ref4 = r.substrateCompartments;
-        for (l = 0, len3 = ref4.length; l < len3; l++) {
-          _cpt = ref4[l];
+        ref3 = r.substrateCompartments;
+        for (l = 0, len3 = ref3.length; l < len3; l++) {
+          _cpt = ref3[l];
           potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id];
           if (potentialLeaf != null) {
             leaf = potentialLeaf;
