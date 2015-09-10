@@ -4,7 +4,7 @@ Reaction   = require "./Reaction"
 Link       = require "./Link"
 
 class Graph
-    constructor: (@id) ->
+    constructor: (@id, @name) ->
         @outNeighbours = new Object()
         @inNeighbours = new Object()
         @value = null
