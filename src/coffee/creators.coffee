@@ -90,6 +90,7 @@ module.exports =
 
 	# System injected
 	createLinks: (s1, reactionNode, s2) ->
+		# console.log(reactionNode.flux_value)
 		source = @compartments[s1]
 		target = reactionNode
 		link =

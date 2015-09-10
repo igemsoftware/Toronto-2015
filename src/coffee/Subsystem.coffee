@@ -1,34 +1,21 @@
-ViewController = require "./ViewController"
-Node           = require "./Node"
-Compartment    = require "./Compartment"
-Metabolite     = require "./Metabolite"
-Reaction       = require "./Reaction"
-Link           = require "./Link"
-utilities      = require "./utilities"
-Graph          = require "./Graph"
-ReactionNode   = require "./ReactionNode"
-
-creators = require './creators'
-addors   = require './addors'
-deletors = require './deletors'
-# Class this later?
-force = require './force'
+Compartment = require "./Compartment"
+utilities   = require "./utilities"
+creators    = require './creators'
+force       = require './force'
 
 class Subsystem
-	# attr
-	#
 	constructor: (attr, @graph) ->
 		@ctx = attr.ctx
 		@W = attr.width
 		@H = attr.height
-		@BG = attr.backgroundColour
+		# @BG = attr.backgroundColour
 		@metaboliteRadius = attr.metaboliteRadius
-		@useStatic = attr.useStatic
-		@everything = attr.everything
-		@hideObjective = attr.hideObjective
+		# @useStatic = attr.useStatic
+		# @everything = attr.everything
+		# @hideObjective = attr.hideObjective
 
-		@force = null
-		@currentActiveNode = null
+		# @force = null
+		# @currentActiveNode = null
 
 		@compartments = new Object()
 		@reactions = new Object()
@@ -42,7 +29,6 @@ class Subsystem
 		creators.createReactionNode = creators.createReactionNode.bind(this)
 		creators.createLeaf = creators.createLeaf.bind(this)
 		creators.createLinks = creators.createLinks.bind(this)
-		deletors.deleteNode = deletors.deleteNode.bind(this)
 		force.initalizeForce = force.initalizeForce.bind(this)
 
 		#get rid of root
@@ -70,16 +56,11 @@ class Subsystem
 			return
 		else
 		# for compartment of graph.outNeighbours
-			mappings =
-				c: 'cytosol'
-				e: 'extracellular'
-				p: 'periplasm'
-
 			nodeAttributes =
 				x : utilities.rand(@W)
 				y : utilities.rand(@H)
 				r : 150
-				name : mappings[graph.id]
+				name : graph.name
 				id : graph.id
 				type : "s"
 				colour: "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"

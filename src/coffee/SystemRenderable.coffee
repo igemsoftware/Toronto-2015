@@ -1,12 +1,10 @@
 Compartment = require './Compartment'
-
-utilities = require './utilities'
-
-creators = require './creators'
-force = require './force'
+utilities   = require './utilities'
+creators    = require './creators'
+force       = require './force'
 
 class SystemRenderable
-	constructor: (graph, @W, @H, @ctx) ->
+	constructor: (graph, @metaboliteRadius, @W, @H, @ctx) ->
 		@nodes = new Array()
 		@links = new Array()
 		# @force = null
@@ -30,9 +28,9 @@ class SystemRenderable
 		for compartment of graph.outNeighbours
 			@buildNodesAndLinks(graph.outNeighbours[compartment])
 
-		delete @compartments
-		delete @reactions
-		delete @radiusScale
+		# delete @compartments
+		# delete @reactions
+		# delete @radiusScale
 
 		@initalizeForce()
 

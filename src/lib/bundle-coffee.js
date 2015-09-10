@@ -310,31 +310,13 @@ module.exports = ReactionNode;
 
 
 },{"./Node":5,"./utilities":17}],8:[function(require,module,exports){
-var Compartment, Graph, Link, Metabolite, Node, Reaction, ReactionNode, Subsystem, ViewController, addors, creators, deletors, force, utilities;
-
-ViewController = require("./ViewController");
-
-Node = require("./Node");
+var Compartment, Subsystem, creators, force, utilities;
 
 Compartment = require("./Compartment");
 
-Metabolite = require("./Metabolite");
-
-Reaction = require("./Reaction");
-
-Link = require("./Link");
-
 utilities = require("./utilities");
 
-Graph = require("./Graph");
-
-ReactionNode = require("./ReactionNode");
-
 creators = require('./creators');
-
-addors = require('./addors');
-
-deletors = require('./deletors');
 
 force = require('./force');
 
@@ -345,13 +327,7 @@ Subsystem = (function() {
     this.ctx = attr.ctx;
     this.W = attr.width;
     this.H = attr.height;
-    this.BG = attr.backgroundColour;
     this.metaboliteRadius = attr.metaboliteRadius;
-    this.useStatic = attr.useStatic;
-    this.everything = attr.everything;
-    this.hideObjective = attr.hideObjective;
-    this.force = null;
-    this.currentActiveNode = null;
     this.compartments = new Object();
     this.reactions = new Object();
     this.nodes = new Array();
@@ -360,7 +336,6 @@ Subsystem = (function() {
     creators.createReactionNode = creators.createReactionNode.bind(this);
     creators.createLeaf = creators.createLeaf.bind(this);
     creators.createLinks = creators.createLinks.bind(this);
-    deletors.deleteNode = deletors.deleteNode.bind(this);
     force.initalizeForce = force.initalizeForce.bind(this);
     for (compartment in this.graph.outNeighbours) {
       this.buildCompartments(this.graph.outNeighbours[compartment]);
@@ -385,20 +360,15 @@ Subsystem = (function() {
   };
 
   Subsystem.prototype.buildCompartments = function(graph) {
-    var c, compartment, mappings, nodeAttributes, results;
+    var c, compartment, nodeAttributes, results;
     if ((graph.value != null) && graph.value.type === "r") {
 
     } else {
-      mappings = {
-        c: 'cytosol',
-        e: 'extracellular',
-        p: 'periplasm'
-      };
       nodeAttributes = {
         x: utilities.rand(this.W),
         y: utilities.rand(this.H),
         r: 150,
-        name: mappings[graph.id],
+        name: graph.name,
         id: graph.id,
         type: "s",
         colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
@@ -446,7 +416,7 @@ Subsystem = (function() {
 module.exports = Subsystem;
 
 
-},{"./Compartment":1,"./Graph":2,"./Link":3,"./Metabolite":4,"./Node":5,"./Reaction":6,"./ReactionNode":7,"./ViewController":11,"./addors":12,"./creators":13,"./deletors":14,"./force":15,"./utilities":17}],9:[function(require,module,exports){
+},{"./Compartment":1,"./creators":13,"./force":15,"./utilities":17}],9:[function(require,module,exports){
 var Compartment, Graph, Subsystem, System, SystemRenderable, ViewController, addors, creators, deletors;
 
 Subsystem = require("./Subsystem");
@@ -473,7 +443,7 @@ System = (function() {
     this.ctx = this.viewController.ctx;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
-    this.metaboliteRadius = 5;
+    this.metaboliteRadius = attr.metaboliteRadius;
     ref = this.buildMetabolitesAndReactions(data.metabolites, data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
     this.graph = new Graph(rootId, rootId);
     sortor = function() {
@@ -548,9 +518,8 @@ System = (function() {
       return results;
     };
     this.buildGraph(compartmentor.bind(this), sortor.bind(this));
-    this.subsystems = new Object();
-    this.subsystems["ecoli"] = new Subsystem(attr, this.graph);
-    this.viewController.startCanvas(this.subsystems["ecoli"]);
+    this.renderable = new SystemRenderable(this.graph, this.metaboliteRadius, attr.width, attr.height, this.ctx);
+    this.viewController.startCanvas(this.renderable);
     console.log(this);
   }
 
@@ -577,11 +546,11 @@ System = (function() {
         if (reaction.metabolites[metaboliteId] > 0) {
           source = reaction.id;
           target = metaboliteId;
-          r.addLink(this.createLink(reactions[source], metabolites[target], reaction.name, reactions.flux, this.metaboliteRadius, this.ctx));
+          r.addLink(this.createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
         } else {
           source = metaboliteId;
           target = reaction.id;
-          r.addLink(this.createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, this.metaboliteRadius, this.ctx));
+          r.addLink(this.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
         }
       }
     }
@@ -624,8 +593,9 @@ creators = require('./creators');
 force = require('./force');
 
 SystemRenderable = (function() {
-  function SystemRenderable(graph, W, H, ctx) {
+  function SystemRenderable(graph, metaboliteRadius, W, H, ctx) {
     var compartment;
+    this.metaboliteRadius = metaboliteRadius;
     this.W = W;
     this.H = H;
     this.ctx = ctx;
@@ -644,9 +614,6 @@ SystemRenderable = (function() {
     for (compartment in graph.outNeighbours) {
       this.buildNodesAndLinks(graph.outNeighbours[compartment]);
     }
-    delete this.compartments;
-    delete this.reactions;
-    delete this.radiusScale;
     this.initalizeForce();
   }
 
@@ -1375,7 +1342,6 @@ chargeHandler = function(node, i) {
 module.exports = {
   initalizeForce: function() {
     var j, len, n, ref;
-    console.log(this.links.length);
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(linkDistanceHandler).charge(chargeHandler).gravity(0.1).theta(0.8).alpha(0.1);
     if (this.useStatic) {
       ref = this.nodes;

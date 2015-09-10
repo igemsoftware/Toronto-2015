@@ -22,7 +22,7 @@ class System
 		@everything = attr.everything
 		@hideObjective = attr.hideObjective
 		# If this is too far below, not accessible for some reason
-		@metaboliteRadius = 5
+		@metaboliteRadius = attr.metaboliteRadius
 
 		# The "full resolution" set of Metabolites and Reactions for this System
 		[@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions)
@@ -92,12 +92,9 @@ class System
 
 
 		@buildGraph(compartmentor.bind(this), sortor.bind(this))
-		@subsystems = new Object()
-		@subsystems["ecoli"] = new Subsystem(attr, @graph)
-		@viewController.startCanvas(@subsystems["ecoli"])
-
-		# @renderable = new SystemRenderable(@graph, attr.width, attr.height, @ctx)
-		# @viewController.startCanvas(@renderable)
+		
+		@renderable = new SystemRenderable(@graph, @metaboliteRadius, attr.width, attr.height, @ctx)
+		@viewController.startCanvas(@renderable)
 		console.log(this)
 
 	buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
@@ -128,11 +125,11 @@ class System
 				if reaction.metabolites[metaboliteId] > 0
 					source = reaction.id
 					target = metaboliteId
-					r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reactions.flux, @metaboliteRadius, @ctx))
+					r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
 				else
 					source = metaboliteId
 					target = reaction.id
-					r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reactions.flux, @metaboliteRadius, @ctx))
+					r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
 
 		return [metabolites, reactions]
 
