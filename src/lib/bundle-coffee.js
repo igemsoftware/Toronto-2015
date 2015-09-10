@@ -1,9 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Compartment, Node,
+var Compartment, Node, stringToColour,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
 Node = require("./Node");
+
+stringToColour = require('./utilities').stringToColour;
 
 Compartment = (function(superClass) {
   extend(Compartment, superClass);
@@ -21,7 +23,7 @@ Compartment = (function(superClass) {
       this.ctx.moveTo(this.x, this.y);
       this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
       this.ctx.closePath();
-      this.ctx.fillStyle = this.colour;
+      this.ctx.fillStyle = stringToColour(this.name);
       if (this.hover) {
         this.ctx.fillStyle = "green";
       }
@@ -36,7 +38,7 @@ Compartment = (function(superClass) {
 module.exports = Compartment;
 
 
-},{"./Node":5}],2:[function(require,module,exports){
+},{"./Node":5,"./utilities":12}],2:[function(require,module,exports){
 var Graph, Link, Metabolite, Reaction, utilities;
 
 utilities = require("./utilities");
@@ -254,11 +256,13 @@ module.exports = Reaction;
 
 
 },{"./Node":5}],7:[function(require,module,exports){
-var Node, ReactionNode,
+var Node, ReactionNode, stringToColour,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
 Node = require("./Node");
+
+stringToColour = require('./utilities').stringToColour;
 
 ReactionNode = (function(superClass) {
   extend(ReactionNode, superClass);
@@ -280,7 +284,7 @@ ReactionNode = (function(superClass) {
       }
       this.ctx.lineTo(this.x + this.r * Math.cos(0), this.y + this.r * Math.sin(0));
       this.ctx.lineTo(this.x + this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + this.r * Math.sin(1 * (2 * Math.PI / nos)));
-      this.ctx.fillStyle = this.colour;
+      this.ctx.fillStyle = stringToColour(this.name);
       this.ctx.closePath();
       this.ctx.fill();
       factor = 1.2;
@@ -292,7 +296,7 @@ ReactionNode = (function(superClass) {
       this.ctx.lineTo(this.x + factor * this.r * Math.cos(0), this.y + factor * this.r * Math.sin(0));
       this.ctx.lineTo(this.x + factor * this.r * Math.cos(1 * 2 * Math.PI / nos), this.y + factor * this.r * Math.sin(1 * (2 * Math.PI / nos)));
       this.ctx.closePath();
-      this.ctx.strokeStyle = this.colour;
+      this.ctx.strokeStyle = stringToColour(this.name);
       return this.ctx.stroke();
     }
   };
@@ -304,7 +308,7 @@ ReactionNode = (function(superClass) {
 module.exports = ReactionNode;
 
 
-},{"./Node":5}],8:[function(require,module,exports){
+},{"./Node":5,"./utilities":12}],8:[function(require,module,exports){
 var Compartment, Graph, Link, Metabolite, Node, Reaction, ReactionNode, Subsystem, ViewController, utilities;
 
 ViewController = require("./ViewController");
@@ -446,15 +450,20 @@ Subsystem = (function() {
   };
 
   Subsystem.prototype.buildCompartments = function(graph) {
-    var c, compartment, nodeAttributes, results;
+    var c, compartment, mappings, nodeAttributes, results;
     if ((graph.value != null) && graph.value.type === "r") {
 
     } else {
+      mappings = {
+        c: 'cytosol',
+        e: 'extracellular',
+        p: 'periplasm'
+      };
       nodeAttributes = {
         x: utilities.rand(this.W),
         y: utilities.rand(this.H),
         r: 150,
-        name: graph.id,
+        name: mappings[graph.id],
         id: graph.id,
         type: "s",
         colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
@@ -642,13 +651,12 @@ System = (function() {
   function System(attr, data) {
     var ref;
     this.attr = attr;
-    this.data = data;
     this.viewController = new ViewController("canvas", this.attr.width, this.attr.height, this.attr.backgroundColour, null);
     this.attr.ctx = this.viewController.ctx;
     this.ctx = this.viewController.ctx;
     this.everything = this.attr.everything;
     this.hideObjective = this.attr.hideObjective;
-    ref = this.buildMetabolitesAndReactions(this.data), this.metabolites = ref[0], this.reactions = ref[1];
+    ref = this.buildMetabolitesAndReactions(data), this.metabolites = ref[0], this.reactions = ref[1];
     this.graph = this.buildGraph('root', 'compartment', function() {
       return console.log(this);
     });
@@ -1260,7 +1268,7 @@ network = new System(systemAttributes, data);
 
 
 },{"./Subsystem":8,"./System":9}],12:[function(require,module,exports){
-var nodeMap, rand, scaleRadius;
+var hashCode, hashStringToColour, intToRGB, nodeMap, rand, scaleRadius;
 
 rand = function(range) {
   return Math.floor(Math.random() * (range + 1));
@@ -1295,10 +1303,45 @@ nodeMap = function(nodes) {
   return map;
 };
 
+hashCode = function(str) {
+  var hash, i, j, len, ref;
+  hash = 0;
+  ref = [0, str.length];
+  for (j = 0, len = ref.length; j < len; j++) {
+    i = ref[j];
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+};
+
+intToRGB = function(i) {
+  var c;
+  c = (i & 0x00FFFFFF).toString(16).toUpperCase();
+  return '00000'.substring(0, 6 - c.length) + c;
+};
+
+hashStringToColour = function(str) {
+  return intToRGB(hashCode(str));
+};
+
+
+var stringToColour = function(str) {
+
+    // str to hash
+    for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+
+    // int/hash to hex
+    for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+
+    return colour;
+}
+;
+
 module.exports = {
   rand: rand,
   scaleRadius: scaleRadius,
-  nodeMap: nodeMap
+  nodeMap: nodeMap,
+  stringToColour: stringToColour
 };
 
 

@@ -1,4 +1,5 @@
 Node = require "./Node"
+stringToColour = require('./utilities').stringToColour
 
 class Compartment extends Node
     constructor: (@attr, @ctx)->
@@ -11,7 +12,10 @@ class Compartment extends Node
             @ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
             @ctx.closePath()
 
-            @ctx.fillStyle = @colour
+            # @ctx.fillStyle = @colour
+
+            @ctx.fillStyle = stringToColour(@name)
+
             @ctx.fillStyle = "green" if @hover
 
             @ctx.fill()

@@ -1,4 +1,5 @@
 Node = require "./Node"
+stringToColour = require('./utilities').stringToColour
 
 class ReactionNode extends Node
     constructor: (attr, @ctx) ->
@@ -20,7 +21,10 @@ class ReactionNode extends Node
 
             # @ctx.strokeStyle = "rgb(120,120,120)"
             # @ctx.stroke()
-            @ctx.fillStyle = @colour
+            # @ctx.fillStyle = @colour
+
+            @ctx.fillStyle = stringToColour(@name)
+
             @ctx.closePath()
 
             @ctx.fill()
@@ -37,7 +41,9 @@ class ReactionNode extends Node
 
             @ctx.closePath()
             # @ctx.strokeStyle = "rgb(120,120,120)"
-            @ctx.strokeStyle = @colour
+            # @ctx.strokeStyle = @colour
+
+            @ctx.strokeStyle = stringToColour(@name)
             @ctx.stroke()
 
             # @ctx.beginPath()

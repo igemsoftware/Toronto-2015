@@ -12,16 +12,20 @@ Graph          = require './Graph'
 utilities = require("./utilities")
 
 class System
-    constructor: (@attr, @data) ->
+    constructor: (@attr, data) ->
+        # Setting up ViewController
         @viewController = new ViewController("canvas", @attr.width, @attr.height, @attr.backgroundColour, null)
-        # [@nodes, @links] = @buildReactionsAndMetabolites(@data)
         @attr.ctx = @viewController.ctx
         @ctx = @viewController.ctx
+
+        # Settings for hiding certain Reactions
         @everything = @attr.everything
         @hideObjective = @attr.hideObjective
 
-        [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data)
+        # The "full resolution" set of Metabolites and Reactions for this System
+        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data)
 
+        # Construct the Graph for this System
         @graph = @buildGraph('root', 'compartment', ->
             console.log(this)
         )

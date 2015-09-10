@@ -46,10 +46,6 @@ class Subsystem
                     reactionNode = @createReaction(graph.value)
                     @createLinks(inNeighbour, reactionNode, outNeighbour)
 
-
-
-
-
     createLinks: (s1, reactionNode, s2) ->
         source = @compartments[s1]
         target = reactionNode
@@ -114,11 +110,16 @@ class Subsystem
             return
         else
         # for compartment of graph.outNeighbours
+            mappings =
+                c: 'cytosol'
+                e: 'extracellular'
+                p: 'periplasm'
+
             nodeAttributes =
                 x : utilities.rand(@W)
                 y : utilities.rand(@H)
                 r : 150
-                name : graph.id
+                name : mappings[graph.id]
                 id : graph.id
                 type : "s"
                 colour: "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
