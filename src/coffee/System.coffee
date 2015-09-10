@@ -11,10 +11,12 @@ addors = require './addors'
 
 class System
 	constructor: (rootId, attr, data) ->
+		# This is mainly so we have @ctx to create Links
 		# Setting up ViewController
 		@viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null)
 		attr.ctx = @viewController.ctx
 		@ctx = @viewController.ctx
+
 
 		# Settings for hiding certain Reactions
 		@everything = attr.everything
@@ -88,6 +90,7 @@ class System
 		@subsystems = new Object()
 		@subsystems["ecoli"] = new Subsystem(attr, @graph)
 
+
 		@viewController.startCanvas(@subsystems["ecoli"])
 
 			# Inject System into utility functions
@@ -95,7 +98,8 @@ class System
 		creators.createLink = creators.createLink.bind(this)
 		deletors.deleteNode = deletors.deleteNode.bind(this)
 
-		@renderable = new SystemRenderable(@graph)
+		@renderable = new SystemRenderable(@graph, @ctx)
+		# @viewController.startCanvas(@renderable)
 		console.log(this)
 
 	buildMetabolitesAndReactions: (metaboliteData, reactionData) ->

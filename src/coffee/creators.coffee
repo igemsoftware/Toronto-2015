@@ -57,36 +57,36 @@ module.exports =
 
 	# System injected
 	createLink: (src, tgt, name, flux, radius, ctx) ->
-        if src.type is "r" and tgt.type is "m"
-            # console.log('here')
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : radius
-                linkScale : utilities.scaleRadius(null, 1, 5)
+		if src.type is "r" and tgt.type is "m"
+	        # console.log('here')
+	        linkAttr =
+	            id        : "#{src.id}-#{tgt.id}"
+	            source    : src
+	            target    : tgt
+	            fluxValue : flux
+	            r         : radius
+	            linkScale : utilities.scaleRadius(null, 1, 5)
 
-            return new Link(linkAttr, ctx)
-        else if src.type is "m" and tgt.type is "r"
-            # console.log(src.type)
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : radius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-            return new Link(linkAttr, ctx)
-        else
-            linkAttr =
-                id        : "#{src.id}-#{tgt.id}"
-                source    : src
-                target    : tgt
-                fluxValue : flux
-                r         : radius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-            return new Link(linkAttr, ctx)
+	        return new Link(linkAttr, ctx)
+	    else if src.type is "m" and tgt.type is "r"
+	        # console.log(src.type)
+	        linkAttr =
+	            id        : "#{src.id}-#{tgt.id}"
+	            source    : src
+	            target    : tgt
+	            fluxValue : flux
+	            r         : radius
+	            linkScale : utilities.scaleRadius(null, 1, 5)
+	        return new Link(linkAttr, ctx)
+	    else
+	        linkAttr =
+	            id        : "#{src.id}-#{tgt.id}"
+	            source    : src
+	            target    : tgt
+	            fluxValue : flux
+	            r         : radius
+	            linkScale : utilities.scaleRadius(null, 1, 5)
+	        return new Link(linkAttr, ctx)
 
 	# System injected
 	createLinks: (s1, reactionNode, s2) ->

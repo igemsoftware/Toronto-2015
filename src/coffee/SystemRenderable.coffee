@@ -3,11 +3,14 @@ Compartment = require './Compartment'
 utilities = require './utilities'
 
 creators = require './creators'
+force = require './force'
 
 class SystemRenderable
-	constructor: (graph) ->
+	constructor: (graph, @ctx) ->
 		@nodes = new Array()
 		@links = new Array()
+
+		# @ctx = viewController.ctx
 
 
 		@compartments = new Object()
@@ -31,6 +34,8 @@ class SystemRenderable
 		delete @compartments
 		delete @reactions
 		delete @radiusScale
+
+		@initalizeForce()
 
 	buildCompartments: (graph)->
 		# Reached a Leaf
@@ -65,5 +70,20 @@ class SystemRenderable
 	createLinks: creators.createLinks
 
 	createReactionNode: creators.createReactionNode
+
+
+	## Do we want these here?
+	initalizeForce: force.initalizeForce
+
+	checkCollisions: (x, y) ->
+		nodeReturn = null
+		for node in @nodes
+			if node.checkCollision(x,y)
+				nodeReturn = node
+				node.hover = true
+				break
+			else
+				node.hover = false
+		return nodeReturn
 
 module.exports = SystemRenderable

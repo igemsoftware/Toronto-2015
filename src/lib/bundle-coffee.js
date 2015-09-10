@@ -553,7 +553,7 @@ System = (function() {
     this.viewController.startCanvas(this.subsystems["ecoli"]);
     creators.createLink = creators.createLink.bind(this);
     deletors.deleteNode = deletors.deleteNode.bind(this);
-    this.renderable = new SystemRenderable(this.graph);
+    this.renderable = new SystemRenderable(this.graph, this.ctx);
     console.log(this);
   }
 
@@ -616,7 +616,7 @@ window.FBA = {
 
 
 },{"./Compartment":1,"./Graph":2,"./Subsystem":8,"./SystemRenderable":10,"./ViewController":11,"./addors":12,"./creators":13,"./deletors":14}],10:[function(require,module,exports){
-var Compartment, SystemRenderable, creators, utilities;
+var Compartment, SystemRenderable, creators, force, utilities;
 
 Compartment = require('./Compartment');
 
@@ -624,9 +624,12 @@ utilities = require('./utilities');
 
 creators = require('./creators');
 
+force = require('./force');
+
 SystemRenderable = (function() {
-  function SystemRenderable(graph) {
+  function SystemRenderable(graph, ctx) {
     var compartment;
+    this.ctx = ctx;
     this.nodes = new Array();
     this.links = new Array();
     this.compartments = new Object();
@@ -644,6 +647,7 @@ SystemRenderable = (function() {
     delete this.compartments;
     delete this.reactions;
     delete this.radiusScale;
+    this.initalizeForce();
   }
 
   SystemRenderable.prototype.buildCompartments = function(graph) {
@@ -690,6 +694,25 @@ SystemRenderable = (function() {
 
   SystemRenderable.prototype.createReactionNode = creators.createReactionNode;
 
+  SystemRenderable.prototype.initalizeForce = force.initalizeForce;
+
+  SystemRenderable.prototype.checkCollisions = function(x, y) {
+    var i, len, node, nodeReturn, ref;
+    nodeReturn = null;
+    ref = this.nodes;
+    for (i = 0, len = ref.length; i < len; i++) {
+      node = ref[i];
+      if (node.checkCollision(x, y)) {
+        nodeReturn = node;
+        node.hover = true;
+        break;
+      } else {
+        node.hover = false;
+      }
+    }
+    return nodeReturn;
+  };
+
   return SystemRenderable;
 
 })();
@@ -697,7 +720,7 @@ SystemRenderable = (function() {
 module.exports = SystemRenderable;
 
 
-},{"./Compartment":1,"./creators":13,"./utilities":17}],11:[function(require,module,exports){
+},{"./Compartment":1,"./creators":13,"./force":15,"./utilities":17}],11:[function(require,module,exports){
 var ViewController;
 
 ViewController = (function() {
