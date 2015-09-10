@@ -551,9 +551,6 @@ System = (function() {
     this.subsystems = new Object();
     this.subsystems["ecoli"] = new Subsystem(attr, this.graph);
     this.viewController.startCanvas(this.subsystems["ecoli"]);
-    creators.createLink = creators.createLink.bind(this);
-    deletors.deleteNode = deletors.deleteNode.bind(this);
-    this.renderable = new SystemRenderable(this.graph, this.ctx);
     console.log(this);
   }
 
@@ -627,8 +624,10 @@ creators = require('./creators');
 force = require('./force');
 
 SystemRenderable = (function() {
-  function SystemRenderable(graph, ctx) {
+  function SystemRenderable(graph, W, H, ctx) {
     var compartment;
+    this.W = W;
+    this.H = H;
     this.ctx = ctx;
     this.nodes = new Array();
     this.links = new Array();
@@ -638,6 +637,7 @@ SystemRenderable = (function() {
     creators.createReactionNode = creators.createReactionNode.bind(this);
     creators.createLeaf = creators.createLeaf.bind(this);
     creators.createLinks = creators.createLinks.bind(this);
+    force.initalizeForce = force.initalizeForce.bind(this);
     for (compartment in graph.outNeighbours) {
       this.buildCompartments(graph.outNeighbours[compartment]);
     }
@@ -1375,6 +1375,7 @@ chargeHandler = function(node, i) {
 module.exports = {
   initalizeForce: function() {
     var j, len, n, ref;
+    console.log(this.links.length);
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.W, this.H]).linkStrength(2).friction(0.9).linkDistance(linkDistanceHandler).charge(chargeHandler).gravity(0.1).theta(0.8).alpha(0.1);
     if (this.useStatic) {
       ref = this.nodes;

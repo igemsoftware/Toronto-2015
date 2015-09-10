@@ -6,12 +6,10 @@ creators = require './creators'
 force = require './force'
 
 class SystemRenderable
-	constructor: (graph, @ctx) ->
+	constructor: (graph, @W, @H, @ctx) ->
 		@nodes = new Array()
 		@links = new Array()
-
-		# @ctx = viewController.ctx
-
+		# @force = null
 
 		@compartments = new Object()
 
@@ -24,6 +22,7 @@ class SystemRenderable
 		creators.createReactionNode = creators.createReactionNode.bind(this)
 		creators.createLeaf = creators.createLeaf.bind(this)
 		creators.createLinks = creators.createLinks.bind(this)
+		force.initalizeForce = force.initalizeForce.bind(this)
 
 		# Build a compartment for each immidiate outNeighbour
 		for compartment of graph.outNeighbours
@@ -56,7 +55,7 @@ class SystemRenderable
 			for compartment of graph.outNeighbours
 				@buildCompartments(graph.outNeighbours[compartment])
 
-	buildNodesAndLinks: (graph)->
+	buildNodesAndLinks: (graph) ->
 		#reached leaf
 		if graph.value? and graph.value.type is "r"
 			#deal with leaf

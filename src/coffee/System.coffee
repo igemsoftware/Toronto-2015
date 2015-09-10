@@ -85,20 +85,18 @@ class System
 					# Create a new child with no outNeighbours or parents
 					@graph.outNeighbours[m[sorter]] = new Graph(@metabolites[metabolite][sorter], mappings[m[sorter]])
 
+		# Inject System into utility functions
+		# todo: remove need for injecting
+		# creators.createLink = creators.createLink.bind(this)
+		# deletors.deleteNode = deletors.deleteNode.bind(this)
+
 
 		@buildGraph(compartmentor.bind(this), sortor.bind(this))
 		@subsystems = new Object()
 		@subsystems["ecoli"] = new Subsystem(attr, @graph)
-
-
 		@viewController.startCanvas(@subsystems["ecoli"])
 
-			# Inject System into utility functions
-			# todo: remove need for injecting
-		creators.createLink = creators.createLink.bind(this)
-		deletors.deleteNode = deletors.deleteNode.bind(this)
-
-		@renderable = new SystemRenderable(@graph, @ctx)
+		# @renderable = new SystemRenderable(@graph, attr.width, attr.height, @ctx)
 		# @viewController.startCanvas(@renderable)
 		console.log(this)
 
