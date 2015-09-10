@@ -50,10 +50,10 @@ Reaction = require("./Reaction");
 Link = require("./Link");
 
 Graph = (function() {
-  function Graph(id, outNeighbours, inNeighbours) {
+  function Graph(id) {
     this.id = id;
-    this.outNeighbours = outNeighbours;
-    this.inNeighbours = inNeighbours;
+    this.outNeighbours = new Object();
+    this.inNeighbours = new Object();
     this.value = null;
   }
 
@@ -368,7 +368,6 @@ Subsystem = (function() {
       this.buildNodesAndLinks(this.graph.outNeighbours[compartment]);
     }
     this.initalizeForce();
-    console.log(this.nodes);
   }
 
   Subsystem.prototype.buildNodesAndLinks = function(graph) {
@@ -464,8 +463,9 @@ deletors = require('./deletors');
 addors = require('./addors');
 
 System = (function() {
-  function System(attr, data) {
-    var ref;
+  function System(rootId, attr, data) {
+    var compartmentor, ref, sortor;
+    this.rootId = rootId;
     this.attr = attr;
     this.viewController = new ViewController("canvas", this.attr.width, this.attr.height, this.attr.backgroundColour, null);
     this.attr.ctx = this.viewController.ctx;
@@ -474,12 +474,78 @@ System = (function() {
     this.hideObjective = this.attr.hideObjective;
     this.metaboliteRadius = 5;
     ref = this.buildMetabolitesAndReactions(data.metabolites, data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    this.graph = this.buildGraph('root', 'compartment', function() {
-      return console.log(this);
-    });
+    this.graph = new Graph(this.rootId);
+    sortor = function() {
+      var _cpt, cpt, i, j, k, l, leaf, len, len1, len2, len3, potentialLeaf, r, reaction, ref1, ref2, ref3, ref4, results;
+      results = [];
+      for (reaction in this.reactions) {
+        r = this.reactions[reaction];
+        ref1 = r.substrateCompartments;
+        for (i = 0, len = ref1.length; i < len; i++) {
+          cpt = ref1[i];
+          leaf = null;
+          ref2 = r.substrateCompartments;
+          for (j = 0, len1 = ref2.length; j < len1; j++) {
+            _cpt = ref2[j];
+            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
+            if (potentialLeaf != null) {
+              leaf = potentialLeaf;
+            }
+          }
+          if (leaf == null) {
+            leaf = new Graph(r.id);
+            leaf.value = r;
+          }
+          leaf.inNeighbours[cpt] = this.graph.outNeighbours[cpt];
+          this.graph.outNeighbours[cpt].outNeighbours[r.id] = leaf;
+        }
+        ref3 = r.productCompartments;
+        for (k = 0, len2 = ref3.length; k < len2; k++) {
+          cpt = ref3[k];
+          leaf = null;
+          ref4 = r.substrateCompartments;
+          for (l = 0, len3 = ref4.length; l < len3; l++) {
+            _cpt = ref4[l];
+            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
+            if (potentialLeaf != null) {
+              leaf = potentialLeaf;
+            }
+          }
+          if (leaf == null) {
+            leaf = new Graph(r.id);
+            leaf.value = r;
+          }
+          leaf.outNeighbours[cpt] = this.graph.outNeighbours[cpt];
+          this.graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf;
+        }
+        if (r.outNeighbours.length === 0) {
+          leaf.outNeighbours["e"] = this.graph.outNeighbours["e"];
+          results.push(this.graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf);
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+    compartmentor = function() {
+      var m, metabolite, results, sorter;
+      sorter = 'compartment';
+      results = [];
+      for (metabolite in this.metabolites) {
+        m = this.metabolites[metabolite];
+        if (this.graph.outNeighbours[m[sorter]] == null) {
+          results.push(this.graph.outNeighbours[m[sorter]] = new Graph(this.metabolites[metabolite][sorter]));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+    this.buildGraph(compartmentor.bind(this), sortor.bind(this));
     this.subsystems = new Object();
     this.subsystems["ecoli"] = new Subsystem(this.attr, this.graph);
     this.viewController.startCanvas(this.subsystems["ecoli"]);
+    creators.createLink = creators.createLink.bind(this);
     deletors.deleteNode = deletors.deleteNode.bind(this);
   }
 
@@ -517,66 +583,9 @@ System = (function() {
     return [metabolites, reactions];
   };
 
-  System.prototype.buildGraph = function(graphId, sorter, funky) {
-    var _cpt, counter, cpt, graph, i, j, k, l, leaf, len, len1, len2, len3, m, metabolite, potentialLeaf, r, reaction, ref, ref1, ref2, ref3;
-    counter = 0;
-    graph = new Graph(graphId, new Object(), new Object());
-    for (metabolite in this.metabolites) {
-      m = this.metabolites[metabolite];
-      if (graph.outNeighbours[m[sorter]] == null) {
-        graph.outNeighbours[m[sorter]] = new Graph(this.metabolites[metabolite][sorter], new Object(), new Object());
-      }
-    }
-    funky = funky.bind(this);
-    funky();
-    for (reaction in this.reactions) {
-      r = this.reactions[reaction];
-      ref = r.substrateCompartments;
-      for (i = 0, len = ref.length; i < len; i++) {
-        cpt = ref[i];
-        leaf = null;
-        ref1 = r.substrateCompartments;
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          _cpt = ref1[j];
-          potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id];
-          if (potentialLeaf != null) {
-            leaf = potentialLeaf;
-          }
-        }
-        if (leaf == null) {
-          leaf = new Graph(r.id, new Object(), new Object());
-          counter++;
-          leaf.value = r;
-        }
-        leaf.inNeighbours[cpt] = graph.outNeighbours[cpt];
-        graph.outNeighbours[cpt].outNeighbours[r.id] = leaf;
-      }
-      ref2 = r.productCompartments;
-      for (k = 0, len2 = ref2.length; k < len2; k++) {
-        cpt = ref2[k];
-        leaf = null;
-        ref3 = r.substrateCompartments;
-        for (l = 0, len3 = ref3.length; l < len3; l++) {
-          _cpt = ref3[l];
-          potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id];
-          if (potentialLeaf != null) {
-            leaf = potentialLeaf;
-          }
-        }
-        if (leaf == null) {
-          leaf = new Graph(r.id, new Object(), new Object());
-          leaf.value = r;
-          counter++;
-        }
-        leaf.outNeighbours[cpt] = graph.outNeighbours[cpt];
-        graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf;
-      }
-      if (r.outNeighbours.length === 0) {
-        leaf.outNeighbours["e"] = graph.outNeighbours["e"];
-        graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf;
-      }
-    }
-    return graph;
+  System.prototype.buildGraph = function(compartmentor, sortor) {
+    compartmentor();
+    return sortor();
   };
 
   System.prototype.createReaction = creators.createReaction;
@@ -1283,7 +1292,7 @@ systemAttributes = {
   hideObjective: true
 };
 
-network = new System(systemAttributes, data);
+network = new System('globalroot', systemAttributes, data);
 
 
 },{"./Subsystem":8,"./System":9}],16:[function(require,module,exports){

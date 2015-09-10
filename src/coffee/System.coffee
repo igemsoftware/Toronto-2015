@@ -9,7 +9,7 @@ deletors = require './deletors'
 addors   = require './addors'
 
 class System
-    constructor: (@attr, data) ->
+    constructor: (@rootId, @attr, data) ->
         # Setting up ViewController
         @viewController = new ViewController("canvas", @attr.width, @attr.height, @attr.backgroundColour, null)
         @attr.ctx = @viewController.ctx
@@ -24,10 +24,57 @@ class System
         # The "full resolution" set of Metabolites and Reactions for this System
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions)
 
+        # @rootId = 'globalroot'
+        @graph = new Graph(@rootId)
+
         # Construct the Graph for this System
-        @graph = @buildGraph('root', 'compartment', ->
-            console.log(this)
-        )
+        sortor = ->
+            for reaction of @reactions
+                r = @reactions[reaction]
+                # todo, create new 'sortee' objects for each potential 'sorter' inside reaction
+                # for sortee in r[sorteeHolder]
+                # todo: generalizable
+
+                for cpt in r.substrateCompartments
+                    leaf = null
+                    for _cpt in r.substrateCompartments
+                        potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
+                        if potentialLeaf?
+                            leaf = potentialLeaf
+
+                    if not leaf?
+                        leaf = new Graph(r.id)
+
+                        leaf.value = r
+                    leaf.inNeighbours[cpt] = @graph.outNeighbours[cpt]
+                    @graph.outNeighbours[cpt].outNeighbours[r.id] = leaf
+
+                for cpt in r.productCompartments
+                    leaf = null
+                    for _cpt in r.substrateCompartments
+                        potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
+                        if potentialLeaf?
+                            leaf = potentialLeaf
+
+                    if not leaf?
+                        leaf = new Graph(r.id)
+                        leaf.value = r
+
+                    leaf.outNeighbours[cpt] = @graph.outNeighbours[cpt]
+                    @graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
+
+                if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
+                    leaf.outNeighbours["e"] = @graph.outNeighbours["e"]
+                    @graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
+        compartmentor = ->
+            sorter = 'compartment'
+            for metabolite of @metabolites
+                m = @metabolites[metabolite]
+                # If current Metabolite's compartment is not a child of `graph`, add it
+                if not @graph.outNeighbours[m[sorter]]?
+                    # Create a new child with no outNeighbours or parents
+                    @graph.outNeighbours[m[sorter]] = new Graph(@metabolites[metabolite][sorter])
+        @buildGraph(compartmentor.bind(this), sortor.bind(this))
 
         @subsystems = new Object()
         @subsystems["ecoli"] = new Subsystem(@attr, @graph)
@@ -36,6 +83,7 @@ class System
 
         # Inject System into utility functions
         # todo: remove need for injecting
+        creators.createLink = creators.createLink.bind(this)
         deletors.deleteNode = deletors.deleteNode.bind(this)
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
@@ -51,6 +99,7 @@ class System
 
         # Loop through each reaction
         for reaction in reactionData
+            # Create 'filters' later
             # Skip if flux is 0 or if reaction name containes 'objective function'
             if (not @everything and reaction.flux_value is 0)
                 continue
@@ -75,65 +124,9 @@ class System
 
     # graphId -> Id for "current" root
     # sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
-    buildGraph: (graphId, sorter, funky) ->
-        counter = 0
-        graph = new Graph(graphId, new Object(), new Object())
-        # May not be needed
-        # [metabolites, reactions] = @buildMetabolitesAndReactions(@data)
-
-        for metabolite of @metabolites
-            m = @metabolites[metabolite]
-            # If current Metabolite's compartment is not a child of `graph`, add it
-            if not graph.outNeighbours[m[sorter]]?
-                # Create a new child with no outNeighbours or parents
-                graph.outNeighbours[m[sorter]] = new Graph(@metabolites[metabolite][sorter], new Object(), new Object())
-
-        funky = funky.bind(this)
-        funky()
-
-        # At this point, there is a child for each type within the 'sorter'
-        # For example, a child for each compartment, that is 'c', 'e', 'p'
-        for reaction of @reactions
-            r = @reactions[reaction]
-            # todo, create new 'sortee' objects for each potential 'sorter' inside reaction
-            # for sortee in r[sorteeHolder]
-            # todo: generalizable
-
-            for cpt in r.substrateCompartments
-                leaf = null
-                for _cpt in r.substrateCompartments
-                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id]
-                    if potentialLeaf?
-                        leaf = potentialLeaf
-
-                if not leaf?
-                    leaf = new Graph(r.id, new Object(), new Object())
-                    counter++
-
-                    leaf.value = r
-                leaf.inNeighbours[cpt] = graph.outNeighbours[cpt]
-                graph.outNeighbours[cpt].outNeighbours[r.id] = leaf
-
-            for cpt in r.productCompartments
-                leaf = null
-                for _cpt in r.substrateCompartments
-                    potentialLeaf = graph.outNeighbours[_cpt].outNeighbours[r.id]
-                    if potentialLeaf?
-                        leaf = potentialLeaf
-
-                if not leaf?
-                    leaf = new Graph(r.id, new Object(), new Object())
-                    leaf.value = r
-                    counter++
-
-                leaf.outNeighbours[cpt] = graph.outNeighbours[cpt]
-                graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
-
-            if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
-                leaf.outNeighbours["e"] = graph.outNeighbours["e"]
-                graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
-
-        return graph
+    buildGraph: (compartmentor, sortor) ->
+        compartmentor()
+        sortor()
 
     createReaction: creators.createReaction
 

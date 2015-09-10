@@ -13,4 +13,4 @@ systemAttributes =
 
 #system = new System(systemAttributes, data)
 
-network = new System(systemAttributes, data)
+network = new System('globalroot', systemAttributes, data)

@@ -4,7 +4,9 @@ Reaction   = require "./Reaction"
 Link       = require "./Link"
 
 class Graph
-    constructor: (@id, @outNeighbours, @inNeighbours) ->
+    constructor: (@id) ->
+        @outNeighbours = new Object()
+        @inNeighbours = new Object()
         @value = null
 
 module.exports = Graph

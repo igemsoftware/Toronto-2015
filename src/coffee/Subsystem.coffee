@@ -8,7 +8,6 @@ utilities      = require "./utilities"
 Graph          = require "./Graph"
 ReactionNode   = require "./ReactionNode"
 
-
 creators = require './creators'
 addors   = require './addors'
 deletors = require './deletors'
@@ -52,7 +51,7 @@ class Subsystem
 		for compartment of @graph.outNeighbours
 			@buildNodesAndLinks(@graph.outNeighbours[compartment])
 		@initalizeForce()
-		console.log(@nodes)
+		# console.log(@nodes)
 
 	buildNodesAndLinks: (graph)->
 		#reached leaf
