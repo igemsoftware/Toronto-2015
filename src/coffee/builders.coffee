@@ -4,7 +4,18 @@ Graph = require './Graph'
 module.exports =
     species:
         sortor: ->
-            #itll work
+            for reaction of @reactions
+                r = @reactions[reaction]
+
+                for specie in r.species
+                    if r.productCompartments.indexOf('e') isnt -1
+                        # fix
+                        g = new Graph(r.id, r.name)
+                        g.outNeighbours['e'] = @graph.outNeighbours['e']
+                        g.inNeighbours[specie] = @graph.outNeighbours[specie]
+                        g.value = r
+                        @graph.outNeighbours[specie].outNeighbours[r.id] = g
+
         compartmentor: ->
             sorter = 'species'
 
@@ -17,6 +28,8 @@ module.exports =
                 for specie in m[sorter]
                     if not @graph.outNeighbours[specie]?
                         @graph.outNeighbours[specie] = new Graph(specie, mappings[specie])
+
+            @graph.outNeighbours['e'] = new Graph('e', 'extracellular')
 
 
     compartments:

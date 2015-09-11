@@ -60,7 +60,7 @@ for i in [0..Object.keys(subsystems).length]
 # 			console.log(reaction)
 
 
-# console.log(data)
+console.log(data)
 #root
 network = new TreeNode(null, new Object(), new System(systemAttributes, data))
 #new System('globalroot', systemAttributes, data)

@@ -38,21 +38,11 @@ class System
         else
             @graph = new Graph(@id, @name)
 
-
-        # type = 'species'
-        #
-        # compartmentor = builders[type].compartmentor.bind(this)
-        # sortor = builders[type].compartmentor.bind(this)
-        #
-        # compartmentor()
-        #
-        # console.log(this)
-
-        type = 'compartments'
-
+        type = 'species'
         compartmentor = builders[type].compartmentor.bind(this)
         sortor = builders[type].sortor.bind(this)
 
+        # Mutates @graph
         @buildGraph(compartmentor, sortor)
 
         @graph.value = new SubSystem(@graph, @metaboliteRadius, attr.width, attr.height, @viewController.ctx)
@@ -84,6 +74,7 @@ class System
             # Push links into Reaction object
             reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 20, 0,@viewController.ctx)
             r = reactions[reaction.id]
+            r.species = reaction.species
             for metaboliteId of reaction.metabolites
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id

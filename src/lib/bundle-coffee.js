@@ -560,7 +560,7 @@ System = (function() {
     } else {
       this.graph = new Graph(this.id, this.name);
     }
-    type = 'compartments';
+    type = 'species';
     compartmentor = builders[type].compartmentor.bind(this);
     sortor = builders[type].sortor.bind(this);
     this.buildGraph(compartmentor, sortor);
@@ -589,6 +589,7 @@ System = (function() {
       }
       reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 20, 0, this.viewController.ctx);
       r = reactions[reaction.id];
+      r.species = reaction.species;
       for (metaboliteId in reaction.metabolites) {
         if (reaction.metabolites[metaboliteId] > 0) {
           source = reaction.id;
@@ -1105,24 +1106,23 @@ Graph = require('./Graph');
 
 module.exports = {
   species: {
-    sortor: function() {},
-    compartmentor: function() {
-      var m, mappings, metabolite, results, sorter, specie;
-      sorter = 'species';
-      mappings = {
-        iJO1366: 'E. coli'
-      };
+    sortor: function() {
+      var g, r, reaction, results, specie;
       results = [];
-      for (metabolite in this.metabolites) {
-        m = this.metabolites[metabolite];
+      for (reaction in this.reactions) {
+        r = this.reactions[reaction];
         results.push((function() {
           var i, len, ref, results1;
-          ref = m[sorter];
+          ref = r.species;
           results1 = [];
           for (i = 0, len = ref.length; i < len; i++) {
             specie = ref[i];
-            if (this.graph.outNeighbours[specie] == null) {
-              results1.push(this.graph.outNeighbours[specie] = new Graph(specie, mappings[specie]));
+            if (r.productCompartments.indexOf('e') !== -1) {
+              g = new Graph(r.id, r.name);
+              g.outNeighbours['e'] = this.graph.outNeighbours['e'];
+              g.inNeighbours[specie] = this.graph.outNeighbours[specie];
+              g.value = r;
+              results1.push(this.graph.outNeighbours[specie].outNeighbours[r.id] = g);
             } else {
               results1.push(void 0);
             }
@@ -1131,6 +1131,24 @@ module.exports = {
         }).call(this));
       }
       return results;
+    },
+    compartmentor: function() {
+      var i, len, m, mappings, metabolite, ref, sorter, specie;
+      sorter = 'species';
+      mappings = {
+        iJO1366: 'E. coli'
+      };
+      for (metabolite in this.metabolites) {
+        m = this.metabolites[metabolite];
+        ref = m[sorter];
+        for (i = 0, len = ref.length; i < len; i++) {
+          specie = ref[i];
+          if (this.graph.outNeighbours[specie] == null) {
+            this.graph.outNeighbours[specie] = new Graph(specie, mappings[specie]);
+          }
+        }
+      }
+      return this.graph.outNeighbours['e'] = new Graph('e', 'extracellular');
     }
   },
   compartments: {
@@ -1480,6 +1498,8 @@ for (i = l = 0, ref2 = Object.keys(subsystems).length; 0 <= ref2 ? l <= ref2 : l
     }
   }
 }
+
+console.log(data);
 
 network = new TreeNode(null, new Object(), new System(systemAttributes, data));
 
