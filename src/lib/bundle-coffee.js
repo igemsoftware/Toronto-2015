@@ -542,7 +542,6 @@ System = (function() {
   function System(rootId, attr, data) {
     var compartmentor, ref, sortor;
     this.viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null);
-    this.ctx = this.viewController.ctx;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
     this.metaboliteRadius = attr.metaboliteRadius;

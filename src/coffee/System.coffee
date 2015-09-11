@@ -1,21 +1,17 @@
 # **Classes**
-SubSystem = require "./SubSystem"
+SubSystem      = require "./SubSystem"
 ViewController = require "./ViewController"
-Compartment = require "./Compartment"
-Graph = require './Graph'
-
+Compartment    = require "./Compartment"
+Graph          = require './Graph'
 
 creators = require './creators'
 deletors = require './deletors'
-addors = require './addors'
+addors   = require './addors'
 
 class System
 	constructor: (rootId, attr, data) ->
 		# Setting up ViewController
 		@viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null)
-		# This is mainly so we have @ctx to create Links
-		@ctx = @viewController.ctx
-
 
 		# Settings for hiding certain Reactions
 		@everything = attr.everything
