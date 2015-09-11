@@ -47,7 +47,7 @@ class System
         @buildGraph(compartmentor, sortor)
 
         @graph.value = new SubSystem(@graph, @metaboliteRadius, @attr.width, @attr.height, @viewController.ctx)
-        @viewController.startCanvas(@graph.value)
+
 
 
         # for system of @graph.outNeighbours
@@ -64,24 +64,21 @@ class System
         #         @graph.outNeighbours[system].value = new System(attr, data)
 
 
-        console.log(@type, @sortables.index)
+
         # if @type is @sortables.sortables[@sortables.index]
-        if @type is 'speciesssss'
+        if @type is 'species'
             console.log(Object.keys(@graph.outNeighbours).length)
             for system of @graph.outNeighbours
                 if system isnt 'e'
-                    console.log(system)
                     attr = JSON.parse(JSON.stringify(@attr))
-                    # @attr.type = @sortables.sortables[@sortables.index+1]
+                    attr.id = @sortables.sortables[@sortables.index+1]
+                    attr.name =  @sortables.sortables[@sortables.index+1]
+                    attr.type = @sortables.sortables[@sortables.index+1]
+                    #@attr.type = @sortables.sortables[@sortables.index+1]
                     # @graph.outNeighbours[system].value = attr
-                    console.log(data)
                     @graph.outNeighbours[system].value = new System(attr, data, @sortables)
-        else
-            console.log('different type')
-            console.log(@type, @sortables.index)
 
-        console.log(this)
-
+        
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()
         reactions = new Object()

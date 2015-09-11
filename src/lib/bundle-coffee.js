@@ -342,7 +342,6 @@ SubSystem = (function() {
     for (compartment in graph.outNeighbours) {
       this.buildNodesAndLinks(graph.outNeighbours[compartment]);
     }
-    this.initalizeForce();
   }
 
   SubSystem.prototype.buildCompartments = function(graph) {
@@ -448,7 +447,6 @@ SubSystem = (function() {
     for (compartment in graph.outNeighbours) {
       this.buildNodesAndLinks(graph.outNeighbours[compartment]);
     }
-    this.initalizeForce();
   }
 
   SubSystem.prototype.buildCompartments = function(graph) {
@@ -568,23 +566,18 @@ System = (function() {
     sortor = builders[this.type].sortor.bind(this);
     this.buildGraph(compartmentor, sortor);
     this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, this.attr.width, this.attr.height, this.viewController.ctx);
-    this.viewController.startCanvas(this.graph.value);
-    console.log(this.type, this.sortables.index);
-    if (this.type === 'speciesssss') {
+    if (this.type === 'species') {
       console.log(Object.keys(this.graph.outNeighbours).length);
       for (system in this.graph.outNeighbours) {
         if (system !== 'e') {
-          console.log(system);
           attr = JSON.parse(JSON.stringify(this.attr));
-          console.log(data);
+          attr.id = this.sortables.sortables[this.sortables.index + 1];
+          attr.name = this.sortables.sortables[this.sortables.index + 1];
+          attr.type = this.sortables.sortables[this.sortables.index + 1];
           this.graph.outNeighbours[system].value = new System(attr, data, this.sortables);
         }
       }
-    } else {
-      console.log('different type');
-      console.log(this.type, this.sortables.index);
     }
-    console.log(this);
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
