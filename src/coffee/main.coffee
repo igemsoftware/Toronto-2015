@@ -9,6 +9,8 @@ systemAttributes =
     useStatic        : false
     everything       : false
     hideObjective    : true
+    type: 'species'         
+
 
 
 model = JSON.parse(JSON.stringify(data))
@@ -60,7 +62,11 @@ for i in [0..Object.keys(subsystems).length]
 # 			console.log(reaction)
 
 
-console.log(data)
+
 #root
-network = new TreeNode(null, new Object(), new System(systemAttributes, data))
+sortables =
+    index: -1
+    sortables: ['species', 'compartments']
+
+network = new System(systemAttributes, data, sortables)
 #new System('globalroot', systemAttributes, data)

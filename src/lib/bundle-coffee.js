@@ -543,29 +543,47 @@ addors = require('./addors');
 builders = require('./builders');
 
 System = (function() {
-  function System(attr, data, treeNode) {
-    var compartmentor, ref, sortor, type;
-    this.treeNode = treeNode;
-    this.id = attr.id;
-    this.name = attr.name;
-    this.sorter = attr.sortor;
-    this.compartmentor = attr.compartmentor;
-    this.viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null);
-    this.everything = attr.everything;
-    this.hideObjective = attr.hideObjective;
-    this.metaboliteRadius = attr.metaboliteRadius;
+  function System(attr1, data, sortables) {
+    var attr, compartmentor, ref, sortor, system;
+    this.attr = attr1;
+    this.sortables = sortables;
+    this.sortables.index++;
+    this.id = this.attr.id;
+    this.name = this.attr.name;
+    this.sorter = this.attr.sortor;
+    this.type = this.attr.type;
+    this.compartmentor = this.attr.compartmentor;
+    this.viewController = new ViewController("canvas", this.attr.width, this.attr.height, this.attr.backgroundColour, null);
+    this.everything = this.attr.everything;
+    this.hideObjective = this.attr.hideObjective;
+    this.metaboliteRadius = this.attr.metaboliteRadius;
     ref = this.buildMetabolitesAndReactions(data.metabolites, data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
     if (!this.id || !this.name) {
       this.graph = new Graph("root", "root");
+      this.type = "species";
     } else {
       this.graph = new Graph(this.id, this.name);
     }
-    type = 'species';
-    compartmentor = builders[type].compartmentor.bind(this);
-    sortor = builders[type].sortor.bind(this);
+    compartmentor = builders[this.type].compartmentor.bind(this);
+    sortor = builders[this.type].sortor.bind(this);
     this.buildGraph(compartmentor, sortor);
-    this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, attr.width, attr.height, this.viewController.ctx);
+    this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, this.attr.width, this.attr.height, this.viewController.ctx);
     this.viewController.startCanvas(this.graph.value);
+    console.log(this.type, this.sortables.index);
+    if (this.type === 'speciesssss') {
+      console.log(Object.keys(this.graph.outNeighbours).length);
+      for (system in this.graph.outNeighbours) {
+        if (system !== 'e') {
+          console.log(system);
+          attr = JSON.parse(JSON.stringify(this.attr));
+          console.log(data);
+          this.graph.outNeighbours[system].value = new System(attr, data, this.sortables);
+        }
+      }
+    } else {
+      console.log('different type');
+      console.log(this.type, this.sortables.index);
+    }
     console.log(this);
   }
 
@@ -1443,7 +1461,7 @@ module.exports = {
 
 
 },{}],18:[function(require,module,exports){
-var System, TreeNode, counter, i, j, k, l, len, len1, metabolite, metaboliteDict, model, network, reaction, ref, ref1, ref2, subsystems, systemAttributes;
+var System, TreeNode, counter, i, j, k, l, len, len1, metabolite, metaboliteDict, model, network, reaction, ref, ref1, ref2, sortables, subsystems, systemAttributes;
 
 System = require("./System");
 
@@ -1456,7 +1474,8 @@ systemAttributes = {
   metaboliteRadius: 10,
   useStatic: false,
   everything: false,
-  hideObjective: true
+  hideObjective: true,
+  type: 'species'
 };
 
 model = JSON.parse(JSON.stringify(data));
@@ -1499,9 +1518,12 @@ for (i = l = 0, ref2 = Object.keys(subsystems).length; 0 <= ref2 ? l <= ref2 : l
   }
 }
 
-console.log(data);
+sortables = {
+  index: -1,
+  sortables: ['species', 'compartments']
+};
 
-network = new TreeNode(null, new Object(), new System(systemAttributes, data));
+network = new System(systemAttributes, data, sortables);
 
 
 },{"./System":10,"./TreeNode":11}],19:[function(require,module,exports){
