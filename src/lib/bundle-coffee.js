@@ -542,7 +542,6 @@ System = (function() {
   function System(rootId, attr, data) {
     var compartmentor, ref, sortor;
     this.viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null);
-    attr.ctx = this.viewController.ctx;
     this.ctx = this.viewController.ctx;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
@@ -621,7 +620,7 @@ System = (function() {
       return results;
     };
     this.buildGraph(compartmentor.bind(this), sortor.bind(this));
-    this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, attr.width, attr.height, this.ctx);
+    this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, attr.width, attr.height, this.viewController.ctx);
     this.viewController.startCanvas(this.graph.value);
     console.log(this);
   }
@@ -632,7 +631,7 @@ System = (function() {
     reactions = new Object();
     for (i = 0, len = metaboliteData.length; i < len; i++) {
       metabolite = metaboliteData[i];
-      metabolite = this.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
+      metabolite = this.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.viewController.ctx);
       metabolites[metabolite.id] = metabolite;
     }
     for (j = 0, len1 = reactionData.length; j < len1; j++) {
@@ -643,17 +642,17 @@ System = (function() {
       if (this.hideObjective && reaction.name.indexOf('objective function') !== -1) {
         continue;
       }
-      reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 20, 0, this.ctx);
+      reactions[reaction.id] = this.createReaction(reaction.name, reaction.id, 20, 0, this.viewController.ctx);
       r = reactions[reaction.id];
       for (metaboliteId in reaction.metabolites) {
         if (reaction.metabolites[metaboliteId] > 0) {
           source = reaction.id;
           target = metaboliteId;
-          r.addLink(this.createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
+          r.addLink(this.createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.viewController.ctx));
         } else {
           source = metaboliteId;
           target = reaction.id;
-          r.addLink(this.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
+          r.addLink(this.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.viewController.ctx));
         }
       }
     }

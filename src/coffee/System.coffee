@@ -11,17 +11,15 @@ addors = require './addors'
 
 class System
 	constructor: (rootId, attr, data) ->
-		# This is mainly so we have @ctx to create Links
 		# Setting up ViewController
 		@viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null)
-		attr.ctx = @viewController.ctx
+		# This is mainly so we have @ctx to create Links
 		@ctx = @viewController.ctx
 
 
 		# Settings for hiding certain Reactions
 		@everything = attr.everything
 		@hideObjective = attr.hideObjective
-		# If this is too far below, not accessible for some reason
 		@metaboliteRadius = attr.metaboliteRadius
 
 		# The "full resolution" set of Metabolites and Reactions for this System
@@ -34,9 +32,6 @@ class System
 		sortor = ->
 			for reaction of @reactions
 				r = @reactions[reaction]
-				# todo, create new 'sortee' objects for each potential 'sorter' inside reaction
-				# for sortee in r[sorteeHolder]
-				# todo: generalizable
 
 				for cpt in r.substrateCompartments
 					leaf = null
@@ -85,15 +80,9 @@ class System
 					# Create a new child with no outNeighbours or parents
 					@graph.outNeighbours[m[sorter]] = new Graph(@metabolites[metabolite][sorter], mappings[m[sorter]])
 
-		# Inject System into utility functions
-		# todo: remove need for injecting
-		# creators.createLink = creators.createLink.bind(this)
-		# deletors.deleteNode = deletors.deleteNode.bind(this)
-
-
 		@buildGraph(compartmentor.bind(this), sortor.bind(this))
 
-		@graph.value = new SubSystem(@graph, @metaboliteRadius, attr.width, attr.height, @ctx)
+		@graph.value = new SubSystem(@graph, @metaboliteRadius, attr.width, attr.height, @viewController.ctx)
 		@viewController.startCanvas(@graph.value)
 		console.log(this)
 
@@ -104,7 +93,7 @@ class System
 		# Loop through each metabolites in the metabolic model provided
 		for metabolite in metaboliteData
 			# Create a new Metabolite object using the current metabolite
-			metabolite = @createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
+			metabolite = @createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @viewController.ctx)
 			# Store current Metabolite in metabolites dictionary
 			metabolites[metabolite.id] = metabolite
 
@@ -119,22 +108,20 @@ class System
 
 			# Create fresh Reaction object
 			# Push links into Reaction object
-			reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 20, 0,@ctx)
+			reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 20, 0,@viewController.ctx)
 			r = reactions[reaction.id]
 			for metaboliteId of reaction.metabolites
 				if reaction.metabolites[metaboliteId] > 0
 					source = reaction.id
 					target = metaboliteId
-					r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
+					r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, @metaboliteRadius, @viewController.ctx))
 				else
 					source = metaboliteId
 					target = reaction.id
-					r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
+					r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, @metaboliteRadius, @viewController.ctx))
 
 		return [metabolites, reactions]
 
-	# graphId -> Id for "current" root
-	# sorter -> string to designate compartments, e.g. `compartment`, `specie`, `subsystem`, etc.
 	buildGraph: (compartmentor, sortor) ->
 		compartmentor()
 		sortor()
