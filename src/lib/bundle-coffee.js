@@ -310,56 +310,42 @@ module.exports = ReactionNode;
 
 
 },{"./Node":5,"./utilities":17}],8:[function(require,module,exports){
-var Compartment, Subsystem, creators, force, utilities;
+var Compartment, SubSystem, creators, force, utilities;
 
-Compartment = require("./Compartment");
+Compartment = require('./Compartment');
 
-utilities = require("./utilities");
+utilities = require('./utilities');
 
 creators = require('./creators');
 
 force = require('./force');
 
-Subsystem = (function() {
-  function Subsystem(attr, graph1) {
+SubSystem = (function() {
+  function SubSystem(graph, metaboliteRadius, W, H, ctx) {
     var compartment;
-    this.graph = graph1;
-    this.ctx = attr.ctx;
-    this.W = attr.width;
-    this.H = attr.height;
-    this.metaboliteRadius = attr.metaboliteRadius;
-    this.compartments = new Object();
-    this.reactions = new Object();
+    this.metaboliteRadius = metaboliteRadius;
+    this.W = W;
+    this.H = H;
+    this.ctx = ctx;
     this.nodes = new Array();
     this.links = new Array();
+    this.compartments = new Object();
     this.radiusScale = utilities.scaleRadius(null, 5, 15);
+    this.reactions = new Object();
     creators.createReactionNode = creators.createReactionNode.bind(this);
     creators.createLeaf = creators.createLeaf.bind(this);
     creators.createLinks = creators.createLinks.bind(this);
     force.initalizeForce = force.initalizeForce.bind(this);
-    for (compartment in this.graph.outNeighbours) {
-      this.buildCompartments(this.graph.outNeighbours[compartment]);
+    for (compartment in graph.outNeighbours) {
+      this.buildCompartments(graph.outNeighbours[compartment]);
     }
-    for (compartment in this.graph.outNeighbours) {
-      this.buildNodesAndLinks(this.graph.outNeighbours[compartment]);
+    for (compartment in graph.outNeighbours) {
+      this.buildNodesAndLinks(graph.outNeighbours[compartment]);
     }
     this.initalizeForce();
   }
 
-  Subsystem.prototype.buildNodesAndLinks = function(graph) {
-    var compartment, results;
-    if ((graph.value != null) && graph.value.type === "r") {
-      return this.createLeaf(graph);
-    } else {
-      results = [];
-      for (compartment in graph.outNeighbours) {
-        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
-      }
-      return results;
-    }
-  };
-
-  Subsystem.prototype.buildCompartments = function(graph) {
+  SubSystem.prototype.buildCompartments = function(graph) {
     var c, compartment, nodeAttributes, results;
     if ((graph.value != null) && graph.value.type === "r") {
 
@@ -384,15 +370,28 @@ Subsystem = (function() {
     }
   };
 
-  Subsystem.prototype.createLeaf = creators.createLeaf;
+  SubSystem.prototype.buildNodesAndLinks = function(graph) {
+    var compartment, results;
+    if ((graph.value != null) && graph.value.type === "r") {
+      return this.createLeaf(graph);
+    } else {
+      results = [];
+      for (compartment in graph.outNeighbours) {
+        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
+      }
+      return results;
+    }
+  };
 
-  Subsystem.prototype.createLinks = creators.createLinks;
+  SubSystem.prototype.createLeaf = creators.createLeaf;
 
-  Subsystem.prototype.createReactionNode = creators.createReactionNode;
+  SubSystem.prototype.createLinks = creators.createLinks;
 
-  Subsystem.prototype.initalizeForce = force.initalizeForce;
+  SubSystem.prototype.createReactionNode = creators.createReactionNode;
 
-  Subsystem.prototype.checkCollisions = function(x, y) {
+  SubSystem.prototype.initalizeForce = force.initalizeForce;
+
+  SubSystem.prototype.checkCollisions = function(x, y) {
     var i, len, node, nodeReturn, ref;
     nodeReturn = null;
     ref = this.nodes;
@@ -409,19 +408,123 @@ Subsystem = (function() {
     return nodeReturn;
   };
 
-  return Subsystem;
+  return SubSystem;
 
 })();
 
-module.exports = Subsystem;
+module.exports = SubSystem;
 
 
 },{"./Compartment":1,"./creators":13,"./force":15,"./utilities":17}],9:[function(require,module,exports){
-var Compartment, Graph, Subsystem, System, SystemRenderable, ViewController, addors, creators, deletors;
+var Compartment, SubSystem, creators, force, utilities;
 
-Subsystem = require("./Subsystem");
+Compartment = require('./Compartment');
 
-SystemRenderable = require('./SystemRenderable');
+utilities = require('./utilities');
+
+creators = require('./creators');
+
+force = require('./force');
+
+SubSystem = (function() {
+  function SubSystem(graph, metaboliteRadius, W, H, ctx) {
+    var compartment;
+    this.metaboliteRadius = metaboliteRadius;
+    this.W = W;
+    this.H = H;
+    this.ctx = ctx;
+    this.nodes = new Array();
+    this.links = new Array();
+    this.compartments = new Object();
+    this.radiusScale = utilities.scaleRadius(null, 5, 15);
+    this.reactions = new Object();
+    creators.createReactionNode = creators.createReactionNode.bind(this);
+    creators.createLeaf = creators.createLeaf.bind(this);
+    creators.createLinks = creators.createLinks.bind(this);
+    force.initalizeForce = force.initalizeForce.bind(this);
+    for (compartment in graph.outNeighbours) {
+      this.buildCompartments(graph.outNeighbours[compartment]);
+    }
+    for (compartment in graph.outNeighbours) {
+      this.buildNodesAndLinks(graph.outNeighbours[compartment]);
+    }
+    this.initalizeForce();
+  }
+
+  SubSystem.prototype.buildCompartments = function(graph) {
+    var c, compartment, nodeAttributes, results;
+    if ((graph.value != null) && graph.value.type === "r") {
+
+    } else {
+      nodeAttributes = {
+        x: utilities.rand(this.W),
+        y: utilities.rand(this.H),
+        r: 150,
+        name: graph.name,
+        id: graph.id,
+        type: "s",
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+      };
+      c = new Compartment(nodeAttributes, this.ctx);
+      this.compartments[graph.id] = c;
+      this.nodes.push(c);
+      results = [];
+      for (compartment in graph.outNeighbours) {
+        results.push(this.buildCompartments(graph.outNeighbours[compartment]));
+      }
+      return results;
+    }
+  };
+
+  SubSystem.prototype.buildNodesAndLinks = function(graph) {
+    var compartment, results;
+    if ((graph.value != null) && graph.value.type === "r") {
+      return this.createLeaf(graph);
+    } else {
+      results = [];
+      for (compartment in graph.outNeighbours) {
+        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
+      }
+      return results;
+    }
+  };
+
+  SubSystem.prototype.createLeaf = creators.createLeaf;
+
+  SubSystem.prototype.createLinks = creators.createLinks;
+
+  SubSystem.prototype.createReactionNode = creators.createReactionNode;
+
+  SubSystem.prototype.initalizeForce = force.initalizeForce;
+
+  SubSystem.prototype.checkCollisions = function(x, y) {
+    var i, len, node, nodeReturn, ref;
+    nodeReturn = null;
+    ref = this.nodes;
+    for (i = 0, len = ref.length; i < len; i++) {
+      node = ref[i];
+      if (node.checkCollision(x, y)) {
+        nodeReturn = node;
+        node.hover = true;
+        break;
+      } else {
+        node.hover = false;
+      }
+    }
+    return nodeReturn;
+  };
+
+  return SubSystem;
+
+})();
+
+module.exports = SubSystem;
+
+
+},{"./Compartment":1,"./creators":13,"./force":15,"./utilities":17}],10:[function(require,module,exports){
+var Compartment, Graph, SubSystem, System, ViewController, addors, creators, deletors;
+
+SubSystem = require("./SubSystem");
 
 ViewController = require("./ViewController");
 
@@ -518,8 +621,8 @@ System = (function() {
       return results;
     };
     this.buildGraph(compartmentor.bind(this), sortor.bind(this));
-    this.renderable = new SystemRenderable(this.graph, this.metaboliteRadius, attr.width, attr.height, this.ctx);
-    this.viewController.startCanvas(this.renderable);
+    this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, attr.width, attr.height, this.ctx);
+    this.viewController.startCanvas(this.graph.value);
     console.log(this);
   }
 
@@ -581,113 +684,7 @@ window.FBA = {
 };
 
 
-},{"./Compartment":1,"./Graph":2,"./Subsystem":8,"./SystemRenderable":10,"./ViewController":11,"./addors":12,"./creators":13,"./deletors":14}],10:[function(require,module,exports){
-var Compartment, SystemRenderable, creators, force, utilities;
-
-Compartment = require('./Compartment');
-
-utilities = require('./utilities');
-
-creators = require('./creators');
-
-force = require('./force');
-
-SystemRenderable = (function() {
-  function SystemRenderable(graph, metaboliteRadius, W, H, ctx) {
-    var compartment;
-    this.metaboliteRadius = metaboliteRadius;
-    this.W = W;
-    this.H = H;
-    this.ctx = ctx;
-    this.nodes = new Array();
-    this.links = new Array();
-    this.compartments = new Object();
-    this.radiusScale = utilities.scaleRadius(null, 5, 15);
-    this.reactions = new Object();
-    creators.createReactionNode = creators.createReactionNode.bind(this);
-    creators.createLeaf = creators.createLeaf.bind(this);
-    creators.createLinks = creators.createLinks.bind(this);
-    force.initalizeForce = force.initalizeForce.bind(this);
-    for (compartment in graph.outNeighbours) {
-      this.buildCompartments(graph.outNeighbours[compartment]);
-    }
-    for (compartment in graph.outNeighbours) {
-      this.buildNodesAndLinks(graph.outNeighbours[compartment]);
-    }
-    this.initalizeForce();
-  }
-
-  SystemRenderable.prototype.buildCompartments = function(graph) {
-    var c, compartment, nodeAttributes, results;
-    if ((graph.value != null) && graph.value.type === "r") {
-
-    } else {
-      nodeAttributes = {
-        x: utilities.rand(this.W),
-        y: utilities.rand(this.H),
-        r: 150,
-        name: graph.name,
-        id: graph.id,
-        type: "s",
-        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
-      };
-      c = new Compartment(nodeAttributes, this.ctx);
-      this.compartments[graph.id] = c;
-      this.nodes.push(c);
-      results = [];
-      for (compartment in graph.outNeighbours) {
-        results.push(this.buildCompartments(graph.outNeighbours[compartment]));
-      }
-      return results;
-    }
-  };
-
-  SystemRenderable.prototype.buildNodesAndLinks = function(graph) {
-    var compartment, results;
-    if ((graph.value != null) && graph.value.type === "r") {
-      return this.createLeaf(graph);
-    } else {
-      results = [];
-      for (compartment in graph.outNeighbours) {
-        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
-      }
-      return results;
-    }
-  };
-
-  SystemRenderable.prototype.createLeaf = creators.createLeaf;
-
-  SystemRenderable.prototype.createLinks = creators.createLinks;
-
-  SystemRenderable.prototype.createReactionNode = creators.createReactionNode;
-
-  SystemRenderable.prototype.initalizeForce = force.initalizeForce;
-
-  SystemRenderable.prototype.checkCollisions = function(x, y) {
-    var i, len, node, nodeReturn, ref;
-    nodeReturn = null;
-    ref = this.nodes;
-    for (i = 0, len = ref.length; i < len; i++) {
-      node = ref[i];
-      if (node.checkCollision(x, y)) {
-        nodeReturn = node;
-        node.hover = true;
-        break;
-      } else {
-        node.hover = false;
-      }
-    }
-    return nodeReturn;
-  };
-
-  return SystemRenderable;
-
-})();
-
-module.exports = SystemRenderable;
-
-
-},{"./Compartment":1,"./creators":13,"./force":15,"./utilities":17}],11:[function(require,module,exports){
+},{"./Compartment":1,"./Graph":2,"./SubSystem":8,"./ViewController":11,"./addors":12,"./creators":13,"./deletors":14}],11:[function(require,module,exports){
 var ViewController;
 
 ViewController = (function() {
@@ -1375,7 +1372,7 @@ systemAttributes = {
 network = new System('globalroot', systemAttributes, data);
 
 
-},{"./Subsystem":8,"./System":9}],17:[function(require,module,exports){
+},{"./Subsystem":9,"./System":10}],17:[function(require,module,exports){
 var nodeMap, rand, scaleRadius;
 
 rand = function(range) {
@@ -1432,7 +1429,7 @@ module.exports = {
 };
 
 
-},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17])
+},{}]},{},[1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map

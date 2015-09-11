@@ -1,28 +1,19 @@
-Compartment = require "./Compartment"
-utilities   = require "./utilities"
+Compartment = require './Compartment'
+utilities   = require './utilities'
 creators    = require './creators'
 force       = require './force'
 
-class Subsystem
-	constructor: (attr, @graph) ->
-		@ctx = attr.ctx
-		@W = attr.width
-		@H = attr.height
-		# @BG = attr.backgroundColour
-		@metaboliteRadius = attr.metaboliteRadius
-		# @useStatic = attr.useStatic
-		# @everything = attr.everything
-		# @hideObjective = attr.hideObjective
-
-		# @force = null
-		# @currentActiveNode = null
-
-		@compartments = new Object()
-		@reactions = new Object()
+class SubSystem
+	constructor: (graph, @metaboliteRadius, @W, @H, @ctx) ->
 		@nodes = new Array()
 		@links = new Array()
+		# @force = null
+
+		@compartments = new Object()
 
 		@radiusScale = utilities.scaleRadius(null, 5, 15)
+		@reactions = new Object()
+
 
 		# Inject System into utility functions
 		# todo: remove need for injecting
@@ -31,31 +22,23 @@ class Subsystem
 		creators.createLinks = creators.createLinks.bind(this)
 		force.initalizeForce = force.initalizeForce.bind(this)
 
-		#get rid of root
-		for compartment of @graph.outNeighbours
-			@buildCompartments(@graph.outNeighbours[compartment])
-		for compartment of @graph.outNeighbours
-			@buildNodesAndLinks(@graph.outNeighbours[compartment])
-		@initalizeForce()
-		# console.log(@nodes)
+		# Build a compartment for each immidiate outNeighbour
+		for compartment of graph.outNeighbours
+			@buildCompartments(graph.outNeighbours[compartment])
+		for compartment of graph.outNeighbours
+			@buildNodesAndLinks(graph.outNeighbours[compartment])
 
-	buildNodesAndLinks: (graph)->
-		#reached leaf
-		if graph.value? and graph.value.type is "r"
-			#deal with leaf
-			@createLeaf(graph)
-		else
-			for compartment of graph.outNeighbours
-				@buildNodesAndLinks(graph.outNeighbours[compartment])
-			#console.log(graph.outNeighbours)
-			#@buildNodesAndLinks(graph.outNeighbours[])
+		# delete @compartments
+		# delete @reactions
+		# delete @radiusScale
+
+		@initalizeForce()
 
 	buildCompartments: (graph)->
-		#reached leaf
+		# Reached a Leaf
 		if graph.value? and graph.value.type is "r"
 			return
 		else
-		# for compartment of graph.outNeighbours
 			nodeAttributes =
 				x : utilities.rand(@W)
 				y : utilities.rand(@H)
@@ -70,12 +53,23 @@ class Subsystem
 			for compartment of graph.outNeighbours
 				@buildCompartments(graph.outNeighbours[compartment])
 
+	buildNodesAndLinks: (graph) ->
+		#reached leaf
+		if graph.value? and graph.value.type is "r"
+			#deal with leaf
+			@createLeaf(graph)
+		else
+			for compartment of graph.outNeighbours
+				@buildNodesAndLinks(graph.outNeighbours[compartment])
+
 	createLeaf: creators.createLeaf
 
 	createLinks: creators.createLinks
 
 	createReactionNode: creators.createReactionNode
 
+
+	## Do we want these here?
 	initalizeForce: force.initalizeForce
 
 	checkCollisions: (x, y) ->
@@ -89,9 +83,4 @@ class Subsystem
 				node.hover = false
 		return nodeReturn
 
-	# Not even being used
-	# addReaction: addors.addReaction
-	# addMetabolite: addors.addMetabolite
-	# deleteNode : deletors.deleteNode
-
-module.exports = Subsystem
+module.exports = SubSystem

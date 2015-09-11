@@ -1,9 +1,9 @@
 # **Classes**
-Subsystem = require "./Subsystem"
-SystemRenderable = require './SystemRenderable'
+SubSystem = require "./SubSystem"
 ViewController = require "./ViewController"
 Compartment = require "./Compartment"
 Graph = require './Graph'
+
 
 creators = require './creators'
 deletors = require './deletors'
@@ -92,9 +92,9 @@ class System
 
 
 		@buildGraph(compartmentor.bind(this), sortor.bind(this))
-		
-		@renderable = new SystemRenderable(@graph, @metaboliteRadius, attr.width, attr.height, @ctx)
-		@viewController.startCanvas(@renderable)
+
+		@graph.value = new SubSystem(@graph, @metaboliteRadius, attr.width, attr.height, @ctx)
+		@viewController.startCanvas(@graph.value)
 		console.log(this)
 
 	buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
