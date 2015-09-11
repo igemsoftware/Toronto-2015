@@ -21,7 +21,7 @@ class Node
 
 
         @compartment = @id.split('_')[@id.split('_').length - 1]
-
+        
         # Reaction properties
         # In neighbours
         @substrates = @inNeighbours = new Array()

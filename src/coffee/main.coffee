@@ -1,4 +1,5 @@
 System = require "./System"
+TreeNode = require "./TreeNode"
 
 systemAttributes =
     width            : window.innerWidth
@@ -34,8 +35,8 @@ for reaction in model.reactions
 		if metaboliteDict[metabolite].subsystems.indexOf(reaction.subsystem) is -1
 			metaboliteDict[metabolite].subsystems.push(reaction.subsystem)
 
-console.log(subsystems)
-console.log(metaboliteDict)
+# console.log(subsystems)
+# console.log(metaboliteDict)
 
 
 for i in [0..Object.keys(subsystems).length]
@@ -43,7 +44,7 @@ for i in [0..Object.keys(subsystems).length]
 	for metabolite of metaboliteDict
 		if metaboliteDict[metabolite].subsystems.length > i
 			counter++
-	console.log(i, counter)
+	#console.log(i, counter)
 
 # counter = 0
 # for metabolite of metaboliteDict
@@ -59,4 +60,7 @@ for i in [0..Object.keys(subsystems).length]
 # 			console.log(reaction)
 
 
-network = new System('globalroot', systemAttributes, data)
+# console.log(data)
+#root
+network = new TreeNode(null, new Object(), new System(systemAttributes, data))
+#new System('globalroot', systemAttributes, data)

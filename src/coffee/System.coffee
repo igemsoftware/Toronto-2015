@@ -3,14 +3,22 @@ SubSystem      = require "./SubSystem"
 ViewController = require "./ViewController"
 Compartment    = require "./Compartment"
 Graph          = require './Graph'
-
+TreeNode       = require './TreeNode'
 
 creators = require './creators'
 deletors = require './deletors'
 addors   = require './addors'
 
+builders = require './builders'
+
 class System
-    constructor: (rootId, attr, data) ->
+    constructor: (attr, data, @treeNode) ->
+
+        @id = attr.id
+        @name = attr.name
+        @sorter = attr.sortor
+        @compartmentor = attr.compartmentor
+
         # Setting up ViewController
         @viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null)
 
@@ -18,66 +26,34 @@ class System
         @everything = attr.everything
         @hideObjective = attr.hideObjective
         @metaboliteRadius = attr.metaboliteRadius
+        # console.log(data)
+
 
         # The "full resolution" set of Metabolites and Reactions for this System
-        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions)
+        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions) #Good
 
-        # @rootId = 'globalroot'
-        @graph = new Graph(rootId, rootId)
+        #implies root
+        if not @id or not @name
+            @graph = new Graph("root", "root")
+        else
+            @graph = new Graph(@id, @name)
 
-        # Construct the Graph for this System
-        sortor = ->
-            for reaction of @reactions
-                r = @reactions[reaction]
 
-                for cpt in r.substrateCompartments
-                    leaf = null
-                    for _cpt in r.substrateCompartments
-                        potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
-                        if potentialLeaf?
-                            leaf = potentialLeaf
+        # type = 'species'
+        #
+        # compartmentor = builders[type].compartmentor.bind(this)
+        # sortor = builders[type].compartmentor.bind(this)
+        #
+        # compartmentor()
+        #
+        # console.log(this)
 
-                    if not leaf?
-                        leaf = new Graph(r.id)
+        type = 'compartments'
 
-                        leaf.value = r
-                    leaf.inNeighbours[cpt] = @graph.outNeighbours[cpt]
-                    @graph.outNeighbours[cpt].outNeighbours[r.id] = leaf
+        compartmentor = builders[type].compartmentor.bind(this)
+        sortor = builders[type].sortor.bind(this)
 
-                for cpt in r.productCompartments
-                    leaf = null
-                    for _cpt in r.substrateCompartments
-                        potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
-                        if potentialLeaf?
-                            leaf = potentialLeaf
-
-                    if not leaf?
-                        leaf = new Graph(r.id)
-                        leaf.value = r
-
-                    leaf.outNeighbours[cpt] = @graph.outNeighbours[cpt]
-                    @graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
-
-                if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
-                    leaf.outNeighbours["e"] = @graph.outNeighbours["e"]
-                    @graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
-
-        compartmentor = ->
-            sorter = 'compartment'
-
-            mappings =
-                c: 'cytosol'
-                p: 'periplasm'
-                e: 'extracellular'
-
-            for metabolite of @metabolites
-                m = @metabolites[metabolite]
-                # If current Metabolite's compartment is not a child of `graph`, add it
-                if not @graph.outNeighbours[m[sorter]]?
-                    # Create a new child with no outNeighbours or parents
-                    @graph.outNeighbours[m[sorter]] = new Graph(@metabolites[metabolite][sorter], mappings[m[sorter]])
-
-        @buildGraph(compartmentor.bind(this), sortor.bind(this))
+        @buildGraph(compartmentor, sortor)
 
         @graph.value = new SubSystem(@graph, @metaboliteRadius, attr.width, attr.height, @viewController.ctx)
         @viewController.startCanvas(@graph.value)
@@ -90,9 +66,10 @@ class System
         # Loop through each metabolites in the metabolic model provided
         for metabolite in metaboliteData
             # Create a new Metabolite object using the current metabolite
-            metabolite = @createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @viewController.ctx)
+            m = @createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @viewController.ctx)
             # Store current Metabolite in metabolites dictionary
-            metabolites[metabolite.id] = metabolite
+            m.species = metabolite.species
+            metabolites[metabolite.id] = m
 
         # Loop through each reaction
         for reaction in reactionData

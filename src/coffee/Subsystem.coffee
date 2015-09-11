@@ -34,6 +34,7 @@ class SubSystem
 
         @initalizeForce()
 
+    
     buildCompartments: (graph)->
         # Reached a Leaf
         if graph.value? and graph.value.type is "r"

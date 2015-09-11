@@ -38,7 +38,7 @@ Compartment = (function(superClass) {
 module.exports = Compartment;
 
 
-},{"./Node":5,"./utilities":16}],2:[function(require,module,exports){
+},{"./Node":5,"./utilities":19}],2:[function(require,module,exports){
 var Graph, Link, Metabolite, Reaction, utilities;
 
 utilities = require("./utilities");
@@ -65,7 +65,7 @@ Graph = (function() {
 module.exports = Graph;
 
 
-},{"./Link":3,"./Metabolite":4,"./Reaction":6,"./utilities":16}],3:[function(require,module,exports){
+},{"./Link":3,"./Metabolite":4,"./Reaction":6,"./utilities":19}],3:[function(require,module,exports){
 var Link;
 
 Link = (function() {
@@ -309,7 +309,7 @@ ReactionNode = (function(superClass) {
 module.exports = ReactionNode;
 
 
-},{"./Node":5,"./utilities":16}],8:[function(require,module,exports){
+},{"./Node":5,"./utilities":19}],8:[function(require,module,exports){
 var Compartment, SubSystem, creators, force, utilities;
 
 Compartment = require('./Compartment');
@@ -415,8 +415,114 @@ SubSystem = (function() {
 module.exports = SubSystem;
 
 
-},{"./Compartment":1,"./creators":12,"./force":14,"./utilities":16}],9:[function(require,module,exports){
-var Compartment, Graph, SubSystem, System, ViewController, addors, creators, deletors;
+},{"./Compartment":1,"./creators":15,"./force":17,"./utilities":19}],9:[function(require,module,exports){
+var Compartment, SubSystem, creators, force, utilities;
+
+Compartment = require('./Compartment');
+
+utilities = require('./utilities');
+
+creators = require('./creators');
+
+force = require('./force');
+
+SubSystem = (function() {
+  function SubSystem(graph, metaboliteRadius, W, H, ctx) {
+    var compartment;
+    this.metaboliteRadius = metaboliteRadius;
+    this.W = W;
+    this.H = H;
+    this.ctx = ctx;
+    this.nodes = new Array();
+    this.links = new Array();
+    this.compartments = new Object();
+    this.radiusScale = utilities.scaleRadius(null, 5, 15);
+    this.reactions = new Object();
+    creators.createReactionNode = creators.createReactionNode.bind(this);
+    creators.createLeaf = creators.createLeaf.bind(this);
+    creators.createLinks = creators.createLinks.bind(this);
+    force.initalizeForce = force.initalizeForce.bind(this);
+    for (compartment in graph.outNeighbours) {
+      this.buildCompartments(graph.outNeighbours[compartment]);
+    }
+    for (compartment in graph.outNeighbours) {
+      this.buildNodesAndLinks(graph.outNeighbours[compartment]);
+    }
+    this.initalizeForce();
+  }
+
+  SubSystem.prototype.buildCompartments = function(graph) {
+    var c, compartment, nodeAttributes, results;
+    if ((graph.value != null) && graph.value.type === "r") {
+
+    } else {
+      nodeAttributes = {
+        x: utilities.rand(this.W),
+        y: utilities.rand(this.H),
+        r: 150,
+        name: graph.name,
+        id: graph.id,
+        type: "s",
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+      };
+      c = new Compartment(nodeAttributes, this.ctx);
+      this.compartments[graph.id] = c;
+      this.nodes.push(c);
+      results = [];
+      for (compartment in graph.outNeighbours) {
+        results.push(this.buildCompartments(graph.outNeighbours[compartment]));
+      }
+      return results;
+    }
+  };
+
+  SubSystem.prototype.buildNodesAndLinks = function(graph) {
+    var compartment, results;
+    if ((graph.value != null) && graph.value.type === "r") {
+      return this.createLeaf(graph);
+    } else {
+      results = [];
+      for (compartment in graph.outNeighbours) {
+        results.push(this.buildNodesAndLinks(graph.outNeighbours[compartment]));
+      }
+      return results;
+    }
+  };
+
+  SubSystem.prototype.createLeaf = creators.createLeaf;
+
+  SubSystem.prototype.createLinks = creators.createLinks;
+
+  SubSystem.prototype.createReactionNode = creators.createReactionNode;
+
+  SubSystem.prototype.initalizeForce = force.initalizeForce;
+
+  SubSystem.prototype.checkCollisions = function(x, y) {
+    var i, len, node, nodeReturn, ref;
+    nodeReturn = null;
+    ref = this.nodes;
+    for (i = 0, len = ref.length; i < len; i++) {
+      node = ref[i];
+      if (node.checkCollision(x, y)) {
+        nodeReturn = node;
+        node.hover = true;
+        break;
+      } else {
+        node.hover = false;
+      }
+    }
+    return nodeReturn;
+  };
+
+  return SubSystem;
+
+})();
+
+module.exports = SubSystem;
+
+
+},{"./Compartment":1,"./creators":15,"./force":17,"./utilities":19}],10:[function(require,module,exports){
+var Compartment, Graph, SubSystem, System, TreeNode, ViewController, addors, builders, creators, deletors;
 
 SubSystem = require("./SubSystem");
 
@@ -426,106 +532,52 @@ Compartment = require("./Compartment");
 
 Graph = require('./Graph');
 
+TreeNode = require('./TreeNode');
+
 creators = require('./creators');
 
 deletors = require('./deletors');
 
 addors = require('./addors');
 
+builders = require('./builders');
+
 System = (function() {
-  function System(rootId, attr, data) {
-    var compartmentor, ref, sortor;
+  function System(attr, data, treeNode) {
+    var compartmentor, ref, sortor, type;
+    this.treeNode = treeNode;
+    this.id = attr.id;
+    this.name = attr.name;
+    this.sorter = attr.sortor;
+    this.compartmentor = attr.compartmentor;
     this.viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null);
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
     this.metaboliteRadius = attr.metaboliteRadius;
     ref = this.buildMetabolitesAndReactions(data.metabolites, data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    this.graph = new Graph(rootId, rootId);
-    sortor = function() {
-      var _cpt, cpt, i, j, k, l, leaf, len, len1, len2, len3, potentialLeaf, r, reaction, ref1, ref2, ref3, ref4, results;
-      results = [];
-      for (reaction in this.reactions) {
-        r = this.reactions[reaction];
-        ref1 = r.substrateCompartments;
-        for (i = 0, len = ref1.length; i < len; i++) {
-          cpt = ref1[i];
-          leaf = null;
-          ref2 = r.substrateCompartments;
-          for (j = 0, len1 = ref2.length; j < len1; j++) {
-            _cpt = ref2[j];
-            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
-            if (potentialLeaf != null) {
-              leaf = potentialLeaf;
-            }
-          }
-          if (leaf == null) {
-            leaf = new Graph(r.id);
-            leaf.value = r;
-          }
-          leaf.inNeighbours[cpt] = this.graph.outNeighbours[cpt];
-          this.graph.outNeighbours[cpt].outNeighbours[r.id] = leaf;
-        }
-        ref3 = r.productCompartments;
-        for (k = 0, len2 = ref3.length; k < len2; k++) {
-          cpt = ref3[k];
-          leaf = null;
-          ref4 = r.substrateCompartments;
-          for (l = 0, len3 = ref4.length; l < len3; l++) {
-            _cpt = ref4[l];
-            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
-            if (potentialLeaf != null) {
-              leaf = potentialLeaf;
-            }
-          }
-          if (leaf == null) {
-            leaf = new Graph(r.id);
-            leaf.value = r;
-          }
-          leaf.outNeighbours[cpt] = this.graph.outNeighbours[cpt];
-          this.graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf;
-        }
-        if (r.outNeighbours.length === 0) {
-          leaf.outNeighbours["e"] = this.graph.outNeighbours["e"];
-          results.push(this.graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf);
-        } else {
-          results.push(void 0);
-        }
-      }
-      return results;
-    };
-    compartmentor = function() {
-      var m, mappings, metabolite, results, sorter;
-      sorter = 'compartment';
-      mappings = {
-        c: 'cytosol',
-        p: 'periplasm',
-        e: 'extracellular'
-      };
-      results = [];
-      for (metabolite in this.metabolites) {
-        m = this.metabolites[metabolite];
-        if (this.graph.outNeighbours[m[sorter]] == null) {
-          results.push(this.graph.outNeighbours[m[sorter]] = new Graph(this.metabolites[metabolite][sorter], mappings[m[sorter]]));
-        } else {
-          results.push(void 0);
-        }
-      }
-      return results;
-    };
-    this.buildGraph(compartmentor.bind(this), sortor.bind(this));
+    if (!this.id || !this.name) {
+      this.graph = new Graph("root", "root");
+    } else {
+      this.graph = new Graph(this.id, this.name);
+    }
+    type = 'compartments';
+    compartmentor = builders[type].compartmentor.bind(this);
+    sortor = builders[type].sortor.bind(this);
+    this.buildGraph(compartmentor, sortor);
     this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, attr.width, attr.height, this.viewController.ctx);
     this.viewController.startCanvas(this.graph.value);
     console.log(this);
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
-    var i, j, len, len1, metabolite, metaboliteId, metabolites, r, reaction, reactions, source, target;
+    var i, j, len, len1, m, metabolite, metaboliteId, metabolites, r, reaction, reactions, source, target;
     metabolites = new Object();
     reactions = new Object();
     for (i = 0, len = metaboliteData.length; i < len; i++) {
       metabolite = metaboliteData[i];
-      metabolite = this.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.viewController.ctx);
-      metabolites[metabolite.id] = metabolite;
+      m = this.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.viewController.ctx);
+      m.species = metabolite.species;
+      metabolites[metabolite.id] = m;
     }
     for (j = 0, len1 = reactionData.length; j < len1; j++) {
       reaction = reactionData[j];
@@ -576,7 +628,24 @@ window.FBA = {
 };
 
 
-},{"./Compartment":1,"./Graph":2,"./SubSystem":8,"./ViewController":10,"./addors":11,"./creators":12,"./deletors":13}],10:[function(require,module,exports){
+},{"./Compartment":1,"./Graph":2,"./SubSystem":8,"./TreeNode":11,"./ViewController":12,"./addors":13,"./builders":14,"./creators":15,"./deletors":16}],11:[function(require,module,exports){
+var TreeNode;
+
+TreeNode = (function() {
+  function TreeNode(parent, children, system) {
+    this.parent = parent;
+    this.children = children;
+    this.system = system;
+  }
+
+  return TreeNode;
+
+})();
+
+module.exports = TreeNode;
+
+
+},{}],12:[function(require,module,exports){
 var ViewController;
 
 ViewController = (function() {
@@ -905,7 +974,7 @@ ViewController = (function() {
 module.exports = ViewController;
 
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = {
   addMetabolite: function(id, name, type, radius, ctx) {
     var metabolite, nodeAttributes;
@@ -1029,7 +1098,118 @@ module.exports = {
 };
 
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
+var Graph;
+
+Graph = require('./Graph');
+
+module.exports = {
+  species: {
+    sortor: function() {},
+    compartmentor: function() {
+      var m, mappings, metabolite, results, sorter, specie;
+      sorter = 'species';
+      mappings = {
+        iJO1366: 'E. coli'
+      };
+      results = [];
+      for (metabolite in this.metabolites) {
+        m = this.metabolites[metabolite];
+        results.push((function() {
+          var i, len, ref, results1;
+          ref = m[sorter];
+          results1 = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            specie = ref[i];
+            if (this.graph.outNeighbours[specie] == null) {
+              results1.push(this.graph.outNeighbours[specie] = new Graph(specie, mappings[specie]));
+            } else {
+              results1.push(void 0);
+            }
+          }
+          return results1;
+        }).call(this));
+      }
+      return results;
+    }
+  },
+  compartments: {
+    compartmentor: function() {
+      var m, mappings, metabolite, results, sorter;
+      sorter = 'compartment';
+      mappings = {
+        c: 'cytosol',
+        p: 'periplasm',
+        e: 'extracellular'
+      };
+      results = [];
+      for (metabolite in this.metabolites) {
+        m = this.metabolites[metabolite];
+        if (this.graph.outNeighbours[m[sorter]] == null) {
+          results.push(this.graph.outNeighbours[m[sorter]] = new Graph(this.metabolites[metabolite][sorter], mappings[m[sorter]]));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    },
+    sortor: function() {
+      var _cpt, cpt, i, j, k, l, leaf, len, len1, len2, len3, potentialLeaf, r, reaction, ref, ref1, ref2, ref3, results;
+      results = [];
+      for (reaction in this.reactions) {
+        r = this.reactions[reaction];
+        ref = r.substrateCompartments;
+        for (i = 0, len = ref.length; i < len; i++) {
+          cpt = ref[i];
+          leaf = null;
+          ref1 = r.substrateCompartments;
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            _cpt = ref1[j];
+            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
+            if (potentialLeaf != null) {
+              leaf = potentialLeaf;
+            }
+          }
+          if (leaf == null) {
+            leaf = new Graph(r.id);
+            leaf.value = r;
+          }
+          leaf.inNeighbours[cpt] = this.graph.outNeighbours[cpt];
+          this.graph.outNeighbours[cpt].outNeighbours[r.id] = leaf;
+        }
+        ref2 = r.productCompartments;
+        for (k = 0, len2 = ref2.length; k < len2; k++) {
+          cpt = ref2[k];
+          leaf = null;
+          ref3 = r.substrateCompartments;
+          for (l = 0, len3 = ref3.length; l < len3; l++) {
+            _cpt = ref3[l];
+            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
+            if (potentialLeaf != null) {
+              leaf = potentialLeaf;
+            }
+          }
+          if (leaf == null) {
+            leaf = new Graph(r.id);
+            leaf.value = r;
+          }
+          leaf.outNeighbours[cpt] = this.graph.outNeighbours[cpt];
+          this.graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf;
+        }
+        if (r.outNeighbours.length === 0) {
+          leaf.outNeighbours["e"] = this.graph.outNeighbours["e"];
+          results.push(this.graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf);
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    }
+  }
+};
+
+
+},{"./Graph":2}],15:[function(require,module,exports){
 var Link, Metabolite, Reaction, ReactionNode, utilities;
 
 Reaction = require('./Reaction');
@@ -1184,7 +1364,7 @@ module.exports = {
 };
 
 
-},{"./Link":3,"./Metabolite":4,"./Reaction":6,"./ReactionNode":7,"./utilities":16}],13:[function(require,module,exports){
+},{"./Link":3,"./Metabolite":4,"./Reaction":6,"./ReactionNode":7,"./utilities":19}],16:[function(require,module,exports){
 module.exports = {
   deleteNode: function(node) {
     var i, inNeighbour, j, len, len1, nodeIndex, outNeighbour, ref, ref1;
@@ -1207,7 +1387,7 @@ module.exports = {
 };
 
 
-},{}],14:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var chargeHandler, linkDistanceHandler;
 
 linkDistanceHandler = function(link, i) {
@@ -1244,10 +1424,12 @@ module.exports = {
 };
 
 
-},{}],15:[function(require,module,exports){
-var System, counter, i, j, k, l, len, len1, metabolite, metaboliteDict, model, network, reaction, ref, ref1, ref2, subsystems, systemAttributes;
+},{}],18:[function(require,module,exports){
+var System, TreeNode, counter, i, j, k, l, len, len1, metabolite, metaboliteDict, model, network, reaction, ref, ref1, ref2, subsystems, systemAttributes;
 
 System = require("./System");
+
+TreeNode = require("./TreeNode");
 
 systemAttributes = {
   width: window.innerWidth,
@@ -1290,10 +1472,6 @@ for (k = 0, len1 = ref1.length; k < len1; k++) {
   }
 }
 
-console.log(subsystems);
-
-console.log(metaboliteDict);
-
 for (i = l = 0, ref2 = Object.keys(subsystems).length; 0 <= ref2 ? l <= ref2 : l >= ref2; i = 0 <= ref2 ? ++l : --l) {
   counter = 0;
   for (metabolite in metaboliteDict) {
@@ -1301,13 +1479,12 @@ for (i = l = 0, ref2 = Object.keys(subsystems).length; 0 <= ref2 ? l <= ref2 : l
       counter++;
     }
   }
-  console.log(i, counter);
 }
 
-network = new System('globalroot', systemAttributes, data);
+network = new TreeNode(null, new Object(), new System(systemAttributes, data));
 
 
-},{"./System":9}],16:[function(require,module,exports){
+},{"./System":10,"./TreeNode":11}],19:[function(require,module,exports){
 var nodeMap, rand, scaleRadius;
 
 rand = function(range) {
@@ -1364,7 +1541,7 @@ module.exports = {
 };
 
 
-},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
+},{}]},{},[1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map
