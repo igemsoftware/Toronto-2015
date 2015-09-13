@@ -1,0 +1,31 @@
+{
+  "name": "fba-api",
+  "version": "0.0.0",
+  "description": "Flux balance analysis API for iGEM UofT.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igemuoftATG/fba-api.git"
+  },
+  "author": "Julian Mazzitelli <julian.mazzitelli@mail.utoronto.ca> (http://jmazz.me)",
+  "contributors": [
+    "Albert Calzaretto <albert.calzaretto@mail.utoronto.ca>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/igemuoftATG/fba-api/issues"
+  },
+  "homepage": "https://github.com/igemuoftATG/fba-api#readme",
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "colors": "^1.1.2",
+    "express": "^4.12.4",
+    "gulp": "^3.9.0",
+    "mongoose": "^4.0.5",
+    "morgan": "^1.6.0",
+    "mysql": "^2.9.0"
+  }
+}
