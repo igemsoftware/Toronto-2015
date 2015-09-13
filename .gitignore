@@ -1,5 +1,15 @@
-node_modules
 __pycache__
 *.pyc
 *.swp
 .DS_store
+node_modules
+bower_components
+.DS_Store
+*.js.map
+*.fdb_latexmk
+*.log
+*.aux
+*.fls
+*.out
+*.pyg
+*.toc
