@@ -30,8 +30,9 @@ class ViewController
         @nodetext =  $('#nodetext')
 
 
-    startCanvas:(graph) ->
-        @activeGraph = graph
+    startCanvas:(subsystem) ->
+        @activeGraph = subsystem
+        @activeGraph.force.start()
         $(@id).css({
             "-moz-user-select": "none",
             "-webkit-user-select": "none",

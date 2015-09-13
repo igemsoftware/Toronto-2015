@@ -4,7 +4,6 @@ linkDistanceHandler = (link, i) ->
         factor = link.target.substrates.length
     else if link.source.type is 'r'
         factor = link.source.products.length
-
     return factor*100
 
 chargeHandler = (node, i) ->
@@ -20,7 +19,7 @@ module.exports = initalizeForce: ->
         # The links: mutates source, target
         .links(@links)
         # Affects gravitational center and initial random position
-        .size([@W, @H])
+        .size([@width, @height])
         # Sets "rigidity" of links in range [0,1]; func(link, index), this -> force; evaluated at start()
         .linkStrength(2)
         # At each tick of the simulation, the particle velocity is scaled by the specified friction

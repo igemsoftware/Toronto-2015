@@ -1,77 +1,92 @@
 Compartment = require './Compartment'
-utilities   = require './utilities'
-creators    = require './creators'
-force       = require './force'
+utilities = require './utilities'
+creators = require './creators'
+force = require './force'
 
-class SubSystem
-    constructor: (graph, @metaboliteRadius, @W, @H, @ctx) ->
-        @nodes = new Array()
-        @links = new Array()
-        # @force = null
-
-        @compartments = new Object()
-
-        @radiusScale = utilities.scaleRadius(null, 5, 15)
-        @reactions = new Object()
-
-
-        # Inject System into utility functions
-        # todo: remove need for injecting
+class Subsystem
+    constructor: (attr) ->
+        creators.createMetabolite = creators.createMetabolite.bind(this)
         creators.createReactionNode = creators.createReactionNode.bind(this)
-        creators.createLeaf = creators.createLeaf.bind(this)
-        creators.createLinks = creators.createLinks.bind(this)
+        creators.createLink = creators.createLink.bind(this)
         force.initalizeForce = force.initalizeForce.bind(this)
 
-        # Build a compartment for each immidiate outNeighbour
-        for compartment of graph.outNeighbours
-            @buildCompartments(graph.outNeighbours[compartment])
-        for compartment of graph.outNeighbours
-            @buildNodesAndLinks(graph.outNeighbours[compartment])
+        @metaboliteRadius  = 10
 
-        # delete @compartments
-        # delete @reactions
-        # delete @radiusScale
+        @nodes = new Array()
+        @links = new Array()
+        @force = null
+        @graph = new Graph()
 
-        # @initalizeForce()
+        @data = attr.data
+        @width = attr.width
+        @height = attr.height
+        @ctx = attr.ctx
+        @everything = attr.everything
+        @hideObjective = attr.hideObjective
 
+        @radiusScale = utilities.scaleRadius(data, 5, 15)
 
-    buildCompartments: (graph)->
-        # Reached a Leaf
-        if graph.value? and graph.value.type is "r"
-            return
-        else
-            nodeAttributes =
-                x : utilities.rand(@W)
-                y : utilities.rand(@H)
-                r : 150
-                name : graph.name
-                id : graph.id
-                type : "s"
-                colour: "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-            c = new Compartment(nodeAttributes, @ctx)
-            @compartments[graph.id] = c
-            @nodes.push(c)
-            for compartment of graph.outNeighbours
-                @buildCompartments(graph.outNeighbours[compartment])
+        @buildUnsortedGraph(data.metabolites, data.reactions)
 
-    buildNodesAndLinks: (graph) ->
-        #reached leaf
-        if graph.value? and graph.value.type is "r"
-            #deal with leaf
-            @createLeaf(graph)
-        else
-            for compartment of graph.outNeighbours
-                @buildNodesAndLinks(graph.outNeighbours[compartment])
+        it = @graph.vertices()
+        #add all metabolites and reactions
+        while not (kv = it.next()).done
+            value = kv.value[1]
+            @nodes.push(value)
 
-    createLeaf: creators.createLeaf
+        #create links
 
-    createLinks: creators.createLinks
+        it = @graph.edges()
+        while not (kv = it.next()).done
+            from = kv.value[0] #ids'
+            to = kv.value[1]
+            value = kv.value[2]
+            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2, @ctx))
 
-    createReactionNode: creators.createReactionNode
+        force.initalizeForce()
+
+        #DoneDONEDONEDONEDONEDONEODNEODNEONDONE CONSTRUTOR IS DONE
 
 
-    ## Do we want these here?
-    initalizeForce: force.initalizeForce
+        #equivelent of buildMetabolitesAndReactions
+    buildUnsortedGraph: (metaboliteData, reactionData) ->
+
+    # Loop through each metabolites in the metabolic model provided
+        for metabolite in metaboliteData
+            # Create a new Metabolite object using the current metabolite
+            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
+            # Store current Metabolite in metabolites dictionary
+            m.species = metabolite.species
+
+            @graph.addVertex(metabolite.id, m)
+
+        # Loop through each reaction
+        for reaction in reactionData
+            # Create 'filters' later
+            # Skip if flux is 0 or if reaction name containes 'objective function'
+            if (not @everything and reaction.flux_value is 0)
+                continue
+            if (@hideObjective and reaction.name.indexOf('objective function') isnt -1 )
+                continue
+
+
+            if not @graph.hasVertex(reaction.id)
+                #id, name, flux_value
+                @graph.addVertex(reaction.id, creators.createReactionNode(reaction.id, reaction.name, reaction.flux_value))
+            # r.species = reaction.species
+            for metaboliteId of reaction.metabolites
+                if reaction.metabolites[metaboliteId] > 0
+                    source = reaction.id
+                    target = metaboliteId
+                else
+                    source = metaboliteId
+                    target = reaction.id
+                @graph.createNewEdge(source, target, "#{source} -> #{target}")
+
+
+
+
+
 
     checkCollisions: (x, y) ->
         nodeReturn = null
@@ -84,4 +99,4 @@ class SubSystem
                 node.hover = false
         return nodeReturn
 
-module.exports = SubSystem
+module.exports = Subsystem

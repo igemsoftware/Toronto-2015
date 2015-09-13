@@ -1,5 +1,6 @@
 System = require "./System"
 TreeNode = require "./TreeNode"
+Network = require "./Network"
 
 systemAttributes =
     id               : 'root'
@@ -68,4 +69,4 @@ sortables =
     sortables: ['species', 'compartments']
     start: 'species'
 
-network = new System(systemAttributes, data, sortables)
+network = new Network(systemAttributes, data, sortables)

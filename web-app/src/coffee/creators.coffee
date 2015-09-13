@@ -8,8 +8,8 @@ utilities = require './utilities'
 module.exports =
     createReaction: (name, id, radius, flux, ctx) ->
         reactionAttributes =
-            x : utilities.rand(@W)
-            y : utilities.rand(@H)
+            x : utilities.rand(@width)
+            y : utilities.rand(@height)
             r : radius
             name : name
             id : id
@@ -19,33 +19,26 @@ module.exports =
         return new Reaction(reactionAttributes, ctx)
 
     # System injected
-    createReactionNode: (reaction) ->
-        r = @reactions[reaction.id]
-        if not r?
-            reactionAttributes =
-                x : utilities.rand(@W)
-                y : utilities.rand(@H)
-                r : @radiusScale(reaction.flux_value)
-                name : reaction.name
-                id : reaction.id
-                type : "r"
-                flux_value : reaction.flux_value
-                colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+    createReactionNode: (id, name, flux_value) ->
+        
+        reactionAttributes =
+            x : utilities.rand(@width)
+            y : utilities.rand(@height)
+            r : @radiusScale(flux_value)
+            name : name
+            id : id
+            type : "r"
+            flux_value : flux_value
+            colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
 
-            r = new ReactionNode(reactionAttributes, @ctx)
-            @reactions[reaction.id] = r
-            for inNeighbour in reaction.inNeighbours
-                r.inNeighbours.push(inNeighbour.name)
-            for outNeighbour in reaction.outNeighbours
-                r.outNeighbours.push(outNeighbour.name)
-            @nodes.push(r)
-        return r
+
+        return new ReactionNode(reactionAttributes, @ctx)
 
     # System injected
     createMetabolite: (name, id, radius, updateOption, ctx) ->
         nodeAttributes =
-            x : utilities.rand(@W)
-            y : utilities.rand(@H)
+            x : utilities.rand(@width)
+            y : utilities.rand(@height)
             r : radius
             name : name
             id : id
@@ -56,7 +49,7 @@ module.exports =
         return metabolite
 
     # System injected
-    createLink: (src, tgt, name, flux, radius, ctx) ->
+    createLink: (src, tgt, name, flux, radius) ->
         if src.type is "r" and tgt.type is "m"
             # console.log('here')
             linkAttr =
@@ -67,7 +60,7 @@ module.exports =
                 r         : radius
                 linkScale : utilities.scaleRadius(null, 1, 5)
 
-            return new Link(linkAttr, ctx)
+            return new Link(linkAttr, @ctx)
         else if src.type is "m" and tgt.type is "r"
             # console.log(src.type)
             linkAttr =
@@ -77,7 +70,7 @@ module.exports =
                 fluxValue : flux
                 r         : radius
                 linkScale : utilities.scaleRadius(null, 1, 5)
-            return new Link(linkAttr, ctx)
+            return new Link(linkAttr, @ctx)
         else
             linkAttr =
                 id        : "#{src.id}-#{tgt.id}"
@@ -86,7 +79,7 @@ module.exports =
                 fluxValue : flux
                 r         : radius
                 linkScale : utilities.scaleRadius(null, 1, 5)
-            return new Link(linkAttr, ctx)
+            return new Link(linkAttr, @ctx)
 
     # System injected
     createLinks: (s1, reactionNode, s2) ->
