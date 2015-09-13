@@ -544,39 +544,39 @@ System = (function() {
   function System(attr1, data, sortables) {
     var attr, compartmentor, ref, sortor, system;
     this.attr = attr1;
-    this.sortables = sortables;
-    this.sortables.index++;
+    sortables.index += 1;
     this.id = this.attr.id;
     this.name = this.attr.name;
-    this.sorter = this.attr.sortor;
     this.type = this.attr.type;
-    this.compartmentor = this.attr.compartmentor;
     this.viewController = new ViewController("canvas", this.attr.width, this.attr.height, this.attr.backgroundColour, null);
     this.everything = this.attr.everything;
     this.hideObjective = this.attr.hideObjective;
     this.metaboliteRadius = this.attr.metaboliteRadius;
     ref = this.buildMetabolitesAndReactions(data.metabolites, data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    if (!this.id || !this.name) {
-      this.graph = new Graph("root", "root");
-      this.type = "species";
-    } else {
-      this.graph = new Graph(this.id, this.name);
-    }
+    this.graph = new Graph(this.id, this.name);
     compartmentor = builders[this.type].compartmentor.bind(this);
     sortor = builders[this.type].sortor.bind(this);
     this.buildGraph(compartmentor, sortor);
     this.graph.value = new SubSystem(this.graph, this.metaboliteRadius, this.attr.width, this.attr.height, this.viewController.ctx);
-    if (this.type === 'species') {
-      console.log(Object.keys(this.graph.outNeighbours).length);
+    if (this.type === sortables.start) {
+      this.graph.value.initalizeForce();
+      this.viewController.startCanvas(this.graph.value);
+    }
+    if (this.type === sortables.sortables[sortables.index]) {
       for (system in this.graph.outNeighbours) {
-        if (system !== 'e') {
+        if (system !== 'e' && !sortables.index + 1 === sortables.sortables.length) {
           attr = JSON.parse(JSON.stringify(this.attr));
-          attr.id = this.sortables.sortables[this.sortables.index + 1];
-          attr.name = this.sortables.sortables[this.sortables.index + 1];
-          attr.type = this.sortables.sortables[this.sortables.index + 1];
-          this.graph.outNeighbours[system].value = new System(attr, data, this.sortables);
+          attr.id = sortables.sortables[sortables.index + 1];
+          attr.name = sortables.sortables[sortables.index + 1];
+          attr.type = sortables.sortables[sortables.index + 1];
+          this.graph.outNeighbours[system].value = new System(attr, data, sortables);
         }
       }
+    } else {
+      console.log('reached end');
+    }
+    if (this.type === sortables.sortables[0]) {
+      console.log(this);
     }
   }
 
@@ -1461,6 +1461,8 @@ System = require("./System");
 TreeNode = require("./TreeNode");
 
 systemAttributes = {
+  id: 'root',
+  name: 'root',
   width: window.innerWidth,
   height: window.innerHeight,
   backgroundColour: "white",
@@ -1513,7 +1515,8 @@ for (i = l = 0, ref2 = Object.keys(subsystems).length; 0 <= ref2 ? l <= ref2 : l
 
 sortables = {
   index: -1,
-  sortables: ['species', 'compartments']
+  sortables: ['species', 'compartments'],
+  start: 'species'
 };
 
 network = new System(systemAttributes, data, sortables);

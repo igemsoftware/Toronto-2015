@@ -12,14 +12,12 @@ addors   = require './addors'
 builders = require './builders'
 
 class System
-    constructor: (@attr, data, @sortables) ->
-        @sortables.index++
+    constructor: (@attr, data, sortables) ->
+        sortables.index+= 1
 
         @id = @attr.id
         @name = @attr.name
-        @sorter = @attr.sortor
         @type = @attr.type
-        @compartmentor = @attr.compartmentor
         # Setting up ViewController
         @viewController = new ViewController("canvas", @attr.width, @attr.height, @attr.backgroundColour, null)
 
@@ -29,16 +27,10 @@ class System
         @metaboliteRadius = @attr.metaboliteRadius
         # console.log(data)
 
-
         # The "full resolution" set of Metabolites and Reactions for this System
-        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions) #Good
+        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions)
 
-        #implies root
-        if not @id or not @name
-            @graph = new Graph("root", "root")
-            @type = "species"
-        else
-            @graph = new Graph(@id, @name)
+        @graph = new Graph(@id, @name)
 
         compartmentor = builders[@type].compartmentor.bind(this)
         sortor = builders[@type].sortor.bind(this)
@@ -48,37 +40,26 @@ class System
 
         @graph.value = new SubSystem(@graph, @metaboliteRadius, @attr.width, @attr.height, @viewController.ctx)
 
+        if @type is sortables.start
+            @graph.value.initalizeForce()
+            @viewController.startCanvas(@graph.value)
 
-
-        # for system of @graph.outNeighbours
-        #     console.log @type
-        #     if @type is "species" and @type isnt "e"
-        #         attr.id = system
-        #         attr.name = system
-        #         attr.type = "compartments"
-        #         @graph.outNeighbours[system].value = new System(attr, data)
-        #     else if @type is "compartments"
-        #         attr.id = system
-        #         attr.name = system
-        #         attr.type = "subsystems"
-        #         @graph.outNeighbours[system].value = new System(attr, data)
-
-
-
-        # if @type is @sortables.sortables[@sortables.index]
-        if @type is 'species'
-            console.log(Object.keys(@graph.outNeighbours).length)
+        if @type is sortables.sortables[sortables.index]
             for system of @graph.outNeighbours
-                if system isnt 'e'
+                if system isnt 'e' and not sortables.index + 1 is sortables.sortables.length
                     attr = JSON.parse(JSON.stringify(@attr))
-                    attr.id = @sortables.sortables[@sortables.index+1]
-                    attr.name =  @sortables.sortables[@sortables.index+1]
-                    attr.type = @sortables.sortables[@sortables.index+1]
-                    #@attr.type = @sortables.sortables[@sortables.index+1]
-                    # @graph.outNeighbours[system].value = attr
-                    @graph.outNeighbours[system].value = new System(attr, data, @sortables)
+                    attr.id = sortables.sortables[sortables.index+1]
+                    attr.name =  sortables.sortables[sortables.index+1]
+                    attr.type = sortables.sortables[sortables.index+1]
+                    @graph.outNeighbours[system].value = new System(attr, data, sortables)
+        else
+            console.log('reached end')
 
-        
+
+        if @type is sortables.sortables[0]
+            console.log(this)
+
+
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()
         reactions = new Object()

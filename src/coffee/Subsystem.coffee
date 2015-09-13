@@ -32,7 +32,7 @@ class SubSystem
         # delete @reactions
         # delete @radiusScale
 
-        #@initalizeForce()
+        # @initalizeForce()
 
 
     buildCompartments: (graph)->

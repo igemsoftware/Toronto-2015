@@ -2,6 +2,8 @@ System = require "./System"
 TreeNode = require "./TreeNode"
 
 systemAttributes =
+    id               : 'root'
+    name             : 'root'
     width            : window.innerWidth
     height           : window.innerHeight
     backgroundColour : "white"
@@ -9,7 +11,7 @@ systemAttributes =
     useStatic        : false
     everything       : false
     hideObjective    : true
-    type: 'species'         
+    type: 'species'
 
 
 
@@ -61,12 +63,9 @@ for i in [0..Object.keys(subsystems).length]
 # 		if metabolite is 'acac_p'
 # 			console.log(reaction)
 
-
-
-#root
 sortables =
     index: -1
     sortables: ['species', 'compartments']
+    start: 'species'
 
 network = new System(systemAttributes, data, sortables)
-#new System('globalroot', systemAttributes, data)
