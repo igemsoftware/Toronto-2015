@@ -16,6 +16,10 @@ scripts using [cobrapy](https://github.com/opencobra/cobrapy) (COnstraints Based
 Reconstruction and Analysis). The web app is a single page application built off
 of [AngularJS](https://angularjs.org/).
 
+## Installability Check Notes
+
+The `web-app` in master right now is a little outdated to our current version. We are redoing some things, and the current version is not fully completed. AngularJS is not being used at the moment but it was present in an older branch of ours. However, install procedures are identical. Furthermore, at this point, the express-server is not explicitly required to be running for the web-app to work (in the final version it will be, for the sake of development we have been 'hardcoding' in server requests). Thanks, and hopefully you won't have too much trouble installing libsbml :).
+
 ## Usage
 
 See the user guide (coming soon).
@@ -126,6 +130,13 @@ dependencies that refuse to build when installed through pip.
 cd express-server
 npm install -g nodemon
 npm install
+```
+
+There are some scripts you can run to `curl` requests to the localserver (optimize will only work if cobrapy is installed fully):
+
+```
+./build-models.sh
+curl http://localhost:9001//model/optimize/iJO1366
 ```
 
 ### cobrapy
