@@ -170,6 +170,15 @@ even though my current libxml was multiple versions ahead of that required.
 [SWIG](http://www.swig.org/) is required to build bindings between C and Python
 for libsbml.
 
+Please note, you will need to point to the correct Python binary (the one with a working cobra install)
+in line 37 of `routes/model/optimize/index.js`:
+
+```js
+var optimizeScript = cp.spawn('python', args)
+```
+
+This will be moved into `config.js` soon.
+
 ## Changelog (web-app)
 
 Current: **1.4.4**
