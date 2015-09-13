@@ -1,12 +1,14 @@
-# Canvas
+# ###Canvas
+
+
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG, system) ->
+    constructor: (@id, @width, @height, @BG, network) ->
         # Create our `<canvas>` DOM element
 
         @c = document.createElement("canvas")
-        @activeGraph = system
-        @network = system
+        @activeGraph = network
+        @network = network
         # Set some attributes
         @c.id     = @id
         @c.width  = @width
@@ -17,21 +19,17 @@ class ViewController
         @clientX = 0
         @clientY = 0
         # Add event listeners. Bind so we preserve `this`.
-        # @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
-        # @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
-        # @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
-        # @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
+        @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
+        @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
+        @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
+        @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
 
         # Append it to the DOM
         #tried to disable select, failed misribly.
         document.body.appendChild(@c)
-        # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
         @nodetext =  $('#nodetext')
-
-
-    startCanvas:(graph) ->
-        @activeGraph = graph
+        #disable highlighting (Still doesnt work WIP)
         $(@id).css({
             "-moz-user-select": "none",
             "-webkit-user-select": "none",
@@ -40,11 +38,8 @@ class ViewController
             "-o-user-select": "none",
             "unselectable": "on"
         })
-
         #temporary
         that = this
-
-
         $('#addMetabolite').click(->
             that.activeGraph.nodes.push(
                 that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(),
@@ -60,7 +55,7 @@ class ViewController
                 name: $('#target :selected').text()
             that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx)
         )
-
+        # Get 2d context
 
 
         # SVG Matrix for zooming/panning
@@ -70,12 +65,8 @@ class ViewController
         @dragScaleFactor = 1.5
         @lastX = @width // 2
         @lastY = @width // 2
-        @activeGraph.force.start()
-        @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
-        @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
-        @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
-        @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
         @startAnimate()
+
 
     populateOptions: (nodes) ->
         $("#source").html("")
@@ -213,8 +204,8 @@ class ViewController
         })
         that = this
         if node.type is 'r'
-            substrates = (substrate for substrate in node.inNeighbours)
-            products = (product for product in node.outNeighbours)
+            substrates = (substrate.name for substrate in node.substrates)
+            products = (product.name for product in node.products)
             @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
             @nodetext.append("<button id='delete'>Delete Reaction</button><br>")
         else

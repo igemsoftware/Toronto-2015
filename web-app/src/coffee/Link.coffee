@@ -11,7 +11,7 @@ class Link
         @appendSubstratesAndProducts()
 
     appendSubstratesAndProducts: ->
-        #update this
+
         if @source.type is 'm' and @target.type is 'r'
             # Case 1: substrate - reaction
             @source.outNeighbours.push(@target)
@@ -20,13 +20,13 @@ class Link
             # Case 2: reaction -> product
             @target.inNeighbours.push(@source)
             @source.products.push(@target)
-        else if @target.type is 'r' and @source.type is 'Compartment'#implies compartment
+        else if @source.type is 's' and @target.type is 'r'
             #case 3: specie - reaction
-            #@target.inNeighbours.push(@source.name)
-            @source.products.push(@target)
-        else if @source.type is 'r' and @target.type is 'Compartment'
             @target.inNeighbours.push(@source)
-            #@source.products.push(@target.name)
+            @source.products.push(@target)
+        else if @source.type is 'r' and @target.type is 's'
+            @target.inNeighbours.push(@source)
+            @source.products.push(@target)
             @r = @target.r
     y = (x1, y1, m) ->
         return (x)->
@@ -44,20 +44,20 @@ class Link
             #theta is the angle from the line to the arrow
             theta = Math.PI/8
             @ctx.beginPath()
-
-            targetx = @target.x + @r*Math.cos(lineAngle)
-            targety = @target.y + @r*Math.sin(lineAngle)
+            if @target.type is "r"
+                targetx = @target.x
+                targety = @target.y
+            else
+                targetx = @target.x + @r*Math.cos(lineAngle)
+                targety = @target.y + @r*Math.sin(lineAngle)
 
             @ctx.moveTo(@source.x, @source.y)
             @ctx.lineTo(targetx, targety)
             #create arrow
-
-
-            @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
-            @ctx.moveTo(targetx, targety)
-            @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
-
-
+            if @source.type is "r"
+                @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
+                @ctx.moveTo(targetx, targety)
+                @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
             @ctx.lineWidth = @thickness
             @ctx.closePath()
             @ctx.strokeStyle = "black"

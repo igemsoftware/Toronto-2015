@@ -18,10 +18,6 @@ class Node
         @colour = attr.colour
         @keepStatic = false
 
-
-
-        @compartment = @id.split('_')[@id.split('_').length - 1]
-        
         # Reaction properties
         # In neighbours
         @substrates = @inNeighbours = new Array()

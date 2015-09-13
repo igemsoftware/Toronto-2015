@@ -1,6 +1,6 @@
 Node = require "./Node"
 
-class Metabolite extends Node
+class Specie extends Node
     draw: ->
         if not @deleted
             @ctx.beginPath()
@@ -8,9 +8,9 @@ class Metabolite extends Node
             @ctx.arc(@x, @y, @r, 0, 2 * Math.PI)
             @ctx.closePath()
 
-            @ctx.fillStyle = "black"
+            @ctx.fillStyle = "orange"
             @ctx.fillStyle = "green" if @hover
 
             @ctx.fill()
-
-module.exports = Metabolite
+    
+module.exports = Specie
