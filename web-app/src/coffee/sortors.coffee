@@ -1,8 +1,10 @@
 Graph = require './Graph'
 
-
 module.exports =
     species:
+        parser: ->
+            @parsedData.foo = 'parsed'
+            @parsedData.bar = 'data'
         sortor: ->
             for reaction of @reactions
                 r = @reactions[reaction]

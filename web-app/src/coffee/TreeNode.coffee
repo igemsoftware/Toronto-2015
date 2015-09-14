@@ -17,9 +17,9 @@ class TreeNode
         # @subsystem.buildGraph(parsedData)
 
 
-        for data in @subsystem.parsedData
+        for key of @subsystem.parsedData
             # Use data to make kids
-            console.log(data)
+            console.log(@subsystem.parsedData[key])
 
         @subsystem.buildSystem(@subsystem.data)
 
