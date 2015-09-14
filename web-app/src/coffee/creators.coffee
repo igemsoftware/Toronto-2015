@@ -1,5 +1,6 @@
 Reaction   = require './Reaction'
 Metabolite = require './Metabolite'
+Compartment = require './Compartment'
 Link       = require './Link'
 
 utilities = require './utilities'
@@ -32,6 +33,16 @@ module.exports =
 
 
         return new ReactionNode(reactionAttributes, @ctx)
+
+
+    createCompartment: (id, name) ->
+        compartmentAttributes =
+            x : utilities.rand(@width)
+            y : utilities.rand(@height)
+            r : @compartmentRadius
+            name : name
+            id : id
+        return new Compartment(compartmentAttributes, @ctx)
 
     # System injected
     createMetabolite: (name, id, radius, updateOption, ctx) ->

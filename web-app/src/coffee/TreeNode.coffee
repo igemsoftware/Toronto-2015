@@ -16,9 +16,11 @@ class TreeNode
         # parsedData = @subsystem.parseData(@subsystem.data) #probably give a sorter
         # @subsystem.buildGraph(parsedData)
 
+        for child of @subsystem.parsedData
+            @subsystem.buildSystem(@subsystem.parsedData[child])
 
-        console.log(@subsystem.parsedData)
+        console.log(@subsystem.graph)
 
-        @subsystem.buildSystem(@subsystem.data)
+        # @subsystem.buildSystem(@subsystem.data)
 
 module.exports = TreeNode

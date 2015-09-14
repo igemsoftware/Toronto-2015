@@ -1,4 +1,5 @@
 Graph = require './Graph'
+creators = require './creators'
 
 module.exports =
     species:
@@ -24,34 +25,39 @@ module.exports =
                             pushedMetabolites.push(metabolite)
                             @parsedData[specie].metabolites.push(metaboliteDict[metabolite])
 
+        compartmentor: ->
+            mappings =
+                iJO1366: 'E. coli'
+
+            species = new Array()
+
+            for metabolite in @data.metabolites
+                for specie in metabolite.species
+                    if specie not in species
+                        species.push(specie)
+
+            for specie in species
+                @graph.addVertex(specie, creators.createCompartment(specie, mappings[specie]))
+
         sortor: ->
             for reaction of @reactions
                 r = @reactions[reaction]
 
                 for specie in r.species
-                    if r.productCompartments.indexOf('e') isnt -1
-                        # fix
-                        g = new Graph(r.id, r.name)
-                        g.outNeighbours['e'] = @graph.outNeighbours['e']
-                        g.inNeighbours[specie] = @graph.outNeighbours[specie]
-                        g.value = r
-                        @graph.outNeighbours[specie].outNeighbours[r.id] = g
-
-        compartmentor: ->
-            sorter = 'species'
-
-            mappings =
-                iJO1366: 'E. coli'
-
-            for metabolite of @metabolites
-                m = @metabolites[metabolite]
-
-                for specie in m[sorter]
-                    if not @graph.outNeighbours[specie]?
-                        @graph.outNeighbours[specie] = new Graph(specie, mappings[specie])
-
-            @graph.outNeighbours['e'] = new Graph('e', 'extracellular')
-
+                    for product in r.products
+                        if product.compartment is 'e'
+                            console.log(r)
+                    # if r.productCompartments.indexOf('e') isnt -1
+                    #     # fix
+                    #     #g = new Graph(r.id, r.name)
+                    #     @graph.addVertex(r.id, r)
+                    #
+                    #
+                    #
+                    #     g.outNeighbours['e'] = @graph.outNeighbours['e']
+                    #     g.inNeighbours[specie] = @graph.outNeighbours[specie]
+                    #     g.value = r
+                    #     @graph.outNeighbours[specie].outNeighbours[r.id] = g
 
     compartments:
         compartmentor: ->
