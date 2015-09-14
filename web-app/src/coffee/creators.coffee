@@ -1,5 +1,4 @@
 Reaction   = require './Reaction'
-ReactionNode = require './ReactionNode'
 Metabolite = require './Metabolite'
 Link       = require './Link'
 

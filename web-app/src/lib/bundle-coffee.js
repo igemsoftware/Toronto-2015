@@ -38,7 +38,7 @@ Compartment = (function(superClass) {
 module.exports = Compartment;
 
 
-},{"./Node":6,"./utilities":21}],2:[function(require,module,exports){
+},{"./Node":6,"./utilities":20}],2:[function(require,module,exports){
 var Graph, Link, Metabolite, Reaction, utilities;
 
 utilities = require("./utilities");
@@ -65,7 +65,7 @@ Graph = (function() {
 module.exports = Graph;
 
 
-},{"./Link":3,"./Metabolite":4,"./Reaction":7,"./utilities":21}],3:[function(require,module,exports){
+},{"./Link":3,"./Metabolite":4,"./Reaction":7,"./utilities":20}],3:[function(require,module,exports){
 var Link;
 
 Link = (function() {
@@ -208,7 +208,7 @@ Network = (function() {
 module.exports = Network;
 
 
-},{"./Subsystem":10,"./TreeNode":12,"./ViewController":13}],6:[function(require,module,exports){
+},{"./Subsystem":9,"./TreeNode":11,"./ViewController":12}],6:[function(require,module,exports){
 var Node, rand;
 
 rand = function(range) {
@@ -254,17 +254,20 @@ module.exports = Node;
 
 
 },{}],7:[function(require,module,exports){
-var Node, Reaction,
+var Node, Reaction, stringToColour,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
 Node = require("./Node");
 
+stringToColour = require('./utilities').stringToColour;
+
 Reaction = (function(superClass) {
   extend(Reaction, superClass);
 
-  function Reaction(attr) {
-    Reaction.__super__.constructor.call(this, attr);
+  function Reaction(attr, ctx) {
+    this.ctx = ctx;
+    Reaction.__super__.constructor.call(this, attr, this.ctx);
     this.substrateCompartments = new Array();
     this.productCompartments = new Array();
     this.links = new Array();
@@ -283,31 +286,7 @@ Reaction = (function(superClass) {
     }
   };
 
-  return Reaction;
-
-})(Node);
-
-module.exports = Reaction;
-
-
-},{"./Node":6}],8:[function(require,module,exports){
-var Node, ReactionNode, stringToColour,
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
-
-Node = require("./Node");
-
-stringToColour = require('./utilities').stringToColour;
-
-ReactionNode = (function(superClass) {
-  extend(ReactionNode, superClass);
-
-  function ReactionNode(attr, ctx) {
-    this.ctx = ctx;
-    ReactionNode.__super__.constructor.call(this, attr, this.ctx);
-  }
-
-  ReactionNode.prototype.draw = function() {
+  Reaction.prototype.draw = function() {
     var factor, i, j, k, nos, ref, ref1, size;
     if (!this.deleted) {
       nos = 6;
@@ -336,14 +315,14 @@ ReactionNode = (function(superClass) {
     }
   };
 
-  return ReactionNode;
+  return Reaction;
 
 })(Node);
 
-module.exports = ReactionNode;
+module.exports = Reaction;
 
 
-},{"./Node":6,"./utilities":21}],9:[function(require,module,exports){
+},{"./Node":6,"./utilities":20}],8:[function(require,module,exports){
 var Compartment, Subsystem, creators, force, parsors, utilities;
 
 Compartment = require('./Compartment');
@@ -506,7 +485,7 @@ Subsystem = (function() {
 module.exports = Subsystem;
 
 
-},{"./Compartment":1,"./creators":16,"./force":18,"./parsors":20,"./utilities":21}],10:[function(require,module,exports){
+},{"./Compartment":1,"./creators":15,"./force":17,"./parsors":19,"./utilities":20}],9:[function(require,module,exports){
 var Compartment, Subsystem, creators, force, parsors, utilities;
 
 Compartment = require('./Compartment');
@@ -669,7 +648,7 @@ Subsystem = (function() {
 module.exports = Subsystem;
 
 
-},{"./Compartment":1,"./creators":16,"./force":18,"./parsors":20,"./utilities":21}],11:[function(require,module,exports){
+},{"./Compartment":1,"./creators":15,"./force":17,"./parsors":19,"./utilities":20}],10:[function(require,module,exports){
 var Compartment, Graph, SubSystem, System, TreeNode, ViewController, addors, builders, creators, deletors;
 
 SubSystem = require("./SubSystem");
@@ -790,7 +769,7 @@ window.FBA = {
 };
 
 
-},{"./Compartment":1,"./Graph":2,"./SubSystem":9,"./TreeNode":12,"./ViewController":13,"./addors":14,"./builders":15,"./creators":16,"./deletors":17}],12:[function(require,module,exports){
+},{"./Compartment":1,"./Graph":2,"./SubSystem":8,"./TreeNode":11,"./ViewController":12,"./addors":13,"./builders":14,"./creators":15,"./deletors":16}],11:[function(require,module,exports){
 var TreeNode;
 
 TreeNode = (function() {
@@ -816,7 +795,7 @@ TreeNode = (function() {
 module.exports = TreeNode;
 
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var ViewController;
 
 ViewController = (function() {
@@ -1144,7 +1123,7 @@ ViewController = (function() {
 module.exports = ViewController;
 
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = {
   addMetabolite: function(id, name, type, radius, ctx) {
     var metabolite, nodeAttributes;
@@ -1268,7 +1247,7 @@ module.exports = {
 };
 
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var Graph;
 
 Graph = require('./Graph');
@@ -1396,12 +1375,10 @@ module.exports = {
 };
 
 
-},{"./Graph":2}],16:[function(require,module,exports){
-var Link, Metabolite, Reaction, ReactionNode, utilities;
+},{"./Graph":2}],15:[function(require,module,exports){
+var Link, Metabolite, Reaction, utilities;
 
 Reaction = require('./Reaction');
-
-ReactionNode = require('./ReactionNode');
 
 Metabolite = require('./Metabolite');
 
@@ -1534,7 +1511,7 @@ module.exports = {
 };
 
 
-},{"./Link":3,"./Metabolite":4,"./Reaction":7,"./ReactionNode":8,"./utilities":21}],17:[function(require,module,exports){
+},{"./Link":3,"./Metabolite":4,"./Reaction":7,"./utilities":20}],16:[function(require,module,exports){
 module.exports = {
   deleteNode: function(node) {
     var i, inNeighbour, j, len, len1, nodeIndex, outNeighbour, ref, ref1;
@@ -1557,7 +1534,7 @@ module.exports = {
 };
 
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var chargeHandler, linkDistanceHandler;
 
 linkDistanceHandler = function(link, i) {
@@ -1594,7 +1571,7 @@ module.exports = {
 };
 
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var Network, network, networkAttributes, sortables;
 
 Network = require("./Network");
@@ -1623,7 +1600,7 @@ networkAttributes = {
 network = new Network(networkAttributes);
 
 
-},{"./Network":5}],20:[function(require,module,exports){
+},{"./Network":5}],19:[function(require,module,exports){
 var Graph;
 
 Graph = require('./Graph');
@@ -1717,7 +1694,7 @@ module.exports = {
 };
 
 
-},{"./Graph":2}],21:[function(require,module,exports){
+},{"./Graph":2}],20:[function(require,module,exports){
 var nodeMap, rand, scaleRadius;
 
 rand = function(range) {
@@ -1774,7 +1751,7 @@ module.exports = {
 };
 
 
-},{}]},{},[1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21])
+},{}]},{},[1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map
