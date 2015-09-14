@@ -6,11 +6,11 @@ Link       = require './Link'
 utilities = require './utilities'
 
 module.exports =
-    createReaction: (name, id, radius, flux, ctx) ->
+    createReaction: (name, id, flux, ctx) ->
         reactionAttributes =
             x : utilities.rand(@width)
             y : utilities.rand(@height)
-            r : radius
+            # r : radius
             name : name
             id : id
             type : "r"
@@ -20,7 +20,7 @@ module.exports =
 
     # System injected
     createReactionNode: (id, name, flux_value) ->
-        
+
         reactionAttributes =
             x : utilities.rand(@width)
             y : utilities.rand(@height)
