@@ -3,8 +3,27 @@ Graph = require './Graph'
 module.exports =
     species:
         parser: ->
-            @parsedData.foo = 'parsed'
-            @parsedData.bar = 'data'
+            metaboliteDict = new Object()
+            for metabolite in @data.metabolites
+                metaboliteDict[metabolite.id] = metabolite
+
+            pushedMetabolites = new Array()
+
+            # Loop through BARE data
+            for reaction in @data.reactions
+                for specie in reaction.species
+                    if not @parsedData[specie]?
+                        @parsedData[specie] = new Object()
+                        @parsedData[specie].metabolites = new Array()
+                        @parsedData[specie].reactions = new Array()
+
+                    @parsedData[specie].reactions.push(reaction)
+
+                    for metabolite of reaction.metabolites
+                        if metabolite not in pushedMetabolites
+                            pushedMetabolites.push(metabolite)
+                            @parsedData[specie].metabolites.push(metaboliteDict[metabolite])
+
         sortor: ->
             for reaction of @reactions
                 r = @reactions[reaction]

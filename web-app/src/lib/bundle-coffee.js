@@ -696,15 +696,12 @@ var TreeNode;
 
 TreeNode = (function() {
   function TreeNode(id, subsystem) {
-    var key;
     this.id = id;
     this.subsystem = subsystem;
     this.parent = null;
     this.children = new Object();
     this.value = null;
-    for (key in this.subsystem.parsedData) {
-      console.log(this.subsystem.parsedData[key]);
-    }
+    console.log(this.subsystem.parsedData);
     this.subsystem.buildSystem(this.subsystem.data);
   }
 
@@ -1394,15 +1391,56 @@ network = new Network(networkAttributes);
 
 
 },{"./Network":5}],18:[function(require,module,exports){
-var Graph;
+var Graph,
+  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Graph = require('./Graph');
 
 module.exports = {
   species: {
     parser: function() {
-      this.parsedData.foo = 'parsed';
-      return this.parsedData.bar = 'data';
+      var i, j, len, len1, metabolite, metaboliteDict, pushedMetabolites, reaction, ref, ref1, results, specie;
+      metaboliteDict = new Object();
+      ref = this.data.metabolites;
+      for (i = 0, len = ref.length; i < len; i++) {
+        metabolite = ref[i];
+        metaboliteDict[metabolite.id] = metabolite;
+      }
+      pushedMetabolites = new Array();
+      ref1 = this.data.reactions;
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        reaction = ref1[j];
+        results.push((function() {
+          var k, len2, ref2, results1;
+          ref2 = reaction.species;
+          results1 = [];
+          for (k = 0, len2 = ref2.length; k < len2; k++) {
+            specie = ref2[k];
+            if (this.parsedData[specie] == null) {
+              this.parsedData[specie] = new Object();
+              this.parsedData[specie].metabolites = new Array();
+              this.parsedData[specie].reactions = new Array();
+            }
+            this.parsedData[specie].reactions.push(reaction);
+            results1.push((function() {
+              var results2;
+              results2 = [];
+              for (metabolite in reaction.metabolites) {
+                if (indexOf.call(pushedMetabolites, metabolite) < 0) {
+                  pushedMetabolites.push(metabolite);
+                  results2.push(this.parsedData[specie].metabolites.push(metaboliteDict[metabolite]));
+                } else {
+                  results2.push(void 0);
+                }
+              }
+              return results2;
+            }).call(this));
+          }
+          return results1;
+        }).call(this));
+      }
+      return results;
     },
     sortor: function() {
       var g, r, reaction, results, specie;
