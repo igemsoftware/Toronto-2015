@@ -1,13 +1,12 @@
-System   = require "./System"
-TreeNode = require "./TreeNode"
 Network  = require "./Network"
 
+# Passed in all the way through to Subsystem
 sortables =
-    index     : -1
-    sortables : ['species', 'compartments']
-    start     : 'species'
+    index       : -1
+    identifiers : ['species', 'compartments']
+    start       : 'species'
 
-systemAttributes =
+networkAttributes =
     id               : 'root'
     name             : 'root'
     width            : window.innerWidth
@@ -19,9 +18,9 @@ systemAttributes =
     hideObjective    : true
     data             : data
     sortables        : sortables
-    type             : 'species'
+    type             : sortables.identifiers[0]
 
-network = new Network(systemAttributes)
+network = new Network(networkAttributes)
 
 # model = JSON.parse(JSON.stringify(data))
 # subsystems = new Object()

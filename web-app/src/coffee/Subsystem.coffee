@@ -1,18 +1,24 @@
 Compartment = require './Compartment'
-utilities = require './utilities'
-creators = require './creators'
-force = require './force'
+utilities   = require './utilities'
+creators    = require './creators'
+parsors     = require './parsors'
+force       = require './force'
 
 class Subsystem
     constructor: (attr) ->
         # Store attributes as properties of System
-        @data = attr.data
-        @width = attr.width
-        @height = attr.height
-        @ctx = attr.ctx
+        @data          = attr.data
+        @width         = attr.width
+        @height        = attr.height
+        @ctx           = attr.ctx
+        @type          = attr.type
         # TODO make these into 'filters'
-        @everything = attr.everything
+        @everything    = attr.everything
         @hideObjective = attr.hideObjective
+
+        # Sortables
+        attr.sortables.index++
+        @sortables = attr.sortables
 
         # TODO be parameterized/or done through a d3 scale
         @metaboliteRadius = 10
@@ -31,10 +37,15 @@ class Subsystem
         @radiusScale = utilities.scaleRadius(@data, 5, 15)
 
         # Bind functions to 'this' so they have access to Subsystem's properties
-        creators.createMetabolite = creators.createMetabolite.bind(this)
+        creators.createMetabolite   = creators.createMetabolite.bind(this)
         creators.createReactionNode = creators.createReactionNode.bind(this)
-        creators.createLink = creators.createLink.bind(this)
-        force.initalizeForce = force.initalizeForce.bind(this)
+        creators.createLink         = creators.createLink.bind(this)
+        force.initalizeForce        = force.initalizeForce.bind(this)
+
+        # Bind and run parser for the current 'type'
+        # Mutates @parsedData
+        @parsedData = new Array()
+        (parsors[@type].parser.bind(this))()
 
         # Further function calling will occur from TreeNode
 
@@ -120,13 +131,11 @@ class Subsystem
         # Initilize a force layout
         force.initalizeForce()
 
-    # Responsible for creating 'minimal view' and sending back parsed data
-    parseData: (compartmentor, sortor) ->
-        compartmentor = compartmentor.bind(this)
-        sortor = sortor.bind(this)
-
-        compartmentor()
-        sortor()
+    # Responsible for returning array of parsed data objects
+    # Potentially disconnect from System and take a bunch of params?
+    parseData: ->
+        # 'this' DOES NOT refer to 'System' in the following :/
+        parsors[@type].parser()
 
     # **Subsystem.checkCollisions**
     # Loops through @nodes and checks for mouse collision

@@ -1,5 +1,7 @@
 class TreeNode
     constructor: (@id, @subsystem) ->
+        # By the time we get here, @subsystem has run its constructor
+
         # A TreeNode
         @parent = null
         # Object of TreeNodes
@@ -14,8 +16,11 @@ class TreeNode
         # parsedData = @subsystem.parseData(@subsystem.data) #probably give a sorter
         # @subsystem.buildGraph(parsedData)
 
-        @subsystem.buildSystem(@subsystem.data)
 
-        # Create the children
+        for data in @subsystem.parsedData
+            # Use data to make kids
+            console.log(data)
+
+        @subsystem.buildSystem(@subsystem.data)
 
 module.exports = TreeNode

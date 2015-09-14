@@ -2,21 +2,23 @@ ViewController = require './ViewController'
 TreeNode       = require './TreeNode'
 Subsystem      = require './Subsystem'
 
-# Main model for our MVC
+# The M for our MVC
 class Network
     constructor: (attr) ->
-        # TODO Remove last parameter
-        @viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, null)
+        # The VC for our MVC
+        @viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour)
 
+        # Create our root TreeNode
+        # Will recursively create children
         subsystemAttr =
             data          : attr.data
             width         : attr.width
             height        : attr.height
             hideObjective : attr.hideObjective
             everything    : attr.everything
+            sortables     : attr.sortables
+            type          : attr.type
             ctx           : @viewController.ctx
-        # Create our root TreeNode
-        # Will recursively create children
         root = new TreeNode('root', new Subsystem(subsystemAttr))
 
         # Start the visualization

@@ -1,12 +1,10 @@
 # Canvas
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG, system) ->
+    constructor: (@id, @width, @height, @BG) ->
         # Create our `<canvas>` DOM element
 
         @c = document.createElement("canvas")
-        @activeGraph = system
-        @network = system
         # Set some attributes
         @c.id     = @id
         @c.width  = @width
@@ -16,6 +14,8 @@ class ViewController
         #current mouse position
         @clientX = 0
         @clientY = 0
+
+        # Can this happen here? Or does it have to be startCanvas?
         # Add event listeners. Bind so we preserve `this`.
         # @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
         # @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
