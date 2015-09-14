@@ -5,89 +5,132 @@ force = require './force'
 
 class Subsystem
     constructor: (attr) ->
+        # Store attributes as properties of System
+        @data = attr.data
+        @width = attr.width
+        @height = attr.height
+        @ctx = attr.ctx
+        # TODO make these into 'filters'
+        @everything = attr.everything
+        @hideObjective = attr.hideObjective
+
+        # TODO be parameterized/or done through a d3 scale
+        @metaboliteRadius = 10
+
+        # The Graph of this Subsystem
+        @graph = new Graph()
+
+        # nodes and links to be used by the force layout
+        @nodes = new Array()
+        @links = new Array()
+        # The force layout provided by D3
+        @force = null
+
+        # Used by createReactionNode
+        # TODO get parameters from elsewhere
+        @radiusScale = utilities.scaleRadius(@data, 5, 15)
+
+        # Bind functions to 'this' so they have access to Subsystem's properties
         creators.createMetabolite = creators.createMetabolite.bind(this)
         creators.createReactionNode = creators.createReactionNode.bind(this)
         creators.createLink = creators.createLink.bind(this)
         force.initalizeForce = force.initalizeForce.bind(this)
 
-        @metaboliteRadius  = 10
+        # Further function calling will occur from TreeNode
 
-        @nodes = new Array()
-        @links = new Array()
-        @force = null
-        @graph = new Graph()
-
-        @data = attr.data
-        @width = attr.width
-        @height = attr.height
-        @ctx = attr.ctx
-        @everything = attr.everything
-        @hideObjective = attr.hideObjective
-
-        @radiusScale = utilities.scaleRadius(data, 5, 15)
-
-        @buildUnsortedGraph(data.metabolites, data.reactions)
-
-        it = @graph.vertices()
-        #add all metabolites and reactions
-        while not (kv = it.next()).done
-            value = kv.value[1]
-            @nodes.push(value)
-
-        #create links
-
-        it = @graph.edges()
-        while not (kv = it.next()).done
-            from = kv.value[0] #ids'
-            to = kv.value[1]
-            value = kv.value[2]
-            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2, @ctx))
-
-        force.initalizeForce()
-
-        #DoneDONEDONEDONEDONEDONEODNEODNEONDONE CONSTRUTOR IS DONE
-
-
-        #equivelent of buildMetabolitesAndReactions
-    buildUnsortedGraph: (metaboliteData, reactionData) ->
-
-    # Loop through each metabolites in the metabolic model provided
+    # **Subsystem.buildGraph**
+    # Takes 'bare' data and constructs @graph
+    # Called from : buildSystem
+    # Requires    : @everything, @hideObjective
+    # Calls       : createMetabolite, createReactionNode, Graph.addVertex, Graph.createNewEdge
+    # Mutates     : @graph
+    buildGraph: (metaboliteData, reactionData) ->
+        # Loop through each metabolite in the metabolic model provided
         for metabolite in metaboliteData
-            # Create a new Metabolite object using the current metabolite
+        # for metabolite in @data.metabolites
+            # Create a new Metabolite
+            # TODO params: metabolite, ctx, metaboliteRadius?
             m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
-            # Store current Metabolite in metabolites dictionary
             m.species = metabolite.species
 
+            # Create a node (vertex) for this Metabolite in Subsystem.graph
             @graph.addVertex(metabolite.id, m)
 
-        # Loop through each reaction
+        # Loop through each reaction in the metabolic model provided
         for reaction in reactionData
-            # Create 'filters' later
-            # Skip if flux is 0 or if reaction name containes 'objective function'
+        # for reaction in @data.reactions
+            # TODO Create 'filters'
+            # Skip if flux is 0
             if (not @everything and reaction.flux_value is 0)
                 continue
-            if (@hideObjective and reaction.name.indexOf('objective function') isnt -1 )
+            # Skip if reaction name contains 'objective function'
+            if (@hideObjective and reaction.name.toLowerCase().indexOf('objective function') isnt -1 )
                 continue
 
-
+            # Create a vertex for a new Reaction if it does not already exist
+            # @Albert is this check required? Why? There was no check for Metabolites
             if not @graph.hasVertex(reaction.id)
-                #id, name, flux_value
                 @graph.addVertex(reaction.id, creators.createReactionNode(reaction.id, reaction.name, reaction.flux_value))
-            # r.species = reaction.species
+
+            # Loop through metabolites inside reaction
+            # Dict. of the form: {id:stoichiometric coefficient}
+            # This will create an edge of either
+            #   metabolite -> reaction
+            #   reaction   -> metabolite
+            # In this way, two edges, two Metabolites, one ReactionNode are
+            # required to represent the reaction A -> B
             for metaboliteId of reaction.metabolites
+                # metabolite is a product
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id
                     target = metaboliteId
-                else
+                # metabolite is a substrate
+                else if reaction.metabolites[metaboliteId] < 0
                     source = metaboliteId
                     target = reaction.id
+
+                # Create an edge for this metabolites relationsip in the reaction
+                # NOTE Reactions may be represented by multiple edges
                 @graph.createNewEdge(source, target, "#{source} -> #{target}")
 
+    # **Subsystem.buildSystem**
+    # Calls: @buildGraph, initializeForce, createLink
+    # Mutates: @nodes, @links
+    buildSystem: (data) ->
+        # TODO buildGraph needs to be slightly augmented so it will work with compartments
+        @buildGraph(data.metabolites, data.reactions)
 
+        # Push all Metabolites and ReactionNodes into @nodes
+        iterator = @graph.vertices()
+        while not (vertex = iterator.next()).done
+            value = vertex.value[1]
+            @nodes.push(value)
 
+        # Push all edges into @links as Links
+        iterator = @graph.edges()
+        while not (edge = iterator.next()).done
+            from = edge.value[0] #ids'
+            to = edge.value[1]
+            value = edge.value[2]
+            # source, target, name, flux, radius
+            # TODO rename radius -> thickness
+            # We don't have fluxes here!
+            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
 
+        # Initilize a force layout
+        force.initalizeForce()
 
+    # Responsible for creating 'minimal view' and sending back parsed data
+    parseData: (compartmentor, sortor) ->
+        compartmentor = compartmentor.bind(this)
+        sortor = sortor.bind(this)
 
+        compartmentor()
+        sortor()
+
+    # **Subsystem.checkCollisions**
+    # Loops through @nodes and checks for mouse collision
+    # Calls: Node.checkCollision
     checkCollisions: (x, y) ->
         nodeReturn = null
         for node in @nodes

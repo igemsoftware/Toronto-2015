@@ -177,25 +177,25 @@ module.exports = Metabolite;
 },{"./Node":6}],5:[function(require,module,exports){
 var Network, Subsystem, TreeNode, ViewController;
 
-ViewController = require("./ViewController");
+ViewController = require('./ViewController');
 
-TreeNode = require("./TreeNode");
+TreeNode = require('./TreeNode');
 
-Subsystem = require("./Subsystem");
+Subsystem = require('./Subsystem');
 
 Network = (function() {
-  function Network(attr, data) {
+  function Network(attr) {
     var root, subsystemAttr;
-    this.viewController = new ViewController("canvas", attr.width, attr.height, attr.backgroundColour, null);
+    this.viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, null);
     subsystemAttr = {
-      data: data,
+      data: attr.data,
       width: attr.width,
       height: attr.height,
-      ctx: this.viewController.ctx,
       hideObjective: attr.hideObjective,
-      everything: attr.everything
+      everything: attr.everything,
+      ctx: this.viewController.ctx
     };
-    root = new TreeNode("root", new Subsystem(subsystemAttr));
+    root = new TreeNode('root', new Subsystem(subsystemAttr));
     this.viewController.startCanvas(root.subsystem);
   }
 
@@ -354,40 +354,25 @@ force = require('./force');
 
 Subsystem = (function() {
   function Subsystem(attr) {
-    var from, it, kv, to, value;
-    creators.createMetabolite = creators.createMetabolite.bind(this);
-    creators.createReactionNode = creators.createReactionNode.bind(this);
-    creators.createLink = creators.createLink.bind(this);
-    force.initalizeForce = force.initalizeForce.bind(this);
-    this.metaboliteRadius = 10;
-    this.nodes = new Array();
-    this.links = new Array();
-    this.force = null;
-    this.graph = new Graph();
     this.data = attr.data;
     this.width = attr.width;
     this.height = attr.height;
     this.ctx = attr.ctx;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
-    this.radiusScale = utilities.scaleRadius(data, 5, 15);
-    this.buildUnsortedGraph(data.metabolites, data.reactions);
-    it = this.graph.vertices();
-    while (!(kv = it.next()).done) {
-      value = kv.value[1];
-      this.nodes.push(value);
-    }
-    it = this.graph.edges();
-    while (!(kv = it.next()).done) {
-      from = kv.value[0];
-      to = kv.value[1];
-      value = kv.value[2];
-      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2, this.ctx));
-    }
-    force.initalizeForce();
+    this.metaboliteRadius = 10;
+    this.graph = new Graph();
+    this.nodes = new Array();
+    this.links = new Array();
+    this.force = null;
+    this.radiusScale = utilities.scaleRadius(this.data, 5, 15);
+    creators.createMetabolite = creators.createMetabolite.bind(this);
+    creators.createReactionNode = creators.createReactionNode.bind(this);
+    creators.createLink = creators.createLink.bind(this);
+    force.initalizeForce = force.initalizeForce.bind(this);
   }
 
-  Subsystem.prototype.buildUnsortedGraph = function(metaboliteData, reactionData) {
+  Subsystem.prototype.buildGraph = function(metaboliteData, reactionData) {
     var i, j, len, len1, m, metabolite, metaboliteId, reaction, results, source, target;
     for (i = 0, len = metaboliteData.length; i < len; i++) {
       metabolite = metaboliteData[i];
@@ -401,7 +386,7 @@ Subsystem = (function() {
       if (!this.everything && reaction.flux_value === 0) {
         continue;
       }
-      if (this.hideObjective && reaction.name.indexOf('objective function') !== -1) {
+      if (this.hideObjective && reaction.name.toLowerCase().indexOf('objective function') !== -1) {
         continue;
       }
       if (!this.graph.hasVertex(reaction.id)) {
@@ -414,7 +399,7 @@ Subsystem = (function() {
           if (reaction.metabolites[metaboliteId] > 0) {
             source = reaction.id;
             target = metaboliteId;
-          } else {
+          } else if (reaction.metabolites[metaboliteId] < 0) {
             source = metaboliteId;
             target = reaction.id;
           }
@@ -424,6 +409,31 @@ Subsystem = (function() {
       }).call(this));
     }
     return results;
+  };
+
+  Subsystem.prototype.buildSystem = function(data) {
+    var edge, from, iterator, to, value, vertex;
+    this.buildGraph(data.metabolites, data.reactions);
+    iterator = this.graph.vertices();
+    while (!(vertex = iterator.next()).done) {
+      value = vertex.value[1];
+      this.nodes.push(value);
+    }
+    iterator = this.graph.edges();
+    while (!(edge = iterator.next()).done) {
+      from = edge.value[0];
+      to = edge.value[1];
+      value = edge.value[2];
+      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
+    }
+    return force.initalizeForce();
+  };
+
+  Subsystem.prototype.parseData = function(compartmentor, sortor) {
+    compartmentor = compartmentor.bind(this);
+    sortor = sortor.bind(this);
+    compartmentor();
+    return sortor();
   };
 
   Subsystem.prototype.checkCollisions = function(x, y) {
@@ -463,40 +473,25 @@ force = require('./force');
 
 Subsystem = (function() {
   function Subsystem(attr) {
-    var from, it, kv, to, value;
-    creators.createMetabolite = creators.createMetabolite.bind(this);
-    creators.createReactionNode = creators.createReactionNode.bind(this);
-    creators.createLink = creators.createLink.bind(this);
-    force.initalizeForce = force.initalizeForce.bind(this);
-    this.metaboliteRadius = 10;
-    this.nodes = new Array();
-    this.links = new Array();
-    this.force = null;
-    this.graph = new Graph();
     this.data = attr.data;
     this.width = attr.width;
     this.height = attr.height;
     this.ctx = attr.ctx;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
-    this.radiusScale = utilities.scaleRadius(data, 5, 15);
-    this.buildUnsortedGraph(data.metabolites, data.reactions);
-    it = this.graph.vertices();
-    while (!(kv = it.next()).done) {
-      value = kv.value[1];
-      this.nodes.push(value);
-    }
-    it = this.graph.edges();
-    while (!(kv = it.next()).done) {
-      from = kv.value[0];
-      to = kv.value[1];
-      value = kv.value[2];
-      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2, this.ctx));
-    }
-    force.initalizeForce();
+    this.metaboliteRadius = 10;
+    this.graph = new Graph();
+    this.nodes = new Array();
+    this.links = new Array();
+    this.force = null;
+    this.radiusScale = utilities.scaleRadius(this.data, 5, 15);
+    creators.createMetabolite = creators.createMetabolite.bind(this);
+    creators.createReactionNode = creators.createReactionNode.bind(this);
+    creators.createLink = creators.createLink.bind(this);
+    force.initalizeForce = force.initalizeForce.bind(this);
   }
 
-  Subsystem.prototype.buildUnsortedGraph = function(metaboliteData, reactionData) {
+  Subsystem.prototype.buildGraph = function(metaboliteData, reactionData) {
     var i, j, len, len1, m, metabolite, metaboliteId, reaction, results, source, target;
     for (i = 0, len = metaboliteData.length; i < len; i++) {
       metabolite = metaboliteData[i];
@@ -510,7 +505,7 @@ Subsystem = (function() {
       if (!this.everything && reaction.flux_value === 0) {
         continue;
       }
-      if (this.hideObjective && reaction.name.indexOf('objective function') !== -1) {
+      if (this.hideObjective && reaction.name.toLowerCase().indexOf('objective function') !== -1) {
         continue;
       }
       if (!this.graph.hasVertex(reaction.id)) {
@@ -523,7 +518,7 @@ Subsystem = (function() {
           if (reaction.metabolites[metaboliteId] > 0) {
             source = reaction.id;
             target = metaboliteId;
-          } else {
+          } else if (reaction.metabolites[metaboliteId] < 0) {
             source = metaboliteId;
             target = reaction.id;
           }
@@ -533,6 +528,31 @@ Subsystem = (function() {
       }).call(this));
     }
     return results;
+  };
+
+  Subsystem.prototype.buildSystem = function(data) {
+    var edge, from, iterator, to, value, vertex;
+    this.buildGraph(data.metabolites, data.reactions);
+    iterator = this.graph.vertices();
+    while (!(vertex = iterator.next()).done) {
+      value = vertex.value[1];
+      this.nodes.push(value);
+    }
+    iterator = this.graph.edges();
+    while (!(edge = iterator.next()).done) {
+      from = edge.value[0];
+      to = edge.value[1];
+      value = edge.value[2];
+      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
+    }
+    return force.initalizeForce();
+  };
+
+  Subsystem.prototype.parseData = function(compartmentor, sortor) {
+    compartmentor = compartmentor.bind(this);
+    sortor = sortor.bind(this);
+    compartmentor();
+    return sortor();
   };
 
   Subsystem.prototype.checkCollisions = function(x, y) {
@@ -689,6 +709,8 @@ TreeNode = (function() {
     this.subsystem = subsystem;
     this.parent = null;
     this.children = new Object();
+    this.value = null;
+    this.subsystem.buildSystem(this.subsystem.data);
   }
 
   return TreeNode;
@@ -1480,7 +1502,7 @@ module.exports = {
 
 
 },{}],19:[function(require,module,exports){
-var Network, System, TreeNode, counter, i, j, k, l, len, len1, metabolite, metaboliteDict, model, network, reaction, ref, ref1, ref2, sortables, subsystems, systemAttributes;
+var Network, System, TreeNode, network, sortables, systemAttributes;
 
 System = require("./System");
 
@@ -1488,66 +1510,28 @@ TreeNode = require("./TreeNode");
 
 Network = require("./Network");
 
-systemAttributes = {
-  id: 'root',
-  name: 'root',
-  width: window.innerWidth,
-  height: window.innerHeight,
-  backgroundColour: "white",
-  metaboliteRadius: 10,
-  useStatic: false,
-  everything: false,
-  hideObjective: true,
-  type: 'species'
-};
-
-model = JSON.parse(JSON.stringify(data));
-
-subsystems = new Object();
-
-metaboliteDict = new Object();
-
-ref = model.metabolites;
-for (j = 0, len = ref.length; j < len; j++) {
-  metabolite = ref[j];
-  metabolite.subsystems = new Array();
-  metaboliteDict[metabolite.id] = metabolite;
-}
-
-ref1 = model.reactions;
-for (k = 0, len1 = ref1.length; k < len1; k++) {
-  reaction = ref1[k];
-  if (reaction.subsystem === '') {
-    reaction.subsystem = 'Unassigned';
-  }
-  if (subsystems[reaction.subsystem] == null) {
-    subsystems[reaction.subsystem] = [reaction];
-  } else {
-    subsystems[reaction.subsystem].push(reaction);
-  }
-  for (metabolite in reaction.metabolites) {
-    if (metaboliteDict[metabolite].subsystems.indexOf(reaction.subsystem) === -1) {
-      metaboliteDict[metabolite].subsystems.push(reaction.subsystem);
-    }
-  }
-}
-
-for (i = l = 0, ref2 = Object.keys(subsystems).length; 0 <= ref2 ? l <= ref2 : l >= ref2; i = 0 <= ref2 ? ++l : --l) {
-  counter = 0;
-  for (metabolite in metaboliteDict) {
-    if (metaboliteDict[metabolite].subsystems.length > i) {
-      counter++;
-    }
-  }
-}
-
 sortables = {
   index: -1,
   sortables: ['species', 'compartments'],
   start: 'species'
 };
 
-network = new Network(systemAttributes, data, sortables);
+systemAttributes = {
+  id: 'root',
+  name: 'root',
+  width: window.innerWidth,
+  height: window.innerHeight,
+  backgroundColour: 'white',
+  metaboliteRadius: 10,
+  useStatic: false,
+  everything: false,
+  hideObjective: true,
+  data: data,
+  sortables: sortables,
+  type: 'species'
+};
+
+network = new Network(systemAttributes);
 
 
 },{"./Network":5,"./System":11,"./TreeNode":12}],20:[function(require,module,exports){
