@@ -2,8 +2,8 @@ Compartment = require './Compartment'
 utilities = require './utilities'
 creators = require './creators'
 sortors = require './sortors'
-force = require './force'
 Link  = require './Link'
+
 
 class System
     constructor: (attr) ->
@@ -11,7 +11,6 @@ class System
         attr.sortables.index+=1
         @sortables = attr.sortables
         @type = @sortables.identifiers[@sortables.index]
-
 
         # Store attributes as properties of System
         @data = attr.data
@@ -36,21 +35,20 @@ class System
         creators.createReactionNode = creators.createReactionNode.bind(this)
         creators.createCompartment = creators.createCompartment.bind(this)
         creators.createLink = creators.createLink.bind(this)
-        force.initializeForce = force.initializeForce.bind(this)
 
         # Create a dictionary of *all* Metabolites, Reactions beforehand
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
 
         # Bind sortors to 'this'
-
         sortors[@type].compartmentor = sortors[@type].compartmentor.bind(this)
         sortors[@type].sortor = sortors[@type].sortor.bind(this)
-
 
         @parsedData = new Object()
         # Bind and run parser for the current 'type'
         # Mutates @parsedData
         (sortors[@type].parser.bind(this))()
+
+        console.log(@parsedData)
 
         # The graph holding all reactions and metabolites in @data
         @fullResGraph = new Graph()
@@ -72,6 +70,7 @@ class System
             species: new Object()
         }
 
+
         # Further function calling will occur from TreeNode
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
@@ -85,6 +84,7 @@ class System
             # TODO params: metabolite, ctx, metaboliteRadius?
             m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
             m.species = metabolite.species
+            m.subsystems = metabolite.subsystems
 
             metabolites[metabolite.id] = m
 
@@ -104,6 +104,7 @@ class System
             r = reactions[reaction.id]
             r.species = reaction.species
             r.metabolites = reaction.metabolites
+            r.subsystem = reaction.subsystem
 
             # Loop through metabolites inside reaction
             # Dict. of the form: {id:stoichiometric coefficient}
@@ -243,10 +244,6 @@ class System
             # We don't have fluxes here!
             @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
 
-        # Initilize a force layout
-
-        # console.log('activating force')
-        # force.initalizeForce()
     linkDistanceHandler : (link, i) ->
         factor = 0
         if link.target.type is 'r'

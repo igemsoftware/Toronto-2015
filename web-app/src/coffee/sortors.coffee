@@ -94,10 +94,33 @@ module.exports =
                                     @graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
     compartments:
         parser: ->
-            return {
-                'foo': 'parsed',
-                'bar': 'data'
-            }
+            # Give back data for `c` and `p`
+            metaboliteDict = new Object()
+            for metabolite in @data.metabolites
+                metaboliteDict[metabolite.id] = metabolite
+
+            pushedMetabolites = new Array()
+            pushedReactions = new Array()
+
+            # Loop through reaction objects
+            for reaction in @data.reactions
+                # Loop through keys (metabolite.id's)
+                for metabolite of reaction.metabolites
+                    compartment = metaboliteDict[metabolite].compartment
+
+                    if compartment isnt 'e'
+                        if not @parsedData[compartment]?
+                            @parsedData[compartment] = new Object()
+                            @parsedData[compartment].metabolites = new Array()
+                            @parsedData[compartment].reactions = new Array()
+
+                        if reaction.id not in pushedReactions
+                            @parsedData[compartment].reactions.push(reaction)
+                            pushedReactions.push(reaction.id)
+
+                        if metabolite not in pushedMetabolites
+                            @parsedData[compartment].metabolites.push(metaboliteDict[metabolite])
+                            pushedMetabolites.push(metabolite)
 
         compartmentor: ->
             sorter = 'compartment'
@@ -122,37 +145,8 @@ module.exports =
                 for cpt in r.substrateCompartments
                     @graph.addEdge(cpt, r.id, "#{cpt} -> #{r.id}")
 
-                    # leaf = null
-                    # for _cpt in r.substrateCompartments
-                    #     if @graph.hasEdge(_cpt, r.id)
-                    #         leaf = @graph.vertexValue(r.id)
-                    #
-                    #     # potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
-                    #     # if potentialLeaf?
-                    #     #     leaf = potentialLeaf
-                    #
-                    # if not leaf?
-                    #     @
-                    #     # leaf = new Graph(r.id)
-                    #     # leaf.value = r
-                    #
-                    # leaf.inNeighbours[cpt] = @graph.outNeighbours[cpt]
-                    # @graph.outNeighbours[cpt].outNeighbours[r.id] = leaf
-
                 for cpt in r.productCompartments
                     @graph.addEdge(r.id, cpt, "{r.id} -> #{cpt}")
-                    # leaf = null
-                    # for _cpt in r.substrateCompartments
-                    #     potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
-                    #     if potentialLeaf?
-                    #         leaf = potentialLeaf
-                    #
-                    # if not leaf?
-                    #     leaf = new Graph(r.id)
-                    #     leaf.value = r
-                    #
-                    # leaf.outNeighbours[cpt] = @graph.outNeighbours[cpt]
-                    # @graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
 
                 # Sinks fix no longer needed
                 # if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
