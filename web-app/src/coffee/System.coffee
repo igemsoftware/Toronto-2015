@@ -1,8 +1,8 @@
 Compartment = require './Compartment'
-utilities   = require './utilities'
-creators    = require './creators'
-sortors     = require './sortors'
-force       = require './force'
+utilities = require './utilities'
+creators = require './creators'
+sortors = require './sortors'
+force = require './force'
 
 class System
     constructor: (attr) ->
@@ -11,13 +11,14 @@ class System
         @sortables = attr.sortables
         @type = @sortables.identifiers[@sortables.index]
 
+
         # Store attributes as properties of System
-        @data          = attr.data
-        @width         = attr.width
-        @height        = attr.height
-        @ctx           = attr.ctx
+        @data = attr.data
+        @width = attr.width
+        @height = attr.height
+        @ctx = attr.ctx
         # TODO make these into 'filters'
-        @everything    = attr.everything
+        @everything = attr.everything
         @hideObjective = attr.hideObjective
 
         # TODO be parameterized/or done through a d3 scale
@@ -29,12 +30,12 @@ class System
         @radiusScale = utilities.scaleRadius(@data, 5, 15)
 
         # Bind functions to 'this' so they have access to system's properties
-        creators.createMetabolite   = creators.createMetabolite.bind(this)
-        creators.createReaction     = creators.createReaction.bind(this)
+        creators.createMetabolite = creators.createMetabolite.bind(this)
+        creators.createReaction = creators.createReaction.bind(this)
         creators.createReactionNode = creators.createReactionNode.bind(this)
-        creators.createCompartment  = creators.createCompartment.bind(this)
-        creators.createLink         = creators.createLink.bind(this)
-        force.initializeForce       = force.initializeForce.bind(this)
+        creators.createCompartment = creators.createCompartment.bind(this)
+        creators.createLink = creators.createLink.bind(this)
+        force.initializeForce = force.initializeForce.bind(this)
 
         # Create a dictionary of *all* Metabolites, Reactions beforehand
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
@@ -65,7 +66,7 @@ class System
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()
-        reactions   = new Object()
+        reactions = new Object()
 
         # Loop through each metabolite in the metabolic model provided
         for metabolite in metaboliteData
@@ -134,8 +135,8 @@ class System
         # Push all edges into @links as Links
         iterator = @graph.edges()
         while not (edge = iterator.next()).done
-            from  = edge.value[0]
-            to    = edge.value[1]
+            from = edge.value[0]
+            to = edge.value[1]
             value = edge.value[2]
             # source, target, name, flux, radius
             # TODO rename radius -> thickness
@@ -143,10 +144,52 @@ class System
             @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
 
         # Initilize a force layout
-        force.initializeForce()
+
         # console.log('activating force')
         # force.initalizeForce()
+    linkDistanceHandler : (link, i) ->
+        factor = 0
+        if link.target.type is 'r'
+            factor = link.target.substrates.length
+        else if link.source.type is 'r'
+            factor = link.source.products.length
 
+        return factor*100
+
+    chargeHandler : (node, i) ->
+        factor = node.inNeighbours.length + node.outNeighbours.length + 1
+        factor = node.r*2
+        return factor * -800
+
+    initializeForce: ->
+        @force = d3.layout.force()
+            # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
+            .nodes(@nodes)
+            # The links: mutates source, target
+            .links(@links)
+            # Affects gravitational center and initial random position
+            .size([@width, @height])
+            # Sets "rigidity" of links in range [0,1]; func(link, index), this -> force; evaluated at start()
+            .linkStrength(2)
+            # At each tick of the simulation, the particle velocity is scaled by the specified friction
+            .friction(0.9)
+            # Target distance b/w nodes; func(link, index), this -> force; evaluated at start()
+            .linkDistance(@linkDistanceHandler)
+            # Charges to be used in calculation for quadtree BH traversal; func(node,index), this -> force; evaluated at start()
+            .charge(@chargeHandler)
+            # Sets the maximum distance over which charge forces are applied; \infty if not specified
+            #.chargeDistance()
+            # Weak geometric constraint similar to a virtual spring connecting each node to the center of the layout's size
+            .gravity(0.1)
+            # Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) < theta => treat quadrant as single large node
+            .theta(0.8)
+            # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
+            .alpha(0.1)
+            # Let's get this party start()ed
+
+        if @useStatic
+            @force.tick() for n in @nodes
+            @force.stop()
 
 
     # **system.buildFullResGraph**

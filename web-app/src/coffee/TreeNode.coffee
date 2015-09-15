@@ -25,8 +25,8 @@ class TreeNode
                     everything    : @system.everything
                     sortables     : @system.sortables
                     ctx           : @system.ctx
-                
-                @children[child] = new TreeNode(child, new System(systemAttr))
 
+                @children[child] = new TreeNode(child, new System(systemAttr))
+                @children[child].parent = this
 
 module.exports = TreeNode

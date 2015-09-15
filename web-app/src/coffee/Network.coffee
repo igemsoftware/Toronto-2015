@@ -1,29 +1,38 @@
 ViewController = require './ViewController'
-TreeNode       = require './TreeNode'
-System      = require './System'
+TreeNode = require './TreeNode'
+System = require './System'
 
 # The M for our MVC
 class Network
     constructor: (attr) ->
         # The VC for our MVC
-        @viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour)
+        @viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this)
 
         # Create our root TreeNode
         # Will recursively create children
         systemAttr =
-            data          : attr.data
-            width         : attr.width
-            height        : attr.height
+            data : attr.data
+            width : attr.width
+            height : attr.height
             hideObjective : attr.hideObjective
-            everything    : attr.everything
-            sortables     : attr.sortables
-            ctx           : @viewController.ctx
-        root = new TreeNode('root', new System(systemAttr))
-
+            everything : attr.everything
+            sortables : attr.sortables
+            ctx : @viewController.ctx
+        @root = new TreeNode('root', new System(systemAttr))
+        @root.system.initializeForce()
 
         # Start the visualization
-        @viewController.startCanvas(root.system)
-        # console.log(root.children.iJO1366.system)
-        # @viewController.startCanvas(root.children.iJO1366.system)
+        @viewController.startCanvas(@root.system)
+        @currentLevel = @root
+
+        
+    enterSpecie: (node) ->
+        #find node
+        @currentLevel = @currentLevel.children[node.id]
+
+        @viewController.setActiveGraph(@currentLevel.system)
+        #@viewController.setActiveGraph(@currentLevel.system)
+
+
 
 module.exports = Network

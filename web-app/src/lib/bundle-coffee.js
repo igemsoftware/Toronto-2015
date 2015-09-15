@@ -186,8 +186,8 @@ System = require('./System');
 
 Network = (function() {
   function Network(attr) {
-    var root, systemAttr;
-    this.viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour);
+    var systemAttr;
+    this.viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this);
     systemAttr = {
       data: attr.data,
       width: attr.width,
@@ -197,9 +197,16 @@ Network = (function() {
       sortables: attr.sortables,
       ctx: this.viewController.ctx
     };
-    root = new TreeNode('root', new System(systemAttr));
-    this.viewController.startCanvas(root.system);
+    this.root = new TreeNode('root', new System(systemAttr));
+    this.root.system.initializeForce();
+    this.viewController.startCanvas(this.root.system);
+    this.currentLevel = this.root;
   }
+
+  Network.prototype.enterSpecie = function(node) {
+    this.currentLevel = this.currentLevel.children[node.id];
+    return this.viewController.setActiveGraph(this.currentLevel.system);
+  };
 
   return Network;
 
@@ -367,17 +374,17 @@ System = (function() {
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
-    var i, j, len, len1, m, metabolite, metaboliteId, metabolites, r, reaction, reactions, source, target;
+    var j, k, len, len1, m, metabolite, metaboliteId, metabolites, r, reaction, reactions, source, target;
     metabolites = new Object();
     reactions = new Object();
-    for (i = 0, len = metaboliteData.length; i < len; i++) {
-      metabolite = metaboliteData[i];
+    for (j = 0, len = metaboliteData.length; j < len; j++) {
+      metabolite = metaboliteData[j];
       m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
       m.species = metabolite.species;
       metabolites[metabolite.id] = m;
     }
-    for (j = 0, len1 = reactionData.length; j < len1; j++) {
-      reaction = reactionData[j];
+    for (k = 0, len1 = reactionData.length; k < len1; k++) {
+      reaction = reactionData[k];
       if (!this.everything && reaction.flux_value === 0) {
         continue;
       }
@@ -404,7 +411,7 @@ System = (function() {
   };
 
   System.prototype.buildSystem = function() {
-    var edge, from, iterator, to, value, vertex;
+    var edge, from, iterator, results, to, value, vertex;
     sortors[this.type].compartmentor();
     sortors[this.type].sortor();
     iterator = this.graph.vertices();
@@ -413,26 +420,58 @@ System = (function() {
       this.nodes.push(value);
     }
     iterator = this.graph.edges();
+    results = [];
     while (!(edge = iterator.next()).done) {
       from = edge.value[0];
       to = edge.value[1];
       value = edge.value[2];
-      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
+      results.push(this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2)));
     }
-    return force.initializeForce();
+    return results;
+  };
+
+  System.prototype.linkDistanceHandler = function(link, i) {
+    var factor;
+    factor = 0;
+    if (link.target.type === 'r') {
+      factor = link.target.substrates.length;
+    } else if (link.source.type === 'r') {
+      factor = link.source.products.length;
+    }
+    return factor * 100;
+  };
+
+  System.prototype.chargeHandler = function(node, i) {
+    var factor;
+    factor = node.inNeighbours.length + node.outNeighbours.length + 1;
+    factor = node.r * 2;
+    return factor * -800;
+  };
+
+  System.prototype.initializeForce = function() {
+    var j, len, n, ref;
+    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.width, this.height]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1);
+    if (this.useStatic) {
+      ref = this.nodes;
+      for (j = 0, len = ref.length; j < len; j++) {
+        n = ref[j];
+        this.force.tick();
+      }
+      return this.force.stop();
+    }
   };
 
   System.prototype.buildFullResGraph = function(metaboliteData, reactionData) {
-    var i, j, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
-    for (i = 0, len = metaboliteData.length; i < len; i++) {
-      metabolite = metaboliteData[i];
+    var j, k, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
+    for (j = 0, len = metaboliteData.length; j < len; j++) {
+      metabolite = metaboliteData[j];
       m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
       m.species = metabolite.species;
       this.fullResGraph.addVertex(metabolite.id, m);
     }
     results = [];
-    for (j = 0, len1 = reactionData.length; j < len1; j++) {
-      reaction = reactionData[j];
+    for (k = 0, len1 = reactionData.length; k < len1; k++) {
+      reaction = reactionData[k];
       if (!this.everything && reaction.flux_value === 0) {
         continue;
       }
@@ -463,11 +502,11 @@ System = (function() {
   };
 
   System.prototype.checkCollisions = function(x, y) {
-    var i, len, node, nodeReturn, ref;
+    var j, len, node, nodeReturn, ref;
     nodeReturn = null;
     ref = this.nodes;
-    for (i = 0, len = ref.length; i < len; i++) {
-      node = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
       if (node.checkCollision(x, y)) {
         nodeReturn = node;
         node.hover = true;
@@ -511,6 +550,7 @@ TreeNode = (function() {
           ctx: this.system.ctx
         };
         this.children[child] = new TreeNode(child, new System(systemAttr));
+        this.children[child].parent = this;
       }
     }
   }
@@ -528,11 +568,12 @@ var ViewController;
 ViewController = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler, mousewheelHandler;
 
-  function ViewController(id1, width, height, BG) {
+  function ViewController(id1, width, height, BG, network) {
     this.id = id1;
     this.width = width;
     this.height = height;
     this.BG = BG;
+    this.network = network;
     this.c = document.createElement("canvas");
     this.c.id = this.id;
     this.c.width = this.width;
@@ -708,7 +749,7 @@ ViewController = (function() {
         specie = ref[i];
         if (specie.checkCollision(pt.x, pt.y)) {
           if (specie.r * this.xform.a >= this.c.width && specie.r * this.xform.a >= this.c.height) {
-            this.network.enterSpecie(specie);
+            this.network.ecie(specie);
           }
         }
       }
@@ -764,7 +805,7 @@ ViewController = (function() {
     } else {
       this.nodetext.html(node.name + "<br>");
       this.nodetext.append("<button id='delete'>Delete Node</button><br>");
-      if (node.type === 's') {
+      if (node.type === 'Compartment') {
         this.nodetext.append("<button id='enter'>Enter Specie</button><br>");
         $("#enter").click(function() {
           return that.network.enterSpecie(node);
@@ -782,23 +823,11 @@ ViewController = (function() {
     });
   };
 
-  ViewController.prototype.setActiveGraph = function(graph) {
-    var scale;
+  ViewController.prototype.setActiveGraph = function(system) {
     this.activeGraph.force.stop();
-    this.activeGraph = graph;
-    this.nodes = this.activeGraph.nodes;
-    this.links = this.activeGraph.links;
-    this.xform = this.svg.createSVGMatrix();
-    scale = 0.25;
-    if (this.network === this.activeGraph) {
-      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    } else {
-      this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      this.xform.a = scale;
-      this.xform.d = scale;
-    }
-    this.populateOptions(this.activeGraph.nodes);
-    this.activeGraph.initalizeForce();
+    system.initializeForce();
+    console.log(system);
+    this.activeGraph = system;
     this.activeGraph.force.on("tick", this.tick.bind(this)).start();
     return this.activeGraph.force.resume();
   };

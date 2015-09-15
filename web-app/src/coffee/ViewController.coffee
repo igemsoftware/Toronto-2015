@@ -1,7 +1,7 @@
 # Canvas
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG) ->
+    constructor: (@id, @width, @height, @BG, @network) ->
         # Create our `<canvas>` DOM element
 
         @c = document.createElement("canvas")
@@ -32,6 +32,7 @@ class ViewController
 
     startCanvas:(system) ->
         @activeGraph = system
+
         @activeGraph.force.start()
         $(@id).css({
             "-moz-user-select": "none",
@@ -191,7 +192,7 @@ class ViewController
                 if specie.checkCollision(pt.x, pt.y)
                     #a or d works doesnt matter since we're not doing complicated transofmrations
                     if specie.r*@xform.a >= @c.width and specie.r*@xform.a >=@c.height
-                        @network.enterSpecie(specie)
+                        @network.ecie(specie)
         else
             if @xform.a <= 0.02
                 @network.exitSpecie()
@@ -221,7 +222,7 @@ class ViewController
         else
             @nodetext.html("#{node.name}<br>")
             @nodetext.append("<button id='delete'>Delete Node</button><br>")
-            if node.type is 's'
+            if node.type is 'Compartment'
                 @nodetext.append("<button id='enter'>Enter Specie</button><br>")
                 $("#enter").click(->
                     that.network.enterSpecie(node)
@@ -235,27 +236,33 @@ class ViewController
             that.system.deleteNode(node)
         )
 
-    setActiveGraph: (graph) ->
+    setActiveGraph: (system) ->
+
         @activeGraph.force.stop()
-        @activeGraph = graph
-        @nodes = @activeGraph.nodes
-        @links = @activeGraph.links
-        #reset Matrix
-        @xform = @svg.createSVGMatrix()
-        scale = 0.25 #zoomed out 4x for reset
+        system.initializeForce()
+        console.log(system)
+        @activeGraph = system
+        # if not system.force?
+        #
+        #     system.initalizeForce()
+        #
 
-        if @network is @activeGraph
-            @ctx.setTransform(1,0,0,1,0,0)
-        else
-            @ctx.setTransform(scale,0,0,scale,0,0)
-            @xform.a = scale
-            @xform.d = scale
-            # @xform.translate(-@c.width/2, -@c.height/2)
-            # @ctx.translate(-@c.width/2, -@c.height/2)
-        @populateOptions(@activeGraph.nodes)
-
-        #we can check later if the force is not null so we dont re-initalize
-        @activeGraph.initalizeForce()
+        # @activeGraph = graph
+        # #reset Matrix
+        # @xform = @svg.createSVGMatrix()
+        # scale = 0.25 #zoomed out 4x for reset
+        #
+        # if @network is @activeGraph
+        #     @ctx.setTransform(1,0,0,1,0,0)
+        # else
+        #     @ctx.setTransform(scale,0,0,scale,0,0)
+        #     @xform.a = scale
+        #     @xform.d = scale
+        #     # @xform.translate(-@c.width/2, -@c.height/2)
+        #     # @ctx.translate(-@c.width/2, -@c.height/2)
+        # @populateOptions(@activeGraph.nodes)
+        #
+        # #we can check later if the force is not null so we dont re-initalize
 
         @activeGraph.force.on("tick", @tick.bind(this)).start()
         @activeGraph.force.resume()
