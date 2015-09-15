@@ -1,6 +1,6 @@
 Network  = require "./Network"
 
-# Passed in all the way through to Subsystem
+# Passed in all the way through to system
 sortables =
     index       : -1
     identifiers : ['species', 'compartments']

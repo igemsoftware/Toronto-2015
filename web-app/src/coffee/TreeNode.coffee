@@ -1,6 +1,6 @@
 class TreeNode
-    constructor: (@id, @subsystem) ->
-        # By the time we get here, @subsystem has run its constructor
+    constructor: (@id, @system) ->
+        # By the time we get here, @system has run its constructor
 
         # A TreeNode
         @parent = null
@@ -8,10 +8,10 @@ class TreeNode
         @children = new Object()
 
 
-        @subsystem.buildSystem(@subsystem.data)
+        @system.buildSystem(@system.data)
 
-        # for child of @subsystem.parsedData
-        #     @subsystem.buildSystem(@subsystem.parsedData[child])
+        # for child of @system.parsedData
+        #     @system.buildSystem(@system.parsedData[child])
 
 
 module.exports = TreeNode

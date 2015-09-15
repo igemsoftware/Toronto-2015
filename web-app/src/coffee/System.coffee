@@ -1,117 +1,221 @@
-# **Classes**
-SubSystem      = require "./SubSystem"
-ViewController = require "./ViewController"
-Compartment    = require "./Compartment"
-Graph          = require './Graph'
-TreeNode       = require './TreeNode'
-
-creators = require './creators'
-deletors = require './deletors'
-addors   = require './addors'
-
-# builders = require './builders'
+Compartment = require './Compartment'
+utilities   = require './utilities'
+creators    = require './creators'
+sortors     = require './sortors'
+force       = require './force'
 
 class System
-    constructor: (@attr, data, sortables) ->
-        sortables.index+= 1
+    constructor: (attr) ->
+        # Store attributes as properties of System
+        @data          = attr.data
+        @width         = attr.width
+        @height        = attr.height
+        @ctx           = attr.ctx
+        @type          = attr.type
+        # TODO make these into 'filters'
+        @everything    = attr.everything
+        @hideObjective = attr.hideObjective
 
-        @id = @attr.id
-        @name = @attr.name
-        @type = @attr.type
-        # Setting up ViewController
-        @viewController = new ViewController("canvas", @attr.width, @attr.height, @attr.backgroundColour, null)
+        # TODO be parameterized/or done through a d3 scale
+        @metaboliteRadius = 10
+        @compartmentRadius = 50
 
-        # Settings for hiding certain Reactions
-        @everything = @attr.everything
-        @hideObjective = @attr.hideObjective
-        @metaboliteRadius = @attr.metaboliteRadius
-        # console.log(data)
+        # Used by createReactionNode
+        # TODO get parameters from elsewhere
+        @radiusScale = utilities.scaleRadius(@data, 5, 15)
 
-        # The "full resolution" set of Metabolites and Reactions for this System
-        [@metabolites, @reactions] = @buildMetabolitesAndReactions(data.metabolites, data.reactions)
+        # Bind functions to 'this' so they have access to system's properties
+        creators.createMetabolite   = creators.createMetabolite.bind(this)
+        creators.createReaction     = creators.createReaction.bind(this)
+        creators.createReactionNode = creators.createReactionNode.bind(this)
+        creators.createCompartment  = creators.createCompartment.bind(this)
+        creators.createLink         = creators.createLink.bind(this)
+        force.initalizeForce        = force.initalizeForce.bind(this)
 
-        @graph = new Graph(@id, @name)
+        # Sortables
+        attr.sortables.index++
+        @sortables = attr.sortables
 
-        compartmentor = builders[@type].compartmentor.bind(this)
-        sortor = builders[@type].sortor.bind(this)
+        # Create a dictionary of *all* Metabolites, Reactions beforehand
+        [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
 
-        # Mutates @graph
-        @buildGraph(compartmentor, sortor)
-
-        @graph.value = new SubSystem(@graph, @metaboliteRadius, @attr.width, @attr.height, @viewController.ctx)
-
-        if @type is sortables.start
-            @graph.value.initalizeForce()
-            @viewController.startCanvas(@graph.value)
-
-        if @type is sortables.sortables[sortables.index]
-            for system of @graph.outNeighbours
-                if system isnt 'e' and not sortables.index + 1 is sortables.sortables.length
-                    attr = JSON.parse(JSON.stringify(@attr))
-                    attr.id = sortables.sortables[sortables.index+1]
-                    attr.name =  sortables.sortables[sortables.index+1]
-                    attr.type = sortables.sortables[sortables.index+1]
-                    @graph.outNeighbours[system].value = new System(attr, data, sortables)
-        else
-            console.log('reached end')
+        # Bind sortors to 'this'
+        sortors[@type].compartmentor = sortors[@type].compartmentor.bind(this)
+        sortors[@type].sortor = sortors[@type].sortor.bind(this)
 
 
-        if @type is sortables.sortables[0]
-            console.log(this)
+        @parsedData = new Object()
+        # Bind and run parser for the current 'type'
+        # Mutates @parsedData
+        (sortors[@type].parser.bind(this))()
 
+
+        # The graph holding all reactions and metabolites in @data
+        @fullResGraph = new Graph()
+        # The Graph of this system
+        @graph = new Graph()
+
+        # nodes and links to be used by the force layout
+        @nodes = new Array()
+        @links = new Array()
+        # The force layout provided by D3
+        @force = null
+
+        # Further function calling will occur from TreeNode
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()
-        reactions = new Object()
+        reactions   = new Object()
 
-        # Loop through each metabolites in the metabolic model provided
+        # Loop through each metabolite in the metabolic model provided
         for metabolite in metaboliteData
-            # Create a new Metabolite object using the current metabolite
-            m = @createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @viewController.ctx)
-            # Store current Metabolite in metabolites dictionary
+        # for metabolite in @data.metabolites
+            # Create a new Metabolite
+            # TODO params: metabolite, ctx, metaboliteRadius?
+            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
             m.species = metabolite.species
+
             metabolites[metabolite.id] = m
 
-        # Loop through each reaction
+        # Loop through each reaction in the metabolic model provided
         for reaction in reactionData
-            # Create 'filters' later
-            # Skip if flux is 0 or if reaction name containes 'objective function'
+        # for reaction in @data.reactions
+            # TODO Create 'filters'
+            # Skip if flux is 0
             if (not @everything and reaction.flux_value is 0)
                 continue
-            if (@hideObjective and reaction.name.indexOf('objective function') isnt -1 )
+            # Skip if reaction name contains 'objective function'
+            if (@hideObjective and reaction.name.toLowerCase().indexOf('objective function') isnt -1 )
                 continue
 
-            # Create fresh Reaction object
-            # Push links into Reaction object
-            reactions[reaction.id] = @createReaction(reaction.name, reaction.id, 20, 0,@viewController.ctx)
+            # May not need radius here
+            reactions[reaction.id] = creators.createReaction(reaction.name, reaction.id, reaction.flux_value, @ctx)
             r = reactions[reaction.id]
             r.species = reaction.species
+            r.metabolites = reaction.metabolites
+
+            # Loop through metabolites inside reaction
+            # Dict. of the form: {id:stoichiometric coefficient}
+            # This will create an edge of either
+            #   metabolite -> reaction
+            #   reaction   -> metabolite
+            # In this way, two edges, two Metabolites, one ReactionNode are
+            # required to represent the reaction A -> B
             for metaboliteId of reaction.metabolites
+                # Create a Link for this metabolites relationship in the reaction
+                # NOTE Reactions may be represented by multiple Links
+
+                # metabolite is a product
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id
                     target = metaboliteId
-                    r.addLink(@createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, @metaboliteRadius, @viewController.ctx))
-                else
+                    r.addLink(creators.createLink(reactions[source], metabolites[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
+                # metabolite is a substrate
+                else if reaction.metabolites[metaboliteId] < 0
                     source = metaboliteId
                     target = reaction.id
-                    r.addLink(@createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, @metaboliteRadius, @viewController.ctx))
+                    r.addLink(creators.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
 
         return [metabolites, reactions]
 
-    buildGraph: (compartmentor, sortor) ->
-        compartmentor()
-        sortor()
+    # **system.buildGraph**
+    # Takes 'bare' data and constructs @fullResGraph
+    # Called from : buildSystem
+    # Requires    : @everything, @hideObjective
+    # Calls       : createMetabolite, createReactionNode, Graph.addVertex, Graph.createNewEdge
+    # Mutates     : @graph
+    buildFullResGraph: (metaboliteData, reactionData) ->
+        # Loop through each metabolite in the metabolic model provided
+        for metabolite in metaboliteData
+        # for metabolite in @data.metabolites
+            # Create a new Metabolite
+            # TODO params: metabolite, ctx, metaboliteRadius?
+            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
+            m.species = metabolite.species
 
-    createReaction: creators.createReaction
+            # Create a node (vertex) for this Metabolite in system.graph
+            @fullResGraph.addVertex(metabolite.id, m)
 
-    createMetabolite: creators.createMetabolite
+        # Loop through each reaction in the metabolic model provided
+        for reaction in reactionData
+        # for reaction in @data.reactions
+            # TODO Create 'filters'
+            # Skip if flux is 0
+            if (not @everything and reaction.flux_value is 0)
+                continue
+            # Skip if reaction name contains 'objective function'
+            if (@hideObjective and reaction.name.toLowerCase().indexOf('objective function') isnt -1 )
+                continue
 
-    createLink: creators.createLink
+            # Create a vertex for a new Reaction if it does not already exist
+            r = creators.createReaction(reaction.id, reaction.name, reaction.flux_value)
+            r.species = reaction.species
+            @fullResGraph.addVertex(r.id, r)
 
-    deleteNode : deletors.deleteNode
+            # Loop through metabolites inside reaction
+            # Dict. of the form: {id:stoichiometric coefficient}
+            # This will create an edge of either
+            #   metabolite -> reaction
+            #   reaction   -> metabolite
+            # In this way, two edges, two Metabolites, one ReactionNode are
+            # required to represent the reaction A -> B
+            for metaboliteId of reaction.metabolites
+                # metabolite is a product
+                if reaction.metabolites[metaboliteId] > 0
+                    source = reaction.id
+                    target = metaboliteId
+                # metabolite is a substrate
+                else if reaction.metabolites[metaboliteId] < 0
+                    source = metaboliteId
+                    target = reaction.id
+
+                # Append Link into Reaction
+                @fullResGraph.vertexValue(r.id).addLink(creators.createLink(@fullResGraph.vertexValue(source), @fullResGraph.vertexValue(target), reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
+
+                # Create an edge for this metabolites relationsip in the reaction
+                # NOTE Reactions may be represented by multiple edges
+                @fullResGraph.createNewEdge(source, target, "#{source} -> #{target}")
+
+
+    # **buildSystem**
+    # Applies `sortor` functions to construct @graph
+    # Once @graph is built, loop through vertices and edges to create nodes and links
+    buildSystem: ->
+        sortors[@type].compartmentor()
+        sortors[@type].sortor()
+
+        # Push all Metabolites and ReactionNodes into @nodes
+        iterator = @graph.vertices()
+        while not (vertex = iterator.next()).done
+            value = vertex.value[1]
+            @nodes.push(value)
+
+        # Push all edges into @links as Links
+        iterator = @graph.edges()
+        while not (edge = iterator.next()).done
+            from  = edge.value[0]
+            to    = edge.value[1]
+            value = edge.value[2]
+            # source, target, name, flux, radius
+            # TODO rename radius -> thickness
+            # We don't have fluxes here!
+            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
+
+        # Initilize a force layout
+        force.initalizeForce()
+
+    # **system.checkCollisions**
+    # Loops through @nodes and checks for mouse collision
+    # Calls: Node.checkCollision
+    checkCollisions: (x, y) ->
+        nodeReturn = null
+        for node in @nodes
+            if node.checkCollision(x,y)
+                nodeReturn = node
+                node.hover = true
+                break
+            else
+                node.hover = false
+        return nodeReturn
 
 module.exports = System
-
-# Expose API to global namespace
-window.FBA =
-    System: System

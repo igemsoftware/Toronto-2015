@@ -1,6 +1,6 @@
 ViewController = require './ViewController'
 TreeNode       = require './TreeNode'
-Subsystem      = require './Subsystem'
+System      = require './System'
 
 # The M for our MVC
 class Network
@@ -10,7 +10,7 @@ class Network
 
         # Create our root TreeNode
         # Will recursively create children
-        subsystemAttr =
+        systemAttr =
             data          : attr.data
             width         : attr.width
             height        : attr.height
@@ -19,11 +19,11 @@ class Network
             sortables     : attr.sortables
             type          : attr.type
             ctx           : @viewController.ctx
-        root = new TreeNode('root', new Subsystem(subsystemAttr))
+        root = new TreeNode('root', new System(systemAttr))
 
         console.log(root)
 
         # Start the visualization
-        @viewController.startCanvas(root.subsystem)
+        @viewController.startCanvas(root.system)
 
 module.exports = Network
