@@ -6,21 +6,12 @@ class TreeNode
         @parent = null
         # Object of TreeNodes
         @children = new Object()
-        # A Subsystem
-        @value = null
 
-        # Calls to be made to strip the data and make new children happen here!
-        # subsystem.organizeData -> [splited up data that is stripped]
-        # create children for it
-        # parse data first for the system
-        # parsedData = @subsystem.parseData(@subsystem.data) #probably give a sorter
-        # @subsystem.buildGraph(parsedData)
 
-        for child of @subsystem.parsedData
-            @subsystem.buildSystem(@subsystem.parsedData[child])
+        @subsystem.buildSystem(@subsystem.data)
 
-        console.log(@subsystem.graph)
+        # for child of @subsystem.parsedData
+        #     @subsystem.buildSystem(@subsystem.parsedData[child])
 
-        # @subsystem.buildSystem(@subsystem.data)
 
 module.exports = TreeNode

@@ -50,6 +50,8 @@ class Subsystem
         (sortors[@type].parser.bind(this))()
 
 
+        # The graph holding all reactions and metabolites in @data
+        @fullResGraph = new Graph()
         # The Graph of this Subsystem
         @graph = new Graph()
 
@@ -117,12 +119,12 @@ class Subsystem
         return [metabolites, reactions]
 
     # **Subsystem.buildGraph**
-    # Takes 'bare' data and constructs @graph
+    # Takes 'bare' data and constructs @fullResGraph
     # Called from : buildSystem
     # Requires    : @everything, @hideObjective
     # Calls       : createMetabolite, createReactionNode, Graph.addVertex, Graph.createNewEdge
     # Mutates     : @graph
-    buildGraph: (metaboliteData, reactionData) ->
+    buildFullResGraph: (metaboliteData, reactionData) ->
         # Loop through each metabolite in the metabolic model provided
         for metabolite in metaboliteData
         # for metabolite in @data.metabolites
@@ -132,7 +134,7 @@ class Subsystem
             m.species = metabolite.species
 
             # Create a node (vertex) for this Metabolite in Subsystem.graph
-            @graph.addVertex(metabolite.id, m)
+            @fullResGraph.addVertex(metabolite.id, m)
 
         # Loop through each reaction in the metabolic model provided
         for reaction in reactionData
@@ -148,7 +150,7 @@ class Subsystem
             # Create a vertex for a new Reaction if it does not already exist
             r = creators.createReaction(reaction.id, reaction.name, reaction.flux_value)
             r.species = reaction.species
-            @graph.addVertex(r.id, r)
+            @fullResGraph.addVertex(r.id, r)
 
             # Loop through metabolites inside reaction
             # Dict. of the form: {id:stoichiometric coefficient}
@@ -168,11 +170,11 @@ class Subsystem
                     target = reaction.id
 
                 # Append Link into Reaction
-                @graph.vertexValue(r.id).addLink(creators.createLink(@graph.vertexValue(source), @graph.vertexValue(target), reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
+                @fullResGraph.vertexValue(r.id).addLink(creators.createLink(@fullResGraph.vertexValue(source), @fullResGraph.vertexValue(target), reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
 
                 # Create an edge for this metabolites relationsip in the reaction
                 # NOTE Reactions may be represented by multiple edges
-                @graph.createNewEdge(source, target, "#{source} -> #{target}")
+                @fullResGraph.createNewEdge(source, target, "#{source} -> #{target}")
 
 
     # **buildSystem**
@@ -193,33 +195,6 @@ class Subsystem
         while not (edge = iterator.next()).done
             from  = edge.value[0]
             to    = edge.value[1]
-            value = edge.value[2]
-            # source, target, name, flux, radius
-            # TODO rename radius -> thickness
-            # We don't have fluxes here!
-            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
-
-        # Initilize a force layout
-        force.initalizeForce()
-
-    # **Subsystem.buildSystem**
-    # Calls: @buildGraph, initializeForce, createLink
-    # Mutates: @nodes, @links
-    buildSystem2: (data) ->
-        # TODO buildGraph needs to be slightly augmented so it will work with compartments
-        @buildGraph(data.metabolites, data.reactions)
-
-        # Push all Metabolites and ReactionNodes into @nodes
-        iterator = @graph.vertices()
-        while not (vertex = iterator.next()).done
-            value = vertex.value[1]
-            @nodes.push(value)
-
-        # Push all edges into @links as Links
-        iterator = @graph.edges()
-        while not (edge = iterator.next()).done
-            from = edge.value[0] #ids'
-            to = edge.value[1]
             value = edge.value[2]
             # source, target, name, flux, radius
             # TODO rename radius -> thickness

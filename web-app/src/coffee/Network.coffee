@@ -21,6 +21,8 @@ class Network
             ctx           : @viewController.ctx
         root = new TreeNode('root', new Subsystem(subsystemAttr))
 
+        console.log(root)
+
         # Start the visualization
         @viewController.startCanvas(root.subsystem)
 

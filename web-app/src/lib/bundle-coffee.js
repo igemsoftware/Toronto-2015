@@ -199,6 +199,7 @@ Network = (function() {
       ctx: this.viewController.ctx
     };
     root = new TreeNode('root', new Subsystem(subsystemAttr));
+    console.log(root);
     this.viewController.startCanvas(root.subsystem);
   }
 
@@ -361,6 +362,7 @@ Subsystem = (function() {
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
     (sortors[this.type].parser.bind(this))();
+    this.fullResGraph = new Graph();
     this.graph = new Graph();
     this.nodes = new Array();
     this.links = new Array();
@@ -404,13 +406,13 @@ Subsystem = (function() {
     return [metabolites, reactions];
   };
 
-  Subsystem.prototype.buildGraph = function(metaboliteData, reactionData) {
+  Subsystem.prototype.buildFullResGraph = function(metaboliteData, reactionData) {
     var i, j, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
     for (i = 0, len = metaboliteData.length; i < len; i++) {
       metabolite = metaboliteData[i];
       m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
       m.species = metabolite.species;
-      this.graph.addVertex(metabolite.id, m);
+      this.fullResGraph.addVertex(metabolite.id, m);
     }
     results = [];
     for (j = 0, len1 = reactionData.length; j < len1; j++) {
@@ -423,7 +425,7 @@ Subsystem = (function() {
       }
       r = creators.createReaction(reaction.id, reaction.name, reaction.flux_value);
       r.species = reaction.species;
-      this.graph.addVertex(r.id, r);
+      this.fullResGraph.addVertex(r.id, r);
       results.push((function() {
         var results1;
         results1 = [];
@@ -435,8 +437,8 @@ Subsystem = (function() {
             source = metaboliteId;
             target = reaction.id;
           }
-          this.graph.vertexValue(r.id).addLink(creators.createLink(this.graph.vertexValue(source), this.graph.vertexValue(target), reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
-          results1.push(this.graph.createNewEdge(source, target, source + " -> " + target));
+          this.fullResGraph.vertexValue(r.id).addLink(creators.createLink(this.fullResGraph.vertexValue(source), this.fullResGraph.vertexValue(target), reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
+          results1.push(this.fullResGraph.createNewEdge(source, target, source + " -> " + target));
         }
         return results1;
       }).call(this));
@@ -448,24 +450,6 @@ Subsystem = (function() {
     var edge, from, iterator, to, value, vertex;
     sortors[this.type].compartmentor();
     sortors[this.type].sortor();
-    iterator = this.graph.vertices();
-    while (!(vertex = iterator.next()).done) {
-      value = vertex.value[1];
-      this.nodes.push(value);
-    }
-    iterator = this.graph.edges();
-    while (!(edge = iterator.next()).done) {
-      from = edge.value[0];
-      to = edge.value[1];
-      value = edge.value[2];
-      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
-    }
-    return force.initalizeForce();
-  };
-
-  Subsystem.prototype.buildSystem2 = function(data) {
-    var edge, from, iterator, to, value, vertex;
-    this.buildGraph(data.metabolites, data.reactions);
     iterator = this.graph.vertices();
     while (!(vertex = iterator.next()).done) {
       value = vertex.value[1];
@@ -544,6 +528,7 @@ Subsystem = (function() {
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
     (sortors[this.type].parser.bind(this))();
+    this.fullResGraph = new Graph();
     this.graph = new Graph();
     this.nodes = new Array();
     this.links = new Array();
@@ -587,13 +572,13 @@ Subsystem = (function() {
     return [metabolites, reactions];
   };
 
-  Subsystem.prototype.buildGraph = function(metaboliteData, reactionData) {
+  Subsystem.prototype.buildFullResGraph = function(metaboliteData, reactionData) {
     var i, j, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
     for (i = 0, len = metaboliteData.length; i < len; i++) {
       metabolite = metaboliteData[i];
       m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
       m.species = metabolite.species;
-      this.graph.addVertex(metabolite.id, m);
+      this.fullResGraph.addVertex(metabolite.id, m);
     }
     results = [];
     for (j = 0, len1 = reactionData.length; j < len1; j++) {
@@ -606,7 +591,7 @@ Subsystem = (function() {
       }
       r = creators.createReaction(reaction.id, reaction.name, reaction.flux_value);
       r.species = reaction.species;
-      this.graph.addVertex(r.id, r);
+      this.fullResGraph.addVertex(r.id, r);
       results.push((function() {
         var results1;
         results1 = [];
@@ -618,8 +603,8 @@ Subsystem = (function() {
             source = metaboliteId;
             target = reaction.id;
           }
-          this.graph.vertexValue(r.id).addLink(creators.createLink(this.graph.vertexValue(source), this.graph.vertexValue(target), reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
-          results1.push(this.graph.createNewEdge(source, target, source + " -> " + target));
+          this.fullResGraph.vertexValue(r.id).addLink(creators.createLink(this.fullResGraph.vertexValue(source), this.fullResGraph.vertexValue(target), reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
+          results1.push(this.fullResGraph.createNewEdge(source, target, source + " -> " + target));
         }
         return results1;
       }).call(this));
@@ -631,24 +616,6 @@ Subsystem = (function() {
     var edge, from, iterator, to, value, vertex;
     sortors[this.type].compartmentor();
     sortors[this.type].sortor();
-    iterator = this.graph.vertices();
-    while (!(vertex = iterator.next()).done) {
-      value = vertex.value[1];
-      this.nodes.push(value);
-    }
-    iterator = this.graph.edges();
-    while (!(edge = iterator.next()).done) {
-      from = edge.value[0];
-      to = edge.value[1];
-      value = edge.value[2];
-      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
-    }
-    return force.initalizeForce();
-  };
-
-  Subsystem.prototype.buildSystem2 = function(data) {
-    var edge, from, iterator, to, value, vertex;
-    this.buildGraph(data.metabolites, data.reactions);
     iterator = this.graph.vertices();
     while (!(vertex = iterator.next()).done) {
       value = vertex.value[1];
@@ -812,16 +779,11 @@ var TreeNode;
 
 TreeNode = (function() {
   function TreeNode(id, subsystem) {
-    var child;
     this.id = id;
     this.subsystem = subsystem;
     this.parent = null;
     this.children = new Object();
-    this.value = null;
-    for (child in this.subsystem.parsedData) {
-      this.subsystem.buildSystem(this.subsystem.parsedData[child]);
-    }
-    console.log(this.subsystem.graph);
+    this.subsystem.buildSystem(this.subsystem.data);
   }
 
   return TreeNode;
