@@ -16,10 +16,6 @@ class Subsystem
         @everything    = attr.everything
         @hideObjective = attr.hideObjective
 
-        # Sortables
-        attr.sortables.index++
-        @sortables = attr.sortables
-
         # TODO be parameterized/or done through a d3 scale
         @metaboliteRadius = 10
         @compartmentRadius = 50
@@ -36,9 +32,14 @@ class Subsystem
         creators.createLink         = creators.createLink.bind(this)
         force.initalizeForce        = force.initalizeForce.bind(this)
 
-        [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
-        console.log(@metabolites, @reactions)
+        # Sortables
+        attr.sortables.index++
+        @sortables = attr.sortables
 
+        # Create a dictionary of *all* Metabolites, Reactions beforehand
+        [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
+
+        # Bind sortors to 'this'
         sortors[@type].compartmentor = sortors[@type].compartmentor.bind(this)
         sortors[@type].sortor = sortors[@type].sortor.bind(this)
 
@@ -89,6 +90,7 @@ class Subsystem
             reactions[reaction.id] = creators.createReaction(reaction.name, reaction.id, reaction.flux_value, @ctx)
             r = reactions[reaction.id]
             r.species = reaction.species
+            r.metabolites = reaction.metabolites
 
             # Loop through metabolites inside reaction
             # Dict. of the form: {id:stoichiometric coefficient}
@@ -173,9 +175,32 @@ class Subsystem
                 @graph.createNewEdge(source, target, "#{source} -> #{target}")
 
 
+    # **buildSystem**
+    # Applies `sortor` functions to construct @graph
+    # Once @graph is built, loop through vertices and edges to create nodes and links
     buildSystem: ->
         sortors[@type].compartmentor()
         sortors[@type].sortor()
+
+        # Push all Metabolites and ReactionNodes into @nodes
+        iterator = @graph.vertices()
+        while not (vertex = iterator.next()).done
+            value = vertex.value[1]
+            @nodes.push(value)
+
+        # Push all edges into @links as Links
+        iterator = @graph.edges()
+        while not (edge = iterator.next()).done
+            from  = edge.value[0]
+            to    = edge.value[1]
+            value = edge.value[2]
+            # source, target, name, flux, radius
+            # TODO rename radius -> thickness
+            # We don't have fluxes here!
+            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
+
+        # Initilize a force layout
+        force.initalizeForce()
 
     # **Subsystem.buildSystem**
     # Calls: @buildGraph, initializeForce, createLink

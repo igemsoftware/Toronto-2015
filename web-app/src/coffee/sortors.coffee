@@ -40,25 +40,58 @@ module.exports =
                 @graph.addVertex(specie, creators.createCompartment(specie, mappings[specie]))
 
         sortor: ->
+            # Loop through every Reaction
             for reaction of @reactions
                 r = @reactions[reaction]
 
                 for specie in r.species
+                    # Case 1: loop through substrates, then products. Can produce
+                    # a. `e ->`
+                    # b. `e -> e`
+                    # c. `e -> specie`
+                    for substrate in r.substrates
+                        if substrate.compartment is 'e'
+                            # Construct `e ->`
+                            if not @graph.hasVertex(r.id)
+                                @graph.addVertex(r.id, r)
+                            if not @graph.hasVertex(substrate.id)
+                                @graph.addVertex(substrate.id, substrate)
+                            @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
+
+                            # Loop through the products for this particular reaction
+                            # Are they extracellular, or within the cell?
+                            for product in r.products
+                                if product.compartment is 'e'
+                                    # Construct `-> e` (To complete `e -> e`)
+                                    if not @graph.hasVertex(product.id)
+                                        @graph.addVertex(product.id, product)
+                                    @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
+                                else
+                                    # Construct `-> specie` (To complete `e -> specie`)
+                                    @graph.addEdge(r.id, specie, "#{r.id} -> #{specie}")
+
+                    # Case 2: loop through products, then substrates. Can produce
+                    # a. `-> e`
+                    # b. `e -> e`
+                    # c. `specie -> e`
                     for product in r.products
                         if product.compartment is 'e'
-                            console.log(r)
-                    # if r.productCompartments.indexOf('e') isnt -1
-                    #     # fix
-                    #     #g = new Graph(r.id, r.name)
-                    #     @graph.addVertex(r.id, r)
-                    #
-                    #
-                    #
-                    #     g.outNeighbours['e'] = @graph.outNeighbours['e']
-                    #     g.inNeighbours[specie] = @graph.outNeighbours[specie]
-                    #     g.value = r
-                    #     @graph.outNeighbours[specie].outNeighbours[r.id] = g
+                            # Construct `-> e`
+                            if not @graph.hasVertex(r.id)
+                                @graph.addVertex(r.id, r)
+                            if not @graph.hasVertex(product.id)
+                                @graph.addVertex(product.id, product)
+                            @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
 
+                            for substrate in r.substrates
+                                if substrate.compartment is 'e'
+                                    # Construct `e ->` (To complete `e -> e`)
+                                    if not @graph.hasVertex(substrate.id)
+                                        @graph.addVertex(substrate.id, substrate)
+                                    @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{product.id}")
+                                else
+                                    # Construct `specie ->` (To complete `specie -> e`)
+                                    @graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
     compartments:
         compartmentor: ->
             sorter = 'compartment'

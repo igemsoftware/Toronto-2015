@@ -5,6 +5,7 @@ class Metabolite extends Node
         super(attr, @ctx)
 
         @specie = attr.specie
+        @compartment = @id.split('_')[@id.split('_').length - 1]
 
     draw: ->
         if not @deleted

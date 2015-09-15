@@ -151,6 +151,7 @@ Metabolite = (function(superClass) {
     this.ctx = ctx;
     Metabolite.__super__.constructor.call(this, attr, this.ctx);
     this.specie = attr.specie;
+    this.compartment = this.id.split('_')[this.id.split('_').length - 1];
   }
 
   Metabolite.prototype.draw = function() {
@@ -230,7 +231,6 @@ Node = (function() {
     this.type = attr.type;
     this.colour = attr.colour;
     this.keepStatic = false;
-    this.compartment = this.id.split('_')[this.id.split('_').length - 1];
     this.substrates = this.inNeighbours = new Array();
     this.products = this.outNeighbours = new Array();
     this.deleted = false;
@@ -345,8 +345,6 @@ Subsystem = (function() {
     this.type = attr.type;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
-    attr.sortables.index++;
-    this.sortables = attr.sortables;
     this.metaboliteRadius = 10;
     this.compartmentRadius = 50;
     this.radiusScale = utilities.scaleRadius(this.data, 5, 15);
@@ -356,8 +354,9 @@ Subsystem = (function() {
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
     force.initalizeForce = force.initalizeForce.bind(this);
+    attr.sortables.index++;
+    this.sortables = attr.sortables;
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    console.log(this.metabolites, this.reactions);
     sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
@@ -389,6 +388,7 @@ Subsystem = (function() {
       reactions[reaction.id] = creators.createReaction(reaction.name, reaction.id, reaction.flux_value, this.ctx);
       r = reactions[reaction.id];
       r.species = reaction.species;
+      r.metabolites = reaction.metabolites;
       for (metaboliteId in reaction.metabolites) {
         if (reaction.metabolites[metaboliteId] > 0) {
           source = reaction.id;
@@ -445,8 +445,22 @@ Subsystem = (function() {
   };
 
   Subsystem.prototype.buildSystem = function() {
+    var edge, from, iterator, to, value, vertex;
     sortors[this.type].compartmentor();
-    return sortors[this.type].sortor();
+    sortors[this.type].sortor();
+    iterator = this.graph.vertices();
+    while (!(vertex = iterator.next()).done) {
+      value = vertex.value[1];
+      this.nodes.push(value);
+    }
+    iterator = this.graph.edges();
+    while (!(edge = iterator.next()).done) {
+      from = edge.value[0];
+      to = edge.value[1];
+      value = edge.value[2];
+      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
+    }
+    return force.initalizeForce();
   };
 
   Subsystem.prototype.buildSystem2 = function(data) {
@@ -514,8 +528,6 @@ Subsystem = (function() {
     this.type = attr.type;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
-    attr.sortables.index++;
-    this.sortables = attr.sortables;
     this.metaboliteRadius = 10;
     this.compartmentRadius = 50;
     this.radiusScale = utilities.scaleRadius(this.data, 5, 15);
@@ -525,8 +537,9 @@ Subsystem = (function() {
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
     force.initalizeForce = force.initalizeForce.bind(this);
+    attr.sortables.index++;
+    this.sortables = attr.sortables;
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    console.log(this.metabolites, this.reactions);
     sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
@@ -558,6 +571,7 @@ Subsystem = (function() {
       reactions[reaction.id] = creators.createReaction(reaction.name, reaction.id, reaction.flux_value, this.ctx);
       r = reactions[reaction.id];
       r.species = reaction.species;
+      r.metabolites = reaction.metabolites;
       for (metaboliteId in reaction.metabolites) {
         if (reaction.metabolites[metaboliteId] > 0) {
           source = reaction.id;
@@ -614,8 +628,22 @@ Subsystem = (function() {
   };
 
   Subsystem.prototype.buildSystem = function() {
+    var edge, from, iterator, to, value, vertex;
     sortors[this.type].compartmentor();
-    return sortors[this.type].sortor();
+    sortors[this.type].sortor();
+    iterator = this.graph.vertices();
+    while (!(vertex = iterator.next()).done) {
+      value = vertex.value[1];
+      this.nodes.push(value);
+    }
+    iterator = this.graph.edges();
+    while (!(edge = iterator.next()).done) {
+      from = edge.value[0];
+      to = edge.value[1];
+      value = edge.value[2];
+      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
+    }
+    return force.initalizeForce();
   };
 
   Subsystem.prototype.buildSystem2 = function(data) {
@@ -1573,33 +1601,81 @@ module.exports = {
       return results;
     },
     sortor: function() {
-      var product, r, reaction, results, specie;
+      var product, r, reaction, results, specie, substrate;
       results = [];
       for (reaction in this.reactions) {
         r = this.reactions[reaction];
         results.push((function() {
-          var i, len, ref, results1;
+          var i, j, k, len, len1, len2, ref, ref1, ref2, results1;
           ref = r.species;
           results1 = [];
           for (i = 0, len = ref.length; i < len; i++) {
             specie = ref[i];
+            ref1 = r.substrates;
+            for (j = 0, len1 = ref1.length; j < len1; j++) {
+              substrate = ref1[j];
+              if (substrate.compartment === 'e') {
+                if (!this.graph.hasVertex(r.id)) {
+                  this.graph.addVertex(r.id, r);
+                }
+                if (!this.graph.hasVertex(substrate.id)) {
+                  this.graph.addVertex(substrate.id, substrate);
+                }
+                this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
+                ref2 = r.products;
+                for (k = 0, len2 = ref2.length; k < len2; k++) {
+                  product = ref2[k];
+                  if (product.compartment === 'e') {
+                    if (!this.graph.hasVertex(product.id)) {
+                      this.graph.addVertex(product.id, product);
+                    }
+                    this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                  } else {
+                    this.graph.addEdge(r.id, specie, r.id + " -> " + specie);
+                  }
+                }
+              }
+            }
             results1.push((function() {
-              var j, len1, ref1, results2;
-              ref1 = r.products;
+              var l, len3, ref3, results2;
+              ref3 = r.products;
               results2 = [];
-              for (j = 0, len1 = ref1.length; j < len1; j++) {
-                product = ref1[j];
+              for (l = 0, len3 = ref3.length; l < len3; l++) {
+                product = ref3[l];
                 if (product.compartment === 'e') {
-                  results2.push(console.log(r));
+                  if (!this.graph.hasVertex(r.id)) {
+                    this.graph.addVertex(r.id, r);
+                  }
+                  if (!this.graph.hasVertex(product.id)) {
+                    this.graph.addVertex(product.id, product);
+                  }
+                  this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                  results2.push((function() {
+                    var len4, n, ref4, results3;
+                    ref4 = r.substrates;
+                    results3 = [];
+                    for (n = 0, len4 = ref4.length; n < len4; n++) {
+                      substrate = ref4[n];
+                      if (substrate.compartment === 'e') {
+                        if (!this.graph.hasVertex(substrate.id)) {
+                          this.graph.addVertex(substrate.id, substrate);
+                        }
+                        results3.push(this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + product.id));
+                      } else {
+                        results3.push(this.graph.addEdge(specie, r.id, specie + " -> " + r.id));
+                      }
+                    }
+                    return results3;
+                  }).call(this));
                 } else {
                   results2.push(void 0);
                 }
               }
               return results2;
-            })());
+            }).call(this));
           }
           return results1;
-        })());
+        }).call(this));
       }
       return results;
     }
