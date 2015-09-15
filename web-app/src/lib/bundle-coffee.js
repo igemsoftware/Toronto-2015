@@ -200,6 +200,7 @@ Network = (function() {
     root = new TreeNode('root', new System(systemAttr));
     console.log(root);
     this.viewController.startCanvas(root.system);
+    root.children.iJO1366.system.forceSystemOn();
   }
 
   return Network;
@@ -355,7 +356,7 @@ System = (function() {
     creators.createReactionNode = creators.createReactionNode.bind(this);
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
-    force.initalizeForce = force.initalizeForce.bind(this);
+    force.initializeForce = force.initializeForce.bind(this);
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
     sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
@@ -424,9 +425,13 @@ System = (function() {
     return this.powerSystemOn();
   };
 
+  System.prototype.forceSystemOn = function() {
+    return force.initializeForce();
+  };
+
   System.prototype.powerSystemOn = function() {
     if (this.sortables.index === 0) {
-      return force.initalizeForce();
+      return force.initializeForce();
     }
   };
 
@@ -508,7 +513,7 @@ TreeNode = (function() {
     this.children = new Object();
     this.system.buildSystem(this.system.data);
     for (child in this.system.parsedData) {
-      if (this.system.sortables.index < this.system.sortables.identifiers.length - 2) {
+      if (this.system.sortables.index < this.system.sortables.identifiers.length - 1) {
         systemAttr = {
           data: this.system.parsedData[child],
           width: this.system.width,
@@ -1177,7 +1182,7 @@ chargeHandler = function(node, i) {
 };
 
 module.exports = {
-  initalizeForce: function() {
+  initializeForce: function() {
     var j, len, n, ref;
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.width, this.height]).linkStrength(2).friction(0.9).linkDistance(linkDistanceHandler).charge(chargeHandler).gravity(0.1).theta(0.8).alpha(0.1);
     if (this.useStatic) {
@@ -1379,7 +1384,6 @@ module.exports = {
   },
   compartments: {
     parser: function() {
-      console.log('heeeeere');
       return {
         'foo': 'parsed',
         'bar': 'data'
@@ -1396,8 +1400,8 @@ module.exports = {
       results = [];
       for (metabolite in this.metabolites) {
         m = this.metabolites[metabolite];
-        if (this.graph.outNeighbours[m[sorter]] == null) {
-          results.push(this.graph.outNeighbours[m[sorter]] = new Graph(this.metabolites[metabolite][sorter], mappings[m[sorter]]));
+        if (!this.graph.hasVertex(m[sorter])) {
+          results.push(this.graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]])));
         } else {
           results.push(void 0);
         }
@@ -1405,54 +1409,28 @@ module.exports = {
       return results;
     },
     sortor: function() {
-      var _cpt, cpt, i, j, k, l, leaf, len, len1, len2, len3, potentialLeaf, r, reaction, ref, ref1, ref2, ref3, results;
+      var cpt, i, len, r, reaction, ref, results;
       results = [];
       for (reaction in this.reactions) {
         r = this.reactions[reaction];
+        if (!this.graph.hasVertex(r.id)) {
+          this.graph.addVertex(r.id, r);
+        }
         ref = r.substrateCompartments;
         for (i = 0, len = ref.length; i < len; i++) {
           cpt = ref[i];
-          leaf = null;
-          ref1 = r.substrateCompartments;
+          this.graph.addEdge(cpt, r.id, cpt + " -> " + r.id);
+        }
+        results.push((function() {
+          var j, len1, ref1, results1;
+          ref1 = r.productCompartments;
+          results1 = [];
           for (j = 0, len1 = ref1.length; j < len1; j++) {
-            _cpt = ref1[j];
-            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
-            if (potentialLeaf != null) {
-              leaf = potentialLeaf;
-            }
+            cpt = ref1[j];
+            results1.push(this.graph.addEdge(r.id, cpt, "{r.id} -> " + cpt));
           }
-          if (leaf == null) {
-            leaf = new Graph(r.id);
-            leaf.value = r;
-          }
-          leaf.inNeighbours[cpt] = this.graph.outNeighbours[cpt];
-          this.graph.outNeighbours[cpt].outNeighbours[r.id] = leaf;
-        }
-        ref2 = r.productCompartments;
-        for (k = 0, len2 = ref2.length; k < len2; k++) {
-          cpt = ref2[k];
-          leaf = null;
-          ref3 = r.substrateCompartments;
-          for (l = 0, len3 = ref3.length; l < len3; l++) {
-            _cpt = ref3[l];
-            potentialLeaf = this.graph.outNeighbours[_cpt].outNeighbours[r.id];
-            if (potentialLeaf != null) {
-              leaf = potentialLeaf;
-            }
-          }
-          if (leaf == null) {
-            leaf = new Graph(r.id);
-            leaf.value = r;
-          }
-          leaf.outNeighbours[cpt] = this.graph.outNeighbours[cpt];
-          this.graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf;
-        }
-        if (r.outNeighbours.length === 0) {
-          leaf.outNeighbours["e"] = this.graph.outNeighbours["e"];
-          results.push(this.graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf);
-        } else {
-          results.push(void 0);
-        }
+          return results1;
+        }).call(this));
       }
       return results;
     }

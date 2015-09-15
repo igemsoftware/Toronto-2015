@@ -34,7 +34,7 @@ class System
         creators.createReactionNode = creators.createReactionNode.bind(this)
         creators.createCompartment  = creators.createCompartment.bind(this)
         creators.createLink         = creators.createLink.bind(this)
-        force.initalizeForce        = force.initalizeForce.bind(this)
+        force.initializeForce       = force.initializeForce.bind(this)
 
         # Create a dictionary of *all* Metabolites, Reactions beforehand
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
@@ -49,7 +49,6 @@ class System
         # Bind and run parser for the current 'type'
         # Mutates @parsedData
         (sortors[@type].parser.bind(this))()
-
 
         # The graph holding all reactions and metabolites in @data
         @fullResGraph = new Graph()
@@ -145,10 +144,15 @@ class System
 
         # Initilize a force layout
         @powerSystemOn()
+        # console.log('activating force')
+        # force.initalizeForce()
+
+    forceSystemOn: ->
+        force.initializeForce()
 
     powerSystemOn: ->
         if @sortables.index is 0
-            force.initalizeForce()
+            force.initializeForce()
 
     # **system.buildFullResGraph**
     # Takes 'bare' data and constructs @fullResGraph

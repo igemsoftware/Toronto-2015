@@ -24,5 +24,8 @@ class Network
 
         # Start the visualization
         @viewController.startCanvas(root.system)
+        # console.log(root.children.iJO1366.system)
+        root.children.iJO1366.system.forceSystemOn()
+        # @viewController.startCanvas(root.children.iJO1366.system)
 
 module.exports = Network

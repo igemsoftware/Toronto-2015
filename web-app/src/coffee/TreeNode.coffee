@@ -11,10 +11,11 @@ class TreeNode
 
         # Build a computed layout for the current system
         @system.buildSystem(@system.data)
+        # console.log(@system)
 
         # Create a child for each key in parsedData
         for child of @system.parsedData
-            if @system.sortables.index < @system.sortables.identifiers.length - 2
+            if @system.sortables.index < @system.sortables.identifiers.length - 1
                 systemAttr =
                     data          : @system.parsedData[child]
                     width         : @system.width

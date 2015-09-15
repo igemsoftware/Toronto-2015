@@ -11,8 +11,7 @@ chargeHandler = (node, i) ->
     factor = node.r*2
     return factor * -800
 
-module.exports = initalizeForce: ->
-    # console.log(@links.length)
+module.exports = initializeForce: ->
     @force = d3.layout.force()
         # The nodes: index,x,y,px,py,fixed bool, weight (# of associated links)
         .nodes(@nodes)

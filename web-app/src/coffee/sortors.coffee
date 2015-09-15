@@ -94,11 +94,11 @@ module.exports =
                                     @graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
     compartments:
         parser: ->
-            console.log('heeeeere')
             return {
                 'foo': 'parsed',
                 'bar': 'data'
             }
+
         compartmentor: ->
             sorter = 'compartment'
 
@@ -109,43 +109,52 @@ module.exports =
 
             for metabolite of @metabolites
                 m = @metabolites[metabolite]
-                # If current Metabolite's compartment is not a child of `graph`, add it
-                if not @graph.outNeighbours[m[sorter]]?
-                    # Create a new child with no outNeighbours or parents
-                    @graph.outNeighbours[m[sorter]] = new Graph(@metabolites[metabolite][sorter], mappings[m[sorter]])
+                if not @graph.hasVertex(m[sorter])
+                    @graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]]))
 
         sortor: ->
             for reaction of @reactions
                 r = @reactions[reaction]
 
+                if not @graph.hasVertex(r.id)
+                    @graph.addVertex(r.id, r)
+
                 for cpt in r.substrateCompartments
-                    leaf = null
-                    for _cpt in r.substrateCompartments
-                        potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
-                        if potentialLeaf?
-                            leaf = potentialLeaf
+                    @graph.addEdge(cpt, r.id, "#{cpt} -> #{r.id}")
 
-                    if not leaf?
-                        leaf = new Graph(r.id)
-
-                        leaf.value = r
-                    leaf.inNeighbours[cpt] = @graph.outNeighbours[cpt]
-                    @graph.outNeighbours[cpt].outNeighbours[r.id] = leaf
+                    # leaf = null
+                    # for _cpt in r.substrateCompartments
+                    #     if @graph.hasEdge(_cpt, r.id)
+                    #         leaf = @graph.vertexValue(r.id)
+                    #
+                    #     # potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
+                    #     # if potentialLeaf?
+                    #     #     leaf = potentialLeaf
+                    #
+                    # if not leaf?
+                    #     @
+                    #     # leaf = new Graph(r.id)
+                    #     # leaf.value = r
+                    #
+                    # leaf.inNeighbours[cpt] = @graph.outNeighbours[cpt]
+                    # @graph.outNeighbours[cpt].outNeighbours[r.id] = leaf
 
                 for cpt in r.productCompartments
-                    leaf = null
-                    for _cpt in r.substrateCompartments
-                        potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
-                        if potentialLeaf?
-                            leaf = potentialLeaf
+                    @graph.addEdge(r.id, cpt, "{r.id} -> #{cpt}")
+                    # leaf = null
+                    # for _cpt in r.substrateCompartments
+                    #     potentialLeaf = @graph.outNeighbours[_cpt].outNeighbours[r.id]
+                    #     if potentialLeaf?
+                    #         leaf = potentialLeaf
+                    #
+                    # if not leaf?
+                    #     leaf = new Graph(r.id)
+                    #     leaf.value = r
+                    #
+                    # leaf.outNeighbours[cpt] = @graph.outNeighbours[cpt]
+                    # @graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
 
-                    if not leaf?
-                        leaf = new Graph(r.id)
-                        leaf.value = r
-
-                    leaf.outNeighbours[cpt] = @graph.outNeighbours[cpt]
-                    @graph.outNeighbours[cpt].inNeighbours[leaf.id] = leaf
-
-                if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
-                    leaf.outNeighbours["e"] = @graph.outNeighbours["e"]
-                    @graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
+                # Sinks fix no longer needed
+                # if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
+                #     leaf.outNeighbours["e"] = @graph.outNeighbours["e"]
+                #     @graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
