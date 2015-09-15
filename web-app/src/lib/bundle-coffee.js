@@ -38,7 +38,7 @@ Compartment = (function(superClass) {
 module.exports = Compartment;
 
 
-},{"./Node":6,"./utilities":17}],2:[function(require,module,exports){
+},{"./Node":6,"./utilities":16}],2:[function(require,module,exports){
 var Graph, Link, Metabolite, Reaction, utilities;
 
 utilities = require("./utilities");
@@ -65,7 +65,7 @@ Graph = (function() {
 module.exports = Graph;
 
 
-},{"./Link":3,"./Metabolite":4,"./Reaction":7,"./utilities":17}],3:[function(require,module,exports){
+},{"./Link":3,"./Metabolite":4,"./Reaction":7,"./utilities":16}],3:[function(require,module,exports){
 var Link;
 
 Link = (function() {
@@ -333,8 +333,8 @@ Reaction = (function(superClass) {
 module.exports = Reaction;
 
 
-},{"./Node":6,"./utilities":17}],8:[function(require,module,exports){
-var Compartment, System, creators, force, sortors, utilities;
+},{"./Node":6,"./utilities":16}],8:[function(require,module,exports){
+var Compartment, System, creators, sortors, utilities;
 
 Compartment = require('./Compartment');
 
@@ -343,8 +343,6 @@ utilities = require('./utilities');
 creators = require('./creators');
 
 sortors = require('./sortors');
-
-force = require('./force');
 
 System = (function() {
   function System(attr) {
@@ -366,7 +364,6 @@ System = (function() {
     creators.createReactionNode = creators.createReactionNode.bind(this);
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
-    force.initializeForce = force.initializeForce.bind(this);
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
     sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
@@ -386,6 +383,7 @@ System = (function() {
       metabolite = metaboliteData[j];
       m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
       m.species = metabolite.species;
+      m.subsystems = metabolite.subsystems;
       metabolites[metabolite.id] = m;
     }
     for (k = 0, len1 = reactionData.length; k < len1; k++) {
@@ -400,6 +398,7 @@ System = (function() {
       r = reactions[reaction.id];
       r.species = reaction.species;
       r.metabolites = reaction.metabolites;
+      r.subsystem = reaction.subsystem;
       for (metaboliteId in reaction.metabolites) {
         if (reaction.metabolites[metaboliteId] > 0) {
           source = reaction.id;
@@ -530,7 +529,7 @@ System = (function() {
 module.exports = System;
 
 
-},{"./Compartment":1,"./creators":12,"./force":14,"./sortors":16,"./utilities":17}],9:[function(require,module,exports){
+},{"./Compartment":1,"./creators":12,"./sortors":15,"./utilities":16}],9:[function(require,module,exports){
 var System, TreeNode;
 
 System = require('./System');
@@ -1159,7 +1158,7 @@ module.exports = {
 };
 
 
-},{"./Compartment":1,"./Link":3,"./Metabolite":4,"./Reaction":7,"./utilities":17}],13:[function(require,module,exports){
+},{"./Compartment":1,"./Link":3,"./Metabolite":4,"./Reaction":7,"./utilities":16}],13:[function(require,module,exports){
 module.exports = {
   deleteNode: function(node) {
     var i, inNeighbour, j, len, len1, nodeIndex, outNeighbour, ref, ref1;
@@ -1183,46 +1182,37 @@ module.exports = {
 
 
 },{}],14:[function(require,module,exports){
-var chargeHandler, linkDistanceHandler;
-
-linkDistanceHandler = function(link, i) {
-  var factor;
-  factor = 0;
-  if (link.target.type === 'r') {
-    factor = link.target.substrates.length;
-  } else if (link.source.type === 'r') {
-    factor = link.source.products.length;
-  }
-  return factor * 100;
-};
-
-chargeHandler = function(node, i) {
-  var factor;
-  factor = node.inNeighbours.length + node.outNeighbours.length + 1;
-  factor = node.r * 2;
-  return factor * -800;
-};
-
-module.exports = {
-  initializeForce: function() {
-    var j, len, n, ref;
-    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.width, this.height]).linkStrength(2).friction(0.9).linkDistance(linkDistanceHandler).charge(chargeHandler).gravity(0.1).theta(0.8).alpha(0.1);
-    if (this.useStatic) {
-      ref = this.nodes;
-      for (j = 0, len = ref.length; j < len; j++) {
-        n = ref[j];
-        this.force.tick();
-      }
-      return this.force.stop();
-    }
-  }
-};
-
-
-},{}],15:[function(require,module,exports){
-var Network, network, networkAttributes, sortables;
+var Network, i, j, len, len1, metabolite, metaboliteDict, network, networkAttributes, reaction, ref, ref1, sortables;
 
 Network = require("./Network");
+
+metaboliteDict = new Object();
+
+ref = data.metabolites;
+for (i = 0, len = ref.length; i < len; i++) {
+  metabolite = ref[i];
+  metabolite.subsystems = new Array();
+  metaboliteDict[metabolite.id] = metabolite;
+}
+
+ref1 = data.reactions;
+for (j = 0, len1 = ref1.length; j < len1; j++) {
+  reaction = ref1[j];
+  if (reaction.subsystem === '') {
+    reaction.subsystem = 'Unassigned';
+  }
+  for (metabolite in reaction.metabolites) {
+    if (metaboliteDict[metabolite].subsystems.indexOf(reaction.subsystem) === -1) {
+      metaboliteDict[metabolite].subsystems.push(reaction.subsystem);
+    }
+  }
+}
+
+data.metabolites = new Array();
+
+for (metabolite in metaboliteDict) {
+  data.metabolites.push(metaboliteDict[metabolite]);
+}
 
 sortables = {
   index: -1,
@@ -1246,7 +1236,7 @@ networkAttributes = {
 network = new Network(networkAttributes);
 
 
-},{"./Network":5}],16:[function(require,module,exports){
+},{"./Network":5}],15:[function(require,module,exports){
 var Graph, creators,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -1460,7 +1450,7 @@ module.exports = {
 };
 
 
-},{"./Graph":2,"./creators":12}],17:[function(require,module,exports){
+},{"./Graph":2,"./creators":12}],16:[function(require,module,exports){
 var nodeMap, rand, scaleRadius;
 
 rand = function(range) {
@@ -1517,7 +1507,7 @@ module.exports = {
 };
 
 
-},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17])
+},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
 
 
 //# sourceMappingURL=maps/bundle-coffee.js.map
