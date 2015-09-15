@@ -181,7 +181,7 @@ This will be moved into `config.js` soon.
 
 ## Changelog (web-app)
 
-Current: **1.4.4**
+Current: **1.5**
 
 * Renders metabolic network as a set of *nodes* and *links*
 * Integration of d3 with custom canvas rendering for improved performance
