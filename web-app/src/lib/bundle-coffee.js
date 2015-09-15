@@ -198,9 +198,7 @@ Network = (function() {
       ctx: this.viewController.ctx
     };
     root = new TreeNode('root', new System(systemAttr));
-    console.log(root);
     this.viewController.startCanvas(root.system);
-    root.children.iJO1366.system.forceSystemOn();
   }
 
   return Network;
@@ -339,7 +337,7 @@ force = require('./force');
 System = (function() {
   function System(attr) {
     var ref;
-    attr.sortables.index++;
+    attr.sortables.index += 1;
     this.sortables = attr.sortables;
     this.type = this.sortables.identifiers[this.sortables.index];
     this.data = attr.data;
@@ -366,7 +364,6 @@ System = (function() {
     this.graph = new Graph();
     this.nodes = new Array();
     this.links = new Array();
-    this.force = null;
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
@@ -422,17 +419,7 @@ System = (function() {
       value = edge.value[2];
       this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
     }
-    return this.powerSystemOn();
-  };
-
-  System.prototype.forceSystemOn = function() {
     return force.initializeForce();
-  };
-
-  System.prototype.powerSystemOn = function() {
-    if (this.sortables.index === 0) {
-      return force.initializeForce();
-    }
   };
 
   System.prototype.buildFullResGraph = function(metaboliteData, reactionData) {

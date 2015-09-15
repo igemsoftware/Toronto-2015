@@ -13,6 +13,7 @@ class TreeNode
         @system.buildSystem(@system.data)
         # console.log(@system)
 
+
         # Create a child for each key in parsedData
         for child of @system.parsedData
             if @system.sortables.index < @system.sortables.identifiers.length - 1
@@ -24,6 +25,7 @@ class TreeNode
                     everything    : @system.everything
                     sortables     : @system.sortables
                     ctx           : @system.ctx
+                
                 @children[child] = new TreeNode(child, new System(systemAttr))
 
 

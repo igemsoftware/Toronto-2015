@@ -7,7 +7,7 @@ force       = require './force'
 class System
     constructor: (attr) ->
         # Sortables and type
-        attr.sortables.index++
+        attr.sortables.index+=1
         @sortables = attr.sortables
         @type = @sortables.identifiers[@sortables.index]
 
@@ -59,7 +59,7 @@ class System
         @nodes = new Array()
         @links = new Array()
         # The force layout provided by D3
-        @force = null
+
 
         # Further function calling will occur from TreeNode
 
@@ -143,16 +143,11 @@ class System
             @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
 
         # Initilize a force layout
-        @powerSystemOn()
+        force.initializeForce()
         # console.log('activating force')
         # force.initalizeForce()
 
-    forceSystemOn: ->
-        force.initializeForce()
 
-    powerSystemOn: ->
-        if @sortables.index is 0
-            force.initializeForce()
 
     # **system.buildFullResGraph**
     # Takes 'bare' data and constructs @fullResGraph
