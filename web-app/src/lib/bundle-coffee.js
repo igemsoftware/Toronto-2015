@@ -198,7 +198,6 @@ Network = (function() {
       ctx: this.viewController.ctx
     };
     this.root = new TreeNode('root', new System(systemAttr));
-    this.root.system.initializeForce();
     this.viewController.startCanvas(this.root.system);
     this.currentLevel = this.root;
     console.log(this.root);
@@ -387,6 +386,7 @@ System = (function() {
       metabolites: new Object(),
       species: new Object()
     };
+    this.initializeForce();
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
@@ -572,7 +572,7 @@ System = (function() {
 
   System.prototype.initializeForce = function() {
     var j, len, n, ref;
-    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.width, this.height]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8).alpha(0.1);
+    this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.width, this.height]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8);
     if (this.useStatic) {
       ref = this.nodes;
       for (j = 0, len = ref.length; j < len; j++) {
@@ -949,9 +949,6 @@ ViewController = (function() {
   ViewController.prototype.setActiveGraph = function(system) {
     this.populateOptions(this.activeGraph.nodes);
     this.activeGraph.force.stop();
-    if (system.force == null) {
-      system.initializeForce();
-    }
     this.activeGraph = system;
     this.activeGraph.force.on("tick", this.tick.bind(this)).start();
     return this.activeGraph.force.resume();

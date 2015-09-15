@@ -69,7 +69,7 @@ class System
             metabolites: new Object()
             species: new Object()
         }
-
+        @initializeForce()
 
         # Further function calling will occur from TreeNode
 
@@ -281,8 +281,8 @@ class System
             # Barnes-Hut theta: (area of quadrant) / (distance b/w node and quadrants COM) < theta => treat quadrant as single large node
             .theta(0.8)
             # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
-            .alpha(0.1)
-            # Let's get this party start()ed
+            #.alpha(0.1)
+
 
         if @useStatic
             @force.tick() for n in @nodes

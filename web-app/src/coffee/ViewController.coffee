@@ -240,8 +240,6 @@ class ViewController
     setActiveGraph: (system) ->
         @populateOptions(@activeGraph.nodes)
         @activeGraph.force.stop()
-        if not system.force?
-            system.initializeForce()
         @activeGraph = system
         # if not system.force?
         #

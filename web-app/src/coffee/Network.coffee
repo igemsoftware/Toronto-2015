@@ -19,7 +19,7 @@ class Network
             sortables : attr.sortables
             ctx : @viewController.ctx
         @root = new TreeNode('root', new System(systemAttr))
-        @root.system.initializeForce()
+        #@root.system.initializeForce()
 
         # Start the visualization
         @viewController.startCanvas(@root.system)
