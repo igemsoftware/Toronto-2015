@@ -334,7 +334,7 @@ module.exports = Reaction;
 
 
 },{"./Node":6,"./utilities":17}],8:[function(require,module,exports){
-var Compartment, System, creators, force, sortors, utilities;
+var Compartment, Link, System, creators, force, sortors, utilities;
 
 Compartment = require('./Compartment');
 
@@ -345,6 +345,8 @@ creators = require('./creators');
 sortors = require('./sortors');
 
 force = require('./force');
+
+Link = require('./Link');
 
 System = (function() {
   function System(attr) {
@@ -376,6 +378,16 @@ System = (function() {
     this.graph = new Graph();
     this.nodes = new Array();
     this.links = new Array();
+    this.deleted = {
+      reactions: new Object(),
+      metabolites: new Object(),
+      species: new Object()
+    };
+    this.added = {
+      reactions: new Object(),
+      metabolites: new Object(),
+      species: new Object()
+    };
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
@@ -413,6 +425,110 @@ System = (function() {
       }
     }
     return [metabolites, reactions];
+  };
+
+  System.prototype.deleteNode = function(id, name) {
+    var j, len, node, ref, toDelete;
+    this.graph.destroyVertex(id);
+    toDelete = null;
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
+      if (node.id === id && node.name === name) {
+        toDelete = node;
+        node.deleted = true;
+      }
+    }
+    if (toDelete.type === "r") {
+      return this.deleted.reactions[toDelete.id] = toDelete.name;
+    } else if (toDelete.type === "m") {
+      return this.deleted.metabolites[toDelete.id] = toDelete.name;
+    } else if (toDelete.type === "specie") {
+      return this.deleted.species[toDelete.id] = toDelete.name;
+    }
+  };
+
+  System.prototype.createNewMetabolite = function(id, name) {
+    var metabolite, metaboliteAttr;
+    metaboliteAttr = {
+      id: id,
+      name: name,
+      x: utilties.rand(this.width),
+      y: utilties.rand(this.height),
+      r: this.metaboliteRadius,
+      type: "m"
+    };
+    metabolite = new Metabolite(metaboliteAttr, this.ctx);
+    return this.added.metabolites[id] = name;
+  };
+
+  System.prototype.createNewReactionOrLink = function(source, target, id, name) {
+    var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
+    src = null;
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
+      if (source.id === node.id && source.name === node.name) {
+        src = node;
+      } else if (target.id === node.id && target.name === node.name) {
+        tgt = node;
+      }
+    }
+    if ((src == null) || (tgt == null)) {
+      return alert("No self linking!");
+    } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: 0,
+        r: radius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.ctx));
+    } else if (src.type === "m" && tgt.type === "m") {
+      reactionAttributes = {
+        x: utilities.rand(this.width),
+        y: utilities.rand(this.height),
+        r: 1,
+        name: name,
+        id: id,
+        type: "r",
+        flux_value: flux,
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+      };
+      reaction = new Reaction(reactionAttributes, this.ctx);
+      this.added.reactions[reactionAttributes.id] = name;
+      this.nodes.push(reaction);
+      linkAttr = {
+        id: source.id + "-" + reaction.id,
+        source: src,
+        target: reaction,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      this.links.push(new Link(linkAttr, this.ctx));
+      linkAttr = {
+        id: reaction.id + "-" + target.id,
+        source: reaction,
+        target: tgt,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.ctx));
+    } else {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.ctx));
+    }
   };
 
   System.prototype.buildSystem = function() {
@@ -530,7 +646,7 @@ System = (function() {
 module.exports = System;
 
 
-},{"./Compartment":1,"./creators":12,"./force":14,"./sortors":16,"./utilities":17}],9:[function(require,module,exports){
+},{"./Compartment":1,"./Link":3,"./creators":12,"./force":14,"./sortors":16,"./utilities":17}],9:[function(require,module,exports){
 var System, TreeNode;
 
 System = require('./System');
@@ -595,6 +711,7 @@ ViewController = (function() {
   ViewController.prototype.startCanvas = function(system) {
     var that;
     this.activeGraph = system;
+    this.populateOptions(this.activeGraph.nodes);
     this.activeGraph.force.start();
     $(this.id).css({
       "-moz-user-select": "none",
@@ -618,7 +735,7 @@ ViewController = (function() {
         id: $('#target').val().trim(),
         name: $('#target :selected').text()
       };
-      return that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx);
+      return that.activeGraph.createNewLink(source, target, $("#reaction_name").val(), 0, that.ctx);
     });
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.xform = this.svg.createSVGMatrix();
@@ -817,7 +934,7 @@ ViewController = (function() {
         });
       }
     }
-    if (this.network !== this.activeGraph) {
+    if (this.network.root.system !== this.activeGraph) {
       this.nodetext.append("<button id='network'>Return to network</button><br>");
       $("#network").click(function() {
         return that.network.exitSpecie();
@@ -829,6 +946,7 @@ ViewController = (function() {
   };
 
   ViewController.prototype.setActiveGraph = function(system) {
+    this.populateOptions(this.activeGraph.nodes);
     this.activeGraph.force.stop();
     if (system.force == null) {
       system.initializeForce();

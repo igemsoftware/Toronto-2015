@@ -3,6 +3,7 @@ utilities = require './utilities'
 creators = require './creators'
 sortors = require './sortors'
 force = require './force'
+Link  = require './Link'
 
 class System
     constructor: (attr) ->
@@ -60,7 +61,16 @@ class System
         @nodes = new Array()
         @links = new Array()
         # The force layout provided by D3
-
+        @deleted = {
+            reactions: new Object()
+            metabolites: new Object()
+            species: new Object()
+        }
+        @added = {
+            reactions: new Object()
+            metabolites: new Object()
+            species: new Object()
+        }
 
         # Further function calling will occur from TreeNode
 
@@ -118,6 +128,96 @@ class System
                     r.addLink(creators.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
 
         return [metabolites, reactions]
+
+    deleteNode: (id, name) ->
+        @graph.destroyVertex(id)
+        toDelete = null
+        for node in @nodes
+            if node.id is id and node.name is name
+                toDelete = node
+                node.deleted = true
+        if toDelete.type is "r"
+            @deleted.reactions[toDelete.id] = toDelete.name
+        else if toDelete.type is "m"
+            @deleted.metabolites[toDelete.id] = toDelete.name
+        else if toDelete.type is "specie"
+            @deleted.species[toDelete.id] = toDelete.name
+
+    #create a metabolite on the current running graph
+    createNewMetabolite: (id, name) ->
+        metaboliteAttr =
+            id : id
+            name : name
+            x : utilties.rand(@width)
+            y : utilties.rand(@height)
+            r : @metaboliteRadius
+            type : "m"
+        metabolite = new Metabolite(metaboliteAttr, @ctx)
+        @added.metabolites[id] = name
+
+
+    #Adds a brand new reaction/link to the current RUNNING graph
+    #name and ID are optional if there is just a link
+    #Source/target is an object with name and id
+    createNewReactionOrLink: (source, target, id, name) ->
+        src = null
+        for node in @nodes
+            if source.id is node.id and source.name is node.name
+                src = node
+            else if target.id is node.id and target.name is node.name
+                tgt = node
+        if not src? or not tgt?
+            alert("No self linking!")
+        else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
+            linkAttr =
+                id : "#{src.id}-#{tgt.id}"
+                source : src
+                target : tgt
+                fluxValue : 0
+                r : radius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, @ctx))
+        else if src.type is "m" and tgt.type is "m"
+            reactionAttributes =
+                x : utilities.rand(@width)
+                y : utilities.rand(@height)
+                r : 1
+                name : name
+                id : id
+                type : "r"
+                flux_value : flux
+                colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
+            reaction = new Reaction(reactionAttributes, @ctx)
+            @added.reactions[reactionAttributes.id] = name
+            @nodes.push(reaction)
+            linkAttr =
+                id : "#{source.id}-#{reaction.id}"
+                source : src
+                target : reaction
+                fluxValue : 0
+                r : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+
+            @links.push(new Link(linkAttr, @ctx))
+            linkAttr =
+                id : "#{reaction.id}-#{target.id}"
+                source : reaction
+                target : tgt
+                fluxValue : 0
+                r : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, @ctx))
+        else
+            linkAttr =
+                id : "#{src.id}-#{tgt.id}"
+                source : src
+                target : tgt
+                fluxValue : 0
+                r : @metaboliteRadius
+                linkScale : utilities.scaleRadius(null, 1, 5)
+            @links.push(new Link(linkAttr, @ctx))
+
+
 
     # **buildSystem**
     # Applies `sortor` functions to construct @graph

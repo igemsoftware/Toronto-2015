@@ -32,7 +32,7 @@ class ViewController
 
     startCanvas:(system) ->
         @activeGraph = system
-
+        @populateOptions(@activeGraph.nodes)
         @activeGraph.force.start()
         $(@id).css({
             "-moz-user-select": "none",
@@ -60,7 +60,7 @@ class ViewController
             target =
                 id:  $('#target').val().trim()
                 name: $('#target :selected').text()
-            that.activeGraph.addLink(source, target, $("#reaction_name").val(), 0, that.ctx)
+            that.activeGraph.createNewLink(source, target, $("#reaction_name").val(), 0, that.ctx)
         )
 
 
@@ -87,6 +87,7 @@ class ViewController
         for node in nodes
             source.append("option").attr("value", node.id).text(node.name)
             target.append("option").attr("value", node.id).text(node.name)
+
 
     updateOptions: (name, id) ->
         d3.select("#source").append("option").attr("value", id).text(name)
@@ -227,7 +228,7 @@ class ViewController
                 $("#enter").click(->
                     that.network.enterSpecie(node)
                 )
-        if @network isnt @activeGraph
+        if @network.root.system isnt @activeGraph
             @nodetext.append("<button id='network'>Return to network</button><br>")
             $("#network").click(->
                 that.network.exitSpecie()
@@ -237,10 +238,10 @@ class ViewController
         )
 
     setActiveGraph: (system) ->
-        
+        @populateOptions(@activeGraph.nodes)
         @activeGraph.force.stop()
         if not system.force?
-            system.initializeForce()    
+            system.initializeForce()
         @activeGraph = system
         # if not system.force?
         #
