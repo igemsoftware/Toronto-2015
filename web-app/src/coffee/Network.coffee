@@ -25,14 +25,16 @@ class Network
         @viewController.startCanvas(@root.system)
         @currentLevel = @root
 
-        
+
     enterSpecie: (node) ->
         #find node
         @currentLevel = @currentLevel.children[node.id]
 
         @viewController.setActiveGraph(@currentLevel.system)
         #@viewController.setActiveGraph(@currentLevel.system)
-
+    exitSpecie: (node) ->
+        @currentLevel = @currentLevel.parent
+        @viewController.setActiveGraph(@currentLevel.system)
 
 
 module.exports = Network

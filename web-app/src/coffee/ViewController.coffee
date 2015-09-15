@@ -237,10 +237,10 @@ class ViewController
         )
 
     setActiveGraph: (system) ->
-
+        
         @activeGraph.force.stop()
-        system.initializeForce()
-        console.log(system)
+        if not system.force?
+            system.initializeForce()    
         @activeGraph = system
         # if not system.force?
         #

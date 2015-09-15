@@ -208,6 +208,11 @@ Network = (function() {
     return this.viewController.setActiveGraph(this.currentLevel.system);
   };
 
+  Network.prototype.exitSpecie = function(node) {
+    this.currentLevel = this.currentLevel.parent;
+    return this.viewController.setActiveGraph(this.currentLevel.system);
+  };
+
   return Network;
 
 })();
@@ -825,8 +830,9 @@ ViewController = (function() {
 
   ViewController.prototype.setActiveGraph = function(system) {
     this.activeGraph.force.stop();
-    system.initializeForce();
-    console.log(system);
+    if (system.force == null) {
+      system.initializeForce();
+    }
     this.activeGraph = system;
     this.activeGraph.force.on("tick", this.tick.bind(this)).start();
     return this.activeGraph.force.resume();
