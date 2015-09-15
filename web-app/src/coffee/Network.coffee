@@ -25,6 +25,8 @@ class Network
         @viewController.startCanvas(@root.system)
         @currentLevel = @root
 
+        console.log(@root)
+
 
     enterSpecie: (node) ->
         #find node

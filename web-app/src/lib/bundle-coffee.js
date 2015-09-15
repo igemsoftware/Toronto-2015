@@ -201,6 +201,7 @@ Network = (function() {
     this.root.system.initializeForce();
     this.viewController.startCanvas(this.root.system);
     this.currentLevel = this.root;
+    console.log(this.root);
   }
 
   Network.prototype.enterSpecie = function(node) {
@@ -369,6 +370,7 @@ System = (function() {
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
     (sortors[this.type].parser.bind(this))();
+    console.log(this.parsedData);
     this.fullResGraph = new Graph();
     this.graph = new Graph();
     this.nodes = new Array();
@@ -1396,10 +1398,48 @@ module.exports = {
   },
   compartments: {
     parser: function() {
-      return {
-        'foo': 'parsed',
-        'bar': 'data'
-      };
+      var compartment, i, j, len, len1, metabolite, metaboliteDict, pushedMetabolites, pushedReactions, reaction, ref, ref1, results;
+      metaboliteDict = new Object();
+      ref = this.data.metabolites;
+      for (i = 0, len = ref.length; i < len; i++) {
+        metabolite = ref[i];
+        metaboliteDict[metabolite.id] = metabolite;
+      }
+      pushedMetabolites = new Array();
+      pushedReactions = new Array();
+      ref1 = this.data.reactions;
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        reaction = ref1[j];
+        results.push((function() {
+          var ref2, results1;
+          results1 = [];
+          for (metabolite in reaction.metabolites) {
+            compartment = metaboliteDict[metabolite].compartment;
+            if (compartment !== 'e') {
+              if (this.parsedData[compartment] == null) {
+                this.parsedData[compartment] = new Object();
+                this.parsedData[compartment].metabolites = new Array();
+                this.parsedData[compartment].reactions = new Array();
+              }
+              if (ref2 = reaction.id, indexOf.call(pushedReactions, ref2) < 0) {
+                this.parsedData[compartment].reactions.push(reaction);
+                pushedReactions.push(reaction.id);
+              }
+              if (indexOf.call(pushedMetabolites, metabolite) < 0) {
+                this.parsedData[compartment].metabolites.push(metaboliteDict[metabolite]);
+                results1.push(pushedMetabolites.push(metabolite));
+              } else {
+                results1.push(void 0);
+              }
+            } else {
+              results1.push(void 0);
+            }
+          }
+          return results1;
+        }).call(this));
+      }
+      return results;
     },
     compartmentor: function() {
       var m, mappings, metabolite, results, sorter;

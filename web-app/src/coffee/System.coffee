@@ -46,6 +46,8 @@ class System
         # Mutates @parsedData
         (sortors[@type].parser.bind(this))()
 
+        console.log(@parsedData)
+
         # The graph holding all reactions and metabolites in @data
         @fullResGraph = new Graph()
         # The Graph of this system
