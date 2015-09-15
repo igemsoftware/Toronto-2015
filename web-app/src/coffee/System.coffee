@@ -6,12 +6,16 @@ force       = require './force'
 
 class System
     constructor: (attr) ->
+        # Sortables and type
+        attr.sortables.index++
+        @sortables = attr.sortables
+        @type = @sortables.identifiers[@sortables.index]
+
         # Store attributes as properties of System
         @data          = attr.data
         @width         = attr.width
         @height        = attr.height
         @ctx           = attr.ctx
-        @type          = attr.type
         # TODO make these into 'filters'
         @everything    = attr.everything
         @hideObjective = attr.hideObjective
@@ -32,14 +36,11 @@ class System
         creators.createLink         = creators.createLink.bind(this)
         force.initalizeForce        = force.initalizeForce.bind(this)
 
-        # Sortables
-        attr.sortables.index++
-        @sortables = attr.sortables
-
         # Create a dictionary of *all* Metabolites, Reactions beforehand
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
 
         # Bind sortors to 'this'
+
         sortors[@type].compartmentor = sortors[@type].compartmentor.bind(this)
         sortors[@type].sortor = sortors[@type].sortor.bind(this)
 
@@ -118,7 +119,38 @@ class System
 
         return [metabolites, reactions]
 
-    # **system.buildGraph**
+    # **buildSystem**
+    # Applies `sortor` functions to construct @graph
+    # Once @graph is built, loop through vertices and edges to create nodes and links
+    buildSystem: ->
+        sortors[@type].compartmentor()
+        sortors[@type].sortor()
+
+        # Push all Metabolites and ReactionNodes into @nodes
+        iterator = @graph.vertices()
+        while not (vertex = iterator.next()).done
+            value = vertex.value[1]
+            @nodes.push(value)
+
+        # Push all edges into @links as Links
+        iterator = @graph.edges()
+        while not (edge = iterator.next()).done
+            from  = edge.value[0]
+            to    = edge.value[1]
+            value = edge.value[2]
+            # source, target, name, flux, radius
+            # TODO rename radius -> thickness
+            # We don't have fluxes here!
+            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
+
+        # Initilize a force layout
+        @powerSystemOn()
+
+    powerSystemOn: ->
+        if @sortables.index is 0
+            force.initalizeForce()
+
+    # **system.buildFullResGraph**
     # Takes 'bare' data and constructs @fullResGraph
     # Called from : buildSystem
     # Requires    : @everything, @hideObjective
@@ -175,34 +207,6 @@ class System
                 # Create an edge for this metabolites relationsip in the reaction
                 # NOTE Reactions may be represented by multiple edges
                 @fullResGraph.createNewEdge(source, target, "#{source} -> #{target}")
-
-
-    # **buildSystem**
-    # Applies `sortor` functions to construct @graph
-    # Once @graph is built, loop through vertices and edges to create nodes and links
-    buildSystem: ->
-        sortors[@type].compartmentor()
-        sortors[@type].sortor()
-
-        # Push all Metabolites and ReactionNodes into @nodes
-        iterator = @graph.vertices()
-        while not (vertex = iterator.next()).done
-            value = vertex.value[1]
-            @nodes.push(value)
-
-        # Push all edges into @links as Links
-        iterator = @graph.edges()
-        while not (edge = iterator.next()).done
-            from  = edge.value[0]
-            to    = edge.value[1]
-            value = edge.value[2]
-            # source, target, name, flux, radius
-            # TODO rename radius -> thickness
-            # We don't have fluxes here!
-            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, 1, 2))
-
-        # Initilize a force layout
-        force.initalizeForce()
 
     # **system.checkCollisions**
     # Loops through @nodes and checks for mouse collision

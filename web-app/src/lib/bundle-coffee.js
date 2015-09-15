@@ -195,7 +195,6 @@ Network = (function() {
       hideObjective: attr.hideObjective,
       everything: attr.everything,
       sortables: attr.sortables,
-      type: attr.type,
       ctx: this.viewController.ctx
     };
     root = new TreeNode('root', new System(systemAttr));
@@ -339,11 +338,13 @@ force = require('./force');
 System = (function() {
   function System(attr) {
     var ref;
+    attr.sortables.index++;
+    this.sortables = attr.sortables;
+    this.type = this.sortables.identifiers[this.sortables.index];
     this.data = attr.data;
     this.width = attr.width;
     this.height = attr.height;
     this.ctx = attr.ctx;
-    this.type = attr.type;
     this.everything = attr.everything;
     this.hideObjective = attr.hideObjective;
     this.metaboliteRadius = 10;
@@ -355,8 +356,6 @@ System = (function() {
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
     force.initalizeForce = force.initalizeForce.bind(this);
-    attr.sortables.index++;
-    this.sortables = attr.sortables;
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
     sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
@@ -406,6 +405,31 @@ System = (function() {
     return [metabolites, reactions];
   };
 
+  System.prototype.buildSystem = function() {
+    var edge, from, iterator, to, value, vertex;
+    sortors[this.type].compartmentor();
+    sortors[this.type].sortor();
+    iterator = this.graph.vertices();
+    while (!(vertex = iterator.next()).done) {
+      value = vertex.value[1];
+      this.nodes.push(value);
+    }
+    iterator = this.graph.edges();
+    while (!(edge = iterator.next()).done) {
+      from = edge.value[0];
+      to = edge.value[1];
+      value = edge.value[2];
+      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
+    }
+    return this.powerSystemOn();
+  };
+
+  System.prototype.powerSystemOn = function() {
+    if (this.sortables.index === 0) {
+      return force.initalizeForce();
+    }
+  };
+
   System.prototype.buildFullResGraph = function(metaboliteData, reactionData) {
     var i, j, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
     for (i = 0, len = metaboliteData.length; i < len; i++) {
@@ -446,25 +470,6 @@ System = (function() {
     return results;
   };
 
-  System.prototype.buildSystem = function() {
-    var edge, from, iterator, to, value, vertex;
-    sortors[this.type].compartmentor();
-    sortors[this.type].sortor();
-    iterator = this.graph.vertices();
-    while (!(vertex = iterator.next()).done) {
-      value = vertex.value[1];
-      this.nodes.push(value);
-    }
-    iterator = this.graph.edges();
-    while (!(edge = iterator.next()).done) {
-      from = edge.value[0];
-      to = edge.value[1];
-      value = edge.value[2];
-      this.links.push(creators.createLink(this.graph.vertexValue(from), this.graph.vertexValue(to), value, 1, 2));
-    }
-    return force.initalizeForce();
-  };
-
   System.prototype.checkCollisions = function(x, y) {
     var i, len, node, nodeReturn, ref;
     nodeReturn = null;
@@ -490,15 +495,32 @@ module.exports = System;
 
 
 },{"./Compartment":1,"./creators":12,"./force":14,"./sortors":16,"./utilities":17}],9:[function(require,module,exports){
-var TreeNode;
+var System, TreeNode;
+
+System = require('./System');
 
 TreeNode = (function() {
   function TreeNode(id, system) {
+    var child, systemAttr;
     this.id = id;
     this.system = system;
     this.parent = null;
     this.children = new Object();
     this.system.buildSystem(this.system.data);
+    for (child in this.system.parsedData) {
+      if (this.system.sortables.index < this.system.sortables.identifiers.length - 2) {
+        systemAttr = {
+          data: this.system.parsedData[child],
+          width: this.system.width,
+          height: this.system.height,
+          hideObjective: this.system.hideObjective,
+          everything: this.system.everything,
+          sortables: this.system.sortables,
+          ctx: this.system.ctx
+        };
+        this.children[child] = new TreeNode(child, new System(systemAttr));
+      }
+    }
   }
 
   return TreeNode;
@@ -508,7 +530,7 @@ TreeNode = (function() {
 module.exports = TreeNode;
 
 
-},{}],10:[function(require,module,exports){
+},{"./System":8}],10:[function(require,module,exports){
 var ViewController;
 
 ViewController = (function() {
@@ -1177,8 +1199,7 @@ Network = require("./Network");
 
 sortables = {
   index: -1,
-  identifiers: ['species', 'compartments'],
-  start: 'species'
+  identifiers: ['species', 'compartments']
 };
 
 networkAttributes = {
@@ -1192,8 +1213,7 @@ networkAttributes = {
   everything: false,
   hideObjective: true,
   data: data,
-  sortables: sortables,
-  type: sortables.identifiers[0]
+  sortables: sortables
 };
 
 network = new Network(networkAttributes);
@@ -1358,6 +1378,13 @@ module.exports = {
     }
   },
   compartments: {
+    parser: function() {
+      console.log('heeeeere');
+      return {
+        'foo': 'parsed',
+        'bar': 'data'
+      };
+    },
     compartmentor: function() {
       var m, mappings, metabolite, results, sorter;
       sorter = 'compartment';

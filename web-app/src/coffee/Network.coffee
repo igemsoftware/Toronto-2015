@@ -17,7 +17,6 @@ class Network
             hideObjective : attr.hideObjective
             everything    : attr.everything
             sortables     : attr.sortables
-            type          : attr.type
             ctx           : @viewController.ctx
         root = new TreeNode('root', new System(systemAttr))
 

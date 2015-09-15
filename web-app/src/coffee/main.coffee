@@ -4,7 +4,6 @@ Network  = require "./Network"
 sortables =
     index       : -1
     identifiers : ['species', 'compartments']
-    start       : 'species'
 
 networkAttributes =
     id               : 'root'
@@ -18,7 +17,6 @@ networkAttributes =
     hideObjective    : true
     data             : data
     sortables        : sortables
-    type             : sortables.identifiers[0]
 
 network = new Network(networkAttributes)
 

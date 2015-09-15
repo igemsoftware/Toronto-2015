@@ -1,4 +1,4 @@
-Graph = require './Graph'
+Graph    = require './Graph'
 creators = require './creators'
 
 module.exports =
@@ -93,6 +93,12 @@ module.exports =
                                     # Construct `specie ->` (To complete `specie -> e`)
                                     @graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
     compartments:
+        parser: ->
+            console.log('heeeeere')
+            return {
+                'foo': 'parsed',
+                'bar': 'data'
+            }
         compartmentor: ->
             sorter = 'compartment'
 
