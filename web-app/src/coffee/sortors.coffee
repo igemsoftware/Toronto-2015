@@ -180,25 +180,55 @@ module.exports =
                         @graph.addVertex(subsystem, creators.createCompartment(subsystem, subsystem))
 
         sortor: ->
-            console.log('In the subsystems sortor')
-            # Reactions have one subsystem
+            # Reactions have one subsystem.
             # Metabolites may belong to more than one reaction, and therefore
             # may have more than one subsystem.
 
             # Loop through each Reaction
+            # for reaction of @reactions
+            #     r = @reactions[reaction]
+            #
+            #     # Create vertex
+            #     @graph.addVertex(r.id, r)
+            #
+            #     for substrate in r.substrates
+            #         for subsystem in substrate.subsystems
+            #             if subsystem is r.subsystem
+            #                 if not @graph.hasEdge("#{subsystem} -> #{r.id}")
+            #                     @graph.addEdge(subsystem, r.id, "#{subsystem} -> #{r.id}")
+            #     for product in r.products
+            #         for subsystem in product.subsystems
+            #             if subsystem is r.subsystem
+            #                 if not @graph.hasEdge(r.id, subsystem, "#{r.id} -> #{subsystem}")
+            #                     @graph.addEdge(r.id, subsystem, "#{r.id} -> #{subsystem}")
+
+
+            # What is exchanged between subsystems? Metabolites.
+
+            subsystemsDict = new Object()
+
             for reaction of @reactions
                 r = @reactions[reaction]
 
-                # Create vertex
-                @graph.addVertex(r.id, r)
+                if not subsystemsDict[r.subsystem]?
+                    subsystemsDict[r.subsystem] = new Object()
 
-                for substrate in r.substrates
-                    for subsystem in substrate.subsystems
-                        # if subsystem is r.subsystem
-                        if not @graph.hasEdge("#{subsystem} -> #{r.id}")
-                            @graph.addEdge(subsystem, r.id, "#{subsystem} -> #{r.id}")
-                for product in r.products
-                    for subsystem in product.subsystems
-                        if subsystem is r.subsystem
-                            if not @graph.hasEdge(r.id, subsystem, "#{r.id} -> #{subsystem}")
-                                @graph.addEdge(r.id, subsystem, "#{r.id} -> #{subsystem}")
+                subsystemsDict[r.subsystem][r.id] = r
+
+            console.log(subsystemsDict)
+
+            for metabolite of @metabolites
+                m = @metabolites[metabolite]
+
+                @graph.addVertex(m.id, m)
+
+                for subsystem in m.subsystems
+                    if m.subsystems.length > 1
+                        # Find which Reaction is involved with this metabolite
+                        for reaction of subsystemsDict[subsystem]
+                            for metabolite of subsystemsDict[subsystem][reaction].metabolites
+                                if metabolite is m.id
+                                    console.log('found', r.id)
+
+
+                        @graph.addEdge(subsystem, m.id, "#{subsystem} -> #{m.id}")

@@ -211,6 +211,8 @@ class System
             # Force layout's cooling parameter from [0,1]; layout stops when this reaches 0
             #.alpha(0.1)
 
+            @force.tick() for n in @nodes
+            @force.stop()
 
         if @useStatic
             @force.tick() for n in @nodes

@@ -216,7 +216,7 @@ class ViewController
         })
         that = this
         if node.type is 'r'
-            console.log(node)
+            # console.log(node)
             substrates = (substrate.name for substrate in node.inNeighbours)
             products = (product.name for product in node.outNeighbours)
             @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")

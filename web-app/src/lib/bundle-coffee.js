@@ -482,12 +482,18 @@ System = (function() {
   };
 
   System.prototype.initializeForce = function() {
-    var j, len, n, ref;
+    var j, k, len, len1, n, ref, ref1;
     this.force = d3.layout.force().nodes(this.nodes).links(this.links).size([this.width, this.height]).linkStrength(2).friction(0.9).linkDistance(this.linkDistanceHandler).charge(this.chargeHandler).gravity(0.1).theta(0.8);
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      n = ref[j];
+      this.force.tick();
+    }
+    this.force.stop();
     if (this.useStatic) {
-      ref = this.nodes;
-      for (j = 0, len = ref.length; j < len; j++) {
-        n = ref[j];
+      ref1 = this.nodes;
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        n = ref1[k];
         this.force.tick();
       }
       return this.force.stop();
@@ -919,7 +925,6 @@ ViewController = (function() {
     });
     that = this;
     if (node.type === 'r') {
-      console.log(node);
       substrates = (function() {
         var i, len, ref, results;
         ref = node.inNeighbours;
@@ -1663,47 +1668,38 @@ module.exports = {
       return results;
     },
     sortor: function() {
-      var i, j, len, len1, product, r, reaction, ref, ref1, results, substrate, subsystem;
-      console.log('In the subsystems sortor');
-      results = [];
+      var m, metabolite, r, reaction, results, subsystem, subsystemsDict;
+      subsystemsDict = new Object();
       for (reaction in this.reactions) {
         r = this.reactions[reaction];
-        this.graph.addVertex(r.id, r);
-        ref = r.substrates;
-        for (i = 0, len = ref.length; i < len; i++) {
-          substrate = ref[i];
-          ref1 = substrate.subsystems;
-          for (j = 0, len1 = ref1.length; j < len1; j++) {
-            subsystem = ref1[j];
-            if (!this.graph.hasEdge(subsystem + " -> " + r.id)) {
-              this.graph.addEdge(subsystem, r.id, subsystem + " -> " + r.id);
-            }
-          }
+        if (subsystemsDict[r.subsystem] == null) {
+          subsystemsDict[r.subsystem] = new Object();
         }
+        subsystemsDict[r.subsystem][r.id] = r;
+      }
+      console.log(subsystemsDict);
+      results = [];
+      for (metabolite in this.metabolites) {
+        m = this.metabolites[metabolite];
+        this.graph.addVertex(m.id, m);
         results.push((function() {
-          var k, len2, ref2, results1;
-          ref2 = r.products;
+          var i, len, ref, results1;
+          ref = m.subsystems;
           results1 = [];
-          for (k = 0, len2 = ref2.length; k < len2; k++) {
-            product = ref2[k];
-            results1.push((function() {
-              var l, len3, ref3, results2;
-              ref3 = product.subsystems;
-              results2 = [];
-              for (l = 0, len3 = ref3.length; l < len3; l++) {
-                subsystem = ref3[l];
-                if (subsystem === r.subsystem) {
-                  if (!this.graph.hasEdge(r.id, subsystem, r.id + " -> " + subsystem)) {
-                    results2.push(this.graph.addEdge(r.id, subsystem, r.id + " -> " + subsystem));
-                  } else {
-                    results2.push(void 0);
+          for (i = 0, len = ref.length; i < len; i++) {
+            subsystem = ref[i];
+            if (m.subsystems.length > 1) {
+              for (reaction in subsystemsDict[subsystem]) {
+                for (metabolite in subsystemsDict[subsystem][reaction].metabolites) {
+                  if (metabolite === m.id) {
+                    console.log('found', r.id);
                   }
-                } else {
-                  results2.push(void 0);
                 }
               }
-              return results2;
-            }).call(this));
+              results1.push(this.graph.addEdge(subsystem, m.id, subsystem + " -> " + m.id));
+            } else {
+              results1.push(void 0);
+            }
           }
           return results1;
         }).call(this));
