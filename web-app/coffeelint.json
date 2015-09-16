@@ -1,0 +1,18 @@
+{
+    "indentation": {
+        "level": "error",
+        "value": 4
+    },
+    "line_endings": {
+        "value": "unix",
+        "level": "error"
+    },
+    "max_line_length": {
+        "name": "max_line_length",
+        "level": "ignore"
+    },
+    "no_trailing_whitespace": {
+        "name": "no_trailing_whitespace",
+        "level": "ignore"
+    }
+}

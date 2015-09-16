@@ -681,6 +681,7 @@ TreeNode = (function() {
     this.parent = null;
     this.children = new Object();
     this.system.buildSystem(this.system.data);
+    console.log(this.system.parsedData);
     for (child in this.system.parsedData) {
       if (this.system.sortables.index < this.system.sortables.identifiers.length - 1) {
         systemAttr = {
@@ -692,7 +693,6 @@ TreeNode = (function() {
           sortables: this.system.sortables,
           ctx: this.system.ctx
         };
-        console.log("Making " + child);
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
       }
@@ -1668,35 +1668,39 @@ module.exports = {
       return results;
     },
     sortor: function() {
-      var m, metabolite, r, reaction, results, subsystem, subsystemsDict;
-      subsystemsDict = new Object();
+      var i, len, product, r, reaction, ref, results, substrate;
+      results = [];
       for (reaction in this.reactions) {
         r = this.reactions[reaction];
-        if (subsystemsDict[r.subsystem] == null) {
-          subsystemsDict[r.subsystem] = new Object();
+        ref = r.substrates;
+        for (i = 0, len = ref.length; i < len; i++) {
+          substrate = ref[i];
+          if (substrate.subsystems.length > 1) {
+            if (!this.graph.hasVertex(r.id)) {
+              this.graph.addVertex(r.id, r);
+            }
+            if (!this.graph.hasVertex(substrate.id)) {
+              this.graph.addVertex(substrate.id, substrate);
+            }
+            this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
+            this.graph.addEdge(r.id, r.subsystem, r.id + " -> " + r.subsystem);
+          }
         }
-        subsystemsDict[r.subsystem][r.id] = r;
-      }
-      console.log(subsystemsDict);
-      results = [];
-      for (metabolite in this.metabolites) {
-        m = this.metabolites[metabolite];
-        this.graph.addVertex(m.id, m);
         results.push((function() {
-          var i, len, ref, results1;
-          ref = m.subsystems;
+          var j, len1, ref1, results1;
+          ref1 = r.products;
           results1 = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            subsystem = ref[i];
-            if (m.subsystems.length > 1) {
-              for (reaction in subsystemsDict[subsystem]) {
-                for (metabolite in subsystemsDict[subsystem][reaction].metabolites) {
-                  if (metabolite === m.id) {
-                    console.log('found', r.id);
-                  }
-                }
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            product = ref1[j];
+            if (product.subsystems.length > 1) {
+              if (!this.graph.hasVertex(r.id)) {
+                this.graph.addVertex(r.id, r);
               }
-              results1.push(this.graph.addEdge(subsystem, m.id, subsystem + " -> " + m.id));
+              if (!this.graph.hasVertex(product.id)) {
+                this.graph.addVertex(product.id, product);
+              }
+              this.graph.addEdge(r.subsystem, r.id, r.subsystem + " -> " + r.id);
+              results1.push(this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id));
             } else {
               results1.push(void 0);
             }
