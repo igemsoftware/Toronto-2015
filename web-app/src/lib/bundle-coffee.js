@@ -352,7 +352,6 @@ System = (function() {
     attr.sortables.index += 1;
     this.sortables = attr.sortables;
     this.type = this.sortables.identifiers[this.sortables.index];
-    console.log(attr.data);
     this.data = attr.data;
     this.width = attr.width;
     this.height = attr.height;
@@ -368,7 +367,6 @@ System = (function() {
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    console.log('Constructed @metabolites and @reactions');
     sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
@@ -399,7 +397,7 @@ System = (function() {
       m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
       m.species = metabolite.species;
       m.subsystems = metabolite.subsystems;
-      metabolites[metabolite.id] = m;
+      metabolites[metabolite.id] = metabolite;
     }
     for (k = 0, len1 = reactionData.length; k < len1; k++) {
       reaction = reactionData[k];
@@ -425,115 +423,24 @@ System = (function() {
           if (metabolites[source] == null) {
             console.log(reaction.id);
           }
+          if (source == null) {
+            console.log('source id: ', source);
+          }
+          if (target == null) {
+            console.log('target id: ', target);
+          }
+          if (metabolites[source] == null) {
+            console.log(reaction);
+            console.log('metabolites-source: ', source);
+          }
+          if (reactions[target] == null) {
+            console.log('reactions-target: ', target);
+          }
           r.addLink(creators.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
         }
       }
     }
     return [metabolites, reactions];
-  };
-
-  System.prototype.deleteNode = function(id, name) {
-    var j, len, node, ref, toDelete;
-    this.graph.destroyVertex(id);
-    toDelete = null;
-    ref = this.nodes;
-    for (j = 0, len = ref.length; j < len; j++) {
-      node = ref[j];
-      if (node.id === id && node.name === name) {
-        toDelete = node;
-        node.deleted = true;
-      }
-    }
-    if (toDelete.type === "r") {
-      return this.deleted.reactions[toDelete.id] = toDelete.name;
-    } else if (toDelete.type === "m") {
-      return this.deleted.metabolites[toDelete.id] = toDelete.name;
-    } else if (toDelete.type === "specie") {
-      return this.deleted.species[toDelete.id] = toDelete.name;
-    }
-  };
-
-  System.prototype.createNewMetabolite = function(id, name) {
-    var metabolite, metaboliteAttr;
-    metaboliteAttr = {
-      id: id,
-      name: name,
-      x: utilties.rand(this.width),
-      y: utilties.rand(this.height),
-      r: this.metaboliteRadius,
-      type: "m"
-    };
-    metabolite = new Metabolite(metaboliteAttr, this.ctx);
-    return this.added.metabolites[id] = name;
-  };
-
-  System.prototype.createNewReactionOrLink = function(source, target, id, name) {
-    var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
-    src = null;
-    ref = this.nodes;
-    for (j = 0, len = ref.length; j < len; j++) {
-      node = ref[j];
-      if (source.id === node.id && source.name === node.name) {
-        src = node;
-      } else if (target.id === node.id && target.name === node.name) {
-        tgt = node;
-      }
-    }
-    if ((src == null) || (tgt == null)) {
-      return alert("No self linking!");
-    } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
-      linkAttr = {
-        id: src.id + "-" + tgt.id,
-        source: src,
-        target: tgt,
-        fluxValue: 0,
-        r: radius,
-        linkScale: utilities.scaleRadius(null, 1, 5)
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
-    } else if (src.type === "m" && tgt.type === "m") {
-      reactionAttributes = {
-        x: utilities.rand(this.width),
-        y: utilities.rand(this.height),
-        r: 1,
-        name: name,
-        id: id,
-        type: "r",
-        flux_value: flux,
-        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
-      };
-      reaction = new Reaction(reactionAttributes, this.ctx);
-      this.added.reactions[reactionAttributes.id] = name;
-      this.nodes.push(reaction);
-      linkAttr = {
-        id: source.id + "-" + reaction.id,
-        source: src,
-        target: reaction,
-        fluxValue: 0,
-        r: this.metaboliteRadius,
-        linkScale: utilities.scaleRadius(null, 1, 5)
-      };
-      this.links.push(new Link(linkAttr, this.ctx));
-      linkAttr = {
-        id: reaction.id + "-" + target.id,
-        source: reaction,
-        target: tgt,
-        fluxValue: 0,
-        r: this.metaboliteRadius,
-        linkScale: utilities.scaleRadius(null, 1, 5)
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
-    } else {
-      linkAttr = {
-        id: src.id + "-" + tgt.id,
-        source: src,
-        target: tgt,
-        fluxValue: 0,
-        r: this.metaboliteRadius,
-        linkScale: utilities.scaleRadius(null, 1, 5)
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
-    }
   };
 
   System.prototype.buildSystem = function() {
@@ -644,6 +551,110 @@ System = (function() {
     return nodeReturn;
   };
 
+  System.prototype.deleteNode = function(id, name) {
+    var j, len, node, ref, toDelete;
+    this.graph.destroyVertex(id);
+    toDelete = null;
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
+      if (node.id === id && node.name === name) {
+        toDelete = node;
+        node.deleted = true;
+      }
+    }
+    if (toDelete.type === "r") {
+      return this.deleted.reactions[toDelete.id] = toDelete.name;
+    } else if (toDelete.type === "m") {
+      return this.deleted.metabolites[toDelete.id] = toDelete.name;
+    } else if (toDelete.type === "specie") {
+      return this.deleted.species[toDelete.id] = toDelete.name;
+    }
+  };
+
+  System.prototype.createNewMetabolite = function(id, name) {
+    var metabolite, metaboliteAttr;
+    metaboliteAttr = {
+      id: id,
+      name: name,
+      x: utilties.rand(this.width),
+      y: utilties.rand(this.height),
+      r: this.metaboliteRadius,
+      type: "m"
+    };
+    metabolite = new Metabolite(metaboliteAttr, this.ctx);
+    return this.added.metabolites[id] = name;
+  };
+
+  System.prototype.createNewReactionOrLink = function(source, target, id, name) {
+    var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
+    src = null;
+    ref = this.nodes;
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
+      if (source.id === node.id && source.name === node.name) {
+        src = node;
+      } else if (target.id === node.id && target.name === node.name) {
+        tgt = node;
+      }
+    }
+    if ((src == null) || (tgt == null)) {
+      return alert("No self linking!");
+    } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: 0,
+        r: radius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.ctx));
+    } else if (src.type === "m" && tgt.type === "m") {
+      reactionAttributes = {
+        x: utilities.rand(this.width),
+        y: utilities.rand(this.height),
+        r: 1,
+        name: name,
+        id: id,
+        type: "r",
+        flux_value: flux,
+        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+      };
+      reaction = new Reaction(reactionAttributes, this.ctx);
+      this.added.reactions[reactionAttributes.id] = name;
+      this.nodes.push(reaction);
+      linkAttr = {
+        id: source.id + "-" + reaction.id,
+        source: src,
+        target: reaction,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      this.links.push(new Link(linkAttr, this.ctx));
+      linkAttr = {
+        id: reaction.id + "-" + target.id,
+        source: reaction,
+        target: tgt,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.ctx));
+    } else {
+      linkAttr = {
+        id: src.id + "-" + tgt.id,
+        source: src,
+        target: tgt,
+        fluxValue: 0,
+        r: this.metaboliteRadius,
+        linkScale: utilities.scaleRadius(null, 1, 5)
+      };
+      return this.links.push(new Link(linkAttr, this.ctx));
+    }
+  };
+
   return System;
 
 })();
@@ -675,7 +686,6 @@ TreeNode = (function() {
           sortables: this.system.sortables,
           ctx: this.system.ctx
         };
-        console.log("Making " + child);
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
       }
@@ -1338,7 +1348,7 @@ for (metabolite in metaboliteDict) {
 
 sortables = {
   index: -1,
-  identifiers: ['species', 'compartments', 'subsystems']
+  identifiers: ['species', 'compartments']
 };
 
 networkAttributes = {
@@ -1518,7 +1528,7 @@ module.exports = {
   },
   compartments: {
     parser: function() {
-      var compartment, i, j, k, len, len1, len2, metabolite, metaboliteDict, pushedMetabolites, pushedReactions, reaction, ref, ref1, ref2, ref3, results;
+      var compartments, cpt, i, j, len, len1, metabolite, metaboliteDict, pushedMetabolites, pushedReactions, reaction, ref, ref1, ref2, results;
       metaboliteDict = new Object();
       ref = this.data.metabolites;
       for (i = 0, len = ref.length; i < len; i++) {
@@ -1528,42 +1538,51 @@ module.exports = {
       pushedMetabolites = new Object();
       pushedReactions = new Object();
       ref1 = this.data.reactions;
+      results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         reaction = ref1[j];
+        compartments = new Array();
         for (metabolite in reaction.metabolites) {
-          compartment = metaboliteDict[metabolite].compartment;
-          if (compartment !== 'e') {
-            if (this.parsedData[compartment] == null) {
-              this.parsedData[compartment] = new Object();
-              this.parsedData[compartment].metabolites = new Array();
-              this.parsedData[compartment].reactions = new Array();
-              pushedMetabolites[compartment] = new Array();
-              pushedReactions[compartment] = new Array();
-            }
-            if (ref2 = reaction.id, indexOf.call(pushedReactions[compartment], ref2) < 0) {
-              this.parsedData[compartment].reactions.push(reaction);
-              pushedReactions[compartment].push(reaction.id);
-            }
-            if (indexOf.call(pushedMetabolites[compartment], metabolite) < 0) {
-              this.parsedData[compartment].metabolites.push(metaboliteDict[metabolite]);
-              pushedMetabolites[compartment].push(metabolite);
-              for (metabolite in reaction.metabolites) {
-                if (metaboliteDict[metabolite].compartment !== compartment) {
-                  if (indexOf.call(pushedMetabolites[compartment], metabolite) < 0) {
-                    this.parsedData[compartment].metabolites.push(metaboliteDict[metabolite]);
-                    pushedMetabolites[compartment].push(metabolite);
-                  }
-                }
-              }
-            }
+          if (ref2 = metaboliteDict[metabolite].compartment, indexOf.call(compartments, ref2) < 0) {
+            compartments.push(metaboliteDict[metabolite].compartment);
           }
         }
-      }
-      ref3 = this.parsedData['c'].metabolites;
-      results = [];
-      for (k = 0, len2 = ref3.length; k < len2; k++) {
-        metabolite = ref3[k];
-        results.push(console.log(metaboliteDict[metabolite.id].compartment));
+        results.push((function() {
+          var k, len2, ref3, results1;
+          results1 = [];
+          for (k = 0, len2 = compartments.length; k < len2; k++) {
+            cpt = compartments[k];
+            if (cpt !== 'e') {
+              if (this.parsedData[cpt] == null) {
+                this.parsedData[cpt] = new Object();
+                this.parsedData[cpt].metabolites = new Array();
+                this.parsedData[cpt].reactions = new Array();
+                pushedMetabolites[cpt] = new Array();
+                pushedReactions[cpt] = new Array();
+              }
+              if (ref3 = reaction.id, indexOf.call(pushedReactions[cpt], ref3) < 0) {
+                this.parsedData[cpt].reactions.push(reaction);
+                pushedReactions[cpt].push(reaction.id);
+              }
+              results1.push((function() {
+                var results2;
+                results2 = [];
+                for (metabolite in reaction.metabolites) {
+                  if (indexOf.call(pushedMetabolites[cpt], metabolite) < 0) {
+                    this.parsedData[cpt].metabolites.push(metaboliteDict[metabolite]);
+                    results2.push(pushedMetabolites[cpt].push(metabolite));
+                  } else {
+                    results2.push(void 0);
+                  }
+                }
+                return results2;
+              }).call(this));
+            } else {
+              results1.push(void 0);
+            }
+          }
+          return results1;
+        }).call(this));
       }
       return results;
     },

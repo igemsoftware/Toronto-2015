@@ -104,55 +104,34 @@ module.exports =
 
             # Loop through reaction objects
             for reaction in @data.reactions
-                # Loop through keys (metabolite.id's)
+                # Determine compartments involved with this reaction
+                compartments = new Array()
                 for metabolite of reaction.metabolites
-                    # if metabolite is 'adn_p'
-                    #     console.log(reaction)
+                    if metaboliteDict[metabolite].compartment not in compartments
+                        compartments.push(metaboliteDict[metabolite].compartment)
 
-                    compartment = metaboliteDict[metabolite].compartment
+                # Add reaction and metabolites to parsedData for each involved compartment
+                for cpt in compartments
+                    if cpt isnt 'e'
+                        # Create an empty parsedData[cpt] object if required
+                        if not @parsedData[cpt]?
+                            @parsedData[cpt] = new Object()
+                            @parsedData[cpt].metabolites = new Array()
+                            @parsedData[cpt].reactions = new Array()
 
-                    if compartment isnt 'e'
-                        if not @parsedData[compartment]?
-                            @parsedData[compartment] = new Object()
-                            @parsedData[compartment].metabolites = new Array()
-                            @parsedData[compartment].reactions = new Array()
+                            pushedMetabolites[cpt] = new Array()
+                            pushedReactions[cpt] = new Array()
 
-                            pushedMetabolites[compartment] = new Array()
-                            pushedReactions[compartment] = new Array()
+                        # Add reaction if not already there
+                        if reaction.id not in pushedReactions[cpt]
+                            @parsedData[cpt].reactions.push(reaction)
+                            pushedReactions[cpt].push(reaction.id)
 
-                        if reaction.id not in pushedReactions[compartment]
-                            @parsedData[compartment].reactions.push(reaction)
-                            pushedReactions[compartment].push(reaction.id)
-
-                        if metabolite not in pushedMetabolites[compartment]
-                            @parsedData[compartment].metabolites.push(metaboliteDict[metabolite])
-                            pushedMetabolites[compartment].push(metabolite)
-
-                            # Reactions may contain metabolites from different compartments
-                            # Thus, when pushing a metabolite, we need to loop through
-                            # the substrates and products of that reaction and push the
-                            # metabolite into the parsedData for the current compartment as well.
-                            # TODO will something similar need to be done for reactions?
-
-                            for metabolite of reaction.metabolites
-                                if metaboliteDict[metabolite].compartment isnt compartment
-                                    # console.log(metaboliteDict[metabolite].compartment)
-                                    if metabolite not in pushedMetabolites[compartment]
-                                        @parsedData[compartment].metabolites.push(metaboliteDict[metabolite])
-                                        pushedMetabolites[compartment].push(metabolite)
-
-                            # if metabolite is 'adn_p'
-                            #     console.log(@parsedData[c].metabolites)
-                            #     console.log('found it!', compartment)
-
-                            # for metabolite of reaction.metabolites
-                            #     if metaboliteDict[metabolite].compartment isnt compartment
-                            #         # console.log(compartment)
-                            #         if reaction.id is 'ADNt2pp'
-                            #             console.log('sdsdsdsd')
-                            #         # console.log(reaction.id, 'wasssds')
-            for metabolite in @parsedData['c'].metabolites
-                console.log(metaboliteDict[metabolite.id].compartment)
+                        # Add metabolites if not already there
+                        for metabolite of reaction.metabolites
+                            if metabolite not in pushedMetabolites[cpt]
+                                @parsedData[cpt].metabolites.push(metaboliteDict[metabolite])
+                                pushedMetabolites[cpt].push(metabolite)
 
         compartmentor: ->
             sorter = 'compartment'

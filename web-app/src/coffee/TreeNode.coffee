@@ -26,7 +26,7 @@ class TreeNode
                     sortables     : @system.sortables
                     ctx           : @system.ctx
 
-                console.log("Making #{child}")
+                # console.log("Making #{child}")
                 @children[child] = new TreeNode(child, new System(systemAttr))
                 @children[child].parent = this
 

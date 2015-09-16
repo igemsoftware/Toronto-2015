@@ -5,16 +5,16 @@ metaboliteDict = new Object()
 
 # Creates metaboliteDict with empty array for subsystems
 for metabolite in data.metabolites
-	metabolite.subsystems = new Array()
-	metaboliteDict[metabolite.id] = metabolite
+    metabolite.subsystems = new Array()
+    metaboliteDict[metabolite.id] = metabolite
 
 for reaction in data.reactions
-	if reaction.subsystem is ''
-		reaction.subsystem = 'Unassigned'
+    if reaction.subsystem is ''
+        reaction.subsystem = 'Unassigned'
 
-	for metabolite of reaction.metabolites
-		if metaboliteDict[metabolite].subsystems.indexOf(reaction.subsystem) is -1
-			metaboliteDict[metabolite].subsystems.push(reaction.subsystem)
+    for metabolite of reaction.metabolites
+        if metaboliteDict[metabolite].subsystems.indexOf(reaction.subsystem) is -1
+            metaboliteDict[metabolite].subsystems.push(reaction.subsystem)
 
 data.metabolites = new Array()
 for metabolite of metaboliteDict
@@ -24,7 +24,7 @@ for metabolite of metaboliteDict
 # Passed in all the way through to system
 sortables =
     index       : -1
-    identifiers : ['species', 'compartments', 'subsystems']
+    identifiers : ['species', 'compartments']
 
 networkAttributes =
     id               : 'root'
