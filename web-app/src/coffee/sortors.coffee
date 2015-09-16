@@ -99,13 +99,16 @@ module.exports =
             for metabolite in @data.metabolites
                 metaboliteDict[metabolite.id] = metabolite
 
-            pushedMetabolites = new Array()
-            pushedReactions = new Array()
+            pushedMetabolites = new Object()
+            pushedReactions = new Object()
 
             # Loop through reaction objects
             for reaction in @data.reactions
                 # Loop through keys (metabolite.id's)
                 for metabolite of reaction.metabolites
+                    # if metabolite is 'adn_p'
+                    #     console.log(reaction)
+
                     compartment = metaboliteDict[metabolite].compartment
 
                     if compartment isnt 'e'
@@ -114,13 +117,42 @@ module.exports =
                             @parsedData[compartment].metabolites = new Array()
                             @parsedData[compartment].reactions = new Array()
 
-                        if reaction.id not in pushedReactions
-                            @parsedData[compartment].reactions.push(reaction)
-                            pushedReactions.push(reaction.id)
+                            pushedMetabolites[compartment] = new Array()
+                            pushedReactions[compartment] = new Array()
 
-                        if metabolite not in pushedMetabolites
+                        if reaction.id not in pushedReactions[compartment]
+                            @parsedData[compartment].reactions.push(reaction)
+                            pushedReactions[compartment].push(reaction.id)
+
+                        if metabolite not in pushedMetabolites[compartment]
                             @parsedData[compartment].metabolites.push(metaboliteDict[metabolite])
-                            pushedMetabolites.push(metabolite)
+                            pushedMetabolites[compartment].push(metabolite)
+
+                            # Reactions may contain metabolites from different compartments
+                            # Thus, when pushing a metabolite, we need to loop through
+                            # the substrates and products of that reaction and push the
+                            # metabolite into the parsedData for the current compartment as well.
+                            # TODO will something similar need to be done for reactions?
+
+                            for metabolite of reaction.metabolites
+                                if metaboliteDict[metabolite].compartment isnt compartment
+                                    # console.log(metaboliteDict[metabolite].compartment)
+                                    if metabolite not in pushedMetabolites[compartment]
+                                        @parsedData[compartment].metabolites.push(metaboliteDict[metabolite])
+                                        pushedMetabolites[compartment].push(metabolite)
+
+                            # if metabolite is 'adn_p'
+                            #     console.log(@parsedData[c].metabolites)
+                            #     console.log('found it!', compartment)
+
+                            # for metabolite of reaction.metabolites
+                            #     if metaboliteDict[metabolite].compartment isnt compartment
+                            #         # console.log(compartment)
+                            #         if reaction.id is 'ADNt2pp'
+                            #             console.log('sdsdsdsd')
+                            #         # console.log(reaction.id, 'wasssds')
+            for metabolite in @parsedData['c'].metabolites
+                console.log(metaboliteDict[metabolite.id].compartment)
 
         compartmentor: ->
             sorter = 'compartment'
@@ -152,3 +184,12 @@ module.exports =
                 # if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
                 #     leaf.outNeighbours["e"] = @graph.outNeighbours["e"]
                 #     @graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
+    subsystems:
+        parser: ->
+            console.log('In the parser')
+
+        compartmentor: ->
+            console.log('In the compartmentor')
+
+        sortor: ->
+            console.log('In the sortor')

@@ -12,6 +12,8 @@ class System
         @sortables = attr.sortables
         @type = @sortables.identifiers[@sortables.index]
 
+        console.log(attr.data)
+
         # Store attributes as properties of System
         @data = attr.data
         @width = attr.width
@@ -38,6 +40,8 @@ class System
 
         # Create a dictionary of *all* Metabolites, Reactions beforehand
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
+        console.log('Constructed @metabolites and @reactions')
+
 
         # Bind sortors to 'this'
         sortors[@type].compartmentor = sortors[@type].compartmentor.bind(this)
@@ -48,7 +52,7 @@ class System
         # Mutates @parsedData
         (sortors[@type].parser.bind(this))()
 
-        console.log(@parsedData)
+        # console.log(@parsedData)
 
         # The graph holding all reactions and metabolites in @data
         @fullResGraph = new Graph()
@@ -126,6 +130,11 @@ class System
                 else if reaction.metabolites[metaboliteId] < 0
                     source = metaboliteId
                     target = reaction.id
+                    # console.log(metabolites[source], source)
+
+                    if not metabolites[source]?
+                        console.log(reaction.id)
+
                     r.addLink(creators.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, @metaboliteRadius, @ctx))
 
         return [metabolites, reactions]

@@ -352,6 +352,7 @@ System = (function() {
     attr.sortables.index += 1;
     this.sortables = attr.sortables;
     this.type = this.sortables.identifiers[this.sortables.index];
+    console.log(attr.data);
     this.data = attr.data;
     this.width = attr.width;
     this.height = attr.height;
@@ -367,11 +368,11 @@ System = (function() {
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
+    console.log('Constructed @metabolites and @reactions');
     sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
     sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
     (sortors[this.type].parser.bind(this))();
-    console.log(this.parsedData);
     this.fullResGraph = new Graph();
     this.graph = new Graph();
     this.nodes = new Array();
@@ -421,6 +422,9 @@ System = (function() {
         } else if (reaction.metabolites[metaboliteId] < 0) {
           source = metaboliteId;
           target = reaction.id;
+          if (metabolites[source] == null) {
+            console.log(reaction.id);
+          }
           r.addLink(creators.createLink(metabolites[source], reactions[target], reaction.name, reaction.flux_value, this.metaboliteRadius, this.ctx));
         }
       }
@@ -671,6 +675,7 @@ TreeNode = (function() {
           sortables: this.system.sortables,
           ctx: this.system.ctx
         };
+        console.log("Making " + child);
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
       }
@@ -1333,7 +1338,7 @@ for (metabolite in metaboliteDict) {
 
 sortables = {
   index: -1,
-  identifiers: ['species', 'compartments']
+  identifiers: ['species', 'compartments', 'subsystems']
 };
 
 networkAttributes = {
@@ -1513,46 +1518,52 @@ module.exports = {
   },
   compartments: {
     parser: function() {
-      var compartment, i, j, len, len1, metabolite, metaboliteDict, pushedMetabolites, pushedReactions, reaction, ref, ref1, results;
+      var compartment, i, j, k, len, len1, len2, metabolite, metaboliteDict, pushedMetabolites, pushedReactions, reaction, ref, ref1, ref2, ref3, results;
       metaboliteDict = new Object();
       ref = this.data.metabolites;
       for (i = 0, len = ref.length; i < len; i++) {
         metabolite = ref[i];
         metaboliteDict[metabolite.id] = metabolite;
       }
-      pushedMetabolites = new Array();
-      pushedReactions = new Array();
+      pushedMetabolites = new Object();
+      pushedReactions = new Object();
       ref1 = this.data.reactions;
-      results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         reaction = ref1[j];
-        results.push((function() {
-          var ref2, results1;
-          results1 = [];
-          for (metabolite in reaction.metabolites) {
-            compartment = metaboliteDict[metabolite].compartment;
-            if (compartment !== 'e') {
-              if (this.parsedData[compartment] == null) {
-                this.parsedData[compartment] = new Object();
-                this.parsedData[compartment].metabolites = new Array();
-                this.parsedData[compartment].reactions = new Array();
+        for (metabolite in reaction.metabolites) {
+          compartment = metaboliteDict[metabolite].compartment;
+          if (compartment !== 'e') {
+            if (this.parsedData[compartment] == null) {
+              this.parsedData[compartment] = new Object();
+              this.parsedData[compartment].metabolites = new Array();
+              this.parsedData[compartment].reactions = new Array();
+              pushedMetabolites[compartment] = new Array();
+              pushedReactions[compartment] = new Array();
+            }
+            if (ref2 = reaction.id, indexOf.call(pushedReactions[compartment], ref2) < 0) {
+              this.parsedData[compartment].reactions.push(reaction);
+              pushedReactions[compartment].push(reaction.id);
+            }
+            if (indexOf.call(pushedMetabolites[compartment], metabolite) < 0) {
+              this.parsedData[compartment].metabolites.push(metaboliteDict[metabolite]);
+              pushedMetabolites[compartment].push(metabolite);
+              for (metabolite in reaction.metabolites) {
+                if (metaboliteDict[metabolite].compartment !== compartment) {
+                  if (indexOf.call(pushedMetabolites[compartment], metabolite) < 0) {
+                    this.parsedData[compartment].metabolites.push(metaboliteDict[metabolite]);
+                    pushedMetabolites[compartment].push(metabolite);
+                  }
+                }
               }
-              if (ref2 = reaction.id, indexOf.call(pushedReactions, ref2) < 0) {
-                this.parsedData[compartment].reactions.push(reaction);
-                pushedReactions.push(reaction.id);
-              }
-              if (indexOf.call(pushedMetabolites, metabolite) < 0) {
-                this.parsedData[compartment].metabolites.push(metaboliteDict[metabolite]);
-                results1.push(pushedMetabolites.push(metabolite));
-              } else {
-                results1.push(void 0);
-              }
-            } else {
-              results1.push(void 0);
             }
           }
-          return results1;
-        }).call(this));
+        }
+      }
+      ref3 = this.parsedData['c'].metabolites;
+      results = [];
+      for (k = 0, len2 = ref3.length; k < len2; k++) {
+        metabolite = ref3[k];
+        results.push(console.log(metaboliteDict[metabolite.id].compartment));
       }
       return results;
     },
@@ -1600,6 +1611,17 @@ module.exports = {
         }).call(this));
       }
       return results;
+    }
+  },
+  subsystems: {
+    parser: function() {
+      return console.log('In the parser');
+    },
+    compartmentor: function() {
+      return console.log('In the compartmentor');
+    },
+    sortor: function() {
+      return console.log('In the sortor');
     }
   }
 };

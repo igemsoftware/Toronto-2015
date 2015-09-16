@@ -24,7 +24,7 @@ for metabolite of metaboliteDict
 # Passed in all the way through to system
 sortables =
     index       : -1
-    identifiers : ['species', 'compartments']
+    identifiers : ['species', 'compartments', 'subsystems']
 
 networkAttributes =
     id               : 'root'
