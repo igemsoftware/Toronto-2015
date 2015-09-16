@@ -6,8 +6,8 @@ class ViewController
 
         @c = document.createElement("canvas")
         # Set some attributes
-        @c.id     = @id
-        @c.width  = @width
+        @c.id = @id
+        @c.width = @width
         @c.height = @height
         @currentActiveNode = null
         @isDraggingNode = false
@@ -27,7 +27,7 @@ class ViewController
         document.body.appendChild(@c)
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
-        @nodetext =  $('#nodetext')
+        @nodetext = $('#nodetext')
 
 
     startCanvas:(system) ->
@@ -50,7 +50,7 @@ class ViewController
         $('#addMetabolite').click(->
             that.activeGraph.nodes.push(
                 that.activeGraph.createMetabolite($('#metab_name').val().trim(), $('#metab_id').val().trim(),
-                                                    true, that.ctx)
+                    true, that.ctx)
             )
         )
         $("#addReaction").click(->
@@ -58,7 +58,7 @@ class ViewController
                 id : $('#source').val().trim()
                 name : $('#source :selected').text()
             target =
-                id:  $('#target').val().trim()
+                id: $('#target').val().trim()
                 name: $('#target :selected').text()
             that.activeGraph.createNewLink(source, target, $("#reaction_name").val(), 0, that.ctx)
         )
@@ -95,14 +95,14 @@ class ViewController
 
     removeOption: (node) ->
         d3.select("#source").selectAll("option")[0].forEach((d)->
-                if  $(d).val() is node.id and $(d).text() is node.name
-                    $(d).remove()
+            if $(d).val() is node.id and $(d).text() is node.name
+                $(d).remove()
             )
         d3.select("#target").selectAll("option")[0].forEach((d)->
-                if  $(d).val() is node.id and $(d).text() is node.name
-                    $(d).remove()
+            if $(d).val() is node.id and $(d).text() is node.name
+                $(d).remove()
             )
-        $('#nodetext').removeClass('showing');
+        $('#nodetext').removeClass('showing')
 
     transformedPoint: (x, y) ->
         pt = @svg.createSVGPoint()
@@ -123,7 +123,7 @@ class ViewController
         if not @currentActiveNode?
             @dragStart = @transformedPoint(@lastX, @lastY)
         else
-            $('#nodetext').removeClass('showing');
+            $('#nodetext').removeClass('showing')
             @isDraggingNode = true
 
     # **mousemove**
@@ -151,7 +151,7 @@ class ViewController
             if @currentActiveNode?
                 @appendText(@currentActiveNode, e)
             else
-                $('#nodetext').removeClass('showing');
+                $('#nodetext').removeClass('showing')
 
 
     # **mouseup**
@@ -216,8 +216,9 @@ class ViewController
         })
         that = this
         if node.type is 'r'
-            substrates = (substrate for substrate in node.inNeighbours)
-            products = (product for product in node.outNeighbours)
+            console.log(node)
+            substrates = (substrate.name for substrate in node.inNeighbours)
+            products = (product.name for product in node.outNeighbours)
             @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
             @nodetext.append("<button id='delete'>Delete Reaction</button><br>")
         else

@@ -686,6 +686,7 @@ TreeNode = (function() {
           sortables: this.system.sortables,
           ctx: this.system.ctx
         };
+        console.log("Making " + child);
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
       }
@@ -918,13 +919,14 @@ ViewController = (function() {
     });
     that = this;
     if (node.type === 'r') {
+      console.log(node);
       substrates = (function() {
         var i, len, ref, results;
         ref = node.inNeighbours;
         results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           substrate = ref[i];
-          results.push(substrate);
+          results.push(substrate.name);
         }
         return results;
       })();
@@ -934,7 +936,7 @@ ViewController = (function() {
         results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           product = ref[i];
-          results.push(product);
+          results.push(product.name);
         }
         return results;
       })();
@@ -1348,7 +1350,7 @@ for (metabolite in metaboliteDict) {
 
 sortables = {
   index: -1,
-  identifiers: ['species', 'compartments']
+  identifiers: ['species', 'compartments', 'subsystems']
 };
 
 networkAttributes = {
@@ -1633,14 +1635,79 @@ module.exports = {
     }
   },
   subsystems: {
-    parser: function() {
-      return console.log('In the parser');
-    },
+    parser: function() {},
     compartmentor: function() {
-      return console.log('In the compartmentor');
+      var m, metabolite, results, sorter, subsystem;
+      sorter = 'subsystem';
+      results = [];
+      for (metabolite in this.metabolites) {
+        m = this.metabolites[metabolite];
+        results.push((function() {
+          var i, len, ref, results1;
+          ref = m.subsystems;
+          results1 = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            subsystem = ref[i];
+            if (!this.graph.hasVertex(subsystem)) {
+              results1.push(this.graph.addVertex(subsystem, creators.createCompartment(subsystem, subsystem)));
+            } else {
+              results1.push(void 0);
+            }
+          }
+          return results1;
+        }).call(this));
+      }
+      return results;
     },
     sortor: function() {
-      return console.log('In the sortor');
+      var i, j, len, len1, product, r, reaction, ref, ref1, results, substrate, subsystem;
+      console.log('In the subsystems sortor');
+      results = [];
+      for (reaction in this.reactions) {
+        r = this.reactions[reaction];
+        this.graph.addVertex(r.id, r);
+        ref = r.substrates;
+        for (i = 0, len = ref.length; i < len; i++) {
+          substrate = ref[i];
+          ref1 = substrate.subsystems;
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            subsystem = ref1[j];
+            if (subsystem === r.subsystem) {
+              if (!this.graph.hasEdge(subsystem + " -> " + r.id)) {
+                this.graph.addEdge(subsystem, r.id, subsystem + " -> " + r.id);
+              }
+            }
+          }
+        }
+        results.push((function() {
+          var k, len2, ref2, results1;
+          ref2 = r.products;
+          results1 = [];
+          for (k = 0, len2 = ref2.length; k < len2; k++) {
+            product = ref2[k];
+            results1.push((function() {
+              var l, len3, ref3, results2;
+              ref3 = product.subsystems;
+              results2 = [];
+              for (l = 0, len3 = ref3.length; l < len3; l++) {
+                subsystem = ref3[l];
+                if (subsystem === r.subsystem) {
+                  if (!this.graph.hasEdge(r.id, subsystem, r.id + " -> " + subsystem)) {
+                    results2.push(this.graph.addEdge(r.id, subsystem, r.id + " -> " + subsystem));
+                  } else {
+                    results2.push(void 0);
+                  }
+                } else {
+                  results2.push(void 0);
+                }
+              }
+              return results2;
+            }).call(this));
+          }
+          return results1;
+        }).call(this));
+      }
+      return results;
     }
   }
 };

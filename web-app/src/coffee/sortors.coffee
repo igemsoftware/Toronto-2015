@@ -165,10 +165,37 @@ module.exports =
                 #     @graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
     subsystems:
         parser: ->
-            console.log('In the parser')
+            # console.log('In the subsystems parser')
 
         compartmentor: ->
-            console.log('In the compartmentor')
+            sorter = 'subsystem'
+
+            for metabolite of @metabolites
+                m = @metabolites[metabolite]
+                for subsystem in m.subsystems
+                    if not @graph.hasVertex(subsystem)
+                        @graph.addVertex(subsystem, creators.createCompartment(subsystem, subsystem))
 
         sortor: ->
-            console.log('In the sortor')
+            console.log('In the subsystems sortor')
+            # Reactions have one subsystem
+            # Metabolites may belong to more than one reaction, and therefore
+            # may have more than one subsystem.
+
+            # Loop through each Reaction
+            for reaction of @reactions
+                r = @reactions[reaction]
+
+                # Create vertex
+                @graph.addVertex(r.id, r)
+
+                for substrate in r.substrates
+                    for subsystem in substrate.subsystems
+                        if subsystem is r.subsystem
+                            if not @graph.hasEdge("#{subsystem} -> #{r.id}")
+                                @graph.addEdge(subsystem, r.id, "#{subsystem} -> #{r.id}")
+                for product in r.products
+                    for subsystem in product.subsystems
+                        if subsystem is r.subsystem
+                            if not @graph.hasEdge(r.id, subsystem, "#{r.id} -> #{subsystem}")
+                                @graph.addEdge(r.id, subsystem, "#{r.id} -> #{subsystem}")
