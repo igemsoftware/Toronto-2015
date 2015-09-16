@@ -10,7 +10,6 @@ angular.module('HyperFlux')
 .controller('NetworkCtrl', ['$scope', '$http', '$filter', 'UrlProvider', 'ngTableParams',
         function($scope, $http, $filter, UrlProvider, ngTableParams) {
 
-
         console.log('Activating NetworkCtrl');
 
   //   var attrs = {

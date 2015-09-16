@@ -39,11 +39,10 @@ networkAttributes =
     data             : data
     sortables        : sortables
 
-# for reaction in data.reactions
-#     if reaction.id is 'THZPSN3'
-#         console.log(reaction)
+window.HyperFluxVisualization = Network
+# network = new Network(networkAttributes)
 
-network = new Network(networkAttributes)
+
 
 
 # model = JSON.parse(JSON.stringify(data))

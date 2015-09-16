@@ -31,40 +31,32 @@
     <script src="../bower_components/ng-table/dist/ng-table.min.js"></script>
     <script src="../bower_components/stats.js/build/stats.min.js"></script>
     <!-- endbower -->
+
+
     <div id="nodetext">
 
     </div>
 
-    <div id="sidebar" style="width: 200px; position: absolute; right: 0; height: 100%; background:red">
-        <!-- <form> -->
-            <input type="text" id="metab_id" placeholder="metabolite id"></input>
-            <input type="text" id="metab_name" placeholder="metabolite name"></input>
+    <!-- <div id="sidebar" style="width: 200px; position: absolute; right: 0; height: 100%; background:red">
+        <input type="text" id="metab_id" placeholder="metabolite id"></input>
+        <input type="text" id="metab_name" placeholder="metabolite name"></input>
 
-
-
-            <button type="submit" id="addMetabolite">Submit</button>
-            <br>
-            <br>
-            <br>
-            Add reaction:
-            <input type="text" id="reaction_name" placeholder="reaction name"></input>
-            <br>
-            source:
-            <br>
-            <select id="source">
-            </select>
-            <br>
-            target:
-            <br>
-            <select id="target">
-            </select>
-            <br>
-            <button type="submit" id="addReaction">Submit</button>
-        <!-- </form> -->
-
-    </div>
-
-
+        <button type="submit" id="addMetabolite">Submit</button>
+        <br>
+        <br>
+        <br> Add reaction:
+        <input type="text" id="reaction_name" placeholder="reaction name"></input>
+        <br> source:
+        <br>
+        <select id="source">
+        </select>
+        <br> target:
+        <br>
+        <select id="target">
+        </select>
+        <br>
+        <button type="submit" id="addReaction">Submit</button>
+    </div> -->
 
     <script>
         var stats = new Stats();
@@ -93,12 +85,30 @@
     <script src="app/services/UrlProvider.js"></script>
     <!-- endinject -->
 
+
+    <script>
+    var sortables = {
+        index       : -1,
+        identifiers : ['species', 'compartments', 'subsystems']
+    };
+
+    var networkAttributes = {
+        id               : 'root',
+        name             : 'root',
+        width            : window.innerWidth,
+        height           : window.innerHeight,
+        backgroundColour : 'white',
+        metaboliteRadius : 10,
+        useStatic        : false,
+        everything       : false,
+        hideObjective    : true,
+        data             : data,
+        sortables        : sortables
+    };
+
+    hyperFlux = new HyperFluxVisualization(networkAttributes);
+    </script>
+
 </body>
-
-</html>
-
-
-</html>
-
 
 </html>

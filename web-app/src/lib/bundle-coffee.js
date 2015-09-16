@@ -1321,7 +1321,7 @@ module.exports = {
 
 
 },{}],14:[function(require,module,exports){
-var Network, i, j, len, len1, metabolite, metaboliteDict, network, networkAttributes, reaction, ref, ref1, sortables;
+var Network, i, j, len, len1, metabolite, metaboliteDict, networkAttributes, reaction, ref, ref1, sortables;
 
 Network = require("./Network");
 
@@ -1372,7 +1372,7 @@ networkAttributes = {
   sortables: sortables
 };
 
-network = new Network(networkAttributes);
+window.HyperFluxVisualization = Network;
 
 
 },{"./Network":5}],15:[function(require,module,exports){
