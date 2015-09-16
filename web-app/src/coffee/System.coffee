@@ -88,7 +88,7 @@ class System
             m.species = metabolite.species
             m.subsystems = metabolite.subsystems
 
-            metabolites[metabolite.id] = metabolite
+            metabolites[metabolite.id] = m
 
         # Loop through each reaction in the metabolic model provided
         for reaction in reactionData

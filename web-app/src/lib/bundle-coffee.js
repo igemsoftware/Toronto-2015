@@ -397,7 +397,7 @@ System = (function() {
       m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
       m.species = metabolite.species;
       m.subsystems = metabolite.subsystems;
-      metabolites[metabolite.id] = metabolite;
+      metabolites[metabolite.id] = m;
     }
     for (k = 0, len1 = reactionData.length; k < len1; k++) {
       reaction = reactionData[k];
