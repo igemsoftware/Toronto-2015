@@ -39,6 +39,10 @@ networkAttributes =
     data             : data
     sortables        : sortables
 
+# for reaction in data.reactions
+#     if reaction.id is 'THZPSN3'
+#         console.log(reaction)
+
 network = new Network(networkAttributes)
 
 

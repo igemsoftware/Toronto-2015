@@ -150,6 +150,9 @@ module.exports =
             for reaction of @reactions
                 r = @reactions[reaction]
 
+                if r.substrateCompartments.length is 1 and r.productCompartments.length is 1 and r.substrateCompartments[0] is r.productCompartments[0]
+                    continue
+
                 if not @graph.hasVertex(r.id)
                     @graph.addVertex(r.id, r)
 
@@ -191,9 +194,9 @@ module.exports =
 
                 for substrate in r.substrates
                     for subsystem in substrate.subsystems
-                        if subsystem is r.subsystem
-                            if not @graph.hasEdge("#{subsystem} -> #{r.id}")
-                                @graph.addEdge(subsystem, r.id, "#{subsystem} -> #{r.id}")
+                        # if subsystem is r.subsystem
+                        if not @graph.hasEdge("#{subsystem} -> #{r.id}")
+                            @graph.addEdge(subsystem, r.id, "#{subsystem} -> #{r.id}")
                 for product in r.products
                     for subsystem in product.subsystems
                         if subsystem is r.subsystem

@@ -1612,6 +1612,9 @@ module.exports = {
       results = [];
       for (reaction in this.reactions) {
         r = this.reactions[reaction];
+        if (r.substrateCompartments.length === 1 && r.productCompartments.length === 1 && r.substrateCompartments[0] === r.productCompartments[0]) {
+          continue;
+        }
         if (!this.graph.hasVertex(r.id)) {
           this.graph.addVertex(r.id, r);
         }
@@ -1672,10 +1675,8 @@ module.exports = {
           ref1 = substrate.subsystems;
           for (j = 0, len1 = ref1.length; j < len1; j++) {
             subsystem = ref1[j];
-            if (subsystem === r.subsystem) {
-              if (!this.graph.hasEdge(subsystem + " -> " + r.id)) {
-                this.graph.addEdge(subsystem, r.id, subsystem + " -> " + r.id);
-              }
+            if (!this.graph.hasEdge(subsystem + " -> " + r.id)) {
+              this.graph.addEdge(subsystem, r.id, subsystem + " -> " + r.id);
             }
           }
         }
