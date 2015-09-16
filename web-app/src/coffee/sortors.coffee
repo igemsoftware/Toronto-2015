@@ -162,10 +162,6 @@ module.exports =
                 for cpt in r.productCompartments
                     @graph.addEdge(r.id, cpt, "{r.id} -> #{cpt}")
 
-                # Sinks fix no longer needed
-                # if r.outNeighbours.length is 0 #outNeighbour is e to be augmented later
-                #     leaf.outNeighbours["e"] = @graph.outNeighbours["e"]
-                #     @graph.outNeighbours["e"].inNeighbours[leaf.id] = leaf
     subsystems:
         parser: ->
             # console.log('In the subsystems parser')

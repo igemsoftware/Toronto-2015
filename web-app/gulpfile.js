@@ -7,6 +7,7 @@ var gulp        = require('gulp'),
     watch       = require('gulp-watch'),
     concat      = require('gulp-concat'),
     wiredep     = require('wiredep').stream,
+    angularFilesort = require('gulp-angular-filesort'),
     inject      = require('gulp-inject'),
     globby      = require('globby'),
     combiner   = require('stream-combiner2'),
@@ -51,7 +52,7 @@ var dests = {
 // Compile `.scss` into `.css`
 gulp.task('sass', function() {
     return gulp
-de    .src(globs.sass)
+    .src(globs.sass)
     .pipe(sass({
        includePaths: ['./bower_components/compass-mixins/lib']
     }).on('error', sass.logError))
@@ -107,12 +108,9 @@ gulp.task('inject:css', function() {
 
 // Inject JS
 gulp.task('inject:js', function() {
-    var sources = gulp.src(globs.libJS, {read: false});
-
-    return gulp
-    .src(globs.index)
-    .pipe(inject(sources, {relative: true}))
-    .pipe(gulp.dest(dests.index));
+    return gulp.src(globs.index)
+        .pipe(inject(gulp.src(['./src/app/**/*.js', './src/lib/**/*.js']).pipe(angularFilesort()),{relative: true}))
+        .pipe(gulp.dest(dests.index));
 });
 
 // Wiredep
@@ -135,7 +133,7 @@ gulp.task('docs:gulpfile', function() {
     .src('./gulpfile.js')
     .pipe(docco())
     .pipe(gulp.dest(dests.docs));
-})
+});
 
 // CoffeeScript documentation
 gulp.task('docs:coffee', function() {
@@ -143,7 +141,7 @@ gulp.task('docs:coffee', function() {
     .src(globs.coffee)
     .pipe(docco())
     .pipe(gulp.dest(dests.docs));
-})
+});
 
 // all documentation
 gulp.task('docs', ['docs:gulpfile', 'docs:coffee'], function() {
@@ -174,7 +172,7 @@ gulp.task('serve', ['sass', 'coffee'], function() {
             baseDir : src,
             routes  : {
                 '/bower_components' : './bower_components',
-                '/node_modules' :'./node_modules'    
+                '/node_modules' :'./node_modules'
             }
         }
     });

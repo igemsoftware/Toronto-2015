@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="HyperFlux" lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>drawee</title>
 
     <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/ng-table/dist/ng-table.min.css" />
     <link rel="stylesheet" href="../bower_components/sanitize-css/dist/sanitize.css" />
     <!-- endbower -->
 
@@ -14,19 +15,24 @@
     <!-- endinject -->
 </head>
 
-<body>
+<body ng-controller="BodyCtrl">
+    <div ui-view class="view"></div>
+
     <script src="iJO1366.js"></script>
     <script src="toydata.js"></script>
 
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="../bower_components/animation-frame/AnimationFrame.js"></script>
     <script src="../bower_components/d3/d3.js"></script>
     <script src="../bower_components/graph.js/dist/graph.full.min.js"></script>
+    <script src="../bower_components/ng-table/dist/ng-table.min.js"></script>
     <script src="../bower_components/stats.js/build/stats.min.js"></script>
     <!-- endbower -->
     <div id="nodetext">
-    
+
     </div>
 
     <div id="sidebar" style="width: 200px; position: absolute; right: 0; height: 100%; background:red">
@@ -77,8 +83,22 @@
 
     <!-- inject:js -->
     <script src="lib/bundle-coffee.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/pages/species/species.controlller.js"></script>
+    <script src="app/pages/services/UrlProvider.js"></script>
+    <script src="app/components/network/network.controller.js"></script>
+    <script src="app/pages/home/home.controller.js"></script>
+    <script src="app/pages/data/data.controller.js"></script>
+    <script src="app/components/header/header.controller.js"></script>
+    <script src="app/services/UrlProvider.js"></script>
     <!-- endinject -->
 
 </body>
+
+</html>
+
+
+</html>
+
 
 </html>
