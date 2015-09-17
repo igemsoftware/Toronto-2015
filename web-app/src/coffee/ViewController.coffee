@@ -188,9 +188,9 @@ class ViewController
 
         factor = zoom
         pt = @transformedPoint(@lastX, @lastY)
-        if @xform.a <= @maxZoomIn and factor < 1
+        if @xform.a <= @maxZoomIn and factor <= 1
             return
-        else if @xform.a >= @maxZoomOut and factor > 1
+        else if @xform.a >= @maxZoomOut and factor >= 1
             return
 
 
@@ -232,13 +232,13 @@ class ViewController
         else
             @nodetext.html("#{node.name}<br>")
             @nodetext.append("<button id='delete'>Delete Node</button><br>")
-            if node.type is 'Compartment'
-                @nodetext.append("<button id='enter'>Enter Specie</button><br>")
+            if node.type is 'Compartment' and @network.currentLevel.children[node.id]?
+                @nodetext.append("<button id='enter'>Enter Node</button><br>")
                 $("#enter").click(->
                     that.network.enterSpecie(node)
                 )
         if @network.root.system isnt @activeGraph
-            @nodetext.append("<button id='network'>Return to network</button><br>")
+            @nodetext.append("<button id='network'>Return to Previous level</button><br>")
             $("#network").click(->
                 that.network.exitSpecie()
             )

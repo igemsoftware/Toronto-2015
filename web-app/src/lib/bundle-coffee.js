@@ -861,9 +861,9 @@ ViewController = (function() {
     }
     factor = zoom;
     pt = this.transformedPoint(this.lastX, this.lastY);
-    if (this.xform.a <= this.maxZoomIn && factor < 1) {
+    if (this.xform.a <= this.maxZoomIn && factor <= 1) {
       return;
-    } else if (this.xform.a >= this.maxZoomOut && factor > 1) {
+    } else if (this.xform.a >= this.maxZoomOut && factor >= 1) {
       return;
     }
     this.ctx.translate(pt.x, pt.y);
@@ -917,15 +917,15 @@ ViewController = (function() {
     } else {
       this.nodetext.html(node.name + "<br>");
       this.nodetext.append("<button id='delete'>Delete Node</button><br>");
-      if (node.type === 'Compartment') {
-        this.nodetext.append("<button id='enter'>Enter Specie</button><br>");
+      if (node.type === 'Compartment' && (this.network.currentLevel.children[node.id] != null)) {
+        this.nodetext.append("<button id='enter'>Enter Node</button><br>");
         $("#enter").click(function() {
           return that.network.enterSpecie(node);
         });
       }
     }
     if (this.network.root.system !== this.activeGraph) {
-      this.nodetext.append("<button id='network'>Return to network</button><br>");
+      this.nodetext.append("<button id='network'>Return to Previous level</button><br>");
       $("#network").click(function() {
         return that.network.exitSpecie();
       });
