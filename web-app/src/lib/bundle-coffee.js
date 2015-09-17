@@ -694,6 +694,8 @@ ViewController = (function() {
     this.isDraggingNode = false;
     this.clientX = 0;
     this.clientY = 0;
+    this.maxZoomOut = 7.5;
+    this.maxZoomIn = 0.05;
     document.getElementById(this.wrapperId).appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
@@ -843,7 +845,7 @@ ViewController = (function() {
   };
 
   mousewheelHandler = function(e) {
-    var delta, factor, i, len, pt, ref, specie, wheel, zoom;
+    var delta, factor, pt, wheel, zoom;
     this.clientX = e.clientX;
     this.clientY = e.clientY;
     e.preventDefault();
@@ -859,25 +861,15 @@ ViewController = (function() {
     }
     factor = zoom;
     pt = this.transformedPoint(this.lastX, this.lastY);
+    if (this.xform.a <= this.maxZoomIn && factor < 1) {
+      return;
+    } else if (this.xform.a >= this.maxZoomOut && factor > 1) {
+      return;
+    }
     this.ctx.translate(pt.x, pt.y);
     this.xform = this.xform.translate(pt.x, pt.y);
     this.ctx.scale(factor, factor);
     this.xform = this.xform.scaleNonUniform(factor, factor);
-    if (this.activeGraph === this.network) {
-      ref = this.network.species;
-      for (i = 0, len = ref.length; i < len; i++) {
-        specie = ref[i];
-        if (specie.checkCollision(pt.x, pt.y)) {
-          if (specie.r * this.xform.a >= this.c.width && specie.r * this.xform.a >= this.c.height) {
-            this.network.ecie(specie);
-          }
-        }
-      }
-    } else {
-      if (this.xform.a <= 0.02) {
-        this.network.exitSpecie();
-      }
-    }
     this.ctx.translate(-pt.x, -pt.y);
     return this.xform = this.xform.translate(-pt.x, -pt.y);
   };
