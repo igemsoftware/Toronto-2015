@@ -1,14 +1,18 @@
 /* global window */
 /* global console */
 /* global ConsortiaFluxVisualization */
+/* global UrlProvider */
+/* global data */
 'use strict';
 
 angular.module('ConsortiaFlux')
 
-.controller('FluxCtrl', ['$scope', function($scope) {
+.controller('FluxCtrl', ['$scope', '$http', 'UrlProvider', function($scope, $http, UrlProvider) {
     // $scope.title = 'iGEM UofT Computation Biology!';
 
-    console.log('fluxes?');
+    $http.get(UrlProvider.baseUrl + '/model/retrieve').then(function(data) {
+        console.log(data.data);
+    });
 
     var sortables = {
         index       : -1,
@@ -32,5 +36,4 @@ angular.module('ConsortiaFlux')
     };
 
     var hyperFlux = new ConsortiaFluxVisualization(networkAttributes);
-
 }]);

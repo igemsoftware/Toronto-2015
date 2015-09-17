@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ConsortiaFlux', ['ui.router', 'ngTable'])
+angular.module('ConsortiaFlux', ['ui.router', 'ngTable', '720kb.tooltips'])
 
 .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');

@@ -107,6 +107,48 @@ canvas {
   #splash .button:hover.purple {
     background-color: #bc37d3; }
 
+#sidebar {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(97, 97, 97, 0.9); }
+  #sidebar h3 {
+    float: left;
+    font-family: "Dancing Script", cursive;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    color: white;
+    line-height: 50px;
+    font-size: 2em; }
+    #sidebar h3:hover {
+      color: #CE93D8; }
+  #sidebar ul {
+    margin: 0;
+    padding: 0; }
+    #sidebar ul li {
+      list-style: none;
+      float: left;
+      height: 50px;
+      line-height: 50px;
+      text-align: center; }
+      #sidebar ul li a {
+        position: relative;
+        color: white;
+        text-decoration: none; }
+        #sidebar ul li a i {
+          font-size: 30px;
+          width: 50px;
+          padding: 10px; }
+        #sidebar ul li a:hover {
+          color: #42A5F5; }
+          #sidebar ul li a:hover i {
+            background-color: #616161; }
+          #sidebar ul li a:hover ul {
+            left: 0; }
+
 #nodetext {
   position: absolute;
   left: 50%;
