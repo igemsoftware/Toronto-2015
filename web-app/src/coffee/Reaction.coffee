@@ -24,6 +24,7 @@ class Reaction extends Node
                 @substrateCompartments.push(link.source.compartment)
 
     draw: ->
+
         if not @deleted
             nos = 6
             size = @r
@@ -37,9 +38,6 @@ class Reaction extends Node
             @ctx.lineTo(@x + @r * Math.cos(0), @y + @r * Math.sin(0))
             @ctx.lineTo(@x + @r * Math.cos(1 * 2 * Math.PI / nos), @y + @r * Math.sin (1 * (2 * Math.PI / nos)))
 
-            # @ctx.strokeStyle = "rgb(120,120,120)"
-            # @ctx.stroke()
-            # @ctx.fillStyle = @colour
 
             @ctx.fillStyle = stringToColour(@name)
 

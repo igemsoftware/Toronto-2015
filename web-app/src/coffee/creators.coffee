@@ -18,23 +18,6 @@ module.exports =
             # colour : utilities.stringToColour(name)
         return new Reaction(reactionAttributes, @ctx)
 
-    # System injected
-    createReactionNode: (id, name, flux_value) ->
-
-        reactionAttributes =
-            x : utilities.rand(@width)
-            y : utilities.rand(@height) 
-            r : @radiusScale(flux_value)
-            name : name
-            id : id
-            type : "r"
-            flux_value : flux_value
-            colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-
-
-        return new ReactionNode(reactionAttributes, @ctx)
-
-
     createCompartment: (id, name) ->
         compartmentAttributes =
             x : utilities.rand(@width)
@@ -59,17 +42,14 @@ module.exports =
         return metabolite
 
     # System injected
-    createLink: (src, tgt, name, flux, radius) ->
+    createLink: (src, tgt, name, thickness) ->
         if src.type is "r" and tgt.type is "m"
             # console.log('here')
             linkAttr =
                 id        : "#{src.id}-#{tgt.id}"
                 source    : src
                 target    : tgt
-                fluxValue : flux
-                r         : radius
-                linkScale : utilities.scaleRadius(null, 1, 5)
-
+                thickness : thickness
             return new Link(linkAttr, @ctx)
         else if src.type is "m" and tgt.type is "r"
             # console.log(src.type)
@@ -77,43 +57,37 @@ module.exports =
                 id        : "#{src.id}-#{tgt.id}"
                 source    : src
                 target    : tgt
-                fluxValue : flux
-                r         : radius
-                linkScale : utilities.scaleRadius(null, 1, 5)
+                thickness : thickness
             return new Link(linkAttr, @ctx)
         else
             linkAttr =
                 id        : "#{src.id}-#{tgt.id}"
                 source    : src
                 target    : tgt
-                fluxValue : flux
-                r         : radius
-                linkScale : utilities.scaleRadius(null, 1, 5)
+                thickness : thickness
             return new Link(linkAttr, @ctx)
 
     # System injected
-    createLinks: (s1, reactionNode, s2) ->
-        # console.log(reactionNode.flux_value)
-        source = @compartments[s1]
-        target = reactionNode
-        link =
-            id : "#{source.name}-#{target.name}"
-            source : source
-            target : target
-            flux_value : reactionNode.flux_value
-            r : @metaboliteRadius
-            linkScale : utilities.scaleRadius(null, 1, 5)
-        @links.push(new Link(link, @ctx))
-        source = reactionNode
-        target = @compartments[s2]
-        link =
-            id : "#{source.name}-#{target.name}"
-            source : source
-            target : target
-            flux_value : reactionNode.flux_value
-            r : @metaboliteRadius
-            linkScale : utilities.scaleRadius(null, 1, 5)
-        @links.push(new Link(link, @ctx))
+    # createLinks: (s1, reactionNode, s2) ->
+    #     # console.log(reactionNode.flux_value)
+    #     source = @compartments[s1]
+    #     target = reactionNode
+    #     link =
+    #         id : "#{source.name}-#{target.name}"
+    #         source : source
+    #         target : target
+    #         r : @metaboliteRadius
+    #         linkScale : utilities.scaleRadius(null, 1, 5)
+    #     @links.push(new Link(link, @ctx))
+    #     source = reactionNode
+    #     target = @compartments[s2]
+    #     link =
+    #         id : "#{source.name}-#{target.name}"
+    #         source : source
+    #         target : target
+    #         r : @metaboliteRadius
+    #         linkScale : utilities.scaleRadius(null, 1, 5)
+    #     @links.push(new Link(link, @ctx))
 
     # System injected
     createLeaf: (graph) ->

@@ -10,7 +10,7 @@ class Node
             console.log(attr)
         @x = attr.x
         @y = attr.y
-        @r = attr.r
+        @r = Math.abs(attr.r)
         @hover = false
         @id = attr.id
         @name = attr.name

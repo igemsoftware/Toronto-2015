@@ -1,15 +1,10 @@
 class Link
     constructor: (@attr, @ctx) ->
         @id = @attr.id
-        @r = @attr.r
         @source = @attr.source
         @target = @attr.target
-        @fluxValue = @attr.fluxValue
-        @linkScale = @attr.linkScale
-        @thickness = @linkScale(@fluxValue)
-
+        @thickness =  @attr.thickness
         @appendSubstratesAndProducts()
-
     appendSubstratesAndProducts: ->
         #update this
         if @source.type is 'm' and @target.type is 'r'
@@ -27,15 +22,6 @@ class Link
         else if @source.type is 'r' and @target.type is 'Compartment'
             @target.inNeighbours.push(@source)
             #@source.products.push(@target.name)
-            @r = @target.r
-    y = (x1, y1, m) ->
-        return (x)->
-            return m*(x-x1)+y1
-    #
-    setM: ->
-        # rise over run bitches
-        @m = (@target.y - @source.y) / (@target.x - @source.x)
-
     draw: ->
         if not @target.deleted and not @source.deleted
             lineAngle = Math.atan2(@target.y - @source.y, @target.x - @source.x) + Math.PI
@@ -45,8 +31,9 @@ class Link
             theta = Math.PI/8
             @ctx.beginPath()
 
-            targetx = @target.x + @r*Math.cos(lineAngle)
-            targety = @target.y + @r*Math.sin(lineAngle)
+
+            targetx = @target.x + @target.r*Math.cos(lineAngle)
+            targety = @target.y + @target.r*Math.sin(lineAngle)
 
             @ctx.moveTo(@source.x, @source.y)
             @ctx.lineTo(targetx, targety)
@@ -56,6 +43,7 @@ class Link
             @ctx.lineTo(targetx + h*Math.cos(theta + lineAngle), targety + h*Math.sin(theta + lineAngle))
             @ctx.moveTo(targetx, targety)
             @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
+
 
 
             @ctx.lineWidth = @thickness
