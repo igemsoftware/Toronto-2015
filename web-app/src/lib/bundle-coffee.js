@@ -725,7 +725,7 @@ ViewController = (function() {
     this.isDraggingNode = false;
     this.clientX = 0;
     this.clientY = 0;
-    document.body.appendChild(this.c);
+    document.getElementById('canvas-wrapper').appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
     this.stats = new Stats();

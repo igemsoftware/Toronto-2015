@@ -24,7 +24,7 @@ class ViewController
 
         # Append it to the DOM
         #tried to disable select, failed misribly.
-        document.body.appendChild(@c)
+        document.getElementById('canvas-wrapper').appendChild(@c)
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
         @nodetext = $('#nodetext')
