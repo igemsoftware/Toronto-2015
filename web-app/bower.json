@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.5",
+    "angular-modal-service": "~0.6.7",
     "angular-tooltips": "~0.1.22",
     "angular-ui-router": "~0.2.15",
     "animation-frame": "~0.2.4",
