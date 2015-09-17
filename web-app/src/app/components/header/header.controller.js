@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('HyperFlux')
+angular.module('ConsortiaFlux')
 
 .controller('HeaderCtrl', ['$rootScope', '$scope', '$timeout', '$state', '$urlRouter',
         function($rootScope, $scope, $timeout, $state, $urlRouter) {

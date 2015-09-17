@@ -4,7 +4,7 @@
 /* global console */
 'use strict';
 
-angular.module('HyperFlux')
+angular.module('ConsortiaFlux')
 
 
 .controller('NetworkCtrl', ['$scope', '$http', '$filter', 'UrlProvider', 'ngTableParams',

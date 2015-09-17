@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('HyperFlux')
+angular.module('ConsortiaFlux')
 
 .controller('HomeCtrl', ['$scope', function($scope) {
     $scope.title = 'iGEM UofT Computation Biology!';

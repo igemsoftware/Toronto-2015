@@ -1,7 +1,7 @@
 # Canvas
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG, @network, @showStats) ->
+    constructor: (@wrapperId, @id, @width, @height, @BG, @network, @showStats) ->
         # Create our `<canvas>` DOM element
 
         @c = document.createElement("canvas")
@@ -15,16 +15,9 @@ class ViewController
         @clientX = 0
         @clientY = 0
 
-        # Can this happen here? Or does it have to be startCanvas?
-        # Add event listeners. Bind so we preserve `this`.
-        # @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
-        # @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
-        # @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
-        # @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
-
         # Append it to the DOM
         #tried to disable select, failed misribly.
-        document.getElementById('canvas-wrapper').appendChild(@c)
+        document.getElementById(@wrapperId).appendChild(@c)
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
         @nodetext = $('#nodetext')
@@ -82,10 +75,13 @@ class ViewController
         @lastX = @width // 2
         @lastY = @width // 2
         @activeGraph.force.start()
+
+        # Add event listeners. Bind so we preserve `this`.
         @c.addEventListener("mousewheel", mousewheelHandler.bind(this), false)
         @c.addEventListener("mousedown", mousedownHandler.bind(this), false)
         @c.addEventListener("mouseup", mouseupHandler.bind(this), false)
         @c.addEventListener("mousemove", mousemoveHandler.bind(this), false)
+
         @startAnimate()
 
     populateOptions: (nodes) ->

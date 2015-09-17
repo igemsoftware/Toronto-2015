@@ -6,7 +6,7 @@ System = require './System'
 class Network
     constructor: (attr) ->
         # The VC for our MVC
-        @viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats)
+        @viewController = new ViewController(attr.wrapperId, 'canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats)
 
         # Create our root TreeNode
         # Will recursively create children

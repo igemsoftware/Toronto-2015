@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('HyperFlux', ['ui.router', 'ngTable'])
+angular.module('ConsortiaFlux', ['ui.router', 'ngTable'])
 
 .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');

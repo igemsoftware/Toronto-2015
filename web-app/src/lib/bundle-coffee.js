@@ -187,7 +187,7 @@ System = require('./System');
 Network = (function() {
   function Network(attr) {
     var systemAttr;
-    this.viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats);
+    this.viewController = new ViewController(attr.wrapperId, 'canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats);
     systemAttr = {
       data: attr.data,
       width: attr.width,
@@ -710,7 +710,8 @@ var ViewController;
 ViewController = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler, mousewheelHandler;
 
-  function ViewController(id1, width, height, BG, network, showStats) {
+  function ViewController(wrapperId, id1, width, height, BG, network, showStats) {
+    this.wrapperId = wrapperId;
     this.id = id1;
     this.width = width;
     this.height = height;
@@ -725,7 +726,7 @@ ViewController = (function() {
     this.isDraggingNode = false;
     this.clientX = 0;
     this.clientY = 0;
-    document.getElementById('canvas-wrapper').appendChild(this.c);
+    document.getElementById(this.wrapperId).appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
     this.stats = new Stats();
@@ -1383,7 +1384,7 @@ networkAttributes = {
   sortables: sortables
 };
 
-window.HyperFluxVisualization = Network;
+window.ConsortiaFluxVisualization = Network;
 
 
 },{"./Network":5}],15:[function(require,module,exports){

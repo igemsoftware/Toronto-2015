@@ -39,7 +39,7 @@ networkAttributes =
     data             : data
     sortables        : sortables
 
-window.HyperFluxVisualization = Network
+window.ConsortiaFluxVisualization = Network
 # network = new Network(networkAttributes)
 
 

@@ -1,7 +1,7 @@
 /* global forcelayout */
 'use strict';
 
-angular.module('HyperFlux')
+angular.module('ConsortiaFlux')
 
 .controller('LayoutCtrl', ['$scope', '$http', 'UrlProvider', function($scope, $http, UrlProvider) {
     $scope.title = 'Layout component';

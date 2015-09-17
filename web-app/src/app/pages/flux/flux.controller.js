@@ -1,7 +1,9 @@
 /* global window */
+/* global console */
+/* global ConsortiaFluxVisualization */
 'use strict';
 
-angular.module('HyperFlux')
+angular.module('ConsortiaFlux')
 
 .controller('FluxCtrl', ['$scope', function($scope) {
     // $scope.title = 'iGEM UofT Computation Biology!';
@@ -14,6 +16,7 @@ angular.module('HyperFlux')
     };
 
     var networkAttributes = {
+        wrapperId        : 'canvas-wrapper',
         id               : 'root',
         name             : 'root',
         width            : window.innerWidth,
@@ -28,6 +31,6 @@ angular.module('HyperFlux')
         showStats        : false
     };
 
-    var hyperFlux = new HyperFluxVisualization(networkAttributes);
+    var hyperFlux = new ConsortiaFluxVisualization(networkAttributes);
 
 }]);
