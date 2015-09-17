@@ -15,10 +15,10 @@ html::-webkit-scrollbar {
   width: 12px; }
 
 html::-webkit-scrollbar-track-piece {
-  background: #00c9b6; }
+  background: #72bcf8; }
 
 html::-webkit-scrollbar-thumb {
-  background: #009688; }
+  background: #42A5F5; }
 
 * {
   box-sizing: border-box; }

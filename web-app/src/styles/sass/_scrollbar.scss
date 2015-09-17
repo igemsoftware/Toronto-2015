@@ -4,10 +4,10 @@ html {
     }
 
     &::-webkit-scrollbar-track-piece {
-        background: lighten($header-bg, 10%);
+        background: lighten($blue-400, 10%);
     }
 
     &::-webkit-scrollbar-thumb {
-        background: $header-bg;
+        background: $blue-400;
     }
 }

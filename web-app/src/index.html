@@ -18,7 +18,7 @@
 </head>
 
 <body ng-controller="BodyCtrl">
-    <div ui-view class="fill"></div>
+    <!-- <div ui-view class="fill"></div> -->
 
     <script src="iJO1366.js"></script>
     <script src="toydata.js"></script>
@@ -42,12 +42,11 @@
     <!-- inject:js -->
     <script src="lib/bundle-coffee.js"></script>
     <script src="app/app.js"></script>
-    <script src="app/pages/species/species.controlller.js"></script>
-    <script src="app/pages/services/UrlProvider.js"></script>
     <script src="app/pages/home/home.controller.js"></script>
+    <script src="app/pages/flux/flux.controller.js"></script>
     <script src="app/pages/data/data.controller.js"></script>
-    <script src="app/components/header/header.controller.js"></script>
     <script src="app/components/network/network.controller.js"></script>
+    <script src="app/components/header/header.controller.js"></script>
     <script src="app/components/forcelayout/layout.controller.js"></script>
     <script src="app/services/UrlProvider.js"></script>
     <!-- endinject -->
@@ -73,7 +72,7 @@
         showStats        : false
     };
 
-    // hyperFlux = new HyperFluxVisualization(networkAttributes);
+    hyperFlux = new HyperFluxVisualization(networkAttributes);
     </script>
 
 </body>

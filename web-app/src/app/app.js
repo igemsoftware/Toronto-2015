@@ -14,10 +14,10 @@ angular.module('HyperFlux', ['ui.router', 'ngTable'])
         templateUrl: 'app/pages/home/home.html',
         controller: 'HomeCtrl'
     })
-    .state('main.species', {
-        url: '/species',
-        templateUrl: 'app/pages/species/species.html',
-        controller: 'SpeciesCtrl'
+    .state('main.flux', {
+        url: '/flux',
+        templateUrl: 'app/pages/flux/flux.html',
+        // controller: 'FluxCtrl'
     });
 })
 
