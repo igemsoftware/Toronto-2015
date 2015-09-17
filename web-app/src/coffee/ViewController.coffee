@@ -1,7 +1,7 @@
 # Canvas
 class ViewController
     # **Constructor**
-    constructor: (@id, @width, @height, @BG, @network) ->
+    constructor: (@id, @width, @height, @BG, @network, @showStats) ->
         # Create our `<canvas>` DOM element
 
         @c = document.createElement("canvas")
@@ -28,6 +28,15 @@ class ViewController
         # Get 2d context
         @ctx = document.getElementById(@id).getContext("2d")
         @nodetext = $('#nodetext')
+
+        @stats = new Stats()
+
+        @stats.domElement.style.position = 'absolute'
+        @stats.domElement.style.left = '0px'
+        @stats.domElement.style.top = '0px'
+
+        if @showStats
+            document.body.appendChild(@stats.domElement)
 
 
     startCanvas:(system) ->
@@ -285,10 +294,14 @@ class ViewController
         node.draw() for node in @activeGraph.nodes
 
     render: ->
-        stats.begin()
-        @clear()
-        @draw()
-        stats.end()
+        if @showStats
+            @stats.begin()
+            @clear()
+            @draw()
+            @stats.end()
+        else
+            @clear()
+            @draw()
         # Request next frame
         requestAnimationFrame(@render.bind(this))
 

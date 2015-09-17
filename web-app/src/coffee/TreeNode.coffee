@@ -15,7 +15,7 @@ class TreeNode
 
 
         # Create a child for each key in parsedData
-        console.log(@system.parsedData)
+        # console.log(@system.parsedData)
         for child of @system.parsedData
             if @system.sortables.index < @system.sortables.identifiers.length - 1
                 systemAttr =

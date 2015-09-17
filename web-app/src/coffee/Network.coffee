@@ -6,7 +6,7 @@ System = require './System'
 class Network
     constructor: (attr) ->
         # The VC for our MVC
-        @viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this)
+        @viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats)
 
         # Create our root TreeNode
         # Will recursively create children
@@ -25,7 +25,7 @@ class Network
         @viewController.startCanvas(@root.system)
         @currentLevel = @root
 
-        console.log(@root)
+        # console.log(@root)
 
 
     enterSpecie: (node) ->

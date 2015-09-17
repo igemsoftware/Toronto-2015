@@ -187,7 +187,7 @@ System = require('./System');
 Network = (function() {
   function Network(attr) {
     var systemAttr;
-    this.viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this);
+    this.viewController = new ViewController('canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats);
     systemAttr = {
       data: attr.data,
       width: attr.width,
@@ -200,7 +200,6 @@ Network = (function() {
     this.root = new TreeNode('root', new System(systemAttr));
     this.viewController.startCanvas(this.root.system);
     this.currentLevel = this.root;
-    console.log(this.root);
   }
 
   Network.prototype.enterSpecie = function(node) {
@@ -681,7 +680,6 @@ TreeNode = (function() {
     this.parent = null;
     this.children = new Object();
     this.system.buildSystem(this.system.data);
-    console.log(this.system.parsedData);
     for (child in this.system.parsedData) {
       if (this.system.sortables.index < this.system.sortables.identifiers.length - 1) {
         systemAttr = {
@@ -712,12 +710,13 @@ var ViewController;
 ViewController = (function() {
   var mousedownHandler, mousemoveHandler, mouseupHandler, mousewheelHandler;
 
-  function ViewController(id1, width, height, BG, network) {
+  function ViewController(id1, width, height, BG, network, showStats) {
     this.id = id1;
     this.width = width;
     this.height = height;
     this.BG = BG;
     this.network = network;
+    this.showStats = showStats;
     this.c = document.createElement("canvas");
     this.c.id = this.id;
     this.c.width = this.width;
@@ -729,6 +728,13 @@ ViewController = (function() {
     document.body.appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
+    this.stats = new Stats();
+    this.stats.domElement.style.position = 'absolute';
+    this.stats.domElement.style.left = '0px';
+    this.stats.domElement.style.top = '0px';
+    if (this.showStats) {
+      document.body.appendChild(this.stats.domElement);
+    }
   }
 
   ViewController.prototype.startCanvas = function(system) {
@@ -1009,10 +1015,15 @@ ViewController = (function() {
   };
 
   ViewController.prototype.render = function() {
-    stats.begin();
-    this.clear();
-    this.draw();
-    stats.end();
+    if (this.showStats) {
+      this.stats.begin();
+      this.clear();
+      this.draw();
+      this.stats.end();
+    } else {
+      this.clear();
+      this.draw();
+    }
     return requestAnimationFrame(this.render.bind(this));
   };
 

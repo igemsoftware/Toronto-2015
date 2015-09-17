@@ -37,42 +37,6 @@
 
     </div>
 
-    <!-- <div id="sidebar" style="width: 200px; position: absolute; right: 0; height: 100%; background:red">
-        <input type="text" id="metab_id" placeholder="metabolite id"></input>
-        <input type="text" id="metab_name" placeholder="metabolite name"></input>
-
-        <button type="submit" id="addMetabolite">Submit</button>
-        <br>
-        <br>
-        <br> Add reaction:
-        <input type="text" id="reaction_name" placeholder="reaction name"></input>
-        <br> source:
-        <br>
-        <select id="source">
-        </select>
-        <br> target:
-        <br>
-        <select id="target">
-        </select>
-        <br>
-        <button type="submit" id="addReaction">Submit</button>
-    </div> -->
-
-    <script>
-        var stats = new Stats();
-
-        stats.domElement.style.position = 'absolute';
-        stats.domElement.style.left = '0px';
-        stats.domElement.style.top = '0px';
-
-        document.body.appendChild(stats.domElement);
-
-        // var update = function() {
-        //     stats.update()
-        //     requestAnimationFrame(update);
-        // };
-    </script>
-
     <!-- inject:js -->
     <script src="lib/bundle-coffee.js"></script>
     <script src="app/app.js"></script>
@@ -84,7 +48,6 @@
     <script src="app/components/header/header.controller.js"></script>
     <script src="app/services/UrlProvider.js"></script>
     <!-- endinject -->
-
 
     <script>
     var sortables = {
@@ -103,7 +66,8 @@
         everything       : false,
         hideObjective    : true,
         data             : data,
-        sortables        : sortables
+        sortables        : sortables,
+        showStats        : false
     };
 
     hyperFlux = new HyperFluxVisualization(networkAttributes);
