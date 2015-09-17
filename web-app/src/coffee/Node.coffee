@@ -6,8 +6,6 @@ rand = (range) ->
 #
 class Node
     constructor: (attr, @ctx) ->
-        if not attr?
-            console.log(attr)
         @x = attr.x
         @y = attr.y
         @r = Math.abs(attr.r)

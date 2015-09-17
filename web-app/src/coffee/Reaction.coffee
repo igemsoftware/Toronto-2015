@@ -4,7 +4,7 @@ stringToColour = require('./utilities').stringToColour
 class Reaction extends Node
     constructor: (attr, @ctx) ->
         super(attr, @ctx)
-
+        
         @substrateCompartments = new Array()
         @productCompartments = new Array()
         @links = new Array()

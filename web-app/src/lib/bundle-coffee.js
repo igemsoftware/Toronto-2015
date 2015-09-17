@@ -77,12 +77,23 @@ Link = (function() {
     this.target = this.attr.target;
     this.thickness = this.attr.thickness;
     this.appendSubstratesAndProducts();
+    this.flux_value = this.source.flux_value || this.target.flux_value;
+    this.colour = "black";
+    if (this.flux_value === 0) {
+      this.colour = "black";
+    } else if (this.flux_value > 0) {
+      this.colour = "green";
+    } else {
+      this.colour = "red";
+    }
   }
 
   Link.prototype.appendSubstratesAndProducts = function() {
     if (this.source.type === 'm' && this.target.type === 'r') {
-      this.source.outNeighbours.push(this.target);
-      return this.target.substrates.push(this.source);
+      if (this.target.substrates.indexOf(this.source) < 0) {
+        this.source.outNeighbours.push(this.target);
+        return this.target.substrates.push(this.source);
+      }
     } else if (this.source.type === 'r' && this.target.type === 'm') {
       this.target.inNeighbours.push(this.source);
       return this.source.products.push(this.target);
@@ -109,7 +120,7 @@ Link = (function() {
       this.ctx.lineTo(targetx + h * Math.cos(-theta + lineAngle), targety + h * Math.sin(-theta + lineAngle));
       this.ctx.lineWidth = this.thickness;
       this.ctx.closePath();
-      this.ctx.strokeStyle = "black";
+      this.ctx.strokeStyle = this.colour;
       return this.ctx.stroke();
     }
   };
@@ -213,9 +224,6 @@ rand = function(range) {
 Node = (function() {
   function Node(attr, ctx) {
     this.ctx = ctx;
-    if (attr == null) {
-      console.log(attr);
-    }
     this.x = attr.x;
     this.y = attr.y;
     this.r = Math.abs(attr.r);
@@ -1393,7 +1401,9 @@ module.exports = {
                 if (!this.graph.hasVertex(substrate.id)) {
                   this.graph.addVertex(substrate.id, substrate);
                 }
-                this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
+                if (!this.graph.hasEdge(substrate.id, r.id)) {
+                  this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
+                }
                 ref2 = r.products;
                 for (k = 0, len2 = ref2.length; k < len2; k++) {
                   product = ref2[k];
@@ -1401,9 +1411,13 @@ module.exports = {
                     if (!this.graph.hasVertex(product.id)) {
                       this.graph.addVertex(product.id, product);
                     }
-                    this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                    if (!this.graph.hasEdge(r.id, product.id)) {
+                      this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                    }
                   } else {
-                    this.graph.addEdge(r.id, specie, r.id + " -> " + specie);
+                    if (!this.graph.hasEdge(r.id, specie)) {
+                      this.graph.addEdge(r.id, specie, r.id + " -> " + specie);
+                    }
                   }
                 }
               }
@@ -1421,7 +1435,9 @@ module.exports = {
                   if (!this.graph.hasVertex(product.id)) {
                     this.graph.addVertex(product.id, product);
                   }
-                  this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                  if (!this.graph.hasEdge(r.id, product.id)) {
+                    this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                  }
                   results2.push((function() {
                     var len4, n, ref4, results3;
                     ref4 = r.substrates;
@@ -1432,9 +1448,17 @@ module.exports = {
                         if (!this.graph.hasVertex(substrate.id)) {
                           this.graph.addVertex(substrate.id, substrate);
                         }
-                        results3.push(this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + product.id));
+                        if (!this.graph.hasEdge(substrate.id, r.id)) {
+                          results3.push(this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + product.id));
+                        } else {
+                          results3.push(void 0);
+                        }
                       } else {
-                        results3.push(this.graph.addEdge(specie, r.id, specie + " -> " + r.id));
+                        if (!this.graph.hasEdge(specie, r.id)) {
+                          results3.push(this.graph.addEdge(specie, r.id, specie + " -> " + r.id));
+                        } else {
+                          results3.push(void 0);
+                        }
                       }
                     }
                     return results3;

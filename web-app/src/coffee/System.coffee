@@ -72,7 +72,6 @@ class System
         }
         @initializeForce()
 
-        # Further function calling will occur from TreeNode
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()
@@ -242,9 +241,8 @@ class System
             # source, target, name, flux, radius
             # TODO rename radius -> thickness
             # We don't have fluxes here!
-
-            #console.log())
-            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value, Math.abs(@thicknesScale(@graph.vertexValue(to).flux_value or @graph.vertexValue(from).flux_value))))
+            @links.push(creators.createLink(@graph.vertexValue(from), @graph.vertexValue(to), value,
+                        Math.abs(@thicknesScale(@graph.vertexValue(to).flux_value or @graph.vertexValue(from).flux_value))))
 
     linkDistanceHandler : (link, i) ->
         factor = 0

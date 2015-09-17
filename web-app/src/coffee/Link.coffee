@@ -3,14 +3,25 @@ class Link
         @id = @attr.id
         @source = @attr.source
         @target = @attr.target
-        @thickness =  @attr.thickness
+        @thickness = @attr.thickness
         @appendSubstratesAndProducts()
+        @flux_value = @source.flux_value or @target.flux_value
+
+        @colour = "black"
+        if @flux_value is 0
+            @colour = "black"
+        else if @flux_value > 0
+            @colour = "green"
+        else
+            @colour = "red"
     appendSubstratesAndProducts: ->
         #update this
         if @source.type is 'm' and @target.type is 'r'
             # Case 1: substrate - reaction
-            @source.outNeighbours.push(@target)
-            @target.substrates.push(@source)
+            if @target.substrates.indexOf(@source) < 0
+                @source.outNeighbours.push(@target)
+                @target.substrates.push(@source)
+
         else if @source.type is 'r' and @target.type is 'm'
             # Case 2: reaction -> product
             @target.inNeighbours.push(@source)
@@ -44,13 +55,9 @@ class Link
             @ctx.moveTo(targetx, targety)
             @ctx.lineTo(targetx + h*Math.cos(-theta + lineAngle), targety + h*Math.sin(-theta + lineAngle))
 
-
-
             @ctx.lineWidth = @thickness
             @ctx.closePath()
-            @ctx.strokeStyle = "black"
+            @ctx.strokeStyle = @colour
             @ctx.stroke()
-
-
 
 module.exports = Link

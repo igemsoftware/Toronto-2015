@@ -56,7 +56,8 @@ module.exports =
                                 @graph.addVertex(r.id, r)
                             if not @graph.hasVertex(substrate.id)
                                 @graph.addVertex(substrate.id, substrate)
-                            @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
+                            if not @graph.hasEdge(substrate.id, r.id)
+                                @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
 
                             # Loop through the products for this particular reaction
                             # Are they extracellular, or within the cell?
@@ -65,10 +66,12 @@ module.exports =
                                     # Construct `-> e` (To complete `e -> e`)
                                     if not @graph.hasVertex(product.id)
                                         @graph.addVertex(product.id, product)
-                                    @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
+                                    if not @graph.hasEdge(r.id, product.id)
+                                        @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
                                 else
                                     # Construct `-> specie` (To complete `e -> specie`)
-                                    @graph.addEdge(r.id, specie, "#{r.id} -> #{specie}")
+                                    if not @graph.hasEdge(r.id, specie)
+                                        @graph.addEdge(r.id, specie, "#{r.id} -> #{specie}")
 
                     # Case 2: loop through products, then substrates. Can produce
                     # a. `-> e`
@@ -81,17 +84,20 @@ module.exports =
                                 @graph.addVertex(r.id, r)
                             if not @graph.hasVertex(product.id)
                                 @graph.addVertex(product.id, product)
-                            @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
+                            if not @graph.hasEdge(r.id, product.id)
+                                @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
 
                             for substrate in r.substrates
                                 if substrate.compartment is 'e'
                                     # Construct `e ->` (To complete `e -> e`)
                                     if not @graph.hasVertex(substrate.id)
                                         @graph.addVertex(substrate.id, substrate)
-                                    @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{product.id}")
+                                    if not @graph.hasEdge(substrate.id, r.id)
+                                        @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{product.id}")
                                 else
                                     # Construct `specie ->` (To complete `specie -> e`)
-                                    @graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
+                                    if not @graph.hasEdge(specie, r.id)
+                                        @graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
     compartments:
         parser: ->
             # Give back data for `c` and `p`
