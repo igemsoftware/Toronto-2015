@@ -12,71 +12,6 @@ angular.module('HyperFlux')
 
         console.log('Activating NetworkCtrl');
 
-  //   var attrs = {
-  //       divName: '#network',
-  //       canvas: {
-  //           height: window.innerHeight - 60,
-  //           width: window.innerWidth - 200,
-  //           top: 60
-  //       }
-  //   };
-  //
-  //   // ==== Network Class ====
-  //   //create new network
-  //   var network = new Network(attrs);
-  //   // for visualizing on ecoli model
-  //   //  var dataRequest = $http.get('http://45.55.193.224/toydata.json');
-  //   var dataRequest = $http.get('http://45.55.193.224/iJO1366.json');
-  //   //var dataRequest = $http.get('http://localhost:3000/iJO1366.json');
-  //
-  //   dataRequest.success(function(data) {
-  //       network.addSystem(data);
-  //   }).error(function(err) {
-  //       alert(err);
-  //   });
-  //   /*$http.get(UrlProvider.baseUrl + '/fba/getJSON').success(function(jsondata){
-  //       console.log('got the data')
-  //       network.addSystem(jsondata);
-  //   });*/
-  //
-  //
-  //   // ==== Sidebar ====
-  //   var sidebar = '#sidebar';
-  //   var sidebarWidth = $(sidebar).width();
-  //   var sidebarOffset = 100;
-  //   $scope.rippleColour = 'deep-purple-500';
-  //   $scope.locked = true;
-  //   $scope.deflated = true;
-  //   $scope.species = {};
-  //
-  //   $scope.getLockedClass = function() {
-  //       if ($scope.locked) {
-  //           return 'locked';
-  //       } else {
-  //           return 'unlocked';
-  //       }
-  //   };
-  //
-  //   /*$scope.lockControl = function() {
-  //       $scope.locked = !$scope.locked;
-  //
-  //       if (!$scope.locked) {
-  //          network.changeDimensions($('body').width(), $(network).height());
-  //       } else {
-  //         network.changeDimensions($('body').width() - sidebarWidth, $(network).height());
-  //       }
-  //   }*/
-  // //  $scope.lockControl();
-  //
-  //   $scope.expandSidebar = function() {
-  //       $(sidebar).width($('body').width() - sidebarOffset);
-  //       $scope.deflated = false;
-  //   };
-  //
-  //   $scope.deflateSidebar = function() {
-  //       $(sidebar).width(sidebarWidth);
-  //       $scope.deflated = true;
-  //   };
 
     /* jshint newcap: false */
     // $scope.tableParams = new ngTableParams({
@@ -98,6 +33,4 @@ angular.module('HyperFlux')
     //         });
     //      }
     //  });
-    // ==== End sidebar ====
-
 }]);

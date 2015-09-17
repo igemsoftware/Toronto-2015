@@ -10,6 +10,7 @@
  * A partial implementation of the Ruby display functions from Compass:
  * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
  */
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script);
 html::-webkit-scrollbar {
   width: 12px; }
 
@@ -19,12 +20,92 @@ html::-webkit-scrollbar-track-piece {
 html::-webkit-scrollbar-thumb {
   background: #009688; }
 
+* {
+  box-sizing: border-box; }
+
 html, body {
   height: 100%;
   width: 100%; }
 
+.fill {
+  width: 100%;
+  height: 100%; }
+
+body {
+  background-image: url("../images/bg/subtle-pattern-10.jpg");
+  background-repeat: repeat;
+  background-position: top left; }
+
 canvas {
-  display: block; }
+  display: block;
+  width: 100%;
+  height: 100%; }
+
+.wrap {
+  margin: 0 auto;
+  max-width: 1200px; }
+
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 2rem;
+  padding-left: 2rem; }
+
+#splash #main-title {
+  text-align: center;
+  font-family: "Dancing Script", cursive; }
+  #splash #main-title h1 {
+    display: block;
+    font-size: 5em;
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 10px; }
+  #splash #main-title h2 {
+    display: block;
+    font-size: 2em;
+    font-style: italic; }
+
+#splash .panel {
+  background-color: #EEEEEE;
+  padding: 20px;
+  text-align: left;
+  border-radius: 5px;
+  border-bottom: 2px solid #d4d4d4; }
+
+#splash .button {
+  margin-top: 20px;
+  display: block;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  padding: 20px;
+  font-size: 1.5em;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-transition: 500ms false false, ease false false;
+  -moz-transition: 500ms false false false, ease false false false;
+  -o-transition: 500ms false false false, ease false false false;
+  transition: 500ms ease; }
+  #splash .button.blue {
+    background-color: #2196F3;
+    border-bottom: 2px solid #0c7cd5; }
+  #splash .button.green {
+    background-color: #4CAF50;
+    border-bottom: 2px solid #3d8b40; }
+  #splash .button.purple {
+    background-color: #9C27B0;
+    border-bottom: 2px solid #771e86; }
+  #splash .button a {
+    display: inline; }
+  #splash .button:hover.blue {
+    background-color: #51adf6; }
+  #splash .button:hover.green {
+    background-color: #6ec071; }
+  #splash .button:hover.purple {
+    background-color: #bc37d3; }
 
 #nodetext {
   position: absolute;

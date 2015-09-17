@@ -6,8 +6,10 @@
     <title>drawee</title>
 
     <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/flexboxgrid/dist/flexboxgrid.css" />
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../bower_components/ng-table/dist/ng-table.min.css" />
-    <link rel="stylesheet" href="../bower_components/sanitize-css/dist/sanitize.css" />
+    <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css" />
     <!-- endbower -->
 
     <!-- inject:css -->
@@ -16,7 +18,7 @@
 </head>
 
 <body ng-controller="BodyCtrl">
-    <div ui-view class="view"></div>
+    <div ui-view class="fill"></div>
 
     <script src="iJO1366.js"></script>
     <script src="toydata.js"></script>
@@ -42,10 +44,11 @@
     <script src="app/app.js"></script>
     <script src="app/pages/species/species.controlller.js"></script>
     <script src="app/pages/services/UrlProvider.js"></script>
-    <script src="app/components/network/network.controller.js"></script>
     <script src="app/pages/home/home.controller.js"></script>
     <script src="app/pages/data/data.controller.js"></script>
     <script src="app/components/header/header.controller.js"></script>
+    <script src="app/components/network/network.controller.js"></script>
+    <script src="app/components/forcelayout/layout.controller.js"></script>
     <script src="app/services/UrlProvider.js"></script>
     <!-- endinject -->
 
@@ -70,7 +73,7 @@
         showStats        : false
     };
 
-    hyperFlux = new HyperFluxVisualization(networkAttributes);
+    // hyperFlux = new HyperFluxVisualization(networkAttributes);
     </script>
 
 </body>
