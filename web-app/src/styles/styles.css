@@ -128,6 +128,14 @@ canvas {
     font-size: 2em; }
     #topbar h3:hover {
       color: #CE93D8; }
+  #topbar .model {
+    color: white;
+    background-color: #42A5F5;
+    display: block;
+    font-size: 1.5em;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 50px; }
   #topbar ul {
     margin: 0;
     padding: 0; }
