@@ -223,27 +223,32 @@ class ViewController
 
         })
         that = this
+        htmlText = ""
         if node.type is 'r'
             # console.log(node)
             substrates = (substrate.name for substrate in node.inNeighbours)
             products = (product.name for product in node.outNeighbours)
-            @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
-            @nodetext.append("<button id='delete'>Delete Reaction</button><br>")
-        else
-            @nodetext.html("#{node.name}<br>")
-            @nodetext.append("<button id='delete'>Delete Node</button><br>")
-            if node.type is 'Compartment' and @network.currentLevel.children[node.id]?
-                @nodetext.append("<button id='enter'>Enter Node</button><br>")
-                $("#enter").click(->
-                    that.network.enterSpecie(node)
-                )
+            htmlText+= ("#{substrates} --- (#{node.name}) ---> #{products}<br>")
+            htmlText+= ("<button id='delete'>Delete Reaction</button><br>")
+        else if node.type is 'm'
+            htmlText+= ("#{node.name}<br>")
+            htmlText+= ("<button id='delete'>Delete Node</button><br>")
+        else if node.type is 'Compartment' and @network.currentLevel.children[node.id]?
+            htmlText += ("#{node.name}<br>")
+            htmlText += ("<button id='enter'>Enter Node</button><br>")
+
         if @network.root.system isnt @activeGraph
-            @nodetext.append("<button id='network'>Return to Previous level</button><br>")
-            $("#network").click(->
-                that.network.exitSpecie()
-            )
+            htmlText += ("<button id='network'>Return to Previous level</button><br>")
+
+        @nodetext.html(htmlText)
         $("#delete").click(->
-            that.system.deleteNode(node)
+            that.network.deleteNode(node.id, that.activeGraph)
+        )
+        $("#enter").click(->
+            that.network.enterSpecie(node)
+        )
+        $("#network").click(->
+            that.network.exitSpecie()
         )
 
     setActiveGraph: (system) ->

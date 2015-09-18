@@ -61,16 +61,7 @@ class System
         @nodes = new Array()
         @links = new Array()
         # The force layout provided by D3
-        @deleted = {
-            reactions: new Object()
-            metabolites: new Object()
-            species: new Object()
-        }
-        @added = {
-            reactions: new Object()
-            metabolites: new Object()
-            species: new Object()
-        }
+
         @initializeForce()
 
 
@@ -132,19 +123,7 @@ class System
 
         return [metabolites, reactions]
 
-    deleteNode: (id, name) ->
-        @graph.destroyVertex(id)
-        toDelete = null
-        for node in @nodes
-            if node.id is id and node.name is name
-                toDelete = node
-                node.deleted = true
-        if toDelete.type is "r"
-            @deleted.reactions[toDelete.id] = toDelete.name
-        else if toDelete.type is "m"
-            @deleted.metabolites[toDelete.id] = toDelete.name
-        else if toDelete.type is "specie"
-            @deleted.species[toDelete.id] = toDelete.name
+    
 
     #create a metabolite on the current running graph
     createNewMetabolite: (id, name) ->

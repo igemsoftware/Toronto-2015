@@ -197,6 +197,15 @@ Network = (function() {
     this.root = new TreeNode('root', new System(systemAttr));
     this.viewController.startCanvas(this.root.system);
     this.currentLevel = this.root;
+    this.deleted = {
+      reactions: new Array(),
+      metabolites: new Array()
+    };
+    this.added = {
+      reactions: new Object(),
+      metabolites: new Object(),
+      species: new Object()
+    };
   }
 
   Network.prototype.enterSpecie = function(node) {
@@ -207,6 +216,26 @@ Network = (function() {
   Network.prototype.exitSpecie = function(node) {
     this.currentLevel = this.currentLevel.parent;
     return this.viewController.setActiveGraph(this.currentLevel.system);
+  };
+
+  Network.prototype.deleteNode = function(id, system) {
+    var i, len, node, ref;
+    ref = system.nodes;
+    for (i = 0, len = ref.length; i < len; i++) {
+      node = ref[i];
+      if (node.id === id) {
+        if (node.type === "r") {
+          system.graph.destroyVertex(id);
+          this.deleted.reactions.push(id);
+          node.deleted = true;
+        } else if (node.type === "m") {
+          system.graph.destroyVertex(id);
+          this.deleted.metabolites.push(id);
+          node.deleted = true;
+        }
+      }
+    }
+    return console.log(this.deleted);
   };
 
   return Network;
@@ -369,16 +398,6 @@ System = (function() {
     this.graph = new Graph();
     this.nodes = new Array();
     this.links = new Array();
-    this.deleted = {
-      reactions: new Object(),
-      metabolites: new Object(),
-      species: new Object()
-    };
-    this.added = {
-      reactions: new Object(),
-      metabolites: new Object(),
-      species: new Object()
-    };
     this.initializeForce();
   }
 
@@ -419,27 +438,6 @@ System = (function() {
       }
     }
     return [metabolites, reactions];
-  };
-
-  System.prototype.deleteNode = function(id, name) {
-    var j, len, node, ref, toDelete;
-    this.graph.destroyVertex(id);
-    toDelete = null;
-    ref = this.nodes;
-    for (j = 0, len = ref.length; j < len; j++) {
-      node = ref[j];
-      if (node.id === id && node.name === name) {
-        toDelete = node;
-        node.deleted = true;
-      }
-    }
-    if (toDelete.type === "r") {
-      return this.deleted.reactions[toDelete.id] = toDelete.name;
-    } else if (toDelete.type === "m") {
-      return this.deleted.metabolites[toDelete.id] = toDelete.name;
-    } else if (toDelete.type === "specie") {
-      return this.deleted.species[toDelete.id] = toDelete.name;
-    }
   };
 
   System.prototype.createNewMetabolite = function(id, name) {
@@ -890,13 +888,14 @@ ViewController = (function() {
   };
 
   ViewController.prototype.appendText = function(node, e) {
-    var product, products, substrate, substrates, that;
+    var htmlText, product, products, substrate, substrates, that;
     this.nodetext.addClass('showing');
     this.nodetext.css({
       'left': e.clientX,
       'top': e.clientY
     });
     that = this;
+    htmlText = "";
     if (node.type === 'r') {
       substrates = (function() {
         var i, len, ref, results;
@@ -918,26 +917,27 @@ ViewController = (function() {
         }
         return results;
       })();
-      this.nodetext.html(substrates + " --- (" + node.name + ") ---> " + products + "<br>");
-      this.nodetext.append("<button id='delete'>Delete Reaction</button><br>");
-    } else {
-      this.nodetext.html(node.name + "<br>");
-      this.nodetext.append("<button id='delete'>Delete Node</button><br>");
-      if (node.type === 'Compartment' && (this.network.currentLevel.children[node.id] != null)) {
-        this.nodetext.append("<button id='enter'>Enter Node</button><br>");
-        $("#enter").click(function() {
-          return that.network.enterSpecie(node);
-        });
-      }
+      htmlText += substrates + " --- (" + node.name + ") ---> " + products + "<br>";
+      htmlText += "<button id='delete'>Delete Reaction</button><br>";
+    } else if (node.type === 'm') {
+      htmlText += node.name + "<br>";
+      htmlText += "<button id='delete'>Delete Node</button><br>";
+    } else if (node.type === 'Compartment' && (this.network.currentLevel.children[node.id] != null)) {
+      htmlText += node.name + "<br>";
+      htmlText += "<button id='enter'>Enter Node</button><br>";
     }
     if (this.network.root.system !== this.activeGraph) {
-      this.nodetext.append("<button id='network'>Return to Previous level</button><br>");
-      $("#network").click(function() {
-        return that.network.exitSpecie();
-      });
+      htmlText += "<button id='network'>Return to Previous level</button><br>";
     }
-    return $("#delete").click(function() {
-      return that.system.deleteNode(node);
+    this.nodetext.html(htmlText);
+    $("#delete").click(function() {
+      return that.network.deleteNode(node.id, that.activeGraph);
+    });
+    $("#enter").click(function() {
+      return that.network.enterSpecie(node);
+    });
+    return $("#network").click(function() {
+      return that.network.exitSpecie();
     });
   };
 
