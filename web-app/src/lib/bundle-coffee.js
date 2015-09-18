@@ -1318,6 +1318,7 @@ module.exports = {
   species: {
     parser: function() {
       var i, j, len, len1, metabolite, metaboliteDict, pushedMetabolites, reaction, ref, ref1, results, specie;
+      console.log(this.data);
       metaboliteDict = new Object();
       ref = this.data.metabolites;
       for (i = 0, len = ref.length; i < len; i++) {

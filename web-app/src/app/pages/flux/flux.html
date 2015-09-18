@@ -1,4 +1,4 @@
-<div ng-controller="FluxCtrl">
+<div ng-controller="FluxCtrl as fluxCtrl">
     <div id="topbar">
         <div class="left">
             <ul>
@@ -8,7 +8,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href ng-click="addSpecie()" tooltips title="Choose specie(s)" tooltip-side="bottom">
+                    <a href ng-click="fluxCtrl.addSpecie()" tooltips title="Choose specie(s)" tooltip-side="bottom">
                         <i class="fa fa-exchange"></i>
                     </a>
                 </li>
@@ -24,7 +24,7 @@
                 <li>
                     <a href>
                         <span class="model">
-                            {{currentModel}}
+                            {{fluxCtrl.currentModel}}
                         </span>
                     </a>
                 </li>

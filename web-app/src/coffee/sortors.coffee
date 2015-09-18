@@ -4,6 +4,7 @@ creators = require './creators'
 module.exports =
     species:
         parser: ->
+            console.log(@data)
             metaboliteDict = new Object()
             for metabolite in @data.metabolites
                 metaboliteDict[metabolite.id] = metabolite
