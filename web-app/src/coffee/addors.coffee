@@ -21,6 +21,7 @@ module.exports =
                 source : src
                 target : tgt
                 thickness: thickness
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, @ctx))
         else if src.type is "m" and tgt.type is "m"
             reactionAttributes =
@@ -39,7 +40,7 @@ module.exports =
                 source : src
                 target : reaction
                 thickness: thickness
-
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, ctx))
             linkAttr =
                 id : "#{reaction.id}-#{target.id}"
@@ -53,6 +54,7 @@ module.exports =
                 source : src
                 target : tgt
                 thickness: thickness
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, ctx))
 
     addReaction: (src, tgt, name, radius, W, H, thickness) ->
@@ -65,6 +67,7 @@ module.exports =
                 target : tgt
                 fluxValue : 0
                 thickness: thickness
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, @ctx))
         else if src.type is "m" and tgt.type is "m"
             reactionAttributes =
@@ -85,6 +88,7 @@ module.exports =
                 fluxValue : 0
                 r : radius
                 thickness: thickness
+                colourScale: @colourScale
 
             @links.push(new Link(linkAttr, @ctx))
             linkAttr =
@@ -94,6 +98,8 @@ module.exports =
                 fluxValue : 0
                 r : radius
                 thickness: thickness
+                colourScale: @colourScale
+                
             @links.push(new Link(linkAttr, @ctx))
         else
             alert("Invalid linkage")

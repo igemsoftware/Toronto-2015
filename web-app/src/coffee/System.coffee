@@ -31,6 +31,7 @@ class System
         # TODO get parameters from elsewhere
         @radiusScale = utilities.scaleRadius(@data, 5, 15)
         @thicknesScale = utilities.scaleRadius(@data, 1, 5)
+        @colourScale = utilities.scaleRadius(@data, 144, 255)
         # Bind functions to 'this' so they have access to system's properties
         creators.createMetabolite = creators.createMetabolite.bind(this)
         creators.createReaction = creators.createReaction.bind(this)
@@ -82,7 +83,7 @@ class System
         # for metabolite in @data.metabolites
             # Create a new Metabolite
             # TODO params: metabolite, ctx, metaboliteRadius?
-            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
+            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius)
             m.species = metabolite.species
             m.subsystems = metabolite.subsystems
 
@@ -195,6 +196,7 @@ class System
                 source : src
                 target : reaction
                 thickness : @thicknesScale(reaction.flux_value)
+                colourScale: @colourScale
 
             @links.push(new Link(linkAttr, @ctx))
             linkAttr =
@@ -202,6 +204,7 @@ class System
                 source : reaction
                 target : tgt
                 thickness : @thicknesScale(reaction.flux_value)
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, @ctx))
         else
             linkAttr =
@@ -209,6 +212,7 @@ class System
                 source : src
                 target : tgt
                 thickness : @thicknesScale(src.flux_value or tgt.flux_value)
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, @ctx))
 
 
@@ -301,7 +305,7 @@ class System
         # for metabolite in @data.metabolites
             # Create a new Metabolite
             # TODO params: metabolite, ctx, metaboliteRadius?
-            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false)
+            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius)
             m.species = metabolite.species
 
             # Create a node (vertex) for this Metabolite in system.graph

@@ -70,21 +70,23 @@ var Link;
 
 Link = (function() {
   function Link(attr, ctx) {
+    var scale;
     this.attr = attr;
     this.ctx = ctx;
     this.id = this.attr.id;
     this.source = this.attr.source;
     this.target = this.attr.target;
     this.thickness = this.attr.thickness;
+    this.colourScale = this.attr.colourScale;
     this.appendSubstratesAndProducts();
     this.flux_value = this.source.flux_value || this.target.flux_value;
-    this.colour = "black";
+    scale = this.colourScale(Math.abs(this.flux_value));
     if (this.flux_value === 0) {
       this.colour = "black";
     } else if (this.flux_value > 0) {
-      this.colour = "green";
+      this.colour = "rgb(40," + scale + ",40)";
     } else {
-      this.colour = "red";
+      this.colour = "rgb(" + scale + ",40,40)";
     }
   }
 
@@ -353,6 +355,7 @@ System = (function() {
     this.compartmentRadius = 50;
     this.radiusScale = utilities.scaleRadius(this.data, 5, 15);
     this.thicknesScale = utilities.scaleRadius(this.data, 1, 5);
+    this.colourScale = utilities.scaleRadius(this.data, 144, 255);
     creators.createMetabolite = creators.createMetabolite.bind(this);
     creators.createReaction = creators.createReaction.bind(this);
     creators.createCompartment = creators.createCompartment.bind(this);
@@ -385,7 +388,7 @@ System = (function() {
     reactions = new Object();
     for (j = 0, len = metaboliteData.length; j < len; j++) {
       metabolite = metaboliteData[j];
-      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
+      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius);
       m.species = metabolite.species;
       m.subsystems = metabolite.subsystems;
       metabolites[metabolite.id] = m;
@@ -493,14 +496,16 @@ System = (function() {
         id: source.id + "-" + reaction.id,
         source: src,
         target: reaction,
-        thickness: this.thicknesScale(reaction.flux_value)
+        thickness: this.thicknesScale(reaction.flux_value),
+        colourScale: this.colourScale
       };
       this.links.push(new Link(linkAttr, this.ctx));
       linkAttr = {
         id: reaction.id + "-" + target.id,
         source: reaction,
         target: tgt,
-        thickness: this.thicknesScale(reaction.flux_value)
+        thickness: this.thicknesScale(reaction.flux_value),
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else {
@@ -508,7 +513,8 @@ System = (function() {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: this.thicknesScale(src.flux_value || tgt.flux_value)
+        thickness: this.thicknesScale(src.flux_value || tgt.flux_value),
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     }
@@ -575,7 +581,7 @@ System = (function() {
     var j, k, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
     for (j = 0, len = metaboliteData.length; j < len; j++) {
       metabolite = metaboliteData[j];
-      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false);
+      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius);
       m.species = metabolite.species;
       this.fullResGraph.addVertex(metabolite.id, m);
     }
@@ -1020,7 +1026,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else if (src.type === "m" && tgt.type === "m") {
@@ -1040,7 +1047,8 @@ module.exports = {
         id: source.id + "-" + reaction.id,
         source: src,
         target: reaction,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       this.links.push(new Link(linkAttr, ctx));
       linkAttr = {
@@ -1055,7 +1063,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, ctx));
     }
@@ -1070,7 +1079,8 @@ module.exports = {
         source: src,
         target: tgt,
         fluxValue: 0,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else if (src.type === "m" && tgt.type === "m") {
@@ -1092,7 +1102,8 @@ module.exports = {
         target: reaction,
         fluxValue: 0,
         r: radius,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       this.links.push(new Link(linkAttr, this.ctx));
       linkAttr = {
@@ -1101,7 +1112,8 @@ module.exports = {
         target: tgt,
         fluxValue: 0,
         r: radius,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else {
@@ -1149,7 +1161,7 @@ module.exports = {
     };
     return new Compartment(compartmentAttributes, this.ctx);
   },
-  createMetabolite: function(name, id, radius, updateOption, ctx) {
+  createMetabolite: function(name, id, radius) {
     var metabolite, nodeAttributes;
     nodeAttributes = {
       x: utilities.rand(this.width),
@@ -1159,10 +1171,7 @@ module.exports = {
       id: id,
       type: "m"
     };
-    metabolite = new Metabolite(nodeAttributes, ctx);
-    if (updateOption) {
-      this.viewController.updateOptions(name, id);
-    }
+    metabolite = new Metabolite(nodeAttributes, this.ctx);
     return metabolite;
   },
   createLink: function(src, tgt, name, thickness) {
@@ -1172,7 +1181,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return new Link(linkAttr, this.ctx);
     } else if (src.type === "m" && tgt.type === "r") {
@@ -1180,7 +1190,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return new Link(linkAttr, this.ctx);
     } else {
@@ -1188,7 +1199,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return new Link(linkAttr, this.ctx);
     }

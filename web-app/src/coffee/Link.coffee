@@ -4,16 +4,16 @@ class Link
         @source = @attr.source
         @target = @attr.target
         @thickness = @attr.thickness
+        @colourScale = @attr.colourScale
         @appendSubstratesAndProducts()
         @flux_value = @source.flux_value or @target.flux_value
-
-        @colour = "black"
+        scale = @colourScale(Math.abs(@flux_value))
         if @flux_value is 0
             @colour = "black"
         else if @flux_value > 0
-            @colour = "green"
+            @colour = "rgb(40,#{scale},40)"
         else
-            @colour = "red"
+            @colour = "rgb(#{scale},40,40)"
     appendSubstratesAndProducts: ->
         #update this
         if @source.type is 'm' and @target.type is 'r'

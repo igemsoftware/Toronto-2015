@@ -28,7 +28,7 @@ module.exports =
         return new Compartment(compartmentAttributes, @ctx)
 
     # System injected
-    createMetabolite: (name, id, radius, updateOption, ctx) ->
+    createMetabolite: (name, id, radius) ->
         nodeAttributes =
             x : utilities.rand(@width)
             y : utilities.rand(@height)
@@ -36,9 +36,7 @@ module.exports =
             name : name
             id : id
             type : "m"
-        metabolite = new Metabolite(nodeAttributes, ctx)
-        if updateOption
-            @viewController.updateOptions(name, id)
+        metabolite = new Metabolite(nodeAttributes, @ctx)
         return metabolite
 
     # System injected
@@ -50,6 +48,7 @@ module.exports =
                 source    : src
                 target    : tgt
                 thickness : thickness
+                colourScale: @colourScale
             return new Link(linkAttr, @ctx)
         else if src.type is "m" and tgt.type is "r"
             # console.log(src.type)
@@ -58,6 +57,7 @@ module.exports =
                 source    : src
                 target    : tgt
                 thickness : thickness
+                colourScale: @colourScale
             return new Link(linkAttr, @ctx)
         else
             linkAttr =
@@ -65,6 +65,7 @@ module.exports =
                 source    : src
                 target    : tgt
                 thickness : thickness
+                colourScale: @colourScale
             return new Link(linkAttr, @ctx)
 
     # System injected
