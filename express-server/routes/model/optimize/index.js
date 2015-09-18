@@ -15,7 +15,7 @@ router.get('/:id', function(req, res, next) {
 			res.status(204).send('204 no content. That model does not exist.\n');
 		} else {
 			model.transform(function(model) {
-				fileName = 'temp/' + req.params.id + '.json';
+				var fileName = 'temp/' + req.params.id + '.json';
 
 				fs.writeFile(fileName, JSON.stringify(model), function(err) {
 					if (err) {
@@ -28,10 +28,13 @@ router.get('/:id', function(req, res, next) {
 					        exitcode : null
 					    };
 
+                        var currentTime = (new Date()).getTime();
+                        var solutionFile = 'temp/' + req.params.id + '_' + currentTime;
+
 						args = [
 							'python-scripts/optimize.py',
 							fileName,
-							'temp/' + req.params.id
+							solutionFile
 						];
 
 						var optimizeScript = cp.spawn('python', args);
@@ -50,9 +53,38 @@ router.get('/:id', function(req, res, next) {
 					    optimizeScript.on('close', function(code) {
 					        results.exitcode = code;
 
+                            // TODO store solutions in DB.
+                            solutionFile = solutionFile + '_solution.json';
+
+                            fs.readFile(solutionFile, function(err, data) {
+                                if (err) {
+                                    res.status(500).send('500 Internal Server Error');
+                                    return;
+                                }
+
+                                var x_dict = JSON.parse(data).x_dict;
+
+                                model.reactions.forEach(function(reaction) {
+                                    // console.log(reaction);
+                                    if (x_dict[reaction.id] !== undefined) {
+                                        console.log(x_dict[reaction.id]);
+                                        reaction.flux_value = x_dict[reaction.id];
+                                        console.log(reaction);
+                                    } else {
+                                        reaction.flux_value = 0;
+                                    }
+                                });
+
+                                res.send(model);
+
+                                // var stream = fs.createReadStream(solutionFile + '_solution.json');
+                                // stream.pipe(res);
+                            });
+
+
 					        // Respond on process close
 					        // otherwise, async problems!
-					        res.send(results);
+					        // res.send(results);
 					    });
 					}
 				});
