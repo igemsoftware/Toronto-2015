@@ -64,17 +64,31 @@ router.get('/:id', function(req, res, next) {
 
                                 var x_dict = JSON.parse(data).x_dict;
 
+
+                                // =============================================
                                 model.reactions.forEach(function(reaction) {
                                     // console.log(reaction);
-                                    if (x_dict[reaction.id] !== undefined) {
-                                        console.log(x_dict[reaction.id]);
+                                    if (x_dict[reaction.id] !== undefined && x_dict[reaction.id] !== null) {
                                         reaction.flux_value = x_dict[reaction.id];
-                                        console.log(reaction);
+
                                     } else {
                                         reaction.flux_value = 0;
                                     }
                                 });
+                                // =============================================
 
+                                model.compartments = [{
+                                    id: 'c',
+                                    name: 'Cytosol'
+                                }, {
+                                    id: 'e',
+                                    name: 'Extracellular'
+                                }, {
+                                    id: 'p',
+                                    name: 'Periplasm'
+                                }];
+
+                                fs.writeFile('optimized.json', JSON.stringify(model));
                                 res.send(model);
 
                                 // var stream = fs.createReadStream(solutionFile + '_solution.json');

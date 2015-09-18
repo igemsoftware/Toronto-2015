@@ -1,0 +1,3699 @@
+R1	2 phospho L lactate synthase
+R2	4 Aminobenzoate mitochondrial transport via symport
+R3	5 hydroxybenzimidazole synthase
+R4	7 mercaptoheptanoate synthase
+R5	7 mercaptoheptanoylthreonine synthase
+R6	4 aminobutyrate transaminase
+R7	acetyl CoA C acetyltransferase
+R8	Adenosyl cobinamide phosphate guanyltransferase
+R9	acetylglutamate kinase
+R10	N acetylglutamate synthase
+R11	acetate kinase
+R12	acetolactate decarboxylase
+R13	acetolactate synthase
+R14	Trans aconitate methyltransferase
+R15	acetylornithine transaminase
+R16	acid phosphatase FMN 
+R17	 R acetoin transport via proton symport
+R18	acylphosphatase
+R19	acylphosphatase 2 
+R20	adenosylcobinamide phosphate synthase
+R21	adenosylcobyric acid synthase glutamine hydrolysing 
+R22	adenine deaminase
+R23	adenylate kinase
+R24	adenylate kinase Inorganic triphosphate 
+R25	adentylate kinase GTP 
+R26	adentylate kinase ITP 
+R27	adenylate kinase d form 
+R28	adenylate cyclase
+R29	adenosine kinase
+R30	Adenosyl cobinamide amidohydrolase
+R31	Adenosylcobalamin 5 phosphate synthase
+R32	adenine phosphoribosyltransferase
+R33	adenylosuccinate lyase
+R34	adenylosuccinate synthase
+R35	archaeatidylinositol N acetylglucosaminyltransferase
+R36	N acetylglucosaminylarchaeatidylinositol deacetylase
+R37	agmatinase
+R38	N acetyl g glutamyl phosphate reductase
+R39	adenosylhomocysteinase
+R40	 S alpha hydroxyglutarate dehydrogenase
+R41	4 amino 5 hydroxymethyl 2 methylpyrimidine synthetase
+R42	O acetylhomoserine thiol lyase
+R43	6 aminohexanoate dimer hydrolase
+R44	phosphoribosylaminoimidazolecarboxamide formyltransferase
+R45	phosphoribosylaminoimidazole carboxylase
+R46	phosphoribosylaminoimidazole carboxylase mutase rxn 
+R47	alpha ketoadipateCoA ligase
+R48	alpha ketoglutarateCoA ligase
+R49	alkaline phosphatase Dihydroneopterin 
+R50	alpha ketopimelateCoA ligase
+R51	alpha ketosubmerateCoA ligase
+R52	alpha ketosubmerate decarboxylase
+R53	acetolactate reversible transport via proton symport
+R54	L alanine transaminase
+R55	Alanyl tRNA synthetase
+R56	Alanine Sodium symporter
+R57	alcohol dehydrogenase 2 propanol  NADP 
+R58	alcohol dehydrogenase ethanol NADP 
+R59	aldehyde dehydrogenase formaldehyde NAD 
+R60	aldehyde dehydrogenase acetaldehyde NAD 
+R61	alkaline phosphatase
+R62	adenosylmethionine 8 amino 7 oxononanoate transaminase
+R63	anthranilate phosphoribosyltransferase
+R64	anthranilate synthase
+R65	8 amino 7 oxononanoate synthase
+R66	aminopropanol phosphorylase
+R67	arginine decarboxylase
+R68	arginine deiminase
+R69	argininosuccinate lyase
+R70	argininosuccinate synthase
+R71	Arginyl tRNA synthetase
+R72	aspartate semialdehyde dehydrogenase irreversible
+R73	archaetidylserine decarboxylase
+R74	L asparaginase
+R75	asparagine synthase glutamine hydrolysing 
+R76	aspartate 1 decarboxylase
+R77	aspartate carbamoyltransferase
+R78	aspartate kinase irreversible
+R79	aspartate transaminase
+R80	Aspartyl tRNA synthetase
+R81	archaetidylglycerol hydrogenase
+R82	archaetidylinositol hydrogenase
+R83	ATP maintenance requirement
+R84	ATP phosphoribosyltransferase
+R85	H exporting ATPase
+R86	ATP synthase four protons for one ATP 
+R87	atrazine chlorohydrolase
+R88	archaetidylserine hydrogenase
+R89	biotin acetyl CoA carboxylase ligase
+R90	beta lysine acetyltransferase
+R91	beta ribofuranosylaminobenzene 5 phosphate synthase
+R92	Biotin uptake
+R93	calcium transport via ABC system
+R94	catalase
+R95	calcium sodium antiporter
+R96	Cobinamide adenyltransferase
+R97	Cobinamide transport via ABC system
+R98	Cob 1 alamin HBI transport via ABC system
+R99	Cob 1 alamin transport via ABC system
+R100	cob I alamin HBI adenosyltransferase
+R101	cob I alamin degradation
+R102	carbamoyl phosphate synthase glutamine hydrolysing 
+R103	cadmium transport out via ABC system
+R104	cadmium transport in via ABC system
+R105	CDP alcohol phosphatidyltransferase glycerol 1 phosphate 
+R106	CDP alcohol phosphatidyltransferase glycerol 1 phosphate  hydroxy 
+R107	CDP 2 3 di O geranylgeranyl sn glycerol synthase
+R108	CDP 2 O 3 hydroxy geranyl 3 O geranyl sn glycerol synthase
+R109	CDP 2 3 di O geranylgeranyl sn glyceroserine O archaetidyltransferase
+R110	CDP 2 O 3 hydroxy geranyl 3 O geranyl sn glyceroserine O archaetidyltransferase
+R111	CDP digeranyl sn glycero myo inositol 3 phosphatidyltransferase
+R112	CDP digeranyl sn glycero myo inositol 3 phosphatidyltransferase 3 hydroxy 
+R113	coenzyme F390 hydrolase ATP 
+R114	coenzyme F390 hydrolase GTP 
+R115	coenzyme F390 synthetase ATP 
+R116	coenzyme F390 synthetase GTP 
+R117	cis homo 2aconitate hydrolase
+R118	cis homo 3aconitate hydrolase
+R119	Methanethiol Transport
+R120	Methane Transport
+R121	cis homoaconitate hydrolase
+R122	chorismate mutase
+R123	chorismate synthase
+R124	4 carboxymuconolactone decarboxylase
+R125	CO2 transporter via diffusion
+R126	cobalt transport inout via permease no H 
+R127	coenzyme b synthatse
+R128	cobaltochelatase
+R129	carbon monoxide dehydrogenase acetyl CoA synthase 2
+R130	carbon monoxide dehydrogenase acetyl CoA synthase
+R131	coenzyme M synthase
+R132	CO transporter via diffusion
+R133	precorrin 2 C20 methyltransferase
+R134	precorrin 3B C17 methyltransferase
+R135	precorrin 4 C11 methyltransferase
+R136	precorrin 5 C1 methyltransferase
+R137	precorrin 6Y C5 15 methyltransferase decarboxylating 
+R138	precorrin 6A reductase
+R139	precorrin 8X methylmutase
+R140	citrate synthase
+R141	Cytosine deaminase
+R142	CTP synthase NH3 
+R143	CTP synthase glutamine 
+R144	cob I yrinic acid a c diamide adenosyltransferase
+R145	cob II yrinic acid a c diamide reductase
+R146	Cob II yrinate a c diamide synthase glutamine hydrolysing 
+R147	Cysteine Desulfhydrase
+R148	cysteine synthase reversible 
+R149	Cysteinyl tRNA synthetase
+R150	L cysteine reversible transport via proton symport
+R151	cytidylate kinase CMP 
+R152	cytidylate kinase dCMP 
+R153	chlorideion transport out via diffusion
+R154	Cobalt transport via ABC system
+R155	Copper transport via ABC system
+R156	Copper export via ATPase
+R157	deoxyadenylate kinase
+R158	diaminopimelate decarboxylase
+R159	3 4 Dihydroxy 2 butanone 4 phosphate synthase
+R160	dethiobiotin synthase
+R161	dCMP deaminase
+R162	dCTP deaminase
+R163	digeranylgeranylglyceryl phosphate synthase
+R164	2 O 3 hydroxy geranyl 3 O geranyl sn glycerol synthase
+R165	digeranyl sn glycerol 1 phospho 3 sn glycerol phosphatase
+R166	digeranyl sn glycerol 1 phospho 3 sn glycerol phosphatase hydroxy 
+R167	dihydroxy acid dehydratase 2 3 dihydroxy 3 methylbutanoate 
+R168	Dihydroxy acid dehydratase 2 3 dihydroxy 3 methylpentanoate 
+R169	dihydrodipicolinate reductase NADPH 
+R170	dihydrodipicolinate synthase
+R171	dihydrofolate reductase
+R172	dihydrofolate synthase
+R173	dihydroneopterin aldolase
+R174	dihydroorotic acid dehydrogenase f420 
+R175	dihydroorotase
+R176	7 8 dihydronepterin 2 3 cyclicphosphate hydrolase
+R177	dihydropyrimidinase 5 6 dihydrouracil 
+R178	dihydropyrimidinase dihydrothymine 
+R179	dihydropteroate synthase
+R180	7 8 dihydropteroate synthase methanopterin 
+R181	3 dehydroquinate dehydratase
+R182	3 dehydroquinate synthase
+R183	diphthine synthase
+R184	dimethylallyltranstransferase
+R185	dimethylallyltranstransferase 3 hydroxy 
+R186	Dimethylamine symport
+R187	7 8 didemethyl 8 hydroxy 5 deazariboflavin synthetase
+R188	Dihydroneopterin monophosphate dephosphorylase
+R189	3 7 dideoxy D threo hepto 2 6 diulosonate synthase
+R190	dephospho CoA kinase
+R191	2 dehydropantoate 2 reductase
+R192	2 5 diamino 6 ribosylamino 4 3H pyrimidinone 5 phosphate reductase
+R193	2 5 diamino 6 ribosylamino 4 3H pyrimidinone 5 phosphate reductase nadph 
+R194	2 5 diamino 6 ribitylamino 4 3H pyrimidinone 5 phosphate deaminase
+R195	dTMP kinase
+R196	deoxyuridine phosphorylase
+R197	Ech Hydrogenase
+R198	enolase
+R199	ethanolamine transport inout via proton symport
+R200	4 Aminobenzoate exchange
+R201	4 Hydroxyphenylacetate exchange
+R202	Acetate exchange
+R203	 R Acetoin exchange
+R204	L Alanine exchange
+R205	 S 2 Acetolactate exchange
+R206	Biotin exchange
+R207	Calcium exchange
+R208	Cobinamide exchange
+R209	Cob I alamin exchange
+R210	Cob I alamin HBI exchange
+R211	Cadmium exchange
+R212	Methane exchange
+R213	Methanethiol exchange
+R214	Citrate exchange
+R215	Chloride exchange
+R216	CO2 exchange
+R217	Carbon monoxide exchange
+R218	Cu2 exchange
+R219	L Cysteine exchange
+R220	Dimethylamine exchange
+R221	Ethanolamine exchange
+R222	Fe2 exchange
+R223	Fe3 exchange
+R224	Folate exchange
+R225	Glycolaldehyde exchange
+R226	D Gluconate exchange
+R227	L Glutamate exchange
+R228	Glycine exchange
+R229	D Glyceraldehyde exchange
+R230	Glycine betaine exchange
+R231	Glycerol exchange
+R232	H2 exchange
+R233	H2O exchange
+R234	Hydrogen sulfide exchange
+R235	H exchange
+R236	L Isoleucine exchange
+R237	Indole 3 acetate exchange
+R238	K exchange
+R239	L Leucine exchange
+R240	L Lysine exchange
+R241	methanol exchange
+R242	Mg exchange
+R243	monomethylamine exchange
+R244	Mn2 exchange
+R245	Molybdate exchange
+R246	N2 exchange
+R247	Sodium exchange
+R248	Nicotinate exchange
+R249	Ammonia exchange
+R250	Ni2 exchange
+R251	Phenylacetic acid exchange
+R252	Phosphate exchange
+R253	 R Pantothenate exchange
+R254	L Proline exchange
+R255	Pyruvate exchange
+R256	Riboflavin exchange
+R257	Sulfite exchange
+R258	Sulfate exchange
+R259	Thiamin exchange
+R260	Trimethylamine exchange
+R261	Thiosulfate exchange
+R262	unknown degradation product of cbl1 for adocbl HBI synthesis exchange
+R263	unknown riboflavin degradation product exchange
+R264	Urea exchange
+R265	L Valine exchange
+R266	Zinc exchange
+R267	coenzyme F430 precursor synthase 1 aminase 
+R268	coenzyme F430 precursor synthase 2 reduction 
+R269	coenzyme F430 precursor synthase 3 reduction 
+R270	coenzyme F430 precursor synthase 4 cyclization 
+R271	coenzyme F430 precursor synthase 5 cyclization 
+R272	F420 Deydrogenase
+R273	F420H2 oxidase
+R274	coenzyme F420 dependent N 5 N 10 methenyltetrahydrosarcinapterin dehydrogenase
+R275	coenzyme F420 dependent N 5 N 10 methenyltetrahydrosarcinapterin reductase
+R276	F420 nonreducing Hydrogenase
+R277	F420 Reducing Hydrogenase
+R278	fructose bisphosphate aldolase
+R279	D Fructose 1 phosphate D glyceraldehyde 3 phosphate lyase
+R280	fructose bisphosphatase
+R281	L fuculose 1 phosphate aldolase
+R282	iron II transport via ABC system
+R283	iron III transport via ABC system
+R284	iron III dicitrate transport via ABC system
+R285	Methionyl tRNA formyltransferase
+R286	formylmethanofuran dehydrogenase b 
+R287	formylmethanofuranH4SPT N formyltransferase b 
+R288	folate reductase
+R289	folate transport via proton simport
+R290	farnesyltranstransferase
+R291	farnesyltranstransferase 3 hyroxy 
+R292	fumarase
+R293	glucosamine 1 phosphate N acetyltransferase
+R294	glycerol 1 phosphate dehydrogenase NAD 
+R295	glucose 1 phosphate thymidylyltransferase
+R296	glutamate 1 semialdehyde aminotransferase
+R297	L glutamate 5 semialdehyde dehydratase reversible
+R298	glutamate 5 semialdehyde dehydrogenase
+R299	galactose 1 phosphate uridylyltransferase
+R300	UTP glucose 1 phosphate uridylyltransferase irreversible 
+R301	glyceraldehyde 3 phosphate dehydrogenase
+R302	glyceraldehyde 3 phosphate dehydrogenase NAD P   phosphorylating 
+R303	phosphoribosylglycinamide formyltransferase
+R304	Glycoaldehydye reversible transport
+R305	GDP 4 dehydro 6 deoxy D mannose epimerase
+R306	gamma F420 0gamma L glutamate ligase
+R307	gamma F420 1gamma L glutamate ligase
+R308	gamma F420 2gamma L glutamate ligase
+R309	gamma F420 3gamma L glutamate ligase
+R310	gamma F420 4gamma L glutamate ligase
+R311	gamma F420 5gamma L glutamate ligase
+R312	gamma F420 6gamma L glutamate ligase
+R313	glutamine fructose 6 phosphate transaminase
+R314	geranylgeranylglyceryl phosphate synthase
+R315	glycine hydroxymethyltransferase
+R316	guanylate kinase GMPATP 
+R317	ADP specific glucokinase
+R318	glucan 1 4 alpha glucosidase
+R319	D gluconate transport via proton symport reversible
+R320	glycogen phosphorylase
+R321	glycogen synthase UDPGlc 
+R322	glutamine synthetase
+R323	glutamyl tRNA Gln amidotransferase
+R324	glutamate 5 kinase
+R325	Glutamate Decarboxylase
+R326	glutamine phosphoribosyldiphosphate amidotransferase
+R327	glutamate synthase F420 
+R328	glutamyl tRNA reductase
+R329	Glutamyl tRNA synthetase
+R330	Glutamyl tRNA synthetase Gln 
+R331	L glutamate transport via proton symport reversible
+R332	Glyceraldehyde facilitated diffusion
+R333	Glycine betaine transport via ABC system
+R334	glycerol transport via channel
+R335	Glycyl tRNA synthetase
+R336	glycine reversible transport via sodium symport
+R337	GDP D mannose dehydratase
+R338	GMP synthase
+R339	GDP 4 oxo L fucose reductase
+R340	geranyltranstransferase
+R341	geranyltranstransferase 3 hydroxy 
+R342	glutathione oxidoreductase
+R343	guanine deaminase
+R344	guanine phosphoribosyltransferase
+R345	dihydromethanoterin reductase
+R346	H2O transport via diffusion
+R347	h2s transport diffusion 
+R348	hydrogen transport
+R349	tetrahydromethanopterin glutamate lyase ATP 
+R350	tetrahydromethanopterin glutamate lyase GTP 
+R351	tetrahydromethanopterin synthesis reaction 10
+R352	tetrahydromethanopterin synthesis reaction 11
+R353	tetrahydromethanopterin synthesis reaction 12
+R354	tetrahydromethanopterin synthesis reaction 13
+R355	tetrahydromethanopterin synthesis reaction 14
+R356	tetrahydromethanopterin synthesis reaction 15
+R357	tetrahydromethanopterin synthesis reaction 16
+R358	tetrahydromethanopterin synthesis reaction 9
+R359	hydroxyarchaetidylserine decarboxylase
+R360	hydroxyarchaetidylglycerol hydrogenase
+R361	hydroxyarchaetidylinositol hydrogenase
+R362	hydroxyarchaetidylserine hydrogenase
+R363	homocitrate synthase
+R364	HCO3 equilibration reaction
+R365	Heterodisulphide reductase
+R366	hydroxyethylthiazole kinase
+R367	hexokinase D fructoseATP 
+R368	histidine decarboxylase
+R369	histidinol dehydrogenase
+R370	histidinol phosphatase
+R371	Histidyl tRNA synthetase
+R372	HK gastricnon gastric P ATPase and ABC ATPase
+R373	hydroxymethylbilane synthase
+R374	Hydroxymethylglutaryl CoA reductase ir 
+R375	Hydroxymethylglutaryl CoA synthase ir 
+R376	hydroxymethylpyrimidine kinase ATP 
+R377	ydroxyphenylacetate transport in via proton symporter
+R378	6 hydroxymethyl dihydropterin pyrophosphokinase
+R379	homoserine dehydrogenase NADPH 
+R380	homoserine O trans acetylase
+R381	homoserine kinase
+R382	homospermidine synthase
+R383	histidinol phosphate transaminase
+R384	hypoxanthine phosphoribosyltransferase Hypoxanthine 
+R385	Imidazole glycerol 3 phosphate synthase
+R386	imidazoleglycerol phosphate dehydratase
+R387	indole 3 glycerol phosphate synthase
+R388	isoleucine transaminase
+R389	Isoleucyl tRNA synthetase
+R390	L isoleucine reversible transport via proton symport
+R391	IMP cyclohydrolase
+R392	IMP dehydrogenase
+R393	indole 3 acetate transport via proton symport
+R394	inositol 2 dehydrogenase
+R395	indolepyruvate ferredoxin oxidoreductase
+R396	indolepyruvate ferredoxin oxidoreductase phenylpyvurate 
+R397	indolepyruvate ferredoxin oxidoreductase hydroxyphenylpyvurate 
+R398	isopentenyl diphosphate isomerase type3 
+R399	3 isopropylmalate dehydrogenase
+R400	3 isopropylmalate dehydratase
+R401	2 isopropylmalate hydratase
+R402	2 isopropylmalate synthase
+R403	ketol acid reductoisomerase 2 3 dihydroxy 3 methylbutanoate 
+R404	potassium reversible transport via proton symport
+R405	leucine transaminase
+R406	Leucyl tRNA synthetase
+R407	L leucine reversible transport via proton symport
+R408	LPPGFo 2 phospho L lactate transferase
+R409	LPPG synthetase
+R410	lysine 2 3 aminomutase
+R411	Lysyl tRNA synthetase
+R412	L lysine transport out via proton antiport reversible
+R413	mannose 1 phosphate guanylyltransferase GDP reversible
+R414	mannose 6 phosphate isomerase
+R415	Methyl coenzyme M reductase
+R416	malate dehydrogenase
+R417	malate dehydrogenase NADP 
+R418	malic enzyme
+R419	Methanol diffusion
+R420	methionine adenosyltransferase
+R421	methionine g lyase
+R422	methionine synthase
+R423	Methionyl tRNA synthetase
+R424	mevalonate kinase atp 
+R425	magnesium transport via ABC system
+R426	magnesium transport inout via permease no H 
+R427	Monomethylamine symport
+R428	manganese transport via ABC system
+R429	molybdate transport via ABC system
+R430	3 methyl 2 oxobutanoate hydroxymethyltransferase
+R431	5 methylthioadenosine phosphorylase
+R432	methenyltetrahydrofolate cyclohydrolase
+R433	methylenetetrahydrofolate dehydrogenase NAD 
+R434	5 10 methylenetetrahydrofolatereductase NADPH 
+R435	Methenyl H4SPt cyclohydrolase
+R436	Mb Biomass function
+R437	Nitrogen exchange diffusion
+R438	Nicotinic acid uptake
+R439	NAD kinase
+R440	NAD synthase nh3 
+R441	NAD synthase glutamine hydrolysing 
+R442	NAPRTase rev 
+R443	sodium proton antiporter HNA is 11 
+R444	Nalpha beta alanyl L histidine hydrolase
+R445	nucleoside diphosphate kinase ATPGDP 
+R446	nucleoside diphosphate kinase ATPUDP 
+R447	nucleoside diphosphate kinase ATPCDP 
+R448	nucleoside diphosphate kinase ATPdTDP 
+R449	nucleoside diphosphate kinase ATPdGDP 
+R450	nucleoside diphosphate kinase ATPdUDP 
+R451	nucleoside diphosphate kinase ATPdCDP 
+R452	nucleoside diphosphate kinase ATPdADP 
+R453	nucleoside diphosphate kinase ATPIDP 
+R454	ammonia reversible transport
+R455	nitrogenase
+R456	nickel transport via ABC system
+R457	nickel transport inout via permease no H 
+R458	nicotinamide nucleotide adenylyltransferase
+R459	Nicotinate nucleotide 5 hydroxybenzimidazole phosphoribosyltransferase
+R460	nicotinate nucleotide adenylyltransferase
+R461	nicotinate nucleotide diphosphorylase carboxylating 
+R462	nucleoside triphosphatase ATP 
+R463	nucleoside triphosphatase dATP 
+R464	nucleoside triphosphatase GTP 
+R465	nucleoside triphosphatase dGTP 
+R466	nucleoside triphosphatase CTP 
+R467	nucleoside triphosphatase dCTP 
+R468	nucleoside triphosphatase UTP 
+R469	nucleoside triphosphatase dUTP 
+R470	nucleoside triphosphatase dTTP 
+R471	nitrite Reductase NADH 
+R472	nitrite Reductase NADPH 
+R473	NaK exchanging ATPase  1
+R474	ornithine carbamoyltransferase
+R475	2 Oxo 4 methyl 3 carboxypentanoate decarboxylation
+R476	orotidine 5 phosphate decarboxylase
+R477	2 oxoglutarate synthase reversible 
+R478	5 Oxoproline amidohydrolase ATP hydrolysing 
+R479	ornithine cyclodeaminase
+R480	Ornithine Decarboxylase
+R481	ornithine transacetylase
+R482	orotate phosphoribosyltransferase
+R483	oxalate decarboxylase
+R484	pyrroline 5 carboxylate reductase
+R485	phenylacetate CoA ligase
+R486	phenylacetate CoA ligase hydroxyphenylacetate 
+R487	phenylacetate CoA ligase indoleacetate 
+R488	phenylacetate transport in via proton symporter
+R489	phosphoadenylyl sulfate reductase thioredoxin 
+R490	pyruvate carboxylase
+R491	ADP specific phosphofructokinase
+R492	phosphoglucosamine mutase
+R493	phosphoglycerate dehydrogenase
+R494	glucose 6 phosphate isomerase
+R495	phosphoglycerate kinase
+R496	Phosphoglycolate phosphatase
+R497	phosphoglycerate mutase
+R498	phosphoglucomutase
+R499	phenylalanine transaminase
+R500	Phenylalanyl tRNA synthetase
+R501	phosphate transport via ABC system
+R502	phosphomannomutase
+R503	pyrimidine phosphatase
+R504	phosphomethylpyrimidine kinase
+R505	Pantothenate reversible transport via proton symport
+R506	pyruvate synthase
+R507	inorganic diphosphatase
+R508	Propionate kinase
+R509	inorganic diphosphatase one proton translocation 
+R510	porphobilinogen synthase
+R511	phosphopantothenoylcysteine decarboxylase
+R512	Pyruvate phosphate dikinase
+R513	polyphosphate kinase
+R514	phosphopantothenate cysteine ligase
+R515	prephenate dehydrogenase
+R516	prephenate dehydratase
+R517	phosphoenolpyruvate synthase
+R518	phosphoribosylglycinamide synthase
+R519	phosphoribosylaminoimidazole synthase
+R520	phosphoribosylanthranilate isomerase irreversible 
+R521	phosphoribosyl AMP cyclohydrolase
+R522	phosphoribosylaminoimidazolesuccinocarboxamide synthase
+R523	phosphoribosyl ATP pyrophosphatase
+R524	phosphoribosylformylglycinamidine synthase
+R525	1 5 phosphoribosyl 5 5 phosphoribosylamino methylideneamino imidazole 4 carboxamide isomerase irreversible 
+R526	Prolyl tRNA synthetase
+R527	L proline transport via ABC system
+R528	phosphoribosylpyrophosphate phosphatase
+R529	phosphoribosylpyrophosphate synthetase
+R530	3 phosphoshikimate 1 carboxyvinyltransferase
+R531	phosphoserine transaminase
+R532	phosphoserine phosphatase L serine 
+R533	phosphotransacetylase
+R534	6 pyruvoyltetrahydropterin synthase
+R535	pantetheine phosphate adenylyltransferase
+R536	pyruvate kinase
+R537	pyruvate decarboxylase
+R538	pyruvate transport in via proton symport
+R539	quinolinate synthase
+R540	riboflavin synthase
+R541	ribokinase
+R542	ribulose bisphosphate carboxylase
+R543	ribose 1 5 bisphosphate isomerase
+R544	 R  homo 2citrate dehydratase
+R545	 R  homo 3citrate dehydratase
+R546	riboflavin transport in via proton symport
+R547	ribonucleoside diphosphate reductase ADP 
+R548	ribonucleoside diphosphate reductase GDP 
+R549	ribonucleoside diphosphate reductase CDP 
+R550	ribonucleoside diphosphate reductase UDP 
+R551	ribonucleoside triphosphate reductase ATP 
+R552	ribonucleoside triphosphate reductase GTP 
+R553	ribonucleoside triphosphate reductase CTP 
+R554	ribonucleoside triphosphate reductase UTP 
+R555	ribose 5 phosphate isomerase
+R556	alpha ribazole 5 phosphate phosphatase
+R557	sulfoethylcysteine synthase
+R558	serine O acetyltransferase
+R559	Seryl tRNA synthetase
+R560	 S homocitrate dehydratase
+R561	sirohydrochlorin cobaltochelatase
+R562	sirohydrochlorin dehydrogenase NAD 
+R563	sirohydrochlorin ferrochetalase
+R564	shikimate dehydrogenase
+R565	shikimate kinase
+R566	sulfomethyl thiazolidine synthase
+R567	sulfate transport exchange via proton symport
+R568	sulfate transport in via proton symport
+R569	sulfopyruvate decarboxylase
+R570	superoxide dismutase
+R571	succinate semialdehyde dehydrogenase NAD 
+R572	succinate semialdehyde dehydrogenase NADP 
+R573	sulfate transport via ABC system
+R574	dTDP 4 dehydrorhamnose 3 5 epimerase
+R575	dTDP 4 dehydrorhamnose reductase
+R576	dTDPglucose 4 6 dehydratase
+R577	trans homoaconitate hydrolase
+R578	thiamine transport via ABC system
+R579	Threonine Aldolase
+R580	threonine phosphate decarboxylase
+R581	threonine phosphate synthase
+R582	threonine synthase
+R583	Threonyl tRNA synthetase
+R584	thiazole phosphate synthesis
+R585	threo iso homo 2citrate dehydrogenase
+R586	threo iso homo 3citrate dehydrogenase
+R587	threo isohomocitrate dehydrogenase
+R588	transketolase
+R589	Trimethylamine symport
+R590	thymidine kinase ATPthymidine 
+R591	thymidine phosphorylase
+R592	thymidylate synthase
+R593	thiamine kinase
+R594	thiamine phosphate kinase
+R595	thiamine phosphate diphosphorylase
+R596	triose phosphate isomerase
+R597	thioredoxin reductase NADPH 
+R598	tryptophan synthase indoleglycerol phosphate 
+R599	tryptophan synthase indole 
+R600	tryptophan transaminase
+R601	Tryptophanyl tRNA synthetase
+R602	thiosulfate reductase
+R603	thiosulfate transport via ABC system
+R604	tyrosine transaminase
+R605	tyrosyl tRNA synthetase
+R606	UDP N acetylglucosamine 2 epimerase
+R607	UDP N acetyl D glucosamine 2 epimerase Hydrolysis 
+R608	UDP N acetylglucosamine 1 carboxyvinyltransferase
+R609	UDP N acetylglucosamine diphosphorylase
+R610	UDP N acetylenolpyruvoylglucosamine reductase
+R611	UDPglucose 4 epimerase
+R612	UDPglucose 6 dehydrogenase
+R613	UMP kinase
+R614	unknown cobalamin degradation product diffusion
+R615	unknown riboflavin degradation product diffusion
+R616	uroporphyrinogen methyltransferase
+R617	uroporphyrinogen III synthase
+R618	Urea transport via facilitate diffusion
+R619	uridylate kinase dUMP 
+R620	valine transaminase
+R621	Valyl tRNA synthetase
+R622	L valine reversible transport via proton symport
+R623	2 oxoisovalerate ferredoxin reductase
+R624	xanthine phosphoribosyltransferase
+R625	yUMP synthetase
+R626	zinc transport via ABC system
+R627	GTP:alpha-D-mannose-1-phosphate guanylyltransferase
+R628	CTP:riboflavin 5'-phosphotransferase
+R629	Oxalosuccinate carboxy-lyase (2-oxoglutarate-forming)
+R630	Isocitrate:NADP+ oxidoreductase (decarboxylating)
+R631	D-Glyceraldehyde:NAD+ oxidoreductase
+R632	alpha-Aminobutyryl histidine hydrolase
+R633	5-formaminoimidazole-4-carboxamide-1-beta-D-ribofuranosyl
+R634	Nicotinamide ribonucleotide phosphohydrolase
+R635	L-aspartate:NADP+ oxidoreductase (deaminating)
+R636	adenosylcobyric acid:(R)-1-aminopropan-2-ol ligase (ADP-forming)
+R637	1D-myo-inositol-3-phosphate lyase (isomerizing)
+R638	(R)-2,3-Dihydroxy-3-methylbutanoate:NADP+ oxidoreductase
+R639	(R)-2,3-Dihydroxy-3-methylpentanoate:NADP+ oxidoreductase
+R640	pyruvate:thiamin diphosphate acetaldehydetransferase
+R641	(S)-2-Aceto-2-hydroxybutanoate pyruvate-lyase (carboxylating)
+R642	(R)-2-Methylmalate synthetase
+R643	(S)-Methylmalonate semialdehyde:NAD+ oxidoreductase
+R644	adenylyl-sulfate kinase
+R645	alcohol dehydrogenase (methanol)
+R646	beta-ureidopropionase (D-3-amino-isobutanoate forming)
+R647	lactaldehyde dehydrogenase
+R648	myo-inositol 3-phosphatase
+R649	Adenosylcobalamin-HBI reductase
+R650	5-hydroxybenzimidazolylcobamide oxidation
+R651	6 deoxy 5 ketofructose 1 phosphate synthase 2 (from fdp)
+R652	6 deoxy 5 ketofructose 1 phosphate synthase 3 (from f1p)
+R653	Fructose 1 phosphate synthase
+R654	Hydroxyacetone synthase
+R655	Acetol oxidation
+R656	Alcohol dehydrogenase (L-lactaldehyde by F420)
+R657	UDP-N-acetyl-D-mannosamine oxidoreductase
+R658	Phosphopantothenate synthetase
+R659	pantothenate synthase (adp-forming)
+R660	Asparaginyl-tRNA synthetase 2 (correction pathway part 1)
+R661	Asparaginyl-tRNA synthetase 2 (correction pathway part 2)
+R662	Arabino-3-hexulose-6-P Isomerase
+R663	Ribulose-5-P Synthetase
+R664	Biotin synthetase
+R665	Biotin synthase protein regeneration reaction
+R666	GTP cyclohydrolase IV
+R667	GTP cyclohydrolase III
+R668	2-amino-5-formylamino-6-ribosylamino-4-(3H)-pyrimidinone 5'-monophosphate hydrolase
+R669	LL-diaminopimelate aminotransferase
+R670	diaminopimelate epimerase
+R671	Precorrin-2 decarboxylase
+R672	Protoheme synthetase
+R673	6-deoxy-5-ketomannitol 1-phosphate:L-aspartate semialdehyde ligase
+R674	Phosphomevalonate decarboxylase
+R675	Isopentenyl kinase
+R676	Isopentenyl diphosphate hydrolase
+R677	Trimethylamine methyltransferase
+R678	Dimethylamine methyltransferase
+R679	Monomethylamine methyltransferase
+R680	Methylthiol: coenzyme M methyltransferase
+R681	Methyl-H4SPT: coenzyme M methyltransferase
+R682	methanol:5-hydroxybenzimidazolylcobamide Co-methyltransferase
+R683	L-Cysteate syntahse
+R684	L-Cysteate:2-oxoglutarate aminotransferase
+R685	1,2-Dichloroethane cobalamin declorination 1
+R686	1,2-Dichloroethane cobalamin declorination 2a
+R687	1,2-Dichloroethane cobalamin declorination 2b
+R688	1,2-Dichloroethane F430 declorination 1
+R689	Chloroethane F430 declorination 1
+R690	1,2-Dichloroethane F430 declorination 2a
+R691	1,2-Dichloroethane F430 declorination 2b
+R692	Chloroethane F430 declorination 2
+R693	F430 reduction
+R694	1,2-Dichloroethane transport
+R695	Chloroethane transport
+R696	Ethylene transport
+R697	Ethane transport
+R698	1,2-Dichloroethane exchange
+R699	Chloroethane exchange
+R700	Ethylene exchange
+R701	Ethane exchange
+R702	Co-methyl-Co-5-hydroxybenzimidazolylcob(I)amide: coenzyme M methyltransferase
+R703	5-hydroxybenzimidazolylcobamide reduction
+R704	Acetate carbonate antiporter
+R705	Carbonate export
+R706	citrate hydro-lyase (cis-aconitate-forming)
+R707	isocitrate hydro-lyase (cis-aconitate-forming)
+R708	4-amino-2-methyl-5-phosphomethylpyrimidine synthetase
+R709	L-cysteinylglycine dipeptidase
+R710	chorismate pyruvate-lyase (amino-accepting; anthranilate-forming)
+R711	L-aspartate:NAD+ oxidoreductase
+R712	ATP amine hydrolysis (spontaneous)
+R713	biotin transport (ABC)
+R714	Chorismate pyruvate lyase
+R715	cytidine kinase (ATP)
+R716	dATP amine hydrolysis (spontaneous)
+R717	Deamino-NAD+ nucleotidohydrolase
+R718	dUTP nucleotidohydrolase
+R719	Flavin adenine dinucleotide synthase
+R720	Flavin cytosine dinucleotide synthase
+R721	Flavin guanosine dinucleotide synthase
+R722	Glycolaldehyde dehydrogenase
+R723	dihydrolipoylprotein:NAD+ oxidoreductase
+R724	Guanosine phosphorylation
+R725	GTP amine hydrolysis (spontaneous)
+R726	GTP diphosphate-lyase (cyclizing; 3',5'-cyclic-GMP-forming)
+R727	all-trans-octaprenyl-diphosphate:4-hydroxybenzoate
+R728	Hydroxypyruvate reductase (NADH)
+R729	Hydroxypyruvate reductase (NADPH)
+R730	L-Homoserine:NAD+ oxidoreductase
+R731	Inosine phosphorylation
+R732	5-Methylthio-5-deoxy-D-ribose-1-phosphate ketol-isomerase
+R733	Sodium ABC transporter
+R734	NAD+ phosphohydrolase
+R735	ATP:dIDP phosphotransferase
+R736	Nicotinate D-ribonucleotide phosphohydrolase
+R737	Xanthosine 5'-phosphate phosphohydrolase
+R738	Inosine 5'-monophosphate phosphohydrolase
+R739	Uridine 5'-monophosphate phosphohydrolase
+R740	2'-Deoxycytidine 5'-monophosphate phosphohydrolase
+R741	Cytidine-5'-monophosphate phosphohydrolase
+R742	Thymidylate 5'-phosphohydrolase
+R743	2'-Deoxyadenosine 5'-monophosphate phosphohydrolase
+R744	Adenosine 5'-monophosphate phosphohydrolase
+R745	2'-Deoxyguanosine 5'-monophosphate phosphohydrolase
+R746	Guanosine 5'-monophosphate phosphohydrolase
+R747	Nucleoside triphosphate pyrophosphorylase (xtp)
+R748	Sodium-translocating pyrophosphatase
+R749	PEP carboxylase
+R750	Sodium-Proline symporter
+R751	L-Pyrrolysine synthesis 1
+R752	L-Pyrrolysine synthesis 2
+R753	pyrrolysyl-tRNA synthase
+R754	geranylgeranyl reductase
+R755	2-Acetolactate pyruvate-lyase (carboxylating)
+R756	O3-Acetyl-L-serine acetate-lyase (adding hydrogen sulfide)
+R757	Heptaprenyl diphosphate extension
+R758	Sulfate adenyltransferase
+R759	N-Succinyl-L-2,6-diaminoheptanedioate:2-oxoglutarate
+R760	Sulfite reductase
+R761	Thiamin diphosphate phosphohydrolase
+R762	L-tyrosine carboxy-lyase (tyramine-forming)
+R763	Zinc ABC transporter 2
+R764	glyceraldehyde ferredoxin oxidoreductase
+R765	dihydrodipicolinate reductase NADH
+R766	5-hydroxybenzimidazolylcobamide oxidized coblat reduction
+R767	N5,N10-methylene-5,6,7,8-tetrahydromethanopterin synthesis (formaldehyde)
+R768	(S)-2-Aceto-2-hydroxybutanoate:NADP+ oxidoreductase (isomerizing)
+R769	UDP-N-acetylglucosamine 4-epimerase
+R770	galactan synthase UDPGla
+R771	polyaceyl-D-galactosamine synthase UDPAcgal
+R772	polyglucuronic acid synthase UDPGlcur
+R773	5,10-methylenetetrahydrofolate reductase (NADH)
+R774	dUMP hydrolase
+R775	Zinc Hydrogen-Potassium antiporter
+R776	Cadmium Hydrogen-Potassium antiporter
+R777	Pyridoxal 5-phosphate synthase
+R778	Deoxyribokinase
+R779	Glycerol dehydrogenase
+R780	ADPribose hydrolase
+R781	Tryptophan import via proton symport
+R782	Glycerol:NADP+ oxidoreductase
+R783	Formate transporter
+R784	3-Hydroxy-2-methylpropanoate:NAD+ oxidoreductase
+R785	L-Proline 5 carboxylate reductase NADP
+R786	O-succinylhomoserine lyase (L-cysteine)  2
+R787	5-methyltetrahydropteroyltriglutamate methyltransferase
+R788	glyoxylate oxioreductase
+R789	Aminoacetaldehyde oxidation
+R790	Methanofuran intermediate 1 biosynthesis
+R791	Methanofuran intermediate 1 kinase
+R792	Methanofuran intermediate 2 dehydration
+R793	Methanofuran intermediate 3 isomerization
+R794	Methanofuran intermediate 4 dehydration
+R795	2,4-substituted-furan reduction (nad)
+R796	2-furaldehyde transaminase
+R797	p-(aminoethyl)phenoxy-methyl-2-(aminomethyl)furan biosynthesis
+R798	p-(aminoethyl)phenoxy-methyl-2-(aminomethyl)furan glutamate extention
+R799	4-[N-L-glutamyl-)-p-(aminoethyl)phenoxy-methyl]-2-(aminomethyl)furan glutamate extention
+R800	4-[N-L-glutamyl-L-glutamyl-)-p-(aminoethyl)phenoxy-methyl]-2-(aminomethyl)furan glutamate extention
+R801	Methanofuran B biosynthesis
+R802	Dimethyl sulfide Transport
+R803	Dimethyl sulfide exchange
+R804	Glutamate Dehydrogenase (NAD)
+R805	Glutamate Dehydrogenase (NADP)
+R806	Cytosolic Heterodisulphide reductase
+R807	Sink needed to allow p-Cresol to leave system
+R808	Sink needed to allow 5'-deoxyribose to leave system
+R809	Sink needed to allow aminoacetaldehyde to leave system
+R810	Sink needed to allow S-Adenosyl-4-methylthio-2-oxobutanoate to leave system
+R811	Sink needed to allow (2R,4S)-2-methyl-2,3,3,4-tetrahydroxytetrahydrofuran to leave system
+R812	Sink needed to allow oxamate to leave system
+R813	E. coli biomass objective function (iJO1366) - WT - with 53.95 GAM estimate
+R814	E. coli biomass objective function (iJO1366) - core - with 53.95 GAM estimate
+R815	(R)-Propane-1,2-diol exchange
+R816	(S)-Propane-1,2-diol exchange
+R817	1,4-alpha-D-glucan exchange
+R818	1,5-Diaminopentane exchange
+R819	2',3'-Cyclic AMP exchange
+R820	2',3'-Cyclic CMP exchange
+R821	2',3'-Cyclic GMP exchange
+R822	2',3'-Cyclic UMP exchange
+R823	2,3-diaminopropionate exchange
+R824	meso-2,6-Diaminoheptanedioate exchange
+R825	2-Dehydro-3-deoxy-D-gluconate exchange
+R826	3,4-Dihydroxyphenylacetaldehyde exchange
+R827	3'-AMP exchange
+R828	3'-cmp exchange
+R829	3'-GMP exchange
+R830	3-hydroxycinnamic acid exchange
+R831	3-Hydroxypropanoate exchange
+R832	3-(3-hydroxy-phenyl)propionate exchange
+R833	3'-UMP exchange
+R834	4-Aminobutanoate exchange
+R835	4-Hydroxyphenylacetaldehyde exchange
+R836	5-Dehydro-D-gluconate exchange
+R837	5-Methylthio-D-ribose exchange
+R838	L-alanine-D-glutamate exchange
+R839	L-alanine-D-glutamate-meso-2,6-diaminoheptanedioate exchange
+R840	L-alanine-D-glutamate-meso-2,6-diaminoheptanedioate-D-alanine exchange
+R841	L-alanine-L-glutamate exchange
+R842	Acetoacetate exchange
+R843	Acetaldehyde exchange
+R844	N-Acetyl-D-galactosamine exchange
+R845	N-Acetyl-D-galactosamine 1-phosphate exchange
+R846	N-Acetyl-D-glucosamine exchange
+R847	N-Acetyl-D-glucosamine 1-phosphate exchange
+R848	N-Acetyl-D-mannosamine exchange
+R849	N-Acetylmuramate exchange
+R850	N-Acetylneuraminate exchange
+R851	4-Amino-4-deoxy-L-arabinose modified core oligosaccharide lipid A exchange
+R852	O-Acetyl-L-serine exchange
+R853	Adenine exchange
+R854	Adenosine exchange
+R855	Adenosylcobalamin exchange
+R856	silver exchange
+R857	Agmatine exchange
+R858	2-Oxoglutarate exchange
+R859	beta-Alanine exchange
+R860	D-Alanine exchange
+R861	D-Alanyl-D-alanine exchange
+R862	D-Allose exchange
+R863	Allantoin exchange
+R864	AMP exchange
+R865	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramic acid exchange
+R866	L-Arabinose exchange
+R867	Arbutin exchange
+R868	aerobactin minus Fe3 exchange
+R869	Aerobactin exchange
+R870	L-Arginine exchange
+R871	L-Ascorbate exchange
+R872	L-Asparagine exchange
+R873	arsenite exchange
+R874	L-Aspartate exchange
+R875	Butyrate (n-C4:0) exchange
+R876	butanesulfonate exchange
+R877	Cys-Gly exchange
+R878	Choline exchange
+R879	chitobiose exchange
+R880	Chloramphenicol exchange
+R881	CMP exchange
+R882	core oligosaccharide lipid A exchange
+R883	core oligosaccharide lipid A diphosphate exchange
+R884	coprogen exchange
+R885	coprogen unloaded (no Fe(III)) exchange
+R886	L-Carnitine exchange
+R887	D-carnitine exchange
+R888	Cytosine exchange
+R889	Cu+ exchange
+R890	Hydrogen cyanide exchange
+R891	Cyanate exchange
+R892	D-Cysteine exchange
+R893	Cytidine exchange
+R894	Deoxyadenosine exchange
+R895	dAMP exchange
+R896	Decanoate (n-C10:0) exchange
+R897	dCMP exchange
+R898	Deoxycytidine exchange
+R899	Dodecanoate (n-C12:0) exchange
+R900	dGMP exchange
+R901	Deoxyguanosine exchange
+R902	Dihydroxyacetone exchange
+R903	dIMP exchange
+R904	Deoxyinosine exchange
+R905	Dimethyl sulfoxide exchange
+R906	Dopamine exchange
+R907	doxorubicin exchange
+R908	dTMP exchange
+R909	dUMP exchange
+R910	Deoxyuridine exchange
+R911	(enterobacterial common antigen)x4 core oligosaccharide lipid A exchange
+R912	phosphoethanolamine KDO(2)-lipid (A) exchange
+R913	Enterochelin exchange
+R914	ethanesulfonate exchange
+R915	Ethanol exchange
+R916	D-fructose 6-phosphate exchange
+R917	Formaldehyde exchange
+R918	Fe(III)dicitrate exchange
+R919	ferric 2,3-dihydroxybenzoylserine exchange
+R920	Fe(III)hydroxamate exchange
+R921	Fe(III)hydoxamate, unloaded exchange
+R922	Ferrichrome exchange
+R923	Ferrichrome minus Fe(III) exchange
+R924	Fe-enterobactin exchange
+R925	ferroxamine exchange
+R926	ferroxamine minus Fe(3) exchange
+R927	Formate exchange
+R928	D-Fructose exchange
+R929	fructoselysine exchange
+R930	D-Fructuronate exchange
+R931	L-Fucose exchange
+R932	Fumarate exchange
+R933	fusidic acid exchange
+R934	D-Glucose 1-phosphate exchange
+R935	sn-Glycero-3-phosphocholine exchange
+R936	sn-Glycero-3-phosphoethanolamine exchange
+R937	Glycerophosphoglycerol exchange
+R938	sn-Glycero-3-phospho-1-inositol exchange
+R939	Glycerophosphoserine exchange
+R940	D-Glucose 6-phosphate exchange
+R941	D-Galactose exchange
+R942	beta D-Galactose exchange
+R943	alpha-D-Galactose 1-phosphate exchange
+R944	D-Galactarate exchange
+R945	D-Galactonate exchange
+R946	L-Galactonate exchange
+R947	Galactitol exchange
+R948	D-Galacturonate exchange
+R949	D-Glucosamine exchange
+R950	D-Glucosamine 6-phosphate exchange
+R951	gamma-butyrobetaine exchange
+R952	GDP exchange
+R953	D-Glucose exchange
+R954	D-Glucarate exchange
+R955	D-Glucuronate exchange
+R956	D-Glucuronate 1-phosphate exchange
+R957	L-Glutamine exchange
+R958	(R)-Glycerate exchange
+R959	Glycerol 2-phosphate exchange
+R960	Glycerol 3-phosphate exchange
+R961	Glycolate exchange
+R962	GMP exchange
+R963	Guanosine exchange
+R964	Oxidized glutathione exchange
+R965	Reduced glutathione exchange
+R966	GTP exchange
+R967	Guanine exchange
+R968	Hydrogen peroxide exchange
+R969	hepta-acylated core oligosaccharide lipid A (E. coli) exchange
+R970	hepta-acylated KDO(2)-lipid (A) exchange
+R971	Hexadecanoate (n-C16:0) exchange
+R972	hexadecenoate (n-C16:1) exchange
+R973	Hg2+ exchange
+R974	L-Histidine exchange
+R975	L-Homoserine exchange
+R976	Hexanoate (n-C6:0) exchange
+R977	Hypoxanthine exchange
+R978	L-Idonate exchange
+R979	IMP exchange
+R980	Indole exchange
+R981	myo-Inositol exchange
+R982	Inosine exchange
+R983	Isethionic acid exchange
+R984	KDO(2)-lipid IV(A) exchange
+R985	D-lactate exchange
+R986	L-Lactate exchange
+R987	Lactose exchange
+R988	KDO(2)-lipid (A) exchange
+R989	cold adapted KDO(2)-lipid (A) exchange
+R990	Lipoate exchange
+R991	L-Lyxose exchange
+R992	D-Malate exchange
+R993	L-Malate exchange
+R994	Maltose exchange
+R995	Maltohexaose exchange
+R996	Maltopentaose exchange
+R997	Maltotriose exchange
+R998	Maltotetraose exchange
+R999	D-Mannose exchange
+R1000	D-Mannose 6-phosphate exchange
+R1001	2(alpha-D-Mannosyl)-D-glycerate exchange
+R1002	Melibiose exchange
+R1003	D-Methionine exchange
+R1004	L-Methionine exchange
+R1005	L-methionine-R-sulfoxide exchange
+R1006	L-Methionine S-oxide exchange
+R1007	minocycline exchange
+R1008	myo-Inositol hexakisphosphate exchange
+R1009	S-Methyl-L-methionine exchange
+R1010	D-Mannitol exchange
+R1011	methanesulfonate exchange
+R1012	Nitrous oxide exchange
+R1013	NMN exchange
+R1014	Nitric oxide exchange
+R1015	Nitrite exchange
+R1016	Nitrate exchange
+R1017	novobiocin exchange
+R1018	(O16 antigen)x4 core oligosaccharide lipid A exchange
+R1019	O2 exchange
+R1020	Superoxide anion exchange
+R1021	octadecanoate (n-C18:0) exchange
+R1022	octadecenoate (n-C18:1) exchange
+R1023	octanoate (n-C8:0) exchange
+R1024	Ornithine exchange
+R1025	Orotate exchange
+R1026	Phenylacetaldehyde exchange
+R1027	Phenethylamine exchange
+R1028	L-Phenylalanine exchange
+R1029	Protoheme exchange
+R1030	Propionate exchange
+R1031	Propanal exchange
+R1032	Phenylpropanoate exchange
+R1033	Phosphonate exchange
+R1034	L-Prolinylglycine exchange
+R1035	psicoselysine exchange
+R1036	O-Phospho-L-serine exchange
+R1037	Putrescine exchange
+R1038	Pyridoxamine exchange
+R1039	Pyridoxal exchange
+R1040	Pyridoxine exchange
+R1041	Quinate exchange
+R1042	alpha-D-Ribose 5-phosphate exchange
+R1043	rifampin exchange
+R1044	D-Ribose exchange
+R1045	L-Rhamnose exchange
+R1046	D-Sorbitol exchange
+R1047	Selenate exchange
+R1048	D-Serine exchange
+R1049	L-Serine exchange
+R1050	Shikimate exchange
+R1051	selenite exchange
+R1052	sulfur dioxide exchange
+R1053	Spermidine exchange
+R1054	Succinate exchange
+R1055	Sucrose exchange
+R1056	sulfoacetate exchange
+R1057	D-tartrate exchange
+R1058	L-tartrate exchange
+R1059	Taurine exchange
+R1060	Thiocyanate exchange
+R1061	L-Threonine exchange
+R1062	L-Threonine O-3-phosphate exchange
+R1063	Thymine exchange
+R1064	Thymidine exchange
+R1065	Trimethylamine N-oxide exchange
+R1066	Trehalose exchange
+R1067	L-Tryptophan exchange
+R1068	tetradecanoate (n-C14:0) exchange
+R1069	tetradecenoate (n-C14:1) exchange
+R1070	tetracycline exchange
+R1071	tungstate exchange
+R1072	Tyramine exchange
+R1073	L-Tyrosine exchange
+R1074	Phosphotyrosine exchange
+R1075	UDP-N-acetyl-D-glucosamine exchange
+R1076	UDP-N-acetyl-D-galactosamine exchange
+R1077	UDPglucose exchange
+R1078	UDPgalactose exchange
+R1079	UDP-D-glucuronate exchange
+R1080	UMP exchange
+R1081	Uracil exchange
+R1082	Uridine exchange
+R1083	Xanthine exchange
+R1084	Xanthosine 5'-phosphate exchange
+R1085	Xanthosine exchange
+R1086	D-Xylose exchange
+R1087	L-Xylulose exchange
+R1088	1,2 diacylglycerol transport via flipping (periplasm to cytoplasm, n-C12:0)
+R1089	1,2 diacylglycerol transport via flipping (periplasm to cytoplasm, n-C14:0)
+R1090	1,2 diacylglycerol transport via flipping (periplasm to cytoplasm, n-C14:1)
+R1091	1,2 diacylglycerol transport via flipping (periplasm to cytoplasm, n-C16:0)
+R1092	1,2 diacylglycerol transport via flipping (periplasm to cytoplasm, n-C16:1)
+R1093	1,2 diacylglycerol transport via flipping (periplasm to cytoplasm, n-C18:0)
+R1094	1,2 diacylglycerol transport via flipping (periplasm to cytoplasm, n-C18:1)
+R1095	(R)-Propane-1,2-diol transport via diffusion (extracellular to periplasm)
+R1096	(R)-Propane-1,2-diol facilitated transport (periplasm)
+R1097	(S)-Propane-1,2-diol transport via diffusion (extracellular to periplasm)
+R1098	(S)-Propane-1,2-diol facilitated transport (periplasm)
+R1099	1,4-alpha-D-glucan transport via ABC system (periplasm)
+R1100	1,4-alpha-D-glucan transport via diffusion (extracellular to periplasm) irreversible
+R1101	23cAMP transport via diffusion (extracellular to periplasm)
+R1102	23cCMP transport via diffusion (extracellular to periplasm)
+R1103	23cGMP transport via diffusion (extracellular to periplasm)
+R1104	23cUMP transport via diffusion (extracellular to periplasm)
+R1105	2,3-diaminopropionate transport in via proton symport
+R1106	2,3-diaminopropionate transport via diffusion
+R1107	2',3'-cyclic-nucleotide phosphodiesterase (UMP) (periplasm)
+R1108	2',3'-cyclic-nucleotide phosphodiesterase (CMP) (periplasm)
+R1109	2',3'-cyclic-nucleotide phosphodiesterase (AMP) (periplasm)
+R1110	2',3'-cyclic-nucleotide phosphodiesterase (GMP) (periplasm)
+R1111	meso-2,6-Diaminoheptanedioate transport via diffusion (extracellular to periplasm)
+R1112	2-Acyl-sn-glycero-3-phosphatidate (n-C12:0) transporter via facilitated diffusion (periplasm)
+R1113	2-Acyl-sn-glycero-3-phosphatidate (n-C14:0) transporter via facilitated diffusion (periplasm)
+R1114	2-Acyl-sn-glycero-3-phosphatidate (n-C14:1) transporter via facilitated diffusion (periplasm)
+R1115	2-Acyl-sn-glycero-3-phosphatidate (n-C16:0) transporter via facilitated diffusion (periplasm)
+R1116	2-Acyl-sn-glycero-3-phosphatidate (n-C16:1) transporter via facilitated diffusion (periplasm)
+R1117	2-Acyl-sn-glycero-3-phosphatidate (n-C18:0) transporter via facilitated diffusion (periplasm)
+R1118	2-Acyl-sn-glycero-3-phosphatidate (n-C18:1) transporter via facilitated diffusion (periplasm)
+R1119	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C12:0) transporter via facilitated diffusion (periplasm)
+R1120	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C14:0) transporter via facilitated diffusion (periplasm)
+R1121	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C14:1) transporter via facilitated diffusion (periplasm)
+R1122	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C16:0) transporter via facilitated diffusion (periplasm)
+R1123	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C16:1) transporter via facilitated diffusion (periplasm)
+R1124	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C18:0) transporter via facilitated diffusion (periplasm)
+R1125	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C18:1) transporter via facilitated diffusion (periplasm)
+R1126	2-acyl-glycerophospho-ethanolamine acyltransferase (n-C12:0)
+R1127	2-acyl-glycerophospho-ethanolamine acyltransferase (n-C14:0)
+R1128	2-acyl-glycerophospho-ethanolamine acyltransferase (n-C14:1)
+R1129	2-acyl-glycerophospho-ethanolamine acyltransferase (n-C16:0)
+R1130	2-acyl-glycerophospho-ethanolamine acyltransferase (n-C16:1)
+R1131	2-acyl-glycerophospho-ethanolamine acyltransferase (n-C18:0)
+R1132	2-acyl-glycerophospho-ethanolamine acyltransferase (n-C18:1)
+R1133	2-Acyl-sn-glycero-3-phosphoglycerol (n-C12:0) transporter via facilitated diffusion (periplasm)
+R1134	2-Acyl-sn-glycero-3-phosphoglycerol (n-C14:0) transporter via facilitated diffusion (periplasm)
+R1135	2-Acyl-sn-glycero-3-phosphoglycerol (n-C14:1) transporter via facilitated diffusion (periplasm)
+R1136	2-Acyl-sn-glycero-3-phosphoglycerol (n-C16:0) transporter via facilitated diffusion (periplasm)
+R1137	2-Acyl-sn-glycero-3-phosphoglycerol (n-C16:1) transporter via facilitated diffusion (periplasm)
+R1138	2-Acyl-sn-glycero-3-phosphoglycerol (n-C18:0) transporter via facilitated diffusion (periplasm)
+R1139	2-Acyl-sn-glycero-3-phosphoglycerol (n-C18:1) transporter via facilitated diffusion (periplasm)
+R1140	2-acyl-glycerophospho-glycerol acyltransferase (n-C12:0)
+R1141	2-acyl-glycerophospho-glycerol acyltransferase (n-C14:0)
+R1142	2-acyl-glycerophospho-glycerol acyltransferase (n-C14:1)
+R1143	2-acyl-glycerophospho-glycerol acyltransferase (n-C16:0)
+R1144	2-acyl-glycerophospho-glycerol acyltransferase (n-C16:1)
+R1145	2-acyl-glycerophospho-glycerol acyltransferase (n-C18:0)
+R1146	2-acyl-glycerophospho-glycerol acyltransferase (n-C18:1)
+R1147	2-Dehydro-L-gulonate reductase to gluconate (NADH)
+R1148	2-Dehydro-L-gulonate reductase to gluconate (NADPH)
+R1149	2-dehydro-L-gulonate reductase (NADH)
+R1150	2-dehydro-L-gulonate reductase (NADPH)
+R1151	2-Methyl-4-amino-5-hydroxymethylpyrimidine diphosphatase
+R1152	dihydroxyphenylacetaldehyde transport via diffusion (extracellular to periplasm)
+R1153	3-aminoacrylate hydrolase
+R1154	3AMP transport via diffusion (extracellular to periplasm)
+R1155	3CMP transport via diffusion (extracellular to periplasm)
+R1156	3GMP transport via diffusion (extracellular to periplasm)
+R1157	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C10:0)
+R1158	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C12:0)
+R1159	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C12:1)
+R1160	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C14:0)
+R1161	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C14:1)
+R1162	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C16:0)
+R1163	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C16:1)
+R1164	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C18:0)
+R1165	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C18:1)
+R1166	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C4:0)
+R1167	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C6:0)
+R1168	3-hydroxyacyl-[acyl-carrier-protein] dehydratase (n-C8:0)
+R1169	3-hydroxycinnamate hydroxylase
+R1170	3-(3-hydroxy-phenyl)propionate hydroxylase
+R1171	3-hydroxypropionate transport via diffusion (extracellular to periplasm)
+R1172	3-hydroxypropionate transport via proton symport (periplasm)
+R1173	3-keto-L-gulonate kinase
+R1174	3'-nucleotidase (UMP) (periplasm)
+R1175	3'-nucleotidase (CMP) (periplasm)
+R1176	3'-nucleotidase (AMP) (periplasm)
+R1177	3'-nucleotidase (GMP) (periplasm)
+R1178	3-oxoacyl-[acyl-carrier-protein] reductase (n-C10:0)
+R1179	3-oxoacyl-[acyl-carrier-protein] reductase (n-C12:0)
+R1180	3-oxoacyl-[acyl-carrier-protein] reductase (n-C12:1)
+R1181	3-oxoacyl-[acyl-carrier-protein] reductase (n-C14:0)
+R1182	3-oxoacyl-[acyl-carrier-protein] reductase (n-C14:1)
+R1183	3-oxoacyl-[acyl-carrier-protein] reductase (n-C16:0)
+R1184	3-oxoacyl-[acyl-carrier-protein] reductase (n-C16:1)
+R1185	3-oxoacyl-[acyl-carrier-protein] reductase (n-C18:0)
+R1186	3-oxoacyl-[acyl-carrier-protein] reductase (n-C18:1)
+R1187	3-oxoacyl-[acyl-carrier-protein] reductase (n-C4:0)
+R1188	3-oxoacyl-[acyl-carrier-protein] reductase (n-C6:0)
+R1189	3-oxoacyl-[acyl-carrier-protein] reductase (n-C8:0)
+R1190	3-oxoacyl-[acyl-carrier-protein] synthase (n-C10:0)
+R1191	3-oxoacyl-[acyl-carrier-protein] synthase (n-C12:0)
+R1192	3-oxoacyl-[acyl-carrier-protein] synthase (n-C12:1)
+R1193	3-oxoacyl-[acyl-carrier-protein] synthase (n-C14:0)
+R1194	3-oxoacyl-[acyl-carrier-protein] synthase (n-C14:1)
+R1195	3-oxoacyl-[acyl-carrier-protein] synthase (n-C16:0)
+R1196	3-oxoacyl-[acyl-carrier-protein] synthase (n-C16:1)
+R1197	3-oxoacyl-[acyl-carrier-protein] synthase (n-C18:0)
+R1198	3-oxoacyl-[acyl-carrier-protein] synthase (n-C18:1)
+R1199	3-oxoacyl-[acyl-carrier-protein] synthase (n-C6:0)
+R1200	3-oxoacyl-[acyl-carrier-protein] synthase (n-C8:0)
+R1201	3-oxoadipyl-CoA thiolase
+R1202	tripeptide (LalaDgluMdap) transport via ABC system (periplasm)
+R1203	LalaDgluMdap (tripeptide) transport via diffusion (extracellular to periplasm)
+R1204	3UMP transport via diffusion (extracellular to periplasm)
+R1205	4-(2-Aminoethyl)-1,2-benzenediol:oxygen oxidoreductase(deaminating)(flavin-containing)
+R1206	4-hydroxyphenylacetaldehyde transport via diffusion (extracellular to periplasm)
+R1207	4-Hydroxy-L-threonine synthase
+R1208	tetrapeptide L,D-carboxypeptidase
+R1209	tetrapeptide L,D-carboxypeptidase (periplasm)
+R1210	tetrapeptide (LalaDgluMdapDala) transport via ABC system (periplasm)
+R1211	LalaDgluMdapDala (pentapeptide) transport via diffusion (extracellular to periplasm)
+R1212	5-dehydro-D-gluconate reductase
+R1213	5-Dehydro-D-gluconate transport via proton symport, reversible (periplasm)
+R1214	5-Dehydro-D-gluconate transport via diffusion (extracellular to periplasm)
+R1215	5'-deoxyadenosine nuclosidase
+R1216	5-Methylthio-D-ribose transport via proton diffusion (extracellular to periplasm)
+R1217	5-Methylthio-D-ribose transport via proton symport (periplasm)
+R1218	arabinose-5-phosphate isomerase
+R1219	acyl-[acyl-carrier-protein] synthetase (n-C14:0)
+R1220	acyl-[acyl-carrier-protein] synthetase  (n-C14:1)
+R1221	acyl-[acyl-carrier-protein] synthetase  (n-C16:0)
+R1222	acyl-[acyl-carrier-protein] synthetase  (n-C16:1)
+R1223	acyl-[acyl-carrier-protein] synthetase  (n-C18:1)
+R1224	acyl-[acyl-carrier-protein] synthetase  (n-C18:0)
+R1225	acyl-[acyl-carrier-protein] synthetase  (n-C12:0)
+R1226	acyl-[acyl-carrier-protein] synthetase  (n-C10:0)
+R1227	acyl-[acyl-carrier-protein] synthetase  (n-C8:0)
+R1228	Aminoacetone:oxygen oxidoreductase(deaminating)(flavin-containing)
+R1229	dTDP-N-4-acetamido-4,6-dideoxy-D-galactose transferase
+R1230	alpha-amylase
+R1231	alpha-amylase (periplasm)
+R1232	Arbutin 6-phosphate glucohydrolase
+R1233	Aminobutyraldehyde dehydrogenase
+R1234	4-aminobutyrate transport in via proton symport (periplasm)
+R1235	4-aminobutyrate transport via diffusion (extracellular to periplasm)
+R1236	acetyl-CoA:acetoacetyl-CoA transferase
+R1237	acetyl-CoA C-acyltransferase (butanoyl-CoA) (r)
+R1238	acetyl-CoA C-acyltransferase (hexanoyl-CoA) (r)
+R1239	acetyl-CoA C-acyltransferase (octanoyl-CoA) (r)
+R1240	acetyl-CoA C-acyltransferase (decanoyl-CoA) (r)
+R1241	acetyl-CoA C-acyltransferase (dodecanoyl-CoA) (r)
+R1242	acetyl-CoA C-acyltransferase (tetradecanoyl-CoA) (r)
+R1243	acetyl-CoA acyltransferase (hexadecanoyl-CoA), (r)
+R1244	acetoacetate transport via proton symport  (periplasm)
+R1245	acetoacetate transport via diffusion (extracellular to periplasm)
+R1246	acetaldehyde dehydrogenase (acetylating)
+R1247	acetaldehyde transport via diffusion (extracellular to periplasm)
+R1248	acetaldehyde reversible transport (periplasm)
+R1249	acetyl-CoA:anthranilate acetyltransferase
+R1250	acetyl-CoA carboxylase
+R1251	acetate-CoA ligase (ADP-forming)
+R1252	N-acetyl-D-galactosamine 1-phosphatase (periplasm)
+R1253	N-acetyl-D-galactosamine 1-phosphate transport via diffusion (extracellular to periplasm)
+R1254	N-acetyl-D-galactosamine transport via diffusion (extracellular to periplasm)
+R1255	N-acetyl-D-glucosamine 1-phosphatase (periplasm)
+R1256	N-acetyl-D-glucosamine 1-phosphate transport via diffusion (extracellular to periplasm)
+R1257	N-acetylglucosamine kinase
+R1258	UDP-N-acetylglucosamine:undecaprenylphosphate N-acetylglucosamine -1-phosphate transferase
+R1259	N-Acetyl-D-glucosamine transport via PEP:Pyr PTS  (periplasm)
+R1260	N-Acetyl-D-glucosamine transport via diffusion (extracellular to periplasm)
+R1261	2-aceto-2-hydroxybutanoate synthase
+R1262	N-acetylmuramate 6-phosphate hydrolase
+R1263	UDP-N-acetyl-D-mannosaminuronic acid transferase
+R1264	N-acetyl-D-mannosamine transport via PTS  (periplasm)
+R1265	N-acetyl-D-mannosamine transport via diffusion (extracellular to periplasm)
+R1266	N-acetylmuramate transport via PEP:Pyr PTS (periplasm)
+R1267	N-acetylmuramate transport via diffusion (extracellular to periplasm)
+R1268	N-acetylneuraminate proton symport (periplasm)
+R1269	N-acetylneuraminate transport via diffusion (extracellular to periplasm)
+R1270	N-Acetylneuraminate lyase
+R1271	acyl-CoA dehydrogenase (butanoyl-CoA)
+R1272	acyl-CoA dehydrogenase (hexanoyl-CoA)
+R1273	acyl-CoA dehydrogenase (octanoyl-CoA)
+R1274	acyl-CoA dehydrogenase (decanoyl-CoA)
+R1275	acyl-CoA dehydrogenase (dodecanoyl-CoA)
+R1276	acyl-CoA dehydrogenase (tetradecanoyl-CoA)
+R1277	acyl-CoA dehydrogenase (hexadecanoyl-CoA)
+R1278	acyl-CoA dehydrogenase (octadecanoyl-CoA)
+R1279	Acetyl-CoA ACP transacylase
+R1280	acetylornithine deacetylase
+R1281	arabinose modified core oligosaccharide lipid A transport via ABC system (periplasm to extracellular)
+R1282	aconitate isomerase (spontaneous)
+R1283	aconitase (half-reaction A, Citrate hydro-lyase)
+R1284	aconitase (half-reaction B, Isocitrate hydro-lyase)
+R1285	acyl-(acyl carrier protein):phosphate acyltransferase (C12:0)
+R1286	acyl-(acyl carrier protein):phosphate acyltransferase (C14:0)
+R1287	acyl-(acyl carrier protein):phosphate acyltransferase (C14:1)
+R1288	acyl-(acyl carrier protein):phosphate acyltransferase (C16:0)
+R1289	acyl-(acyl carrier protein):phosphate acyltransferase (C16:1)
+R1290	acyl-(acyl carrier protein):phosphate acyltransferase (C18:0)
+R1291	acyl-(acyl carrier protein):phosphate acyltransferase (C18:1)
+R1292	acyl-carrier protein synthase
+R1293	acetyl-CoA synthetase
+R1294	O-Acetyl-L-serine transport via diffusion (extracellular to periplasm)
+R1295	O-Acetyl-L-serine export via facilitated transport
+R1296	acetate reversible transport via proton symport (periplasm)
+R1297	Na+/Acetate symport (periplasm)
+R1298	Acetate transport via diffusion (extracellular to periplasm)
+R1299	Adenosine deaminase
+R1300	4-aminobenzoate synthase
+R1301	4-amino-4-deoxychorismate synthase
+R1302	adenine transport via proton symport (reversible) (periplasm)
+R1303	adenine transport via diffusion (extracellular to periplasm)
+R1304	adenosylmethionine decarboxylase
+R1305	adenosine hydrolase
+R1306	adenosine transport in via proton symport (periplasm)
+R1307	adenosine transport in via proton symport, reversible (periplasm)
+R1308	adenosine transport via diffusion (extracellular to periplasm)
+R1309	Adenosyl cobinamide kinase
+R1310	Adenosylcobalamin transport via ABC system (periplasm)
+R1311	Adenosylcobalimin transport via ton system (extermal)
+R1312	ADPribose diphosphatase
+R1313	adenylsuccinate lyase
+R1314	N-acetylglucosamine-6-phosphate deacetylase
+R1315	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tripeptide amidase
+R1316	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tripeptide amidase (periplasm)
+R1317	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tripeptide beta -1,4-N-acetylglucosaminidase
+R1318	GlcNAc-anhMurNAc tripeptide transport in via proton symport (periplasm)
+R1319	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tetrapeptide amidase
+R1320	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tetrapeptide amidase (periplasm)
+R1321	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tetrapeptide L,D-carboxypeptidase
+R1322	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tetrapeptide L,D-carboxypeptidase (periplasmic)
+R1323	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tetrapeptide beta -1,4-N-acetylglucosaminidase
+R1324	GlcNAc-anhMurNAc tetrapeptide transport in via proton symport (periplasm)
+R1325	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl beta -1,4-N-acetylglucosaminidase
+R1326	ADP-D-glycero-D-manno-heptose epimerase
+R1327	GlcNAc-anhMurNAc transport in via proton symport (periplasm)
+R1328	agmatine transport via diffusion (extracellular to periplasm)
+R1329	1-tetradecanoyl-sn-glycerol 3-phosphate O-acyltransferase (n-C12:0)
+R1330	1-tetradecanoyl-sn-glycerol 3-phosphate O-acyltransferase (n-C14:0)
+R1331	1-tetradec-7-enoyl-sn-glycerol 3-phosphate O-acyltransferase (n-C14:1)
+R1332	1-hexadecanoyl-sn-glycerol 3-phosphate O-acyltransferase (n-C16:0)
+R1333	1-hexadec-7-enoyl-sn-glycerol 3-phosphate O-acyltransferase (n-C16:1)
+R1334	1-octadecanoyl-sn-glycerol 3-phosphate O-acyltransferase (n-C18:0)
+R1335	1-octadec-7-enoyl-sn-glycerol 3-phosphate O-acyltransferase (n-C18:1)
+R1336	silver transport out via proton antiport
+R1337	S-adenosylhomocysteine nucleosidase
+R1338	2-Oxogluterate dehydrogenase
+R1339	2-oxoglutarate reversible transport via symport (periplasm)
+R1340	alpha-ketoglutarate transport via diffusion (extracellular to periplasm)
+R1341	D-alanine-D-alanine dipeptidase
+R1342	D-alanyl-D-alanine (DalaDala) transport via ABC system (periplasm)
+R1343	D-alanine-D-alanine ligase (reversible)
+R1344	D-alanyl-D-alanine (DalaDala) transport via diffusion (extracellular to periplasm)
+R1345	L-alanyl-gamma-glutamate epimerase
+R1346	alanine racemase
+R1347	D-alanine transaminase
+R1348	alanine transaminase
+R1349	L-alanine transport via ABC system (periplasm)
+R1350	L-alanine transport in via proton symport (periplasm)
+R1351	L-alanine reversible transport via proton symport (periplasm)
+R1352	L-alanine transport in via sodium symport (periplasm)
+R1353	L-alanine transport via diffusion (extracellular to periplasm)
+R1354	alcohol dehydrogenase (glycerol)
+R1355	alcohol dehydrogenase (ethanol)
+R1356	aldehyde dehydrogenase (phenylacetaldehyde, NAD)
+R1357	aldehyde dehydrogenase (acetaldehyde, NADP)
+R1358	aldehyde dehydrogenase (propanal, NADP)
+R1359	aldehyde dehydrogenase (butanal, NAD)
+R1360	Allose kinase
+R1361	Allose 6-phosphate isomerase
+R1362	allantoate amidohydrolase
+R1363	allantoinase
+R1364	allantoin transport in via proton symport (periplasm)
+R1365	allantoin transport via diffusion (extracellular to periplasm)
+R1366	Allulose 6-phosphate epimerase
+R1367	D-allose transport via ABC system (periplasm)
+R1368	Allose transport via diffusion (extracellular to periplasm)
+R1369	apolipoprotein N-acyltransferase (phosphatidylethanolamine, periplasm)
+R1370	apolipoprotein N-acyltransferase (phosphatidylglycerol, periplasm)
+R1371	aldose reductase (methylglyoxal)
+R1372	aldose reductase (acetol)
+R1373	altronate hydrolase
+R1374	anhydrous-N-Acetylmuramyl-tripeptide amidase
+R1375	anhydrous-N-Acetylmuramyl-tetrapeptide amidase
+R1376	anhydrous-N-Acetylmuramyl-tetrapeptide L,D-carboxypeptidase
+R1377	Amylomaltase (maltotriose)
+R1378	Amylomaltase (maltotetraose)
+R1379	Amylomaltase (maltopentaose)
+R1380	Amylomaltase (maltohexaose)
+R1381	N-acetylmannosamine 6-phosphate epimerase
+R1382	N-acetyl-D-mannosamine kinase
+R1383	S-adenosylmethione:2-demthylmenaquinole methyltransferase (menaquinone 8)
+R1384	AMP nucleosidase
+R1385	alanyl aminopeptidase (cys-gly)
+R1386	aminopeptidase (pro-gly)
+R1387	AMP transport via diffusion (extracellular to periplasm)
+R1388	GlcNAc-anhMurNAc transport via diffusion (extracellular to periplasm)
+R1389	1,6-anhydrous-N-Acetylmuramate kinase
+R1390	L-2-amino-3-oxobutanoate decarboxylation (spontaneous)
+R1391	Ap4A hydrolase
+R1392	Ap4A synthetase
+R1393	Ap5A hydrolase
+R1394	aminopropylcadaverine synthase
+R1395	acyl-phosphate:glycerol-3-phosphate acyltransferase (C12:0)
+R1396	acyl-phosphate:glycerol-3-phosphate acyltransferase (C14:0)
+R1397	acyl-phosphate:glycerol-3-phosphate acyltransferase (C14:1)
+R1398	acyl-phosphate:glycerol-3-phosphate acyltransferase (C16:0)
+R1399	acyl-phosphate:glycerol-3-phosphate acyltransferase (C16:1)
+R1400	acyl-phosphate:glycerol-3-phosphate acyltransferase (C18:0)
+R1401	acyl-phosphate:glycerol-3-phosphate acyltransferase (C18:1)
+R1402	acylphosphatase (C12:0)
+R1403	acylphosphatase (C14:0)
+R1404	acylphosphatase (C14:1)
+R1405	acylphosphatase (C16:0)
+R1406	acylphosphatase (C16:1)
+R1407	acylphosphatase (C18:0)
+R1408	acylphosphatase (C18:1)
+R1409	aminopropanol dehydrogenase reversible
+R1410	5-amino-6-(5-phosphoribosylamino)uracil reductase
+R1411	L-arabinose isomerase
+R1412	aerobactin reductase
+R1413	aerobactin transport via ABC system (periplasm)
+R1414	aerobactin Fe-loading reaction (spontaneous)
+R1415	aerobactin secretion (to extracellular)
+R1416	aerobactin transport via ton system (extracellular)
+R1417	aerobactin secretion (to periplasm)
+R1418	arbutin transport via PEP:Pyr PTS (periplasm)
+R1419	arbutin transport via diffusion (extracellular to periplasm)
+R1420	L-arabinose transport via ABC system (periplasm)
+R1421	L-arabinose transport via proton symport (periplasm)
+R1422	L-arabinose transport via proton antiport (periplasm)
+R1423	L-arabinose transport via diffusion (extracellular to periplasm)
+R1424	Arginine/agmatine antiport (periplasm)
+R1425	arginine/ornithine antiporter (periplasm)
+R1426	L-arginine transport via ABC system (periplasm)
+R1427	L-arginine transport out via proton antiport (cytoplasm to periplasm)
+R1428	L-arginine transport via diffusion (extracellular to periplasm)
+R1429	aspartate-semialdehyde dehydrogenase
+R1430	L-ascorbate 6-phosphate lactonase
+R1431	L-ascorbate transport via PEP:Pyr PTS (periplasm)
+R1432	L-ascorbate transport via diffusion (extracellular to periplasm)
+R1433	asparagine synthetase
+R1434	Asparaginyl-tRNA synthetase
+R1435	L-asparagine transport via ABC system (periplasm)
+R1436	L-asparagine reversible transport via proton symport (periplasm)
+R1437	L-asparagine transport via diffusion (extracellular to periplasm)
+R1438	arsenite efflux via ATP hydrolysis (periplasm)
+R1439	arsenite transport via diffusion (extracellular to periplasm)
+R1440	aspartate kinase
+R1441	L-aspartate oxidase
+R1442	L-aspartase
+R1443	L-aspartate transport via ABC system (periplasm)
+R1444	Aspartate transport via proton symport (2 H) (periplasm)
+R1445	L-asparate transport via proton symport (3 H) (periplasm)
+R1446	L-aspartate transport in via proton symport (periplasm)
+R1447	L-aspartate transport in via proton symport (periplasm) reversible
+R1448	L-aspartate transport via diffusion (extracellular to periplasm)
+R1449	arsenate reductase
+R1450	Arginine succinyltransferase
+R1451	L-allo-threonine dehydrogenase
+R1452	ATP synthase (four protons for one ATP) (periplasm)
+R1453	beta-alanine transport in via proton symport (periplasm)
+R1454	beta-alanine transport via diffusion (extracellular to periplasm)
+R1455	betaine-aldehyde dehydrogenase
+R1456	bis-molybdenum cofactor synthase
+R1457	bis-molybdopterin guanine dinucleotide synthase (single GDP)
+R1458	bis-molybdopterin guanine dinucleotide synthase
+R1459	3',5'-bisphosphate nucleotidase
+R1460	Biotin sulfoxide reductase
+R1461	Biotin transport via proton symport (periplasm)
+R1462	Biotin transport via diffusion (extracellular to periplasm)
+R1463	Biotin synthase
+R1464	Acetyl-CoA:butyrate-CoA transferase
+R1465	butanesulfonate transport via ABC system (periplasm)
+R1466	butanesulfonate transport via diffusion (extracellular to periplasm)
+R1467	Butyrate transport via proton symport, reversible (periplasm)
+R1468	Butyrate transport via diffusion (extracellular to periplasm)
+R1469	tungsten bispterin guanine dinucleotide synthase (single GDP)
+R1470	tungsten bispterin guanine dinucleotide synthase
+R1471	tungsten bispterin cofactor synthase
+R1472	calcium (Ca+2) transport out via proton antiport (periplasm)
+R1473	calcium (Ca+2) transport via diffusion (extracellular to periplasm)
+R1474	Lysine/Cadaverine antiporter (periplasm)
+R1475	calcium / sodium antiporter (1:1)
+R1476	Cobinamide transport via ton system (extermal)
+R1477	Cobinamide transport via ABC system (uptake, periplasm)
+R1478	Cob(1)alamin transport via ABC system (periplasm)
+R1479	Cob(1)alamin transport via ton system (extermal)
+R1480	cob(I)alamin adenosyltransferase
+R1481	carbamate deaminase
+R1482	Carbamate kinase
+R1483	7-cyano-7-carbaguanine synthase
+R1484	Cadmium (Cd+2) ABC transporter (periplasm)
+R1485	cadmium (Cd+2) transport out via proton antiport (periplasm)
+R1486	cadmium (Cd+2) transport via diffusion (extracellular to periplasm)
+R1487	cadmium (+2) transport in via permease (no H+)
+R1488	CDP-Diacylglycerol pyrophostatase (n-C12:0)
+R1489	CDP-Diacylglycerol pyrophostatase (n-C14:0)
+R1490	CDP-Diacylglycerol pyrophostatase (n-C14:1)
+R1491	CDP-Diacylglycerol pyrophostatase (n-C16:0)
+R1492	CDP-Diacylglycerol pyrophostatase (n-C16:1)
+R1493	CDP-Diacylglycerol pyrophostatase (n-C18:0)
+R1494	CDP-Diacylglycerol pyrophostatase (n-C18:1)
+R1495	7-cyano-7-deazaguanine reductase
+R1496	7-deaza-7-carboxyguanine synthase
+R1497	4-(cytidine 5'-diphospho)-2-C-methyl-D-erythritol kinase
+R1498	cyclopropane fatty acid synthase (Phosphatidylethanolamine, n-C16:0)
+R1499	cyclopropane fatty acid synthase (Phosphatidylglycerol, n-C16:0)
+R1500	cyclopropane fatty acid synthase (Phosphatidylethanolamine, n-C18:0)
+R1501	cyclopropane fatty acid synthase (Phosphatidylglycerol, n-C18:0)
+R1502	L-Cysteinylglycine (Cys-Gly) transport via ABC system (periplasm)
+R1503	L-Cysteinylglycine transport via diffusion (extracellular to periplasm)
+R1504	choline transport via ABC system (periplasm)
+R1505	choline transport via proton symport (periplasm)
+R1506	choline transport via diffusion (extracellular to periplasm)
+R1507	choline dehydrogenase
+R1508	chitobiose transport via PEP:Pyr PTS (periplasm)
+R1509	chitobiose transport via diffusion (extracellular to periplasm)
+R1510	Cinnamate dioxygenase
+R1511	Citrate lyase
+R1512	citrate transport out via proton antiport (periplasm)
+R1513	Citrate transport via succinate antiport (periplasm)
+R1514	citrate transport via diffusion (extracellular to periplasm)
+R1515	cold lipid A transport via ABC system (periplasm to extracellular)
+R1516	cardiolipin hydrolase (periplasm, n-C12:0)
+R1517	cardiolipin hydrolase (periplasm, n-C14:0)
+R1518	cardiolipin hydrolase (periplasm, n-C14:1)
+R1519	cardiolipin hydrolase (periplasm, n-C16:0)
+R1520	cardiolipin hydrolase (periplasm, n-C16:1)
+R1521	cardiolipin hydrolase (periplasm, n-C18:0)
+R1522	cardiolipin hydrolase (periplasm, n-C18:1)
+R1523	cardiolipin synthase (periplasmic, n-C12:0)
+R1524	cardiolipin synthase (periplasmic, n-C14:0)
+R1525	cardiolipin synthase (periplasmic, n-C14:1)
+R1526	cardiolipin synthase (periplasmic, n-C16:0)
+R1527	cardiolipin synthase (periplasmic, n-C16:1)
+R1528	cardiolipin synthase (periplasmic, n-C18:0)
+R1529	cardiolipin synthase (periplasmic, n-C18:1)
+R1530	chloride transport out via proton antiport (2:1) (periplasm)
+R1531	chloride (Cl-1) transport via diffusion (extracellular to periplasm)
+R1532	CMP nucleosidase
+R1533	CMP transport via diffusion (extracellular to periplasm)
+R1534	Chloramphenicol transport via diffusion (extracellular to periplasm)
+R1535	Chloramphenicol transport via TolC system
+R1536	CO2 transport via diffusion (extracellular to periplasm)
+R1537	CO2 transporter via diffusion (periplasm)
+R1538	Cobalt (Co+2) ABC transporter (periplasm)
+R1539	cobalt (Co+2) transport out via proton antiport (periplasm)
+R1540	cobalt (Co+2) transport via diffusion (extracellular to periplasm)
+R1541	cobalt transport in via permease (no H+)
+R1542	Lipid A core kinase (periplasm)
+R1543	core oligosaccharide lipid A diphosphate transport via ABC system (periplasm to extracellular)
+R1544	core oligosaccharide lipid A transport via ABC system (periplasm)
+R1545	core oligosaccharide lipid A transport via ABC system (periplasm to extracellular)
+R1546	coprogen(Fe(III)) reductase
+R1547	coprogen unloaded secretion (extracellular)
+R1548	coprogen unloaded secretion
+R1549	coprogen transport via ABC system (periplasm)
+R1550	coprogen Fe-loading reaction (spontaneaous)
+R1551	Coprogen transport via ton system (extracellular)
+R1552	6-carboxy-5,6,7,8-tetrahydropterin synthase
+R1553	cyclic pyranopterin monophosphate synthase
+R1554	coproporphyrinogen oxidase (O2 required)
+R1555	Oxygen Independent coproporphyrinogen-III oxidase
+R1556	gamma-butyrobetainyl-CoA: carnitine CoA transferase
+R1557	Carnitine-CoA Ligase
+R1558	carnitine-CoA racemase
+R1559	crotonobetainyl-CoA: carnitine CoA transferase
+R1560	Carnityl-CoA dehydratse
+R1561	D-Carnitine-CoA Ligase
+R1562	D-carnitine transport via ABC system (periplasm)
+R1563	D-carnitine outward transport (H+ antiport)
+R1564	D-carnitine transport via diffusion (extracellular to periplasm)
+R1565	L-carnitine transport via ABC system (periplasm)
+R1566	L-carnitine outward transport (H+ antiport)
+R1567	Carnitine/butyrobetaine antiporter (periplasm)
+R1568	L-carnitine/D-carnitine antiporter (periplasm)
+R1569	L-carnitine transport via diffusion (extracellular to periplasm)
+R1570	cytosine transport in via proton symport (periplasm)
+R1571	cytosine transport via diffusion (extracellular to periplasm)
+R1572	Crotonobetaine-CoA Ligase
+R1573	crotonobetaine transport via ABC system (periplasm)
+R1574	cronobetaine outward transport (H+ antiport)
+R1575	3-cis-2-trans-enoyl-CoA isomerase
+R1576	Cuprous Oxidase (Cu+1)
+R1577	Copper (Cu +1) ABC transporter (periplasm)
+R1578	Copper (Cu+2) ABC transporter (periplasm)
+R1579	copper (Cu+2) transport via diffusion (extracellular to periplasm)
+R1580	copper transport in via permease (no H+)
+R1581	copper transport out via proton antiport
+R1582	copper (Cu+1) transport via diffusion (extracellular to periplasm)
+R1583	Cyanide sulfurtransferase
+R1584	Cyanide sulfurtransferase (periplasmic)
+R1585	Cyanide transport via diffusion (extracellular to periplasm)
+R1586	Cyanate aminohydrolase
+R1587	Cyanate transport via proton symport (periplasm)
+R1588	Cyanate transport via diffusion (extracellular to periplasm)
+R1589	D-cysteine desulfhydrase
+R1590	D-cysteine uptake via ABC system (periplasm)
+R1591	D-cysteine transport via diffusion (extracellular to periplasm)
+R1592	cysteine synthase
+R1593	L-cysteine sulfinic acid desulfurase
+R1594	cystathionine b-lyase
+R1595	L-cysteine export via ABC system (cytoplasm to periplasm)
+R1596	L-cysteine uptake via ABC system (periplasm)
+R1597	L-cysteine transport via diffusion (extracellular to periplasm)
+R1598	L-cysteine export via facilitated transport
+R1599	cytochrome oxidase bd (menaquinol-8: 2 protons) (periplasm)
+R1600	cytochrome oxidase bd (ubiquinol-8: 2 protons) (periplasm)
+R1601	cytochrome oxidase bo3 (ubiquinol-8: 4 protons) (periplasm)
+R1602	cytidine deaminase
+R1603	Cytidine hydrolase
+R1604	cytidine kinase (GTP)
+R1605	cytidine transport in via proton symport (periplasm)
+R1606	cytidine transport in via proton symport, reversible (periplasm)
+R1607	cytidine transport via diffusion (extracellular to periplasm)
+R1608	D-lactate transport via proton symport (periplasm)
+R1609	D-lactate transport via diffusion (extracellular to periplasm)
+R1610	D-Amino acid dehydrogenase
+R1611	Deoxyadenosine deaminase
+R1612	deoxyadenosine transport in via proton symport (periplasm)
+R1613	deoxyadenosine transport via diffusion (extracellular to periplasm)
+R1614	diacylglycerol kinase (n-C12:0)
+R1615	diacylglycerol kinase (n-C14:0)
+R1616	diacylglycerol kinase (n-C14:1)
+R1617	diacylglycerol kinase (n-C16:0)
+R1618	diacylglycerol kinase (n-C16:1)
+R1619	diacylglycerol kinase (n-C18:0)
+R1620	diacylglycerol kinase (n-C18:1)
+R1621	D-alanine transport in via proton symport (periplasm)
+R1622	D-Alanine transport via diffusion (extracellular to periplasm)
+R1623	dAMP transport via diffusion (extracellular to periplasm)
+R1624	2,3-diaminopropionate amonnia lyase
+R1625	M-diaminopimelic acid ABC transport (periplasm)
+R1626	1,5-Diaminopentane transport via diffusion (extracellular to periplasm)
+R1627	CDP-diacylglycerol synthetase (n-C12:0)
+R1628	CDP-diacylglycerol synthetase (n-C14:0)
+R1629	CDP-diacylglycerol synthetase (n-C14:1)
+R1630	CDP-diacylglycerol synthetase (n-C16:0)
+R1631	CDP-diacylglycerol synthetase (n-C16:1)
+R1632	CDP-diacylglycerol synthetase (n-C18:0)
+R1633	CDP-diacylglycerol synthetase (n-C18:1)
+R1634	diacetylchitobiose-6-phosphate hydrolase
+R1635	Decanoate transport via diffusion (extracellular to periplasm)
+R1636	dCMP transport via diffusion (extracellular to periplasm)
+R1637	deoxycytidine deaminase
+R1638	deoxycytidine transport in via proton symport (periplasm)
+R1639	deoxycytidine transport via diffusion (extracellular to periplasm)
+R1640	Fatty acid (dodecanoate) transport via facilitated irreversible diffusion (extracellular to periplasm)
+R1641	2-dehydro-3-deoxygalactonokinase
+R1642	2-dehydro-3-deoxy-D-gluconate transport via proton symport, reversible (periplasm)
+R1643	2-dehydro-3-deoxy-D-gluconate transport via diffusion (extracellular to periplasm)
+R1644	2-dehydro-3-deoxygluconokinase
+R1645	3-deoxy-D-arabino-heptulosonate 7-phosphate synthetase
+R1646	2-dehydro-3-deoxy-6-phosphogalactonate aldolase
+R1647	deoxyguanylate kinase (dGMP:ATP)
+R1648	dGMP transport via diffusion (extracellular to periplasm)
+R1649	deoxyguanosine transport in via proton symport (periplasm)
+R1650	deoxyguanosine transport via diffusion (extracellular to periplasm)
+R1651	2,3-dehydroadipyl-CoA hydratase
+R1652	Dihydroxyacetone phosphotransferase
+R1653	Dihydroxyacetone transport via diffusion (extracellular to periplasm)
+R1654	Dihydroxyacetone transport via facilitated diffusion (periplasm)
+R1655	2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase
+R1656	2,3-dihydroxybenzoate adenylate synthase
+R1657	2,3-dihydroxybenzoylserine hydrolase
+R1658	2,3-dihydroxycinnamate dehydrogenase
+R1659	2,3-dihydroxycinnamate 1,2-dioxygenase
+R1660	Dihydromonapterin reductase
+R1661	1,4-dihydroxy-2-naphthoate octaprenyltransferase
+R1662	1,4-dihydroxy-2-napthoyl-CoA synthase
+R1663	1,4-dihydroxy-2-napthoyl-CoA thioesterase
+R1664	dihydroneopterin aldolase reversible
+R1665	Dihydroneopterin epimerase
+R1666	dihydoorotic acid dehydrogenase (quinone8)
+R1667	dihydroorotic acid (menaquinone-8)
+R1668	Fumarate dependent DHORD
+R1669	2,3-dihydroxyphenylpropionate dehydrogenase
+R1670	diaminohydroxyphosphoribosylaminopryrimidine deaminase (25drapp)
+R1671	4,5-dihydroxy-2,3-pentanedione cyclization (spontaneous)
+R1672	dihydropteridine reductase
+R1673	dihydropteridine reductase (NADH)
+R1674	dihydroneopterin triphosphate 2'-epimerase
+R1675	3-dehydroquinate dehydratase, irreversible
+R1676	dIMP transport via diffusion (extracellular to periplasm)
+R1677	deoxyinosine transport in via proton symport (periplasm)
+R1678	deoxyinosine transport via diffusion (extracellular to periplasm)
+R1679	2,5-diketo-D-gluconate reductase
+R1680	2,5-diketo-D-gluconate reductase (NADH)
+R1681	2,5-diketo-D-gluconate reductase (NADPH)
+R1682	1-hydroxy-2-methyl-2-(E)-butenyl 4-diphosphate reductase (dmpp)
+R1683	3-Dimethylubiquinonol 3-methyltransferase
+R1684	Dimethyl sulfoxide reductase (Menaquinol 8)
+R1685	Dimethyl sulfoxide reductase (Menaquinol 8) (periplasm)
+R1686	Dimethyl sulfoxide reductase (Demethylmenaquinol 8)
+R1687	Dimethyl sulfoxide reductase (Demethylmenaquinol 8) (periplasm)
+R1688	Dimethyl sulfoxide transport via diffusion (extracellular to periplasm)
+R1689	Dimethyl sulfoxide transport via diffusion (periplasm)
+R1690	Dimethyl sulfide transport via diffusion (extracellular to periplasm)
+R1691	Dihydroneopterin triphosphate pyrophosphatase
+R1692	2,3 dioxo-L-gulonate reductase
+R1693	dopamine transport via diffusion (extracellular to periplasm)
+R1694	Doxorubicin transport via diffusion (extracellular to periplasm)
+R1695	Doxorubicin transport via TolC system
+R1696	deoxyribose-phosphate aldolase
+R1697	DsbA protein reoxidation reaction (aerobic)
+R1698	DsbA protein reoxidation reaction (anaerobic)
+R1699	DsbC:glutathione thiotransferase
+R1700	DsbD reductase
+R1701	DsbG:glutathione thiotransferase
+R1702	D-serine dehydrogenase
+R1703	D-serine transport in via proton symport (periplasm)
+R1704	D-serine transport via diffusion (extracellular to periplasm)
+R1705	D(-)-tartrate dehydratase
+R1706	dTMP transport via diffusion (extracellular to periplasm)
+R1707	dUMP transport via diffusion (extracellular to periplasm)
+R1708	dihydrouracil dehydrogenase (NAD)
+R1709	deoxyuridine kinase (ATP:Deoxyuridine)
+R1710	deoxyuridine transport in via proton symport (periplasm)
+R1711	deoxyuridine transport via diffusion (extracellular to periplasm)
+R1712	dUTP diphosphatase
+R1713	1-deoxy-D-xylulose reductoisomerase
+R1714	1-deoxy-D-xylulose 5-phosphate synthase
+R1715	1-Deoxy-D-xylulose kinase
+R1716	Erythrose 4-phosphate dehydrogenase
+R1717	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C10:0)
+R1718	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C10:0)
+R1719	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C12:0)
+R1720	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C12:0)
+R1721	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C12:1)
+R1722	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C12:1)
+R1723	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C14:0)
+R1724	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C14:0)
+R1725	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C14:1)
+R1726	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C14:1)
+R1727	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C16:0)
+R1728	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C16:0)
+R1729	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C16:1)
+R1730	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C16:1)
+R1731	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C18:0)
+R1732	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C18:0)
+R1733	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C18:1)
+R1734	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C18:1)
+R1735	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C4:0)
+R1736	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C4:0)
+R1737	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C6:0)
+R1738	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C6:0)
+R1739	enoyl-[acyl-carrier-protein] reductase (NADH) (n-C8:0)
+R1740	enoyl-[acyl-carrier-protein] reductase (NADPH) (n-C8:0)
+R1741	enterobacterial common antigen (x4) core oligosaccharide lipid A transport via ABC system (periplasm to extracellular)
+R1742	enterobacterial common antigen (x4) O-antigen ligase (periplasm)
+R1743	enterobacterial common antigen polymerase (periplasm)
+R1744	enterobacterial common antigen transferase (flippase, cytoplasm to periplasm)
+R1745	3-hydroxyacyl-CoA dehydratase (3-hydroxybutanoyl-CoA)
+R1746	3-hydroxyacyl-CoA dehydratase (3-hydroxyhexanoyl-CoA)
+R1747	3-hydroxyacyl-CoA dehydratase (3-hydroxyoctanoyl-CoA)
+R1748	3-hydroxyacyl-CoA dehydratase (3-hydroxydecanoyl-CoA)
+R1749	3-hydroxyacyl-CoA dehydratase (3-hydroxydodecanoyl-CoA)
+R1750	3-hydroxyacyl-CoA dehydratase (3-hydroxytetradecanoyl-CoA)
+R1751	3-hydroxyacyl-CoA dehydratase (3-hydroxyhexadecanoyl-CoA)
+R1752	3-hydroxyacyl-CoA dehydratase (3-hydroxyoctadecanoyl-CoA)
+R1753	2-dehydro-3-deoxy-phosphogluconate aldolase
+R1754	6-phosphogluconate dehydratase
+R1755	Endotoxin Synthesis (lauroyl transferase)
+R1756	Endotoxin Synthesis (myristoyl transferase)
+R1757	Endotoxin Synthesis (palmitoleoyl ACP)
+R1758	Enoylglutaryl-[ACP] methyl ester reductase
+R1759	phosphoethanolamine lipid A transport via ABC system (periplasm to extracellular)
+R1760	enterochelin synthase
+R1761	Enterochelin Esterase
+R1762	Enterochelin Esterase (Fe containing)
+R1763	Enoylpimeloyl-[ACP] methyl ester reductase
+R1764	Ethanolamine ammonia-lyase
+R1765	ethanolamine transport in via proton symport
+R1766	ethanolamine transport via diffusion (extracellular)
+R1767	ethanesulfonate transport via ABC system (periplasm)
+R1768	ethanesulfonate transport via diffusion (extracellular to periplasm)
+R1769	ethanol transport via diffusion (extracellular to periplasm)
+R1770	ethanol reversible transport via diffusion (periplasm)
+R1771	fructose 6-phosphate aldolase
+R1772	D-fructose 6-phosphate phosphatase
+R1773	Fructose-6-phosphate transport via phosphate antiport (periplasm)
+R1774	fructose 6-phosphate transport via diffusion (extracellular to periplasm)
+R1775	fatty-acyl-ACP hydrolase
+R1776	fatty-acid-CoA thioesterase (decanoate)
+R1777	fatty-acid-CoA thioesterase (dodecanoate)
+R1778	fatty-acid-CoA thioesterase (tetradecanoate)
+R1779	fatty-acid-CoA thioesterase (tetradecenoate)
+R1780	fatty-acid-CoA thioesterase (hexadecanoate)
+R1781	fatty-acid-CoA thioesterase (hexadecenoate)
+R1782	fatty-acid-CoA thioesterase (octadecanoate)
+R1783	fatty-acid-CoA thioesterase (octadecenoate)
+R1784	fatty-acid-CoA thioesterase (hexanoate)
+R1785	fatty-acid-CoA thioesterase (octanoate)
+R1786	fatty-acid-CoA ligase (decanoate transport via vectoral Co-A coupling)
+R1787	fatty-acid-CoA ligase (dodecanoate transport via vectoral Co-A coupling)
+R1788	fatty-acid-CoA ligase (tetradecanoate transport via vectoral Co-A coupling)
+R1789	fatty-acid-CoA ligase (tetradecenoate transport via vectoral Co-A coupling)
+R1790	fatty-acid-CoA ligase (hexadecanoate transport via vectoral Co-A coupling)
+R1791	fatty-acid-CoA ligase (hexadecenoate transport via vectoral Co-A coupling)
+R1792	fatty-acid-CoA ligase (octadecanoate transport via vectoral Co-A coupling)
+R1793	fatty-acid-CoA ligase (octadecenoate transport via vectoral Co-A coupling)
+R1794	fatty-acid-CoA ligase (hexanoate transport via vectoral Co-A coupling)
+R1795	fatty-acid-CoA ligase (octanoate transport via vectoral Co-A coupling)
+R1796	FAD reductase
+R1797	formaldehyde dehydrogenase
+R1798	formaldehyde transport via diffusion (extracellular to periplasm)
+R1799	formaldehyde transport via diffusion (periplasm)
+R1800	formaldehyde glutathione ligase (spontaneous)
+R1801	Sedoheptulose 1,7-bisphosphate D-glyceraldehyde-3-phosphate-lyase
+R1802	L-fucose isomerase
+R1803	L-fuculokinase
+R1804	Ferrochelatase
+R1805	formate dehydrogenase (quinone-8) (periplasm)
+R1806	Formate Dehydrogenase (menaquinone-8) (periplasm)
+R1807	FMNH2-dependent monooxygenase
+R1808	FMNH2-dependent monooxygenase (methanesulfonate)
+R1809	FMNH2-dependent monooxygenase (ethanesulfonate)
+R1810	FMNH2-dependent monooxygenase (butanesulfonate)
+R1811	FMNH2-dependent monooxygenase (sulfoacetate)
+R1812	iron (II) transport via ABC system (periplasm)
+R1813	iron (II) transport in via proton symport (periplasm)
+R1814	iron (Fe+2) transport out via proton antiport (periplasm)
+R1815	iron (II) transport via diffusion (extracellular to periplasm)
+R1816	iron (+2) transport in via permease (no H+)
+R1817	iron transport from ferric-dicitrate via ABC system (periplasm)
+R1818	ferric-dicitrate transport via ton system (extracellular)
+R1819	release of Fe(III) from ferric 2,3-dihydroxybenzoylserine
+R1820	ferric 2,3-dihydroxybenzoylserine transport via ABC system (periplasm)
+R1821	ferric 2,3-dihydroxybenzoylserine transport via ton system (extracellular)
+R1822	Fe(III)hydroxamate reductase
+R1823	Fe(III)hydroxamate unloaded secretion
+R1824	Fe(III)hydroxamate unloaded secretion (extracellular)
+R1825	ferric-dicitrate transport via ABC system (periplasm)
+R1826	Fe(III) hydroxamate Fe-loading reaction (spontaneaous)
+R1827	Fe(III)hydroxamine transport via ton system (extracellular)
+R1828	Fe(III) reduction
+R1829	iron (III) transport via ABC system (periplasm to cytoplasm)
+R1830	iron (III) transport via diffusion (extracellular to periplasm)
+R1831	Ferrichrome reductase
+R1832	ferrichrome (minus Fe) secretion (to extracellular)
+R1833	ferrichrome (minus Fe) secretion (to periplasm)
+R1834	ferrichrome transport via ABC system (periplasm)
+R1835	ferrichrome Fe(III)-loading reaction (spontaneous)
+R1836	ferrichrome transport via ton system (extracellular)
+R1837	Fe-enterobactin reduction (Fe(III)-unloading)
+R1838	Fe-enterobactin transport via ABC system (periplasm)
+R1839	enterobactin Fe(III) binding (spontaneous)
+R1840	enterochelin transport (secretion periplasm)
+R1841	Fe-enterobactin transport via ton system (extracellular)
+R1842	enterochelin transport (secretion)
+R1843	ferroxamine reductase
+R1844	ferroxamine (minus Fe3) secretion (to extracellular)
+R1845	ferroxamine (minus Fe3) secretion (to periplasm)
+R1846	ferroxamine transport via ABC system (periplasm)
+R1847	ferroxamine Fe3-loading reaction (spontaneous)
+R1848	ferroxamine transport via ton system (extracellular)
+R1849	ferroxidase
+R1850	iron-sulfur cluster damage (peroxide, spontaneous)
+R1851	iron-sulfur cluster damage (nitrous oxide, spontaneous)
+R1852	iron-sulfur cluster repair
+R1853	beta-fructofuranosidase
+R1854	Formate-hydrogen lyase
+R1855	flavodoxin reductase (NADPH)
+R1856	flavin reductase
+R1857	flavin reductase (NAD)
+R1858	FMN adenylyltransferase
+R1859	FMN reductase
+R1860	Aminomethyltransferase
+R1861	Formyl-CoA Transferase
+R1862	formate transport via proton symport (uptake only, periplasm)
+R1863	formate transport via diffusion (extracellular to periplasm)
+R1864	formate transport via diffusion (cytoplasm to periplasm)
+R1865	fumarate reductase
+R1866	fructose-1-phosphate kinase
+R1867	Fructoselysine phosphate deglycase
+R1868	fructoselysine 3-epimerase
+R1869	Fructoselysine Kinase
+R1870	Fructoselysine transport via proton symport (periplasm)
+R1871	fructoselysine transporter via diffusion (extracellular)
+R1872	D-fructuronate transport via proton symport, reversible (periplasm)
+R1873	D-fructuronate transport via diffusion (extracellular)
+R1874	Fructose transport via PEP:Pyr PTS (f6p generating) (periplasm)
+R1875	D-fructose transport via PEP:Pyr PTS (periplasm)
+R1876	D-fructose transport via diffusion (extracellular to periplasm)
+R1877	formyltetrahydrofolate deformylase
+R1878	formate-tetrahydrofolate ligase
+R1879	L-fucose transport via diffusion (extracellular to periplasm)
+R1880	L-fucose transport via proton symport (periplasm)
+R1881	Fumarate transport via proton symport (2 H) (periplasm)
+R1882	Fumarate transport via proton symport (3 H) (periplasm)
+R1883	Fumarate transport via diffusion (extracellular to periplasm)
+R1884	Fusidic acid transport via diffusion (extracellular to periplasm)
+R1885	Fusidic acid transport via TolC system
+R1886	Glucose-1-phosphatase
+R1887	D-glucose 1-phosphate transport via diffusion
+R1888	glycerol-2-phosphate phosphatase
+R1889	glycerol 2-phosphate phosphatase (periplasmic)
+R1890	glycerol-3-phosphate acyltransferase (C12:0)
+R1891	glycerol-3-phosphate acyltransferase (C14:0)
+R1892	glycerol-3-phosphate acyltransferase (C14:1)
+R1893	glycerol-3-phosphate acyltransferase (C16:0)
+R1894	glycerol-3-phosphate acyltransferase (C16:1)
+R1895	glycerol-3-phosphate acyltransferase (C18:0)
+R1896	glycerol-3-phosphate acyltransferase (C18:1)
+R1897	sn-glycerol-3-phosphocholine transport via ABC system (periplasm)
+R1898	glycero-3-phosphocholine transport via diffusion (extracellular to periplasm)
+R1899	glycerol-3-phosphate dehydrogenase (NADP)
+R1900	glycerol-3-phosphate dehydrogenase (ubiquinone-8)
+R1901	glycerol-3-phosphate dehydrogenase (menaquinone-8)
+R1902	glycerol-3-phosphate dehydrogenase (demethylmenaquinone-8)
+R1903	sn-glycerol-3-phosphoethanolamine transport via ABC system (periplasm)
+R1904	glycero-3-phosphoethanolamine transport via diffusion (extracellular to periplasm)
+R1905	sn-glycerol-3-phosphoglycerol transport via ABC system (periplasm)
+R1906	glycerophoglycerol transport via diffusion (extracellular to periplasm)
+R1907	glycero-3-phospho-1-inositol transport via diffusion (extracellular to periplasm)
+R1908	sn-glycerol-3-phosphoserine transport via ABC system (periplasm)
+R1909	glycerophosphserine transport via diffusion (extracellular to periplasm)
+R1910	glycerol-3-phosphatase
+R1911	L-glutamate 5-semialdehyde dehydratase (spontaneous)
+R1912	glucosamine-6-phosphate deaminase
+R1913	glucose 6-phosphate dehydrogenase
+R1914	glucose-6-phosphate phosphatase
+R1915	Glucose-6-phosphate transport via phosphate antiport (periplasm)
+R1916	glucose 6-phosphate transport via diffusion (extracellular to periplasm)
+R1917	D-galactose 1-phosphatase
+R1918	D-galactose 1-phosphate transport via diffusion (extracellular to periplasm)
+R1919	beta D-galactose transport via diffusion (extracellular to periplasm)
+R1920	galactarate dehydratase
+R1921	L-galactonate oxidoreductase
+R1922	galactonate dehydratase
+R1923	L-galactonate transport via proton symport (periplasm)
+R1924	L-galactonate transport via diffusion (extracellular to periplasm)
+R1925	D-galactonate transport via proton symport (periplasm)
+R1926	D-galactonate transport via diffusion (extracellular to periplasm)
+R1927	D-galactarte transport via proton symport, reversible (periplasm)
+R1928	D-galactarte transport via diffusion (extracellular to periplasm)
+R1929	galactokinase
+R1930	aldose-1-epimerase
+R1931	a-galactosidase (melibiose)
+R1932	galactosyltransferase I (LPS core synthesis)
+R1933	Galactitol transport via PEP:Pyr PTS (periplasm)
+R1934	Galactitol transport via diffusion (extracellular to periplasm)
+R1935	D-galacturonate transport via proton symport, reversible (periplasm)
+R1936	D-galacturonate transport via diffusion (extracellular to periplasm)
+R1937	D-galactose transport via ABC system (periplasm)
+R1938	D-galactose transport in via proton symport (periplasm)
+R1939	D-galactose transport via diffusion (extracellular to periplasm)
+R1940	D-Glucosamine 6-phosphate transport via phosphate antiport (periplasm)
+R1941	D-glucosamine 6-phosphate transport via diffusion (extracellular to periplasm)
+R1942	D-glucosamine transport via PEP:Pyr PTS (periplasm)
+R1943	D-glucosamine transport via diffusion (extracellular to periplasm)
+R1944	GAR transformylase-T
+R1945	gamma-butyrobetaine transport via diffusion (extracellular to periplasm)
+R1946	GDP diphosphokinase
+R1947	GDP-mannose mannosyl hydrolase
+R1948	GDP-mannose phyrophosphatase
+R1949	guanosine 3'-diphosphate 5'-triphosphate 3'-diphosphatase
+R1950	GDP transport via diffusion (extracellular to periplasm)
+R1951	gamma-glutamyl-gamma aminobutyric acid dehydrogenase
+R1952	gamma-glutamyl-gamma-aminobutyric acid hydrolase
+R1953	gamma glutamyl putrescine oxidase
+R1954	gamma glutamyl putrescine synthase
+R1955	gamma-hydroxybutyrate dehydrogenase (NADH)
+R1956	glycine hydroxymethyltransferase, reversible
+R1957	1,4-alpha-glucan branching enzyme (glycogen -> bglycogen)
+R1958	D-glucose O-acetyltransferase
+R1959	Glucose dehydrogenase (ubiquinone-8 as acceptor) (periplasm)
+R1960	D-gluconate transport via proton symport, reversible (periplasm)
+R1961	D-gluconate transport via diffusion (extracellular to periplasm)
+R1962	5-dehydro-4-deoxyglucarate aldolase
+R1963	glucarate dehydratase
+R1964	D-glucarate transport via proton symport, reversible (periplasm)
+R1965	D-glucarate transport via diffusion (extracellular to periplasm)
+R1966	glycogen synthase (ADPGlc)
+R1967	glucosyltransferase I (LPS core synthesis)
+R1968	glucosyltransferase II (LPS core synthesis)
+R1969	glucosyltransferase III (LPS core synthesis)
+R1970	D-glucuronate 1-phosphate transport via diffusion (extracellular to periplasm)
+R1971	D-glucuronate transport via proton symport, reversible (periplasm)
+R1972	D-glucuronat transport via diffusion (extracellular to periplasm)
+R1973	D-glucose transport via ABC system (periplasm)
+R1974	D-glucose transport via PEP:Pyr PTS (periplasm)
+R1975	D-glucose transport in via proton symport (periplasm)
+R1976	glucose transport via diffusion (extracellular to periplasm)
+R1977	D-glucose transport via diffusion (extracellular to periplasm) irreversible
+R1978	glycogen debranching enzyme (bglycogen -> glycogen)
+R1979	glucose-1-phosphate adenylyltransferase
+R1980	Glutaminyl-tRNA synthetase
+R1981	L-glutamine transport via ABC system (periplasm)
+R1982	L-glutamine transport via diffusion (extracellular to periplasm)
+R1983	Galactitol-1-phosphate dehydrogenase
+R1984	4-aminobutyrate/glutamate antiport (periplasm)
+R1985	gamma-glutamylcysteine synthetase
+R1986	glutaminase
+R1987	glutamate racemase
+R1988	glutamate synthase (NADPH)
+R1989	L-glutamate transport via ABC system (periplasm)
+R1990	L-glutamate transport via proton symport, reversible (periplasm)
+R1991	Na+/glutamate symport (periplasm)
+R1992	L-glutamate transport via diffusion (extracellular to periplasm)
+R1993	glyoxalate carboligase
+R1994	Glyceraldehyde transport via diffusion (extracellular to periplasm)
+R1995	Glyceraldehyde facilitated diffusion (periplasm)
+R1996	glycine C-acetyltransferase
+R1997	Glycine betaine transport via ABC system (periplasm)
+R1998	Glycine betaine transport via proton symport (periplasm)
+R1999	Glycine betaine transport via diffusion (extracellular to periplasm)
+R2000	sn-Glycerol 2-phosphate transport via ABC system (periplasm)
+R2001	Glycerol-2-phosphate transport via diffusion (extracellular to periplasm)
+R2002	sn-Glycerol 3-phosphate transport via ABC system (periplasm)
+R2003	Glycerol-3-phosphate : phosphate antiporter (periplasm)
+R2004	Glycerol-3-phosphate transport via diffusion (extracellular to periplasm)
+R2005	D-glycerate transport via proton symport, reversible (periplasm)
+R2006	D-glycerate transport via diffusion (extracellular to periplasm)
+R2007	glycerate kinase
+R2008	Glycine Cleavage System
+R2009	Glycolate dehydrogenase (NAD)
+R2010	Glycolate dehydrogenase (NADP)
+R2011	glycolate transport via proton symport, reversible (periplasm)
+R2012	glycolate transport via sodium symport (periplasm)
+R2013	glycolate transport via diffusion (extracellular to periplasm)
+R2014	Glycolate oxidase
+R2015	glycerol transport via diffusion (extracellular to periplasm)
+R2016	glycerol transport via channel (periplasm)
+R2017	glycerol kinase
+R2018	hydroxyacylglutathione hydrolase
+R2019	glyoxalase III
+R2020	glycine transport in via proton symport (periplasm)
+R2021	glycine reversible transport via proton symport (periplasm)
+R2022	glycine transport in via sodium symport (periplasm)
+R2023	Glycine transport via diffusion (extracellular to periplasm)
+R2024	D-glycero-D-manno-hepose 1-phosphate adenyltransferase
+R2025	D-glycero-D-manno-heptose 7-phosphate kinase
+R2026	D-glycero-D-manno-heptose 1,7-bisphosphate phosphatase
+R2027	GMP reductase
+R2028	GMP transport via diffusion (extracellular to periplasm)
+R2029	phosphogluconate dehydrogenase
+R2030	gluconokinase
+R2031	Gp4G hydrolase
+R2032	Glycerophosphodiester phosphodiesterase (Glycerophosphocholine)
+R2033	Glycerophosphodiester phosphodiesterase (Glycerophosphoethanolamine)
+R2034	Glycerophosphodiester phosphodiesterase (Glycerophosphoserine)
+R2035	Glycerophosphodiester phosphodiesterase (Glycerophosphoglycerol)
+R2036	Glycerophosphodiester phosphodiesterase (Glycerophosphoinositol)
+R2037	glutaredoxin reductase
+R2038	guanosine kinase
+R2039	guanosine transport in via proton symport (periplasm)
+R2040	guanosine transport via diffusion (extracellular to periplasm)
+R2041	Glutathionylspermidine amidase
+R2042	Glutathionylspermidine synthetase
+R2043	glutathione (ox) transport via diffusion (extracellular to periplasm)
+R2044	glutathione peridoxase
+R2045	glutathione hydralase (periplasmic)
+R2046	glutathione export via ABC system (cytoplasm to periplasm)
+R2047	Reduced glutathione via ABC system (periplasm)
+R2048	glutathione transport via diffusion (extracellular to periplasm)
+R2049	glutathione synthetase
+R2050	GTP cyclohydrolase I
+R2051	GTP cyclohydrolase II (25drapp)
+R2052	guanosine-5'-triphosphate,3'-diphosphate diphosphatase
+R2053	GTP diphosphokinase
+R2054	GTP transport via diffusion (extracellular to periplasm)
+R2055	guanylate cyclase
+R2056	guanine transport in via proton symport (periplasm)
+R2057	Guanine transport via diffusion (extracellular to periplasm)
+R2058	Guanine transport via diffusion (periplasm)
+R2059	glucuronate isomerase (D-glucuronate)
+R2060	glucuronate isomerase (D-galacturonate)
+R2061	Glucuronate 1-phosphate phosphatase (periplasm)
+R2062	hydrogen peroxide transport via diffusion (external)
+R2063	H2O transport via diffusion (extracellular to periplasm)
+R2064	H2O transport via diffusion (periplasm)
+R2065	Hydrogen sulfide oxidation
+R2066	h2s transport (periplasm)
+R2067	h2s transport via diffusion (extracellular to periplasm)
+R2068	hydrogen transport via diffusion (extracellular to periplasm)
+R2069	hydrogen transport diffusion (periplasm)
+R2070	3-hydroxyacyl-CoA dehydrogenase (acetoacetyl-CoA)
+R2071	3-hydroxyacyl-CoA dehydrogenase (3-oxohexanoyl-CoA)
+R2072	3-hydroxyacyl-CoA dehydrogenase (3-oxooctanoyl-CoA)
+R2073	3-hydroxyacyl-CoA dehydrogenase (3-oxodecanoyl-CoA)
+R2074	3-hydroxyacyl-CoA dehydrogenase (3-oxododecanoyl-CoA)
+R2075	3-hydroxyacyl-CoA dehydrogenase (3-oxotetradecanoyl-CoA)
+R2076	3-hydroxyacyl-CoA dehydrogenase (3-oxohexadecanoyl-CoA)
+R2077	3-hydroxyacyl-CoA dehydrogenase (3-oxooctadecanoyl-CoA), peroxisomal
+R2078	3-hydroxyadipyl-CoA dehydrogenase (NAD+)
+R2079	Hydroxybenzoate octaprenyltransferase
+R2080	3-hydroxycinnamic acid transport via proton symport, reversible (periplasm)
+R2081	3-hydroxycinnamic acid transport via diffusion (extracellular to periplasm)
+R2082	homocysteine S-methyltransferase
+R2083	Homocysteine Methyltransferase
+R2084	Hexadecanoate transport via facilitated irreversible diffusion (extracellular to periplasm)
+R2085	Hexadecenoate transport via facilitated irreversible diffusion (extracellular to periplasm)
+R2086	Heme O synthase
+R2087	LPS heptose kinase I (LPS core synthesis)
+R2088	LPS heptose kinase II (LPS core synthesis)
+R2089	heptosyltransferase I (LPS core synthesis)
+R2090	heptosyltransferase II (LPS core synthesis)
+R2091	heptosyltransferase III (LPS core synthesis)
+R2092	heptosyltransferase IV (LPS core synthesis)
+R2093	hexokinase (D-glucose:ATP)
+R2094	hexokinase (D-mannose:ATP)
+R2095	hexanoate transport via proton symport, reversible (periplasm)
+R2096	Mercury (Hg+2) ABC transporter (periplasm)
+R2097	mercury (Hg+2) transport out via proton antiport (periplasm)
+R2098	mercury (Hg+2) transport via diffusion (extracellular to periplasm)
+R2099	L-histidine transport via ABC system (periplasm)
+R2100	L-histidine reversible transport via proton symport (periplasm)
+R2101	L-histidine transport via diffusion (extracellular to periplasm)
+R2102	2-hydroxy-6-ketonona-2,4-dienedioic acid hydrolase
+R2103	2-hydroxy-6-ketononotrienedioate hydrolase
+R2104	L-homoserineserine efflux via proton symport
+R2105	L-homoserine transport via diffusion (extracellular to periplasm)
+R2106	4-hydroxy-2-oxopentanoate aldolase
+R2107	2,3-dihydroxypheylpropionate 1,2-dioxygenase
+R2108	3-(3-hydroxyphenyl)propionate transport via proton symport, reversible (periplasm)
+R2109	3-(3-hydroxyphenyl)propionate transport via diffusion (extracellular to periplasm)
+R2110	hydroxypyruvate isomerase
+R2111	homoserine O-succinyltransferase
+R2112	hypoxanthine dehydrogenase
+R2113	Hexanoate transport via diffusion (extracellular to periplasm)
+R2114	Acetyl-CoA:hexanoate-CoA transferase
+R2115	hydrogenase (ubiquinone-8: 2 protons) (periplasm)
+R2116	Hydrogenase (menaquinone8: 2 protons) (periplasm)
+R2117	Hydrogenase (Demethylmenaquinone-8: 2 protons) (periplasm)
+R2118	hypothetical enyme
+R2119	Hypoxanthine transport via diffusion (extracellular to periplasm)
+R2120	Hypoxanthine transport (periplasm)
+R2121	proton transport via diffusion (extracellular to periplasm)
+R2122	ISC [2Fe-2S] regeneration
+R2123	ISC [2Fe-2S] Synthesis
+R2124	ISC [2Fe-2S] Synthesis II
+R2125	ISC [2Fe-2S] Transfer
+R2126	ISC [4Fe-4S] Reduction
+R2127	ISC [4Fe-4S] Transfer
+R2128	isocitrate dehydrogenase (NADP)
+R2129	isochorismate synthase
+R2130	isochorismatase
+R2131	Isocitrate lyase
+R2132	ISC Cysteine desulfuration
+R2133	L-idonate 5-dehydrogenase
+R2134	L-indonate 5-dehydrogenase (NADP)
+R2135	L-idonate transport via proton symport, reversible (periplasm)
+R2136	L-idonate transport via diffusion (extracellular to periplasm)
+R2137	L-isoleucine transport via ABC system (periplasm)
+R2138	L-isoleucine reversible transport via proton symport (periplasm)
+R2139	L-isoleucine transport via diffusion (extracellular to periplasm)
+R2140	IMP transport via diffusion (extracellular to periplasm)
+R2141	Indole transport via proton symport, irreversible (periplasm)
+R2142	Indole transport via proton symport, reversible (periplasm)
+R2143	Indole transport via diffusion (extracellular to periplasm)
+R2144	Na+/myo-inositol symporter (periplasm)
+R2145	Inosine hydrolase
+R2146	insosine kinase
+R2147	inositol transport via diffusion (extracellular to periplasm)
+R2148	inosine transport in via proton symport (periplasm)
+R2149	inosine transport in via proton symport, reversible (periplasm)
+R2150	inosine transport via diffusion (extracellular to periplasm)
+R2151	isopentenyl-diphosphate D-isomerase
+R2152	1-hydroxy-2-methyl-2-(E)-butenyl 4-diphosphate reductase (ipdp)
+R2153	isethionate transport via ABC system (periplasm)
+R2154	isethionate transport via diffusion (extracellular to periplasm)
+R2155	KDO(2)-lipid IV A transport via ABC system (periplasm)
+R2156	KDO(2)-lipid IV A transport via ABC system (periplasm to extracellular)
+R2157	ketol-acid reductoisomerase (2-Acetolactate)
+R2158	beta-ketoacyl-ACP synthase
+R2159	beta-ketoacyl-ACP synthase (2)
+R2160	3-deoxy-manno-octulosonate cytidylyltransferase
+R2161	3-deoxy-manno-octulosonate-8-phosphatase
+R2162	3-deoxy -D-manno-octulosonic -acid 8-phosphate synthase
+R2163	3-keto-L-gulonate 6-phosphate decarboxylase
+R2164	Potassium ABC transporter (periplasm)
+R2165	potassium transport in via proton symport (periplasm)
+R2166	potassium transport out via proton antiport (periplasm)
+R2167	potassium transport via diffusion (extracellular to periplasm)
+R2168	L-Lactate dehydrogenase (ubiquinone)
+R2169	L-Lactate dehydrogenase (menaquinone)
+R2170	L-lactate reversible transport via proton symport (periplasm)
+R2171	L-lactate transport via diffusion (extracellular to periplasm)
+R2172	4-amino-4-deoxy-L-arabinotransferase (LPS lipid A modification, periplasmic face of membrane))
+R2173	b-galactosidase
+R2174	L-alanyl-gamma-D-glutamyl-meso-diaminopimelate hydrolase
+R2175	L-alanyl-D-glutamate transport via diffusion (extracellular to periplasm)
+R2176	L-alanyl-D-glutamate transport in via proton symport (periplasm)
+R2177	L-alanyl-L-glutamate transport via diffusion (extracellular to periplasm)
+R2178	L-alanyl-L-glutamate transport in via proton symport (periplasm)
+R2179	D-Lactaldehyde:NAD+ 1-oxidoreductase
+R2180	L-Lactaldehyde:NADP+ 1-oxidoreductase
+R2181	L-alanyl-gamma-L-glutamate peptidase
+R2182	lacaldehyde reductase (R-propane-1,2-diol forming)
+R2183	lacaldehyde reductase (S-propane-1,2-diol forming)
+R2184	Lactose transport via proton aniport (periplasm)
+R2185	Lactose transport via diffusion (extracellular to periplasm)
+R2186	Lactose transport via proton symport (periplasm)
+R2187	D-lactate dehydrogenase
+R2188	leucine transaminase (irreversible)
+R2189	L-leucine transport via ABC system (periplasm)
+R2190	L-leucine reversible transport via proton symport (periplasm)
+R2191	L-leucine transport via diffusion (extracellular to periplasm)
+R2192	lactoylglutathione lyase
+R2193	lipid (cold) A transport via ABC system (periplasm)
+R2194	core oligosaccharide lipid A:hexadecanoate transferase (n-C16:0) (extracellular membrane)
+R2195	Lipid A:hexadecanoate transferase (n-C16:0) (extracellular membrane)
+R2196	Lipoyl-adenylate protein ligase
+R2197	Lipoate-ATP adenylate transferase
+R2198	lipid A transport via ABC system (periplasm)
+R2199	lipid A transport via ABC system (periplasm to extracellular)
+R2200	Lipoyl(octanoyl) transferase
+R2201	Lipoate synthase
+R2202	Lipoate transport via proton symport (periplasm)
+R2203	lipoate transport via diffusion (extracellular to periplasm)
+R2204	Lipid A disaccaride synthase
+R2205	Lysophospholipase L1 (2-acylglycerophosphotidate, n-C12:0) (periplasm)
+R2206	Lysophospholipase L1 (2-acylglycerophosphotidate, n-C14:0) (periplasm)
+R2207	Lysophospholipase L1 (2-acylglycerophosphotidate, n-C14:1) (periplasm)
+R2208	Lysophospholipase L1 (2-acylglycerophosphotidate, n-C16:0) (periplasm)
+R2209	Lysophospholipase L1 (2-acylglycerophosphotidate, n-C16:1) (periplasm)
+R2210	Lysophospholipase L1 (2-acylglycerophosphotidate, n-C18:0) (periplasm)
+R2211	Lysophospholipase L1 (2-acylglycerophosphotidate, n-C18:1) (periplasm)
+R2212	Lysophospholipase L1 (2-acylglycerophosphoethanolamine, n-C12:0) (periplasm)
+R2213	Lysophospholipase L1 (2-acylglycerophosphoethanolamine, n-C14:0) (periplasm)
+R2214	Lysophospholipase L1 (2-acylglycerophosphoethanolamine, n-C14:1) (periplasm)
+R2215	Lysophospholipase L1 (2-acylglycerophosphoethanolamine, n-C16:0) (periplasm)
+R2216	Lysophospholipase L1 (2-acylglycerophosphoethanolamine, n-C16:1) (periplasm)
+R2217	Lysophospholipase L1 (2-acylglycerophosphoethanolamine, n-C18:0) (periplasm)
+R2218	Lysophospholipase L1 (2-acylglycerophosphoethanolamine, n-C18:1) (periplasm)
+R2219	Lysophospholipase L1 (2-acylglycerophosphoglycerol, n-C12:0) (periplasm)
+R2220	Lysophospholipase L1 (2-acylglycerophosphoglycerol, n-C14:0) (periplasm)
+R2221	Lysophospholipase L1 (2-acylglycerophosphoglycerol, n-C14:1) (periplasm)
+R2222	Lysophospholipase L1 (2-acylglycerophosphoglycerol, n-C16:0) (periplasm)
+R2223	Lysophospholipase L1 (2-acylglycerophosphoglycerol, n-C16:1) (periplasm)
+R2224	Lysophospholipase L1 (2-acylglycerophosphoglycerol, n-C18:0) (periplasm)
+R2225	Lysophospholipase L1 (2-acylglycerophosphoglycerol, n-C18:1) (periplasm)
+R2226	Lysophospholipase L2 (2-acylglycerophosphotidate, n-C12:0)
+R2227	Lysophospholipase L2 (2-acylglycerophosphotidate, n-C14:0)
+R2228	Lysophospholipase L2 (2-acylglycerophosphotidate, n-C14:1)
+R2229	Lysophospholipase L2 (2-acylglycerophosphotidate, n-C16:0)
+R2230	Lysophospholipase L2 (2-acylglycerophosphotidate, n-C16:1)
+R2231	Lysophospholipase L2 (2-acylglycerophosphotidate, n-C18:0)
+R2232	Lysophospholipase L2 (2-acylglycerophosphotidate, n-C18:1)
+R2233	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoethanolamine, n-C12:0)
+R2234	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoethanolamine, n-C14:0)
+R2235	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoethanolamine, n-C14:1)
+R2236	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoethanolamine, n-C16:0)
+R2237	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoethanolamine, n-C16:1)
+R2238	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoethanolamine, n-C18:0)
+R2239	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoethanolamine, n-C18:1)
+R2240	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoglycerol, n-C12:0)
+R2241	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoglycerol, n-C14:0)
+R2242	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoglycerol, n-C14:1)
+R2243	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoglycerol, n-C16:0)
+R2244	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoglycerol, n-C16:1)
+R2245	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoglycerol, n-C18:0)
+R2246	Lysophospholipase L2 (acyltransferase, 2-acyl-glycerophosphoglycerol, n-C18:1)
+R2247	Lysophospholipase L2 (2-acylglycerophosphoethanolamine, n-C12:0)
+R2248	Lysophospholipase L2 (2-acylglycerophosphoethanolamine, n-C14:0)
+R2249	Lysophospholipase L2 (2-acylglycerophosphoethanolamine, n-C14:1)
+R2250	Lysophospholipase L2 (2-acylglycerophosphoethanolamine, n-C16:0)
+R2251	Lysophospholipase L2 (2-acylglycerophosphoethanolamine, n-C16:1)
+R2252	Lysophospholipase L2 (2-acylglycerophosphoethanolamine, n-C18:0)
+R2253	Lysophospholipase L2 (2-acylglycerophosphoethanolamine, n-C18:1)
+R2254	Lysophospholipase L2 (2-acylglycerophosphoglycerol, n-C12:0)
+R2255	Lysophospholipase L2 (2-acylglycerophosphoglycerol, n-C14:0)
+R2256	Lysophospholipase L2 (2-acylglycerophosphoglycerol, n-C14:1)
+R2257	Lysophospholipase L2 (2-acylglycerophosphoglycerol, n-C16:0)
+R2258	Lysophospholipase L2 (2-acylglycerophosphoglycerol, n-C16:1)
+R2259	Lysophospholipase L2 (2-acylglycerophosphoglycerol, n-C18:0)
+R2260	Lysophospholipase L2 (2-acylglycerophosphoglycerol, n-C18:1)
+R2261	L-serine dehydrogenase
+R2262	lysine decarboxylase
+R2263	L-lysine transport via ABC system (periplasm)
+R2264	L-lysine transport in via proton symport (periplasm)
+R2265	L-lysine transport out via proton antiport (cytoplasm to periplasm)
+R2266	L-lysine transport via diffusion (extracellular to periplasm)
+R2267	Lyxose isomerase
+R2268	L-Lyxose transport via proton symport (periplasm)
+R2269	L-Lyxose transport via diffusion (extracellular to periplasm)
+R2270	mannitol-1-phosphate 5-dehydrogenase
+R2271	Malonyl-ACP decarboxylase
+R2272	Malonyl-CoA methyltransferase
+R2273	malate decarboxylating oxidoreductase (decarboxylating)
+R2274	D-Malate transport via proton symport (2 H) (periplasm)
+R2275	D-Malate transport via diffusion (extracellular to periplasm)
+R2276	malate synthase
+R2277	maltose O-acetyltransferase
+R2278	maltohexaose transport via ABC system (periplasm)
+R2279	maltohexaose transport via diffusion (extracellular to periplasm) irreversible
+R2280	maltopentaose transport via ABC system (periplasm)
+R2281	maltopentaoseMaltotriose transport via diffusion (extracellular to periplasm) irreversible
+R2282	Maltotriose transport via ABC system (periplasm)
+R2283	Maltotriose transport via diffusion (extracellular to periplasm) irreversible
+R2284	maltotetraose transport via ABC system (periplasm)
+R2285	maltotetraoseMaltotriose transport via diffusion (extracellular to periplasm) irreversible
+R2286	maltose transport via ABC system (periplasm)
+R2287	maltose transport via PEP:Pyr PTS (periplasm)
+R2288	maltoseMaltotriose transport via diffusion (extracellular to periplasm) irreversible
+R2289	Malate transport via proton symport (2 H) (periplasm)
+R2290	Malate transport via proton symport (3 H) (periplasm)
+R2291	L-malate transport out via proton antiport (periplasm)
+R2292	Malate transport via diffusion (extracellular to periplasm)
+R2293	mannose-1-phosphate guanylyltransferase (GDP)
+R2294	Mannose-6-phosphate transport via phosphate antiport (periplasm)
+R2295	Mannose 6-phosphate transport via diffusion (extracellular to periplasm)
+R2296	Mannonate oxidoreductase
+R2297	2-O-alpha-mannosyl-D-glycerate transport via PEP:Pyr PTS (periplasm)
+R2298	2-O-alpha-mannosyl-D-glycerate transport via diffusion (extracellular to periplasm)
+R2299	2-O-alpha-mannosyl-6-phosphate-D-glycerate hydrolase
+R2300	D-mannose transport via PEP:Pyr PTS (periplasm)
+R2301	D-mannose transport via diffusion (extracellular to periplasm)
+R2302	2-methylcitrate dehydratase
+R2303	methylisocitrate lyase
+R2304	2-methylcitrate synthase
+R2305	Malonyl-CoA-ACP transacylase
+R2306	3-mercaptopyruvate sulfurtransferase
+R2307	murein crosslinking transpeptidase 1A:(A2pm->D-ala) (periplasm)
+R2308	murein crosslinking transpeptidase 1B:(A2pm->A2pm) (periplasm)
+R2309	murein D,D-carboxypeptidase (murein5px4p) (periplasm)
+R2310	murein D,D-carboxypeptidase (murein5px4px4p) (periplasm)
+R2311	murein D,D-carboxypeptidase (murein5p5p) (periplasm)
+R2312	murein D,D-carboxypeptidase (murein5p4p) (periplasm)
+R2313	murein D,D-carboxypeptidase (murein5p3p) (periplasm)
+R2314	murein D,D-endopeptidase (murein4px4p) (periplasm)
+R2315	murein D,D-endopeptidase (murein3px4p) (periplasm)
+R2316	murein D,D-endopeptidase (murein5px4p) (periplasm)
+R2317	murein D,D-endopeptidase (murein4px4px4p) (periplasm)
+R2318	Malate dehydrogenase (ubiquinone 8 as acceptor)
+R2319	Malate dehydrogenase (menaquinone 8 as acceptor)
+R2320	malic enzyme (NAD)
+R2321	malic enzyme (NADP)
+R2322	2C-methyl-D-erythritol 2,4 cyclodiphosphate dehydratase
+R2323	2-C-methyl-D-erythritol 2,4-cyclodiphosphate synthase
+R2324	melibiose transport in via symport (periplasm)
+R2325	melibiose transport in via antiport (periplasm)
+R2326	melibiose transport via diffusion (extracellular to periplasm)
+R2327	Methanol transport via diffusion (extracellular to periplasm)
+R2328	Methanol reversible transport via diffusion (periplasm)
+R2329	2-C-methyl-D-erythritol 4-phosphate cytidylyltransferase
+R2330	D-methionine transport via ABC system (periplasm)
+R2331	D-methionine transport via diffusion (extracellular to periplasm)
+R2332	methionine oxidation (spontaneous)
+R2333	methionine oxidation 2 (spontaneous)
+R2334	L-methionine S-oxide transport via ABC system (periplasm)
+R2335	L-methionine S-oxide diffusion (extracellular)
+R2336	L-methionine R-oxide transport via ABC system (periplasm)
+R2337	L-methionine R-oxide diffusion (extracellular)
+R2338	L-methionine-S-oxide reductase
+R2339	L-methionine-R-sulfoxide reductase
+R2340	L-methionine transport via ABC system (periplasm)
+R2341	L-methionine transport via diffusion (extracellular to periplasm)
+R2342	magnesium (Mg+2) transport in/out via proton antiport (periplasm)
+R2343	magnesium (Mg+2) transport via diffusion (extracellular to periplasm)
+R2344	magnesium (+2) transport in via diffusion
+R2345	Magnesium (Mg+2) ABC transporter (ubtake, periplasm)
+R2346	methylglyoxal synthase
+R2347	myo-inositol 1-phosphatase
+R2348	2-methylisocitrate dehydratase
+R2349	Minocycline transport via diffusion (extracellular to periplasm)
+R2350	Minocycline transport via TolC system
+R2351	myo-inositol phosphate transport via diffusion (extracellular to periplasm)
+R2352	murein L,D-carboxypeptidase (murein5px4p) (periplasm)
+R2353	murein L,D-carboxypeptidase (murein4p4p) (periplasm)
+R2354	murein L,D-carboxypeptidase (murein5p5p) (periplasm)
+R2355	murein L,D-carboxypeptidase (murein4p3p) (periplasm)
+R2356	murein L,D-carboxypeptidase (murein5px3p) (periplasm)
+R2357	murein L,D-endopeptidase (murein3px3p) (periplasm)
+R2358	murein L,D-endopeptidase (murein5px3p) (periplasm)
+R2359	Maltodextrin glucosidase (maltotriose)
+R2360	Maltodextrin glucosidase (maltotetraose)
+R2361	Maltodextrin glucosidase (maltopentaose)
+R2362	Maltodextrin glucosidase (maltohexaose)
+R2363	Maltodextrin glucosidase (maltoheptaose)
+R2364	murein lytic transglycosylase (murein4p4p) (periplasm)
+R2365	murein lytic transglycosylase (murein4p3p) (periplasm)
+R2366	murein lytic transglycosylase (murein3p3p) (periplasm)
+R2367	murein lytic transglycosylase (murein4px4p4p) (periplasm)
+R2368	Maltodextrin phosphorylase (maltopentaose)
+R2369	Maltodextrin phosphorylase (maltohexaose)
+R2370	Maltodextrin phosphorylase (maltoheptaose)
+R2371	Methylmalonyl-CoA decarboxylase
+R2372	S-methylmethionine permease (periplasm)
+R2373	S-methyl-L-methionine transport via diffusion (extracellular to periplasm)
+R2374	Methylmalonyl-CoA mutase
+R2375	manganese (Mn+2) transport out via proton antiport (periplasm)
+R2376	manganese transport in via permease (no H+)
+R2377	mannose 6-phosphate phosphatase
+R2378	mannitol transport via PEP:Pyr PTS (periplasm)
+R2379	mannitol transport via diffusion (extracellular to periplasm)
+R2380	D-mannonate hydrolyase
+R2381	manganese (Mn+2) transport in via proton symport (periplasm)
+R2382	Manganese (Mn+2) transport via diffusion (extracellular to periplasm)
+R2383	MoaD sulfuration (nadh, assumed)
+R2384	3-deoxy-D-manno-octulosonic acid transferase
+R2385	3-deoxy-D-manno-octulosonic acid transferase III (LPS core biosynthesis)
+R2386	molybdate transport via ABC system (periplasm)
+R2387	molybdate transport via diffusion (extracellular to periplasm)
+R2388	molybdopterin cytidine dinucleotide synthase
+R2389	molybdenum cofactor synthase
+R2390	molybdopterin guanine dinucleotide synthase
+R2391	malate oxidase
+R2392	molybdopterin adenylyltransferase
+R2393	murein polymerizing transglycosylase
+R2394	murein polymerizing transglycosylase 2 (three linked units)
+R2395	molybdopterin synthase
+R2396	molybdopterin synthase sulfurylase
+R2397	malonic semialdehyde reductase
+R2398	methanesulfonate transport via ABC system (periplasm)
+R2399	methanesulfonate transport via diffusion (extracellular to periplasm)
+R2400	methylthioadenosine nucleosidase
+R2401	methylenetetrahydrofolate dehydrogenase (NADP)
+R2402	(2R,4S)-2-methyl-2,3,3,4-tetrahydroxytetrahydrofuran synthesis (spontaneous)
+R2403	N-methyltryptophan oxidase
+R2404	nitrious oxide transport via diffusion (extracellular to periplasm)
+R2405	nitrious oxide transport (diffusion)
+R2406	N-acetylornithine deacetylase
+R2407	Nicotinic acid transport via diffusion (extracellular to periplasm)
+R2408	Nicotinic acid uptake (periplasm)
+R2409	NAD diphosphatase
+R2410	NADH dehydrogenase (menaquinone-8 & 0 protons)
+R2411	NADH dehydrogenase (ubiquinone-8 & 3 protons) (periplasm)
+R2412	NADH dehydrogenase (menaquinone-8 & 3 protons) (periplasm)
+R2413	NADH dehydrogenase (demethylmenaquinone-8 & 3 protons) (periplasm)
+R2414	NADH dehydrogenase (ubiquinone-8 )
+R2415	NADH dehydrogenase (demethylmenaquinone-8 & 0 protons)
+R2416	NAD nucleosidase
+R2417	NADPH Quinone Reductase (Ubiquinone-8)
+R2418	NADPH Quinone Reductase (Menaquinone-8)
+R2419	NADPH Quinone Reductase (2-Demethylmenaquinone-8)
+R2420	NADP phosphatase
+R2421	NAD transhydrogenase
+R2422	nicotinic acid mononucleotide pyrophosphorylase
+R2423	sodium proton antiporter (H:NA is 1.5) (periplasm)
+R2424	sodium proton antiporter (H:NA is 2) (periplasm)
+R2425	sodium transport out via proton antiport (cytoplasm to periplasm)
+R2426	sodium transport via diffusion (extracellular to periplasm)
+R2427	ammonia transport via diffusion (extracellular to periplasm)
+R2428	ammonia reversible transport (periplasm)
+R2429	NADH:flavorubredoxin oxidoreductase
+R2430	Nickle (Ni+2) ABC transporter (periplasm)
+R2431	nickle (Ni+2) transport out via proton antiport (periplasm)
+R2432	nickel transport via diffusion (extracellular to periplasm)
+R2433	nickel (+2) transport in via permease (no H+)
+R2434	nickel transport via ABC system (uptake, periplasm)
+R2435	nicotinamide-nucleotide amidase
+R2436	NMN nucleosidase
+R2437	NMN permease (periplasm)
+R2438	NMN transport via NMN glycohydrolase (periplasm)
+R2439	NMN transport via diffusion (extracellular to periplasm)
+R2440	nicotinamidase
+R2441	Nicotinate-nucleotide dimethylbenzimidazole phosphoribosyltransferase
+R2442	nitrite transport in via proton symport, reversible (periplasm)
+R2443	nitrite transport via diffusion (extracellular to periplasm)
+R2444	Nitrate reductase (Ubiquinol-8)
+R2445	Nitrate reductase (Ubiquinol-8) (periplasm)
+R2446	Nitrate reductase (Menaquinol-8) (periplasm)
+R2447	nitrate transport in via nitrite antiport (periplasm)
+R2448	nitrate transport via diffusion (extracellular to periplasm)
+R2449	nitric oxide dioxygenase
+R2450	Novobiocin transport via diffusion (extracellular to periplasm)
+R2451	Novobiocin transport via TolC system
+R2452	nitric oxide transport via diffusion (extracellular to periplasm)
+R2453	NO transport (diffusion)
+R2454	5'-nucleotidase (dUMP)
+R2455	5'-nucleotidase (XMP)
+R2456	5'-nucleotidase (IMP)
+R2457	5'-nucleotidase (dIMP)
+R2458	5'-nucleotidase (dIMP) (periplasm)
+R2459	5'-nucleotidase (UMP)
+R2460	5'-nucleotidase (dCMP)
+R2461	5'-nucleotidase (CMP)
+R2462	5'-nucleotidase (dTMP)
+R2463	5'-nucleotidase (dAMP)
+R2464	5'-nucleotidase (AMP)
+R2465	5'-nucleotidase (dGMP)
+R2466	5'-nucleotidase (GMP)
+R2467	nucleoside-triphosphatase (ITP)
+R2468	nucleoside-triphosphatase (dITP)
+R2469	nucleoside-triphosphatase (XTP)
+R2470	nucleoside-triphosphatase (GTP) (periplasm)
+R2471	Nucleoside triphosphate pyrophosphorylase (dgtp)
+R2472	Nucleoside triphosphate pyrophosphorylase (ditp)
+R2473	Nucleoside triphosphate pyrophosphorylase (gtp)
+R2474	Nucleoside triphosphate pyrophosphorylase (dctp)
+R2475	Nucleoside triphosphate pyrophosphorylase (ctp)
+R2476	Nucleoside triphosphate pyrophosphorylase (datp)
+R2477	Nucleoside triphosphate pyrophosphorylase (atp)
+R2478	Nucleoside triphosphate pyrophosphorylase (dttp)
+R2479	Nucleoside triphosphate pyrophosphorylase (utp)
+R2480	Nucleoside triphosphate pyrophosphorylase (itp)
+R2481	Nucleoside triphosphate tripolyhydrolase
+R2482	nitrite Reductase (Ubiquinole-8, periplasm)
+R2483	nitrite Reductase (Menaquinole-8, periplasm)
+R2484	O16 antigen (x4) core oligosaccharide lipid A transport via ABC system (periplasm to extracellular)
+R2485	O16 anitgen (x4) ligase (periplasm)
+R2486	O16 antigen polymerase (periplasm)
+R2487	rhamanosyl-N-acetylglucosamyl-undecaprenyl diphosphate O-acetyltransferase (LPS O16 antigen biosynthesis)
+R2488	O16 antigen (flippase, cytoplasm to periplasm)
+R2489	galactofuranosyltransferase (LPS O16 antigen biosynthesis)
+R2490	glucosyltransferase I (LPS O16 antigen biosynthesis)
+R2491	glucosyltransferase II (LPS O16 antigen biosynthesis)
+R2492	superoxide anion transport via diffusion (extracellular to periplasm)
+R2493	oxygen transport via diffusion (extracellular to periplasm)
+R2494	o2 transport via diffusion (periplasm)
+R2495	oxaloacetate decarboxylase
+R2496	2-Oxobutanoate formate lyase
+R2497	Octadecanoate transport via facilitated irreversible diffusion (extracellular to periplasm)
+R2498	Octadecenoate (n-C18:1) transport via facilitated irreversible diffusion (extracellular to periplasm)
+R2499	Octanoate transport via diffusion (extracellular to periplasm)
+R2500	Octaprenyl pyrophosphate synthase
+R2501	Octanoate non-lipoylated apo domain ligase
+R2502	3-Oxo-glutaryl-[ACP] methyl ester dehydratase
+R2503	3-Oxo-glutaryl-[ACP] methyl ester reductase
+R2504	3-Oxo-glutaryl-[ACP] methyl ester synthase
+R2505	O-Phospho-4-hydroxy-L-threonine:2-oxoglutarate aminotransferase
+R2506	2-octaprenyl-6-hydroxyphenol methylase
+R2507	2-Octaprenyl-6-methoxy-benzoquinol methylase
+R2508	2-Octaprenyl-3-methyl-6-methoxy-1,4-benzoquinol hydroxylase
+R2509	2-Octaprenyl-3-methyl-6-methoxy-1,4-benzoquinol hydroxylase (anaerobic)
+R2510	2-octaprenyl-6-methoxyphenol hydroxylase
+R2511	2-octaprenyl-6-methoxyphenol hydroxylase (anaerobic)
+R2512	2-oxopent-4-enoate hydratase
+R2513	Octaprenyl-hydroxybenzoate decarboxylase
+R2514	2-Octaprenylphenol hydroxylase
+R2515	2-Octaprenylphenol hydroxylase (anaerobic)
+R2516	3-Oxo-pimeloyl-[ACP] methyl ester dehydratase
+R2517	3-Oxo-pimeloyl-[ACP] methyl ester reductase
+R2518	3-Oxo-pimeloyl-[ACP] methyl ester synthase
+R2519	ornithine transport via ABC system (periplasm)
+R2520	ornithine transport via diffusion (extracellular to periplasm)
+R2521	Orotate transport via proton symport (2 H) (periplasm)
+R2522	Orotate transport via diffusion (extracellular to periplasm)
+R2523	oxamate transcarbamoylase
+R2524	Oxalyl-CoA decarboxylase
+R2525	oxepin-CoA hydrolase/ 3-oxo-5,6-dehydrosuberyl-CoA semialdehyde dehydrogenase (NADP+)
+R2526	3-oxo-5,6-dehydrosuberyl-CoA thiolase
+R2527	1-pyrroline-5-carboxylate dehydrogenase
+R2528	phosphatidate transport via ABC system (n-C12:0, periplasm)
+R2529	phosphatidate transport via ABC system (n-C14:0, periplasm)
+R2530	phosphatidate transport via ABC system (n-C14:1, periplasm)
+R2531	phosphatidate transport via ABC system (n-C16:0, periplasm)
+R2532	phosphatidate transport via ABC system (n-C16:1, periplasm)
+R2533	phosphatidate transport via ABC system (n-C18:0, periplasm)
+R2534	phosphatidate transport via ABC system (n-C18:1, periplasm)
+R2535	phenylacetaldehyde reversible transport via proton symport (periplasm)
+R2536	phenethylacetaldehyde transport via diffusion (extracellular to periplasm)
+R2537	ring 1,2-phenylacetyl-CoA epoxidase (NADPH)
+R2538	pantothenate synthase
+R2539	Phosphatidate phosphatase (n-C12:0)
+R2540	Phosphatidate phosphatase (periplasmic, n-C12:0)
+R2541	Phosphatidate phosphatase (n-C14:0)
+R2542	Phosphatidate phosphatase (periplasmic, n-C14:0)
+R2543	Phosphatidate phosphatase (n-C14:1)
+R2544	Phosphatidate phosphatase (periplasmic, n-C14:1)
+R2545	Phosphatidate phosphatase (n-C16:0)
+R2546	Phosphatidate phosphatase (periplasmic, n-C16:0)
+R2547	Phosphatidate phosphatase (n-C16:1)
+R2548	Phosphatidate phosphatase (periplasmic, n-C16:1)
+R2549	Phosphatidate phosphatase (n-C18:0)
+R2550	Phosphatidate phosphatase (periplasmic, n-C18:0)
+R2551	Phosphatidate phosphatase (n-C18:1)
+R2552	Phosphatidate phosphatase (periplasmic, n-C18:1)
+R2553	phospho-N-acetylmuramoyl-pentapeptide-transferase (meso-2,6-diaminopimelate)
+R2554	phosphoadenylyl-sulfate reductase (glutaredoxin)
+R2555	3',5'-cyclic-nucleotide phosphodiesterase
+R2556	pyruvate dehydrogenase
+R2557	pyridoxine 5'-phosphate oxidase (anaerboic
+R2558	pyridoxine 5'-phosphate oxidase
+R2559	Pyridoxine 5'-phosphate synthase
+R2560	Pyridoxine 5-phosphate phosphatase
+R2561	phosphatidylethanolamine transport via ABC system (n-C12:0, periplasm)
+R2562	phosphatidylethanolamine transport via ABC system (n-C14:0, periplasm)
+R2563	phosphatidylethanolamine transport via ABC system (n-C14:1, periplasm)
+R2564	phosphatidylethanolamine transport via ABC system (n-C16:0, periplasm)
+R2565	phosphatidylethanolamine transport via ABC system (n-C16:1, periplasm)
+R2566	phosphatidylethanolamine transport via ABC system (n-C18:0, periplasm)
+R2567	phosphatidylethanolamine transport via ABC system (n-C18:1, periplasm)
+R2568	Phenethylamine oxidase
+R2569	phenethylamine transport via diffusion (extracellular to periplasm)
+R2570	Erythronate 4-phosphate (4per) dehydrogenase
+R2571	phosphoethanolamine transferase (c-C16:1)
+R2572	phosphofructokinase
+R2573	phosphofructokinase (s7p)
+R2574	pyruvate formate lyase
+R2575	phosphatidylglycerol transport via ABC system (n-C12:0, periplasm)
+R2576	phosphatidylglycerol transport via ABC system (n-C14:0, periplasm)
+R2577	phosphatidylglycerol transport via ABC system (n-C14:1, periplasm)
+R2578	phosphatidylglycerol transport via ABC system (n-C16:0, periplasm)
+R2579	phosphatidylglycerol transport via ABC system (n-C16:1, periplasm)
+R2580	phosphatidylglycerol transport via ABC system (n-C18:0, periplasm)
+R2581	phosphatidylglycerol transport via ABC system (n-C18:1, periplasm)
+R2582	6-phosphogluconolactonase
+R2583	phosphatidylglycerophosphate transport via ABC system (n-C12:0, periplasm)
+R2584	phosphatidylglycerophosphate transport via ABC system (n-C14:0, periplasm)
+R2585	phosphatidylglycerophosphate transport via ABC system (n-C14:1, periplasm)
+R2586	phosphatidylglycerophosphate transport via ABC system (n-C16:0, periplasm)
+R2587	phosphatidylglycerophosphate transport via ABC system (n-C16:1, periplasm)
+R2588	phosphatidylglycerophosphate transport via ABC system (n-C18:0, periplasm)
+R2589	phosphatidylglycerophosphate transport via ABC system (n-C18:1, periplasm)
+R2590	phosphatidylglycerol phosphate phosphatase (n-C14:0)
+R2591	phosphatidylglycerol phosphate phosphatase (periplasm, n-C14:0)
+R2592	phosphatidylglycerol phosphate phosphatase (n-C14:1)
+R2593	phosphatidylglycerol phosphate phosphatase (periplasm, n-C14:1)
+R2594	phosphatidylglycerol phosphate phosphatase (n-C16:0)
+R2595	phosphatidylglycerol phosphate phosphatase (periplasm, n-C16:0)
+R2596	phosphatidylglycerol phosphate phosphatase (n-C16:1)
+R2597	phosphatidylglycerol phosphate phosphatase (periplasm, n-C16:1)
+R2598	phosphatidylglycerol phosphate phosphatase (n-C18:0)
+R2599	phosphatidylglycerol phosphate phosphatase (periplasm, n-C18:0)
+R2600	phosphatidylglycerol phosphate phosphatase (n-C18:1)
+R2601	phosphatidylglycerol phosphate phosphatase (periplasm, n-C18:1)
+R2602	Phosphatidylglycerol synthase (n-C12:0)
+R2603	Phosphatidylglycerol synthase (n-C14:0)
+R2604	Phosphatidylglycerol synthase (n-C14:1)
+R2605	Phosphatidylglycerol synthase (n-C16:0)
+R2606	Phosphatidylglycerol synthase (n-C16:1)
+R2607	Phosphatidylglycerol synthase (n-C18:0)
+R2608	Phosphatidylglycerol synthase (n-C18:1)
+R2609	protoheme transport via ABC system (periplasm)
+R2610	protoheme transport irreversible out via diffusion (periplasm to extracellular)
+R2611	L-phenylalanine reversible transport via proton symport (periplasm)
+R2612	L-phenylalanine transport via diffusion (extracellular to periplasm)
+R2613	Phytase (periplasm)
+R2614	phosphate reversible transport via symport (periplasm)
+R2615	phosphate transport via diffusion (extracellular to periplasm)
+R2616	phosphate transport via ABC system (uptake, periplasm)
+R2617	Phospholipase A1 (phosphatidate, n-C12:0) (periplasm)
+R2618	Phospholipase A1 (phosphatidate, n-C14:0) (periplasm)
+R2619	Phospholipase A1 (phosphatidate, n-C14:1) (periplasm)
+R2620	Phospholipase A1 (phosphatidate, n-C16:0) (periplasm)
+R2621	Phospholipase A1 (phosphatidate, n-C16:1) (periplasm)
+R2622	Phospholipase A1 (phosphatidate, n-C18:0) (periplasm)
+R2623	Phospholipase A1 (phosphatidate, n-C18:1) (periplasm)
+R2624	Phospholipase A1 (phosphatidylethanolamine, n-C12:0) (periplasm)
+R2625	Phospholipase A1 (phosphatidylethanolamine, n-C14:0) (periplasm)
+R2626	Phospholipase A1 (phosphatidylethanolamine, n-C14:1) (periplasm)
+R2627	Phospholipase A1 (phosphatidylethanolamine, n-C16:0) (periplasm)
+R2628	Phospholipase A1 (phosphatidylethanolamine, n-C16:1) (periplasm)
+R2629	Phospholipase A1 (phosphatidylethanolamine, n-C18:0) (periplasm)
+R2630	Phospholipase A1 (phosphatidylethanolamine, n-C18:1) (periplasm)
+R2631	Phospholipase A1 (phosphatidylglycerol, n-C12:0) (periplasm)
+R2632	Phospholipase A1 (phosphatidylglycerol, n-C14:0) (periplasm)
+R2633	Phospholipase A1 (phosphatidylglycerol, n-C14:1) (periplasm)
+R2634	Phospholipase A1 (phosphatidylglycerol, n-C16:0) (periplasm)
+R2635	Phospholipase A1 (phosphatidylglycerol, n-C16:1) (periplasm)
+R2636	Phospholipase A1 (phosphatidylglycerol, n-C18:0) (periplasm)
+R2637	Phospholipase A1 (phosphatidylglycerol, n-C18:1) (periplasm)
+R2638	Phospholipase A2 (phosphatidate, n-C12:0) (periplasm)
+R2639	Phospholipase A2 (phosphatidate, n-C14:0) (periplasm)
+R2640	Phospholipase A2 (phosphatidate, n-C14:1) (periplasm)
+R2641	Phospholipase A2 (phosphatidate, n-C16:0) (periplasm)
+R2642	Phospholipase A2 (phosphatidate, n-C16:1) (periplasm)
+R2643	Phospholipase A2 (phosphatidate, n-C18:0) (periplasm)
+R2644	Phospholipase A2 (phosphatidate, n-C18:1) (periplasm)
+R2645	Phospholipase A2 (phosphatidylethanolamine, n-C12:0) (periplasm)
+R2646	Phospholipase A2 (phosphatidylethanolamine, n-C14:0) (periplasm)
+R2647	Phospholipase A2 (phosphatidylethanolamine, n-C14:1) (periplasm)
+R2648	Phospholipase A2 (phosphatidylethanolamine, n-C16:0) (periplasm)
+R2649	Phospholipase A2 (phosphatidylethanolamine, n-C16:1) (periplasm)
+R2650	Phospholipase A2 (phosphatidylethanolamine, n-C18:0) (periplasm)
+R2651	Phospholipase A2 (phosphatidylethanolamine, n-C18:1) (periplasm)
+R2652	Phospholipase A2 (phosphatidylglycerol, n-C12:0) (periplasm)
+R2653	Phospholipase A2 (phosphatidylglycerol, n-C14:0) (periplasm)
+R2654	Phospholipase A2 (phosphatidylglycerol, n-C14:1) (periplasm)
+R2655	Phospholipase A2 (phosphatidylglycerol, n-C16:0) (periplasm)
+R2656	Phospholipase A2 (phosphatidylglycerol, n-C16:1) (periplasm)
+R2657	Phospholipase A2 (phosphatidylglycerol, n-C18:0) (periplasm)
+R2658	Phospholipase A2 (phosphatidylglycerol, n-C18:1) (periplasm)
+R2659	Pimeloyl-[ACP] methyl ester esterase
+R2660	pantothenate kinase
+R2661	Pantothenate sodium symporter (periplasm)
+R2662	Pantothenate transport via diffusion (extracellular to periplasm)
+R2663	peroxyaminoacrylate reductase
+R2664	pyruvate oxidase
+R2665	inorganic triphosphatase
+R2666	propanal transport via diffusion (extracellular to periplasm)
+R2667	propanal transport via channel (periplasm)
+R2668	Na+/Propionate symporter (periplasm)
+R2669	propionate transport via diffusion
+R2670	phosphoenolpyruvate carboxylase
+R2671	phosphoenolpyruvate carboxykinase
+R2672	Propanoyl-CoA: succinate CoA-transferase
+R2673	guanosine-3',5'-bis(diphosphate) 3'-diphosphatase
+R2674	phosphopentomutase
+R2675	phosphopentomutase 2 (deoxyribose)
+R2676	protoporphyrinogen oxidase (aerobic)
+R2677	protoporphyrinogen oxidase (anaerobic)
+R2678	Phenylpropanoate Dioxygenase
+R2679	3-phenylpropionate transport via proton symport, reversible (periplasm)
+R2680	3-phenylpropionate transport via diffusion (extracellular to periplasm)
+R2681	Phosphonate hydrogenase (periplasm)
+R2682	Phosphonate transport via diffusion (extracellular to periplasm)
+R2683	1-(5-phosphoribosyl)-5-[(5-phosphoribosylamino)methylideneamino)imidazole-4-carboxamide isomerase
+R2684	Proline dehydrogenase
+R2685	L-Prolinylglycine (Pro-Gly) transport via ABC system (periplasm)
+R2686	L-Prolinylglycine transport via diffusion (extracellular to periplasm)
+R2687	L-proline transport via ABC system (periplasm)
+R2688	L-proline reversible transport via proton symport (periplasm)
+R2689	Na+/Proline-L symporter (periplasm)
+R2690	L-proline transport via diffusion (extracellular to periplasm)
+R2691	psicoselysine transport via proton symport (periplasm)
+R2692	psicoselysine transporter via diffusion (extracellular)
+R2693	Phosphatidylserine decarboxylase (n-C12:0)
+R2694	Phosphatidylserine decarboxylase (n-C14:0)
+R2695	Phosphatidylserine decarboxylase (n-C14:1)
+R2696	Phosphatidylserine decarboxylase (n-C16:0)
+R2697	Phosphatidylserine decarboxylase (n-C16:1)
+R2698	Phosphatidylserine decarboxylase (n-C18:0)
+R2699	Phosphatidylserine decarboxylase (n-C18:1)
+R2700	phospho-L-serine transport via diffusion (extracellular to periplasm)
+R2701	phospho-L-serine phosphatase (periplasmic)
+R2702	Phosphatidylserine syntase (n-C12:0)
+R2703	Phosphatidylserine syntase (n-C14:0)
+R2704	Phosphatidylserine syntase (n-C14:1)
+R2705	Phosphatidylserine syntase (n-C16:0)
+R2706	Phosphatidylserine syntase (n-C16:1)
+R2707	Phosphatidylserine syntase (n-C18:0)
+R2708	Phosphatidylserine syntase (n-C18:1)
+R2709	Phosphate acetyltransferase
+R2710	phospho-L-threonine phosphatase (periplasmic)
+R2711	putrescine/ornithine antiporter (periplasm)
+R2712	Putrescine Transaminase
+R2713	putrescine transport via ABC system (periplasm)
+R2714	putrescine transport in via proton symport
+R2715	putrescine transport via diffusion (extracellular to periplasm)
+R2716	purine-nucleoside phosphorylase (Adenosine)
+R2717	purine-nucleoside phosphorylase (Deoxyadenosine)
+R2718	purine-nucleoside phosphorylase (Guanosine)
+R2719	purine-nucleoside phosphorylase (Deoxyguanosine)
+R2720	purine-nucleoside phosphorylase (Inosine)
+R2721	purine-nucleoside phosphorylase (Deoxyinosine)
+R2722	purine-nucleoside phosphorylase (Xanthosine)
+R2723	pyridoxamine 5'-phosphate oxidase
+R2724	pyridoxamine kinase
+R2725	pyridoxamine transport via diffusion (extracellular)
+R2726	pyridoxamine import
+R2727	pyridoxal kinase
+R2728	pyridoxine kinase
+R2729	pyridoxine transport via diffusion (extracellular)
+R2730	pyridoxine import
+R2731	Pyridoxal 5-phosphate phosphatase
+R2732	pyridoxal transport via diffusion (extracellular)
+R2733	pyridoxal import
+R2734	pyrimidine-nucleoside phosphorylase (uracil)
+R2735	pyrimidine oxygenase
+R2736	pyruvate reversible transport via proton symport (periplasm)
+R2737	pyruvate transport via diffusion (extracellular to periplasm)
+R2738	quinol monooxygenase (Ubiquinol-8)
+R2739	quinol monooxygenase (menaquinol 8)
+R2740	Quinate transport via diffusion (extracellular to periplasm)
+R2741	Quinate transport (periplasm)
+R2742	Quinate dehydrogenase
+R2743	ribose-1,5-bisphosphokinase
+R2744	ribose 1-phosphokinase
+R2745	ribose 5-phosphate phosphatase
+R2746	Ribose 5-phosphate transport via diffusion (extracellular to periplasm)
+R2747	riboflavin kinase
+R2748	L-ribulokinase (L-ribulose)
+R2749	L-ribulose-phosphate 4-epimerase
+R2750	ring 1,2-epoxyphenylacetyl-CoA isomerase (oxepin-CoA forming)
+R2751	Rifampin transport via diffusion (extracellular to periplasm)
+R2752	Rifampin transport via TolC system
+R2753	rhamnosyltransferase I (LPS core biosynthesis)
+R2754	S-ribosylhomocysteine cleavage enzyme
+R2755	D-ribose transport via ABC system (periplasm)
+R2756	ribose transport via diffusion (extracellular to periplasm)
+R2757	L-rhamnose isomerase
+R2758	rhamnulokinase
+R2759	L-rhamnose transport via diffusion (extracellular to periplasm)
+R2760	L-rhamnose transport via proton symport (periplasm)
+R2761	Rhamnulose-1-phosphate aldolase
+R2762	ribonucleoside-diphosphate reductase (ADP) (glutaredoxin)
+R2763	ribonucleoside-diphosphate reductase (GDP) (glutaredoxin)
+R2764	ribonucleoside-diphosphate reductase (CDP) (glutaredoxin)
+R2765	ribonucleoside-diphosphate reductase (UDP) (glutaredoxin)
+R2766	ribonucleoside-triphosphate reductase (ATP) (flavodoxin)
+R2767	ribonucleoside-triphosphate reductase (GTP) (flavodoxin)
+R2768	ribonucleoside-triphosphate reductase (CTP) (flavodoxin)
+R2769	ribonucleoside-triphosphate reductase (UTP) (flavodoxin)
+R2770	ribulose 5-phosphate 3-epimerase
+R2771	SUF [2Fe-2S] regeneration
+R2772	SUF [2Fe-2S] Synthesis
+R2773	SUF [2Fe-2S] Synthesis II
+R2774	SUF [2Fe-2S] Transfer
+R2775	SUF [4Fe-4S] Reduction
+R2776	SUF [4Fe-4S] Transfer
+R2777	sedoheptulose 7-phosphate isomerase
+R2778	Succinylarginine dihydrolase
+R2779	sarcosine oxidase
+R2780	sorbitol-6-phosphate dehydrogenase
+R2781	D-sorbitol transport via PEP:Pyr PTS (periplasm)
+R2782	D-sorbitol transport via diffusion (extracellular to periplasm)
+R2783	SUF Cysteine desulfuration
+R2784	succinyl-diaminopimelate desuccinylase
+R2785	succinyldiaminopimelate transaminase
+R2786	selenocysteine synthase
+R2787	selenate glutathione reductase
+R2788	selenate glutathione reductase II
+R2789	selenate glutathione reductase III
+R2790	Selenophosphate synthase
+R2791	selenate reductase
+R2792	selenate transport via diffusion (extracellular to periplasm)
+R2793	selenate transport via proton symport (periplasm)
+R2794	2-succinyl-5-enolpyruvyl-6-hydroxy-3-cyclohexene-1-carboxylate synthase
+R2795	(L-seryl)adenylate synthase
+R2796	D-serine deaminase
+R2797	L-serine deaminase
+R2798	Seryl-tRNA synthetase (selenocystein)
+R2799	L-serine reversible transport via proton symport (periplasm)
+R2800	L-serine via sodium symport (periplasm)
+R2801	L-serine transport via diffusion (extracellular to periplasm)
+R2802	S-Formylglutathione hydralase
+R2803	Succinylglutamate desuccinylase
+R2804	Succinylglutamic semialdehyde dehydrogenase
+R2805	2-succinyl-6-hydroxy-2,4-cyclohexadiene 1-carboxylate synthase
+R2806	sirohydrochlorin ferrochelatase
+R2807	O-succinylhomoserine lyase (L-cysteine)
+R2808	shikimate transport in via proton symport (periplasm)
+R2809	shikimate transport via diffusion (extracellular to periplasm)
+R2810	selenite transport via diffusion (extracellular to periplasm)
+R2811	selenite transport via proton symport (periplasm)
+R2812	SO2 transport via diffusion (extracellular to periplasm)
+R2813	SO2 transport via diffusion (periplasm)
+R2814	sulfite transport via diffusion (extracellular to periplasm)
+R2815	sulfate transport in via proton symport (periplasm to cytoplasm)
+R2816	sulfate transport via diffusion (extracellular to periplasm)
+R2817	Succinylornithine transaminase
+R2818	Spermidine acetyltransferase
+R2819	Spermidine acetyltransferase (N8)
+R2820	spermidine transport via ABC system (periplasm)
+R2821	spermidine transport out via proton antiport (periplasm)
+R2822	spermidine transport via diffusion (extracellular to periplasm)
+R2823	spermidine synthase
+R2824	succinate:aspartate antiporter (periplasm)
+R2825	o-succinylbenzoate-CoA ligase
+R2826	O-succinylbenzoate-CoA synthase
+R2827	succinate transport via proton symport (2 H) (periplasm)
+R2828	Succintate transport via proton symport (3 H) (periplasm)
+R2829	succinate transport out via proton antiport (periplasm)
+R2830	succinate transport via diffusion (extracellular to periplasm)
+R2831	succinate dehydrogenase (irreversible)
+R2832	succinate:fumarate antiporter (periplasm)
+R2833	succinate:malate antiporter (periplasm)
+R2834	succinyl-CoA synthetase (ADP-forming)
+R2835	sucrose transport transport via diffusion (extracellular to periplasm)
+R2836	succinate:D-tartrate antiporter (periplasm)
+R2837	sucrose transport via PEP:Pyr  (periplasm)
+R2838	sulfoacetate transport via ABC system (periplasm)
+R2839	sulfoaceate transport via diffusion (extracellular to periplasm)
+R2840	sulfite reductase (NADPH2)
+R2841	sulfate transport via ABC system (periplasm)
+R2842	trans-2-decenoyl-ACP isomerase
+R2843	tagaturonate reductase
+R2844	transaldolase
+R2845	L(+)-tartrate dehydratase
+R2846	D-tartrate transport via diffusion (extracellular to periplasm)
+R2847	Tartrate/succinate antiporter (periplasm)
+R2848	Tartrate transport via diffusion (extracellular to periplasm)
+R2849	D-tartrate transport via proton symport (3 H) (periplasm)
+R2850	Taurine dioxygenase
+R2851	taurine transport via ABC system (periplasm)
+R2852	taurine transport via diffusion (extracellular to periplasm)
+R2853	Thiocyanate transport via diffusion (extracellular to periplasm)
+R2854	thiamin pyrophosphatase
+R2855	dTDP-4-amino-4,6-dideoxy-D-glucose acetyltransferase
+R2856	dTDP-4-amino-4,6-dideoxy-D-glucose transaminase
+R2857	Tetraacyldisaccharide 4'kinase
+R2858	thiol:disulfide reductase (DsbC)
+R2859	thiol:disulfide reductase (DsbG)
+R2860	Tagatose-bisphosphate aldolase
+R2861	NAD(P) transhydrogenase (periplasm)
+R2862	tetrahydrodipicolinate succinylase
+R2863	Tetrahydrofolate aminomethyltransferase
+R2864	hydrogen peroxide reductase (thioredoxin)
+R2865	thymidine transport in via proton symport (periplasm)
+R2866	thymidine transport in via proton symport, reversible (periplasm)
+R2867	thymidine transport via diffusion (extracellular to periplasm)
+R2868	thiamine transport via ABC system (periplasm)
+R2869	Thiamine transport via diffusion (extracellular to periplasm)
+R2870	L-allo-Threonine Aldolase
+R2871	L-threonine dehydrogenase
+R2872	L-threonine deaminase
+R2873	phospho-L-threonine transport via diffusion (extracellular to periplasm)
+R2874	L-threonine transport via ABC system (periplasm)
+R2875	L-threonine efflux transport via proton antiport (periplasm)
+R2876	L-threonine reversible transport via proton symport (periplasm)
+R2877	L-threonine  via sodium symport (periplasm)
+R2878	L-threonine transport via diffusion (extracellular to periplasm)
+R2879	thymine transport out via proton antiport (periplasm)
+R2880	thymine transport via diffusion (extracellular to periplasm)
+R2881	Trimethylamine N-oxide reductase (menaquinol 8)
+R2882	Trimethylamine N-oxide reductase (menaquinol 8) (periplasm)
+R2883	Trimethylamine N-oxide reductase (demethylmenaquinol 8)
+R2884	Trimethylamine N-oxide reductase (demethylmenaquinol 8) (periplasm)
+R2885	Trimethylamine N-oxide transport via diffusion (extracellular to periplasm)
+R2886	Trimethylamine transport via diffusion (extracellular to periplasm)
+R2887	triphosphoribosyl-dephospho-CoA synthase
+R2888	trehalose-6-phosphate hydrolase
+R2889	trehalose-phosphatase
+R2890	alpha,alpha-trehalose-phosphate synthase (UDP-forming)
+R2891	alpha,alpha-trehalase
+R2892	alpha,alpha-trehalase (periplasm)
+R2893	trehalose transport via PEP:Pyr PTS (periplasm)
+R2894	trehalose transport via diffusion (extracellular to periplasm)
+R2895	Tryptophanase (L-tryptophan)
+R2896	L-tryptophan reversible transport via proton symport (periplasm)
+R2897	L-tryptophan transport via diffusion (extracellular to periplasm)
+R2898	tartronate semialdehyde reductase
+R2899	thiosulfate transport via ABC system (periplasm)
+R2900	thiosulfate transport via diffusion (extracellular to periplasm)
+R2901	Tetradecanoate transport via facilitated irreversible diffusion (extracellular to periplasm)
+R2902	Tetradecenoate transport via facilitated irreversible diffusion (extracellular to periplasm)
+R2903	Tetracycline transport via diffusion (extracellular to periplasm)
+R2904	Tetracycline transport via TolC system
+R2905	tungstate transport via ABC system (periplasm)
+R2906	tungstate transport via diffusion (extracellular to periplasm)
+R2907	tyramine transport via diffusion (extracellular to periplasm)
+R2908	tyrosine lyase
+R2909	Tyramine:oxygen oxidoreductase(deaminating)(flavin-containing) (periplasm)
+R2910	phospho-L-tyrosine phosphatase (periplasmic)
+R2911	phopho-L-tyrosine transport via diffusion (extracellular to periplasm)
+R2912	L-tyrosine reversible transport via proton symport (periplasm)
+R2913	L-tyrosine transport via diffusion (extracellular to periplasm)
+R2914	ThDP adenylyl transferase
+R2915	UDP-3-O-(3-hydroxymyristoyl)glucosamine acyltransferase
+R2916	UDP-N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminopimelate synthetase
+R2917	UDP-N-acetyl-D-galactosamine pyrophosphohydrolase (periplasm)
+R2918	UDP-N-acetyl-D-glucosamine pyrophosphohydrolase (periplasm)
+R2919	UDP-N-acetyl-D-glucosamine transport via diffusion (extracellular to periplasm)
+R2920	UDP-N-acetylglucosamine acyltransferase
+R2921	UDP-N-acetylglucosamine-N-acetylmuramyl-(pentapeptide)pyrophosphoryl-undecaprenol N-acetylglucosamine transferase
+R2922	UDP-N-acetylmuramoyl-L-alanyl-D-glutamate synthetase
+R2923	UDP-N-acetylmuramoyl-L-alanine synthetase
+R2924	undecaprenyl-diphosphatase
+R2925	Undecaprenyl diphosphate synthase
+R2926	undecaprenyl-diphosphatase (periplasm)
+R2927	undecaprenyl phosphate transport (cytoplasm to periplasm)
+R2928	UDP-N-acetyl-D-galactosamine transport via diffusion (extracellular to periplasm)
+R2929	UDPgalactopyranose mutase
+R2930	UDPgalactose pyrophosphohydrolase
+R2931	UDPgalactose transport via diffusion (extracellular to periplasm)
+R2932	UDP-glucuronate C-4'' decarboxylase
+R2933	UDP-D-glucuronate transport via diffusion (extracellular to periplasm)
+R2934	UDPglucose pyrophosphohydrolase
+R2935	UDPglucose transport via diffusion (extracellular to periplasm)
+R2936	UDP-4''-ketopentose:UDP-4-amino-4-deoxy-L-arabinose aminotransferase
+R2937	UDP-D-glucuronate pyrophosphohydrolase (periplasm)
+R2938	UDPglucose--hexose-1-phosphate uridylyltransferase
+R2939	Ureidoglycolate hydrolase
+R2940	UDP-N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminopimeloyl-D-alanyl-D-alanine synthetase
+R2941	UDP-3-O-acetylglucosamine deacetylase
+R2942	UDP-L-Ara4N formyltransferase
+R2943	transport (cytoplasm to periplasm)
+R2944	UDP-N-acetylmuramate:L-alanyl-gamma-D-glutamyl-meso-diaminopimelate ligase
+R2945	UDP-N-acetylmuramoyl-L-alanyl-D-gamma-glutamyl-meso-2,6-diaminopimelate-D-alanine L,D-carboxypeptidase
+R2946	UDP-N-acetylmuramate:L-alanyl-gamma-D-glutamyl-meso-diaminopimelate-D-alanine ligase
+R2947	UMP transport via diffusion (extracellular to periplasm)
+R2948	undecaprenyl phosphate-L-Ara4FN formylase
+R2949	undecaprenyl phosphate-L-Ara4FN transferase
+R2950	uroporphyrinogen decarboxylase (uroporphyrinogen III)
+R2951	uracil phosphoribosyltransferase
+R2952	peroxyureidoacrylate hydrolase
+R2953	uracil transport in via proton symport (periplasm)
+R2954	uracil transport in via proton symport, reversible (periplasm)
+R2955	uracil transport via diffusion (extracellular to periplasm)
+R2956	ureidoglycolate dehydrogenase
+R2957	Urea transport via diffusion (extracellular to periplasm)
+R2958	Urea transport via facilitate diffusion (periplasm)
+R2959	uricase
+R2960	Uridine hydrolase
+R2961	uridine kinase (GTP:Uridine)
+R2962	uridine transport in via proton symport (periplasm)
+R2963	uridine transport in via proton symport, reversible (periplasm)
+R2964	uridine transport via diffusion (extracellular to periplasm)
+R2965	UDP-sugar hydrolase
+R2966	L-valine transport via ABC system (periplasm)
+R2967	L-valine reversible transport via proton symport (periplasm)
+R2968	L-valine transport via diffusion (extracellular to periplasm)
+R2969	Valine-pyruvate aminotransferase
+R2970	tungsten pterin cofactor synthase
+R2971	L-xylulose 5-phosphate 3-epimerase
+R2972	xanthine dehydrogenase
+R2973	xanthine transport in via proton symport (periplasm)
+R2974	xanthine transport via diffusion (extracellular to periplasm)
+R2975	xanthine reversible transport (periplasm)
+R2976	XMP transport via diffusion (extracellular to periplasm)
+R2977	Xanthosine hydrolase
+R2978	Xanthosine transport via proton symport (periplasm)
+R2979	xanthosine transport via diffusion (extracellular to periplasm)
+R2980	xylose isomerase
+R2981	xylulokinase
+R2982	L-xylulokinase
+R2983	L-xylulose transport in via proton symport (periplasm)
+R2984	L-xylulose transport via diffusion (extracellular to periplasm)
+R2985	D-xylose transport via ABC system (periplasm)
+R2986	D-xylose transport in via proton symport (periplasm)
+R2987	D-xylose transport via diffusion (extracellular to periplasm)
+R2988	Zinc (Zn+2) ABC transporter, efflux (periplasm)
+R2989	zinc (Zn+2) transport out via proton antiport (periplasm)
+R2990	zinc transport in via permease (no H+)
+R2991	zinc (Zn+2) transport via ABC system (periplasm)
+R2992	zinc (Zn+2) transport via diffusion (extracellular to periplasm)
+R2993	L-alanine dehydrogenase 
+R2994	succinate semialdehyde dehydrogenase 
+R2995	L-glutamine synthetase 
+R2996	aspartate aminotransferase 
+R2997	bifunctional proline dehydrogenase/pyrroline-5-carboxylate dehydrogenase 
+R2998	carbamoyl phosphate synthase
+R2999	asparaginase
+R3000	putative asparagine synthase 
+R3001	aminotransferase 
+R3002	dehydrogenase
+R3003	aldehyde dehydrogenase 
+R3004	ADP-glucose pyrophosphorylase 
+R3005	putative glycoside hydrolase
+R3006	bifunctional N-acetylglucosamine-1-phosphate uridyltransferase/glucosamine-1-phosphate acetyltransferase 
+R3007	glucosamine--fructose-6-phosphate aminotransferase 
+R3008	NAD-dependent epimerase/dehydratase 
+R3009	UDP-glucose pyrophosphorylase 
+R3010	aspartyl/glutamyl-tRNA amidotransferase
+R3011	arginase 
+R3012	urease
+R3013	putative ornithine decarboxylase 
+R3014	putative carboxynorspermidine decarboxylase protein 
+R3015	hypothetical protein/gamma-glutamylputrescine oxidase
+R3016	gamma-glutamyl-gamma-aminobutyraldehyde dehydrogenase
+R3017	gamma-glutamyl kinase 
+R3018	gamma-glutamyl phosphate reductase 
+R3019	putative proline racemase
+R3020	bifunctional ornithine acetyltransferase/N-acetylglutamate synthase protein 
+R3021	N-acetyl-gamma-glutamyl-phosphate reductase 
+R3022	biotin protein ligase 
+R3023	ribulose bisophosphate carboxylase
+R3024	phosphoribulokinase 
+R3025	 
+R3026	farnesyl-diphosphate synthase 
+R3027	phytoene dehydrogenase 
+R3028	methoxyneurosporene dehydrogenase (hydroxyneurosporene desaturase)
+R3029	phytoene synthase 
+R3030	hydroxyneurosporene synthase 
+R3031	hydroxyneurosporene-O-methyltransferase 
+R3032	spheroidene monooxygenase 
+R3033	isocitrate dehydrogenase 
+R3034	succinate dehydrogenase
+R3035	aconitate hydratase 
+R3036	fumarate hydratase 
+R3037	S-adenosylmethionine synthetase 
+R3038	S-adenosyl-L-homocysteine hydrolase 
+R3039	methionine synthase I 
+R3040	cystathionine gamma-synthase 
+R3041	O-acetylhomoserine sulfhydrylase
+R3042	branched chain amino acid: 2-keto-4-methylthiobutyrate aminotransferase 
+R3043	arginine exchange
+R3044	histidine exchange
+R3045	lysine exchange
+R3046	cysteine exchange
+R3047	glutamine exchange
+R3048	glutathione exchange
+R3049	Glutathione disulfide exchange
+R3050	cobalamin exchange
+R3051	heme exchange
+R3052	sorbitol exchange
+R3053	Mannitol exchange
+R3054	ribose exchange
+R3055	xylose exchange
+R3056	fructose exchange
+R3057	glutamate exchange
+R3058	aspartate exchange
+R3059	asparagine exchange
+R3060	Malate exchange
+R3061	2-Oxobutanoate exchange
+R3062	2-Oxopentanoic acid exchange
+R3063	Mannose exchange
+R3064	enoyl-[acyl-carrier-protein] reductase [NADH] 
+R3065	short-chain dehydrogenase/reductase SDR 
+R3066	3-oxoacyl-[acyl-carrier-protein] synthase III 
+R3067	Acyl-CoA dehydrogenase
+R3068	3-oxoacyl-[acyl-carrier-protein] reductase 
+R3069	acetyl-CoA carboxylase carboxyltransferase subunit alpha 
+R3070	[Acyl-carrier-protein] S-malonyltransferase
+R3071	3-oxoacyl-[acyl-carrier-protein] synthase I 
+R3072	3-hydroxydecanoyl-(acyl carrier protein) dehydratase 
+R3073	enoyl-ACP dehydratase 
+R3074	thiolase
+R3075	enoyl-CoA hydratase 
+R3076	3-hydroxyacyl-CoA dehydrogenase / short chain enoyl-CoA hydratase 
+R3077	2-amino-4-hydroxy-6-hydroxymethyldihydropteridine pyrophosphokinase 
+R3078	folylpolyglutamate synthetase 
+R3079	aminodeoxychorismate synthase 
+R3080	hypothetical protein
+R3081	bifunctional 5,10-methylene-tetrahydrofolate dehydrogenase/5,10-methylene-tetrahydrofolate cyclohydrolase 
+R3082	sorbitol dehydrogenase 
+R3083	mannitol dehydrogenase 
+R3084	putative fructokinase 
+R3085	D-mannose-6-phosphate aldose-ketose-isomerase
+R3086	putative nucleotide di-P-sugar epimerase or dehydratase 
+R3087	1-phosphofructokinase 
+R3088	UDP-galactose 4-epimerase 
+R3089	Gamma-glutamyltransferase
+R3090	putative glutathione synthetase
+R3091	NADPH-glutathione reductase 
+R3092	putative glutathione peroxidase 
+R3093	glycerol-3-phosphate dehydrogenase 
+R3094	putative glycerol-3-phosphate acyltransferase PlsX
+R3095	phosphatidylethanolamine N-methyltransferase / phosphatidyl-N-methylethanolamine N-methyltransferase 
+R3096	CDP-alcohol phosphatidyltransferase
+R3097	CDP-diacylglycerol--glycerol-3-phosphate 3-phosphatidyltransferase 
+R3098	S-adenosylmethionine-diacylglycerol 3-amino-3-carboxypropyl transferase
+R3099	S-adenosylmethionine-diacylgycerolhomoserine-N-methlytransferase
+R3100	phosphatidate cytidylyltransferase 
+R3101	phosphatidylserine decarboxylase 
+R3102	putative phosphatidylglycerophosphatase A 
+R3103	phospholipid/glycerol acyltransferase
+R3104	diacylglycerol kinase 
+R3105	phospholipase D/transphosphatidylase 
+R3106	putative choline kinase 
+R3107	CDP-diacylglycerol-choline O-phosphatidyltransferase 
+R3108	homoserine dehydrogenase 
+R3109	L-threonine ammonia-lyase 
+R3110	glycine dehydrogenase 
+R3111	L-threonine aldolase 
+R3112	serine hydroxymethyltransferase 
+R3113	serine-pyruvate aminotransferase/aspartate aminotransferase 
+R3114	phosphoserine phosphatase 
+R3115	phosphoserine aminotransferase 
+R3116	D-isomer specific 2-hydroxyacid dehydrogenase, NAD binding subunit
+R3117	2-amino-3-ketobutyrate coenzyme A ligase 
+R3118	L-threonine 3-dehydrogenase 
+R3119	glycine cleavage system aminomethyltransferase T 
+R3120	dimethylglycine dehydrogenase
+R3121	putative sarcosine oxidase
+R3122	L-serine ammonia-lyase 
+R3123	(R)-1-Aminopropan-2-ol:NAD+ oxidoreductase
+R3124	glucokinase 
+R3125	6-phosphofructokinase 
+R3126	phosphoglyceromutase 
+R3127	phosphopyruvate hydratase 
+R3128	alcohol dehydrogenase class III 
+R3129	isocitrate/isopropylmalate dehydrogenase / tartrate dehydrogenase
+R3130	putative hydroxypyruvate reductase/glycerate kinase
+R3131	2-hydroxyacid dehydrogenase
+R3132	formate dehydrogenase
+R3133	imidazole glycerol phosphate synthase subunit HisH 
+R3134	histidinol-phosphate aminotransferase 
+R3135	histidine ammonia-lyase 
+R3136	urocanase 
+R3137	imidazolonepropionase 
+R3138	N-formimino-L-glutamate deiminase 
+R3139	hydrogenase
+R3140	long chain acyl-CoA synthetase 
+R3141	lipoyl synthase
+R3142	lipoate-protein ligase B
+R3143	UDP-3-O-[3-hydroxymyristoyl] N-acetylglucosamine deacetylase 
+R3144	UDP-3-O-[3-hydroxymyristoyl] glucosamine N-acyltransferase 
+R3145	lipid-A-disaccharide synthase 
+R3146	2-dehydro-3-deoxyphosphooctonate aldolase 
+R3147	putative 3-deoxy-D-manno-octulosonic-acid transferase (KDO transferase) 
+R3148	putative lipid A biosynthesis lauroyl acyltransferase 
+R3149	dihydrodipicolinate reductase 
+R3150	2,3,4,5-tetrahydropyridine-2,6-carboxylate N-succinyltransferase 
+R3151	L-lysine 2,3-aminomutase 
+R3152	glutathione-dependent formaldehyde-activating enzyme
+R3153	S-formylglutathione hydrolase 
+R3154	5,10-methylenetetrahydrofolate reductase 
+R3155	5-nucleotidase 
+R3156	purine nucleoside phosphorylase 
+R3157	nucleoside hydrolase
+R3158	pyrazinamidase/nicotinamidase
+R3159	nicotinate phosphoribosyltransferase 
+R3160	nicotinic acid mononucleotide adenylyltransferase 
+R3161	NAD synthetase 
+R3162	NUDIX hydrolase
+R3163	NAD(P) transhydrogenase subunit alpha 
+R3164	inorganic polyphosphate/ATP-NAD kinase 
+R3165	L-tyrosine ammonia-lyase
+R3166	carbonic anhydrase
+R3167	acetamidase/formamidase
+R3168	nitric oxide reductase
+R3169	nitrogenase molybdenum-iron protein
+R3170	amidase
+R3171	nitrogenase molybdenum-iron protein beta chain
+R3172	NADPH-ferredoxin reductase
+R3173	cyclohexadienyl dehydrogenase 
+R3174	putative 5-formyltetrahydrofolate cyclo-ligase
+R3175	ubiquinol-cytochrome c reductase, iron-sulfur protein
+R3176	cytochrome c oxidase, aa3 type/ cbb3-type cytochrome c oxidase
+R3177	putative NADH dehydrogenase I and II
+R3178	Qox quinol
+R3179	F0F1 ATP synthase subunit epsilon 
+R3180	putative manganese-dependent inorganic pyrophosphatase 
+R3181	pantoate--beta-alanine ligase 
+R3182	bifunctional phosphopantothenoylcysteine decarboxylase/phosphopantothenate synthase 
+R3183	phosphopantetheine adenylyltransferase 
+R3184	4-phosphopantetheinyl transferase 
+R3185	5-keto-4-deoxyuronate isomerase 
+R3186	2-deoxy-D-gluconate 3-dehydrogenase
+R3187	2-keto-3-deoxygluconate kinase 
+R3188	glucuronate isomerase 
+R3189	mannonate dehydratase 
+R3190	D-mannonate oxidoreductase
+R3191	xylulose kinase
+R3192	D-ribulokinase 
+R3193	ribitol 2-dehydrogenase 
+R3194	D-fructose 1,6-bisphosphatase 
+R3195	glucose-6-phosphate 1-dehydrogenase 
+R3196	translaldolase 
+R3197	ribose-5-phosphate isomerase A 
+R3198	carbohydrate kinase ribokinase family protein
+R3199	2-keto-3-deoxy-phosphogluconate aldolase 
+R3200	quinoprotein glucose dehydrogenase 
+R3201	D-isomer specific 2-hydroxyacid dehydrogenase
+R3202	peptidoglycan glycosyltransferase 
+R3203	UDP-N-acetylmuramate--L-alanine ligase 
+R3204	UDP-N-acetylmuramoylalanyl-D-glutamate--2,6-diaminopimelate ligase 
+R3205	D-alanine--D-alanine ligase 
+R3206	UDP-N-acetylmuramoyl-tripeptide--D-alanyl-D-alanine ligase 
+R3207	undecaprenyl pyrophosphate phosphatase 
+R3208	phospho-N-acetylmuramoyl-pentapeptide-transferase 
+R3209	undecaprenyldiphospho-muramoylpentapeptide beta-N-acetylglucosaminyltransferase 
+R3210	3-hydroxybutyryl-CoA dehydrogenase 
+R3211	poly-beta-hydroxybutyrate polymerase
+R3212	metal-dependent amidase/aminoacylase/carboxypeptidase
+R3213	3-deoxy-D-arabinoheptulosonate-7-phosphate synthase 
+R3214	shikimate 5-dehydrogenase 
+R3215	anthranilate synthase component I 
+R3216	N-(5-phosphoribosyl)anthranilate isomerase 
+R3217	tryptophan synthase
+R3218	aromatic amino acid aminotransferase 
+R3219	LHI-RC-LHII
+R3220	5-aminolevulinate synthase 
+R3221	uroporphyrinogen decarboxylase
+R3222	magnesium chelatase
+R3223	bacteriochlorophyll/chlorophyll a synthase 
+R3224	delta-aminolevulinic acid dehydratase 
+R3225	coproporphyrinogen III oxidase 
+R3226	porphobilinogen deaminase 
+R3227	protoheme IX farnesyltransferase
+R3228	bacteriochlorophyll synthase, 23 kDa subunit (BchJ)
+R3229	putative cytochrome oxidase assembly factor
+R3230	uroporphyrin-III C-methyltransferase 
+R3231	precorrin-3 methyltransferase 
+R3232	precorrin 6A synthase 
+R3233	cobalt-precorrin-6x reductase 
+R3234	putative precorrin-6y C5,15-methyltransferase 
+R3235	cobyrinic acid a,c-diamide synthase 
+R3236	cobyric acid synthase 
+R3237	cobalamin-5-phosphate synthase 
+R3238	Mg-protoporphyrin IX methyl transferase 
+R3239	magnesium-protoporphyrin IX monomethyl ester cyclase 
+R3240	protochlorophyllide reductase iron-sulfur ATP-binding protein 
+R3241	2-vinyl bacteriochlorophyllide hydratase
+R3242	chlorophyll synthesis pathway, BchC 
+R3243	geranylgeranyl hydrogenase
+R3244	isopentenyl-diphosphate delta-isomerase 
+R3245	chlorophyllide reductase
+R3246	propionyl-CoA carboxylase
+R3247	acyl-CoA sythetase 
+R3248	crotonyl-CoA carboxylase/reductase
+R3249	methylmalonyl-CoA epimerase/ethylmalonyl-CoA epimerase 
+R3250	methylmalonyl-CoA mutase/ethylmalonyl-CoA mutase
+R3251	Methylsuccinyl-CoA dehydrogenase
+R3252	mesaconyl-CoA hydratase
+R3253	methylmalonyl-CoA carboxy-lyase
+R3254	Malyl-CoA thioesterase
+R3255	methylmalonate-semialdehyde dehydrogenase 
+R3256	isopropylmalate/homocitrate synthase 
+R3257	amidophosphoribosyltransferase 
+R3258	phosphoribosylamine--glycine ligase 
+R3259	phosphoribosylformylglycinamidine (FGAM) synthetase
+R3260	phosphoribosylaminoimidazole synthetase 
+R3261	N5-carboxyaminoimidazole ribonucleotide mutase
+R3262	stationary phase survival protein SurE 
+R3263	hypoxanthine phosphoribosyltransferase 
+R3264	inosine-5-monophosphate dehydrogenase 
+R3265	nucleoside diphosphate kinase 
+R3266	nucleoside triphosphate pyrophosphohydrolase 
+R3267	xanthine-guanine phosphoribosyltransferase 
+R3268	guanylate kinase 
+R3269	ribonucleotide-diphosphate reductase
+R3270	deoxyguanosinetriphosphate triphosphohydrolase-like protein
+R3271	RelA/SpoT family protein 
+R3272	adenylosuccinate synthetase 
+R3273	2,3-cyclic-nucleotide 2-phosphodiesterase
+R3274	putative deoxyribonucleotide triphosphate pyrophosphatase
+R3275	transthyretin-like protein
+R3276	thioredoxin reductase
+R3277	dihydroorotate dehydrogenase 2 
+R3278	cytidylate kinase 
+R3279	uridylate kinase 
+R3280	CTP synthetase 
+R3281	2-deoxycytidine 5-triphosphate deaminase 
+R3282	phenylhydantoinase 
+R3283	thymidylate kinase 
+R3284	acetyl-coenzyme A synthetase 
+R3285	dihydrolipoamide dehydrogenase 
+R3286	acetyl-CoA carboxylase biotin
+R3287	acetyl-CoA hydrolase/transferase family protein
+R3288	lactate dehydrogenase 
+R3289	putative hydroxyacylglutathione hydrolase (glyoxalase II) (GLX II) protein 
+R3290	GTP cyclohydrolase II / 3,4-dihydroxy-2-butanone 4-phosphate synthase 
+R3291	diaminohydroxyphosphoribosylaminopyrimidine deaminase / 5-amino-6-(5-phosphoribosylamino)uracil reductase 
+R3292	6,7-dimethyl-8-ribityllumazine synthase 
+R3293	FMN adenylyltransferase / riboflavin kinase 
+R3294	putative selenocysteine lyase
+R3295	alpha amylase domain-containing protein
+R3296	putative beta-glucosidase A 
+R3297	OtsA trehalose-6-phosphate synthase 
+R3298	putative trehalose-6-phosphate phosphatase 
+R3299	putative trehalose synthase
+R3300	glycogen synthase 
+R3301	2-oxoglutarate dehydrogenase E1 component 
+R3302	dihydrolipoamide acetyltransferase 
+R3303	phosphoadenosine phosphosulfate reductase 
+R3304	sulfite/nitrite reductase
+R3305	hydroxymethylglutaryl-CoA lyase 
+R3306	3-ketoacid CoA transferase
+R3307	sulfoacetaldehyde acetyltransferase
+R3308	FAD dependent oxidoreductase 
+R3309	1-deoxy-D-xylulose 5-phosphate reductoisomerase 
+R3310	4-diphosphocytidyl-2C-methyl-D-erythritol synthase 
+R3311	4-diphosphocytidyl-2-C-methyl-D-erythritol kinase 
+R3312	4-hydroxy-3-methylbut-2-en-1-yl diphosphate synthase 
+R3313	4-hydroxy-3-methylbut-2-enyl diphosphate reductase 
+R3314	geranylgeranyl pyrophosphate synthase/polyprenyl synthetase
+R3315	undecaprenyl pyrophosphate synthetase 
+R3316	putative hydoxyethylthiazole kinase
+R3317	thiamine-phosphate pyrophosphorylase
+R3318	Fructose transport via PEP:Pyr PTS
+R3319	ABC L-glutamate transporter
+R3320	ABC L-aspartate transporter
+R3321	ABC L-glutamine transporter
+R3322	Pyruvate transport via Na+ symport
+R3323	2-Oxobutanoate transport via Na+ symport
+R3324	2-Oxopentanoic acid transport via Na+ symport
+R3325	ABC molybdate transporter
+R3326	ABC Fe3+ transport
+R3327	ABC glycine betaine transporter
+R3328	ABC L-proline transporter
+R3329	ABC choline transporter
+R3330	ABC sorbitol transporter
+R3331	ABC Mannitol transporter
+R3332	ABC L-asparagine transporter
+R3333	ABC D-Alanyl-D-alanine transporter
+R3334	Ammonia transport via proton symport
+R3335	Succinate transport via Na+ symport
+R3336	(S)-Malate transport via Na+ symport
+R3337	Fumarate transport via Na+ symport
+R3338	ABC thiosulfate transporter
+R3339	thiamine ABC transporter
+R3340	ABC putrescine transporter
+R3341	ABC spermidine transporter
+R3342	ABC Maltose transporter
+R3343	ABC glycerol-3-phosphate transporter
+R3344	ABC sucrose transporter
+R3345	ABC glycerol transporter
+R3346	ABC ribose transporter
+R3347	ABC xylose transporter
+R3348	ABC fructose transporter
+R3349	ABC phosphate transporter
+R3350	ABC L-arginine transporter
+R3351	ABC L-histidine transporter
+R3352	ABC L-lysine transporter
+R3353	ABC L-cysteine transporter
+R3354	ABC D-Alanine transporter
+R3355	ABC L-Alanine transporter
+R3356	ABC L-Glycine transporter
+R3357	Citrate via sodium symport
+R3358	ABC L-leucine transporter
+R3359	ABC L-isoleucine transporter
+R3360	ABC L-valine transporter
+R3361	ABC L-methionine transporter
+R3362	ABC oligopeptide (tetrapeptide) transporter
+R3363	ABC glutathione (reduced) transporter
+R3364	ABC Glutathione disulfide (oxidized) transporter
+R3365	ABC cobalamin (Cobamide coenzyme) transporter
+R3366	ABC Mn+2 transporter
+R3367	ABC Fe+2 transporter
+R3368	ABC Co2+ transporter
+R3369	ABC heme exporter
+R3370	ABC Cu2+ transporter
+R3371	ABC sulfate transporter
+R3372	ABC trehalose transporter
+R3373	Sodium/Calcium antiporter (1:1)
+R3374	Sodium/H+ antiporter
+R3375	Sodium/Sulfate symporter
+R3376	CO2 transport via diffusion
+R3377	O2 transport via diffusion
+R3378	Taurine ABC transporter
+R3379	ABC zinc transporter
+R3380	mannose transport via PEP:Pyr PTS
+R3381	arginine transport via diffusion
+R3382	histidine transport via diffusion
+R3383	lysine transport via diffusion
+R3384	cysteine transport via diffusion
+R3385	glutamine transport via diffusion
+R3386	L-leucine transport via diffusion
+R3387	L-isoleucine transport via diffusion
+R3388	L-valine transport via diffusion
+R3389	L-methionine transport via diffusion
+R3390	D-Alanyl-D-alanine transport via diffusion
+R3391	oligopeptide (tetrapeptide) transport via diffusion
+R3392	glutathione transport via diffusion
+R3393	Glutathione disulfide transport via diffusion
+R3394	cobalamin transport via diffusion
+R3395	Cu2+ transport via diffusion
+R3396	zinc transport via diffusion
+R3397	Mn+2 transport via diffusion
+R3398	Fe+2 transport via diffusion
+R3399	heme transport via diffusion
+R3400	thiosulfate transport via diffusion
+R3401	sulfate transport via diffusion
+R3402	molybdate transport via diffusion
+R3403	thiamine transport via diffusion
+R3404	putrescine transport via diffusion
+R3405	spermidine transport via diffusion
+R3406	Fe3+ transport via diffusion
+R3407	glycine betaine transport via diffusion
+R3408	proline transport via diffusion
+R3409	choline transport via diffusion
+R3410	Maltose transport via diffusion
+R3411	glycerol-3-phosphate transport via diffusion
+R3412	sorbitol transport via diffusion
+R3413	Mannitol transport via diffusion
+R3414	sucrose transport via diffusion
+R3415	trehalose transport via diffusion
+R3416	glycerol transport via diffusion
+R3417	D-ribose transport via diffusion
+R3418	D-xylose transport via diffusion
+R3419	D-fructose transport via diffusion
+R3420	phosphate transport via diffusion
+R3421	L-glutamate transport via diffusion
+R3422	L-aspartate transport via diffusion
+R3423	L-asparagine transport via diffusion
+R3424	Ammonia transport via diffusion
+R3425	Sodium transport via diffusion
+R3426	Calcium transport via diffusion
+R3427	Succinate transport via diffusion
+R3428	Malate transport via diffusion
+R3429	Fumarate transport via diffusion
+R3430	Pyruvate transport via diffusion
+R3431	2-Oxobutanoate transport via diffusion
+R3432	2-Oxopentanoic acid transport via diffusion
+R3433	3'-AMP transport via diffusion
+R3434	3'-UMP transport via diffusion
+R3435	3'-GMP transport via diffusion
+R3436	3'-CMP transport via diffusion
+R3437	D-Alanine transport via diffusion
+R3438	L-Alanine transport via diffusion
+R3439	L-Glycine transport via diffusion
+R3440	Citrate transport via diffusion
+R3441	Mannose transport via diffusion
+R3442	4-hydroxybenzoate polyprenyltransferase 
+R3443	3-octaprenyl-4hydroxybenzoate decarboxylase/carboxy-lyase
+R3444	3-demethylubiquinone-9 3-methyltransferase 
+R3445	2-octaprenyl-3-methyl-6-methoxy-1,4-benzoquinol hydroxylase / 2-octaprenyl-6-methoxyphenol hydroxylase 
+R3446	2-octaprenyl-6-methoxy-1,4-benzoquinone methylase / demethylmenaquinone methyltransferase 
+R3447	isopropylmalate isomerase 
+R3448	ketol-acid reductoisomerase 
+R3449	dihydroxy-acid dehydratase 
+R3450	branched-chain amino acid aminotransferase 
+R3451	branched-chain alpha-keto acid dehydrogenase E1 component 
+R3452	isovaleryl-CoA dehydrogenase 
+R3453	3-hydroxyisobutyrate dehydrogenase 
+R3454	3-methylcrotonoyl-CoA carboxylase
+R3455	4-hydroxythreonine-4-phosphate dehydrogenase 
+R3456	dihydropyrimidine dehydrogenase
+R3457	electron transfer flavoprotein-ubiquinone oxidoreductase 
+R3458	NADPH-dependent FMN reductase
+R3459	NAD(P)H -dependent quinone oxidoreductase
+R3460	thiosulfate sulfurtransferase, rhodanese-like
+R3461	nitrilotriacetate monooxygenase component B 
+R3462	ABC Nickel transporter
+R3463	Nickel exchange
+R3464	Nickel transport via diffusion
+R3465	O-succinylhomoserine sulfhydrylase
+R3466	sugar phosphate isomerase
+R3467	ABC Glucose transporter
+R3468	Glucose exchange
+R3469	Glucose transport via diffusion
+R3470	Acetate via Na+ symport 
+R3471	Acetate transport via diffusion
+R3472	ABC L-phenylalanine transporter
+R3473	L-phenylalanine transport via diffusion
+R3474	ABC L-Tryptophan transporter
+R3475	L-Tryptophan transport via diffusion
+R3476	ABC L-Serine transporter
+R3477	L-Serine transport via diffusion
+R3478	ABC L-Threonine transporter
+R3479	L-Threonine transport via diffusion
+R3480	Glyoxylate via Na+ symport 
+R3481	Glyoxylate exchange
+R3482	Glyoxylate transport via diffusion
+R3483	Formate via proton symport 
+R3484	Formate transport via diffusion
+R3485	Formaldehyde via diffusion
+R3486	Formaldehyde transport via diffusion
+R3487	ABC L-Ornithine transporter
+R3488	L-Ornithine exchange
+R3489	L-Ornithine transport via diffusion
+R3490	Urea via diffusion
+R3491	Urea transport via diffusion
+R3492	Beta-Alanine via proton symport 
+R3493	Beta-Alanine transport via diffusion
+R3494	Uracil via Na+ symport 
+R3495	Uracil transport via diffusion
+R3496	Cytosine via Na+ symport 
+R3497	Cytosine transport via diffusion
+R3498	Benzoate via proton symport 
+R3499	Benzoate exchange
+R3500	Benzoate transport via diffusion
+R3501	(R)-Lactate via proton symport 
+R3502	(R)-Lactate exchange
+R3503	(R)-Lactate transport via diffusion
+R3504	(S)-Lactate via proton symport 
+R3505	(S)-Lactate exchange
+R3506	(S)-Lactate transport via diffusion
+R3507	(R)-Malate transport via Na+ symport
+R3508	(R)-Malate exchange
+R3509	(R)-Malate transport via diffusion
+R3510	Magnesium transporter
+R3511	Magnesium exchange
+R3512	Magnesium transport via diffusion
+R3513	Gluconate via proton symport 
+R3514	Gluconate exchange
+R3515	Gluconate transport via diffusion
+R3516	D-Glucuronate via proton symport 
+R3517	D-Glucuronate transport via diffusion
+R3518	ABC Potassium transporter
+R3519	Potassium exchange
+R3520	Potassium transport via diffusion
+R3521	Adenine via Na+ symport 
+R3522	Adenine transport via diffusion
+R3523	Thymine via Na+ symport 
+R3524	Thymine transport via diffusion
+R3525	Guanine via Na+ symport 
+R3526	Guanine transport via diffusion
+R3527	Riboflavin via Na+ symport 
+R3528	Riboflavin transport via diffusion
+R3529	Hypoxanthine via Na+ symport 
+R3530	Hypoxanthine transport via diffusion
+R3531	Xanthine via Na+ symport 
+R3532	Xanthine transport via diffusion
+R3533	5,6-Dihydrouracil via Na+ symport 
+R3534	5,6-Dihydrouracil exchange
+R3535	5,6-Dihydrouracil transport via diffusion
+R3536	ABC Cobinamide transporter
+R3537	Cobinamide transport via diffusion
+R3538	Taurine transport via diffusion
+R3539	D-Glycerate via proton symport 
+R3540	D-Glycerate exchange
+R3541	D-Glycerate transport via diffusion
+R3542	Ethanol via proton symport 
+R3543	Ethanol transport via diffusion
+R3544	Hydrogen via diffusion
+R3545	Hydrogen exchange
+R3546	Hydrogen transport via diffusion
+R3547	ABC D-phenylalanine transporter
+R3548	D-phenylalanine exchange
+R3549	D-phenylalanine transport via diffusion
+R3550	Nitrite via proton symport 
+R3551	Nitrite transport via diffusion
+R3552	ABC Nitrate transporter 
+R3553	Nitrate  transport via diffusion
+R3554	Nitrogen via diffusion
+R3555	Nitrogen exchange
+R3556	Nitrogen transport via diffusion
+R3557	Propanoate  via proton symport 
+R3558	Propanoate exchange
+R3559	Propanoate  transport via diffusion
+R3560	ABC D-Arabitol transporter
+R3561	D-Arabitol exchange
+R3562	D-Arabitol transport via diffusion
+R3563	ABC L-Cysteate transporter
+R3564	L-Cysteate exchange
+R3565	L-Cysteate transport via diffusion
+R3566	ABC D-Aspartate transporter
+R3567	D-Aspartate exchange
+R3568	D-Aspartate transport via diffusion
+R3569	2',3'-Cyclic AMP  via proton symport 
+R3570	2',3'-Cyclic AMP  transport via diffusion
+R3571	2',3'-Cyclic CMP  via proton symport 
+R3572	2',3'-Cyclic CMP  transport via diffusion
+R3573	2',3'-Cyclic UMP  via proton symport 
+R3574	2',3'-Cyclic UMP  transport via diffusion
+R3575	2',3'-Cyclic GMP  via proton symport 
+R3576	2',3'-Cyclic GMP  transport via diffusion
+R3577	ABC D-Arabinose transporter
+R3578	D-Arabinose exchange
+R3579	D-Arabinose transport via diffusion
+R3580	ABC Xylitol transporter
+R3581	Xylitol exchange
+R3582	Xylitol transport via diffusion
+R3583	ABC Choline phosphate transporter
+R3584	Choline phosphate exchange
+R3585	Choline phosphate transport via diffusion
+R3586	L-arginine carboxy-lyase (agmatine-forming)
+R3587	ABC Ribitol transporter
+R3588	Ribitol exchange
+R3589	Ribitol transport via diffusion
+R3590	Glycolate via Na+ symport 
+R3591	Glycolate  transport via diffusion
+R3592	2-Oxoglutarate  via proton symport 
+R3593	2-Oxoglutarate  transport via diffusion
+R3594	4-Hydroxy-2-oxoglutarate  via proton symport 
+R3595	4-Hydroxy-2-oxoglutarate exchange
+R3596	4-Hydroxy-2-oxoglutarate  transport via diffusion
+R3597	D-Altronate  via proton symport 
+R3598	D-Altronate exchange
+R3599	D-Altronate  transport via diffusion
+R3600	Deoxyribose  via proton symport 
+R3601	Deoxyribose exchange
+R3602	Deoxyribose  transport via diffusion
+R3603	ABC Cys-Gly transporter
+R3604	Cys-Gly transport via diffusion
+R3605	Hippurate  via proton symport 
+R3606	Hippurate exchange
+R3607	Hippurate  transport via diffusion
+R3608	Chitobiose  via proton symport 
+R3609	Chitobiose  transport via diffusion
+R3610	D-1-Aminopropan-2-ol O-phosphate  via proton symport 
+R3611	D-1-Aminopropan-2-ol O-phosphate exchange
+R3612	D-1-Aminopropan-2-ol O-phosphate  transport via diffusion
+R3613	UDP-2,3-diacylglucosamine hydrolase
+R3614	Acetamide  via proton symport 
+R3615	Acetamide exchange
+R3616	Acetamide  transport via diffusion
+R3617	(R)-2-Methylmalate  via proton symport 
+R3618	(R)-2-Methylmalate exchange
+R3619	(R)-2-Methylmalate  transport via diffusion
+R3620	3-Phospho-D-glycerate  via proton symport 
+R3621	3-Phospho-D-glycerate exchange
+R3622	3-Phospho-D-glycerate  transport via diffusion
+R3623	Biomass (Photo)
+R3624	Hydrogen sulfide via diffusion
+R3625	Hydrogen sulfide transport via diffusion
+R3626	Thiosulfate/sulfite conversion
+R3627	Sulfite oxidase
+R3628	quinolinate phosphoribosyl transferase
+R3629	thiamine diphosphokinase
+R3630	ABC Biotin transporter
+R3631	Biotin transport via diffusion
+R3632	ABC Nicotinate transporter
+R3633	Nicotinate transport via diffusion
+R3634	Photon exchange
+R3635	Photon transport
+R3636	DMSO/TMAO-reductase
+R3637	Dimethyl sulfoxide transport via diffusion
+R3638	Dimethyl sulfide transport via diffusion
+R3639	putative GTP cyclohydrolase
+R3640	Cardiolipin synthase
+R3641	Lipopolysaccharide biosynthesis
+R3642	Thiamine exchange
+R3643	Methanol  via proton symport 
+R3644	Methanol  transport via diffusion
+R3645	5'-Methylthioadenosine  via proton symport 
+R3646	5'-Methylthioadenosine exchange
+R3647	5'-Methylthioadenosine  transport via diffusion
+R3648	Glycolaldehyde  via proton symport 
+R3649	Glycolaldehyde  transport via diffusion
+R3650	Methanethiol  via proton symport 
+R3651	Methanethiol  transport via diffusion
+R3652	meso-Tartaric acid  via proton symport 
+R3653	meso-Tartaric acid exchange
+R3654	meso-Tartaric acid  transport via diffusion
+R3655	4-Coumarate  via proton symport 
+R3656	4-Coumarate exchange
+R3657	4-Coumarate  transport via diffusion
+R3658	Selenide  via proton symport 
+R3659	Selenide exchange
+R3660	Selenide  transport via diffusion
+R3661	5-Methylcytosine  via proton symport 
+R3662	5-Methylcytosine exchange
+R3663	5-Methylcytosine  transport via diffusion
+R3664	Aminoacetaldehyde  via proton symport 
+R3665	Aminoacetaldehyde exchange
+R3666	Aminoacetaldehyde  transport via diffusion
+R3667	Ethanolamine  via proton symport 
+R3668	Ethanolamine  transport via diffusion
+R3669	ABC Dethiobiotin transporter
+R3670	Dethiobiotin exchange
+R3671	Dethiobiotin transport via diffusion
+R3672	Biomass (Aero)
+R3673	5'-Deoxyadenosine  via proton symport 
+R3674	5'-Deoxyadenosine exchange
+R3675	5'-Deoxyadenosine  transport via diffusion
+R3676	magnesium-protoporphyrin IX monomethylester oxidative cyclase (Anaerobic)
+R3677	putative PQQ dehydrogenase protein 
+R3678	UDP-sulfoquinovose synthase
+R3679	 SQDG synthase
+R3680	L-Aspartate:tRNAAsp ligase (AMP-forming)
+R3681	3-Sulfopyruvate  via proton symport 
+R3682	3-Sulfopyruvate exchange
+R3683	3-Sulfopyruvate  transport via diffusion
+R3684	4-Aminobutyraldehyde  via proton symport 
+R3685	4-Aminobutyraldehyde exchange
+R3686	4-Aminobutyraldehyde  transport via diffusion
+R3687	ABC D-Proline transporter
+R3688	D-Proline exchange
+R3689	D-Proline transport via diffusion
+R3690	Demand reaction for minor carotenoid
+R3691	Demand reaction for PHB
+R3692	3'-AMP transport via proton symport 
+R3693	3'-UMP transport via proton symport 
+R3694	3'-GMP transport via proton symport 
+R3695	3'-CMP transport via proton symport 
+R3696	H+ transport via diffusion
+R3697	Demand reaction for Glycogen
+R3698	Sulfite  via proton symport 
+R3699	Sulfite  transport via diffusion

@@ -50,12 +50,9 @@ MetabolicModelSchema.methods.transform = function transform(cb) {
 
 	model.reactions.forEach(function(reaction) {
 		metabolitesDict = {};
-        
-		reaction.metabolites.forEach(function(metabolite) {
+	    reaction.metabolites.forEach(function(metabolite) {
 			metabolitesDict[metabolite.id] = metabolite.stoichiometric_coefficient;
 		});
-
-
 		reaction.metabolites = metabolitesDict;
 
         speciesArray = [];
