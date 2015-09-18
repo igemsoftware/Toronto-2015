@@ -1,8 +1,0 @@
-function (err) {
-                    if (err) {
-                        res.status(500).send('500 Internal Server Error');
-                        return;
-                    }
-
-                    cb(fileName);
-                }

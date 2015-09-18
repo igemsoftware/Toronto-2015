@@ -2,6 +2,7 @@ var router = require('express').Router();
 var fs = require('fs');
 
 var MetabolicModel = App.Model('metabolicmodel');
+var Community = App.Model('community');
 
 function writeModel(id, cb) {
     MetabolicModel.findOne({id: id}, function(err, model) {
@@ -23,7 +24,7 @@ function writeModel(id, cb) {
                         return;
                     }
 
-                    cb(fileName);
+                    cb(id, fileName);
                 });
             });
         }
@@ -32,15 +33,27 @@ function writeModel(id, cb) {
 
 function createCommunity(req, res, next) {
     // Given an array of model ids
-    // res.send(req.body.models);
+    var community = {};
+    console.log(req.body);
+    community.name = req.body.name;
+    community.members = [];
 
-    var files = [];
+    var checkProgress = function(model, file) {
+        community.members.push({
+            model: model,
+            file: file
+        });
 
-    var checkProgress = function(file) {
-        files.push(file);
+        if (community.members.length === req.body.models.length) {
+            // res.send(files);
 
-        if (files.length === req.body.models.length) {
-            res.send(files);
+            console.log(community);
+            community = new Community(community);
+            console.log(community);
+
+            community.save(function(err, community) {
+                res.send(community);
+            });
         }
     };
 
@@ -50,6 +63,21 @@ function createCommunity(req, res, next) {
 
 }
 
-router.post('/', createCommunity);
+function checkIfCommunityExists(req, res, next) {
+    Community.findOne({name: req.body.name}, function(err, community) {
+        if (err) {
+            res.status(500).send('500 Internal Server Error');
+            return;
+        }
+
+        if (!community) {
+            next();
+        } else {
+            res.send('Cannot create community "' + req.body.name + '"\n');
+        }
+    });
+}
+
+router.post('/', checkIfCommunityExists, createCommunity);
 
 module.exports = router;

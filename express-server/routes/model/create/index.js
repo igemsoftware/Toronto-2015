@@ -91,9 +91,9 @@ function saveModel(req, res, next) {
     // req.body.metabolites = metabsArray;
 
 
-    req.body.metabolites.forEach(function(metabolite) {
-        console.log(metabolite.subsystems);
-    });
+    // req.body.metabolites.forEach(function(metabolite) {
+    //     console.log(metabolite.subsystems);
+    // });
 
     req.body.metabolites.forEach(function(metabolite) {
         metabolite.species = [{
