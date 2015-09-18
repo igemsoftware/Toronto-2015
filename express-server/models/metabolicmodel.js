@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var MetabolicModelSchema = new mongoose.Schema({
+
 	reactions: [{
 		subsystem: String,
 		name: String,
