@@ -18,15 +18,26 @@ function FluxCtrl($http, UrlProvider, ModalService) {
     this.data = {};
     this.loading = true;
 
-    $http.get(UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel).then(function(res) {
-        console.log(data);
-        // startConsortiaFlux(res.data);
-    }, function(err) {
-        console.log(err);
-    });
+    this.loadNStartModel();
 }
 
 FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
+
+FluxCtrl.prototype.loadNStartModel = function() {
+    this.receiver = function(res) {
+        console.log(data);
+        console.log(res.data);
+        this.startConsortiaFlux(res.data);
+    };
+
+    this.errorCatch = function(err) {
+        console.log(err);
+    };
+
+    var requestUrl = this.UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel;
+
+    this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+};
 
 FluxCtrl.prototype.startConsortiaFlux = function(data) {
     var sortables = {
@@ -50,7 +61,7 @@ FluxCtrl.prototype.startConsortiaFlux = function(data) {
         showStats: false
     };
 
-    var hyperFlux = new ConsortiaFluxVisualization(networkAttributes);
+    this.ConsortiaFluxTool = new ConsortiaFluxVisualization(networkAttributes);
 };
 
 FluxCtrl.prototype.addSpecie = function() {
