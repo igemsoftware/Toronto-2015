@@ -84,9 +84,9 @@ Link = (function() {
     if (this.flux_value === 0) {
       this.colour = "black";
     } else if (this.flux_value > 0) {
-      this.colour = "rgb(40," + scale + ",40)";
+      this.colour = "rgb(0," + scale + ",0)";
     } else {
-      this.colour = "rgb(" + scale + ",40,40)";
+      this.colour = "rgb(" + scale + ",0,0)";
     }
   }
 
@@ -384,7 +384,7 @@ System = (function() {
     this.metaboliteRadius = 10;
     this.compartmentRadius = 50;
     this.radiusScale = utilities.scaleRadius(this.data, 5, 15);
-    this.thicknesScale = utilities.scaleRadius(this.data, 1, 5);
+    this.thicknesScale = utilities.scaleRadius(this.data, 5, 15);
     this.colourScale = utilities.scaleRadius(this.data, 144, 255);
     creators.createMetabolite = creators.createMetabolite.bind(this);
     creators.createReaction = creators.createReaction.bind(this);
@@ -534,7 +534,7 @@ System = (function() {
       from = edge.value[0];
       to = edge.value[1];
       value = edge.value[2];
-      flux = 1;
+      flux = 0;
       if (from.type === "r") {
         flux = to.flux_value;
       } else if (to.type === "r") {
@@ -969,8 +969,6 @@ ViewController = (function() {
 
   ViewController.prototype.draw = function() {
     var i, j, len, len1, link, node, ref, ref1, results;
-    console.log(this.activeGraph.nodes);
-    console.log(this.activeGraph.links);
     ref = this.activeGraph.links;
     for (i = 0, len = ref.length; i < len; i++) {
       link = ref[i];
@@ -990,11 +988,12 @@ ViewController = (function() {
       this.stats.begin();
       this.clear();
       this.draw();
-      return this.stats.end();
+      this.stats.end();
     } else {
       this.clear();
-      return this.draw();
+      this.draw();
     }
+    return requestAnimationFrame(this.render.bind(this));
   };
 
   return ViewController;
@@ -1672,21 +1671,22 @@ rand = function(range) {
 };
 
 scaleRadius = function(model, minRadius, maxRadius) {
-  var fluxes, largest, reaction;
+  var fluxes, largest, minimum, reaction, threshold;
   largest = 1;
-  if (model) {
-    fluxes = (function() {
-      var j, len, ref, results;
-      ref = model.reactions;
-      results = [];
-      for (j = 0, len = ref.length; j < len; j++) {
-        reaction = ref[j];
-        results.push(reaction.flux_value);
-      }
-      return results;
-    })();
-    largest = Math.max.apply(Math, fluxes);
-  }
+  threshold = 40;
+  fluxes = [];
+  fluxes = (function() {
+    var j, len, ref, results;
+    ref = model.reactions;
+    results = [];
+    for (j = 0, len = ref.length; j < len; j++) {
+      reaction = ref[j];
+      results.push(reaction.flux_value);
+    }
+    return results;
+  })();
+  largest = Math.max.apply(Math, fluxes);
+  minimum = Math.min.apply(Math, fluxes);
   return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);
 };
 

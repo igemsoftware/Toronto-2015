@@ -294,8 +294,6 @@ class ViewController
         @ctx.fill()
 
     draw: ->
-        console.log @activeGraph.nodes
-        console.log @activeGraph.links
         link.draw() for link in @activeGraph.links
         node.draw() for node in @activeGraph.nodes
 
@@ -309,6 +307,6 @@ class ViewController
             @clear()
             @draw()
         # Request next frame
-        #requestAnimationFrame(@render.bind(this))
+        requestAnimationFrame(@render.bind(this))
 
 module.exports = ViewController

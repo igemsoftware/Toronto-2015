@@ -11,9 +11,9 @@ class Link
         if @flux_value is 0
             @colour = "black"
         else if @flux_value > 0
-            @colour = "rgb(40,#{scale},40)"
+            @colour = "rgb(0,#{scale},0)"
         else
-            @colour = "rgb(#{scale},40,40)"
+            @colour = "rgb(#{scale},0,0)"
     appendSubstratesAndProducts: ->
         #update this
         if @source.type is 'm' and @target.type is 'r'

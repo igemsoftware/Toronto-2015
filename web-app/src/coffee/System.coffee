@@ -31,9 +31,9 @@ class System
         # TODO get parameters from elsewhere
 
         @radiusScale = utilities.scaleRadius(@data, 5, 15)
-        @thicknesScale = utilities.scaleRadius(@data, 1, 5)
+        @thicknesScale = utilities.scaleRadius(@data, 5, 15)
         @colourScale = utilities.scaleRadius(@data, 144, 255)
-        
+
         # Bind functions to 'this' so they have access to system's properties
         creators.createMetabolite = creators.createMetabolite.bind(this)
         creators.createReaction = creators.createReaction.bind(this)
@@ -217,7 +217,7 @@ class System
             from = edge.value[0]
             to = edge.value[1]
             value = edge.value[2]
-            flux = 1
+            flux = 0
             if from.type is "r"
                 flux = to.flux_value
             else if to.type is "r"

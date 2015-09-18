@@ -4,10 +4,14 @@ rand = (range) ->
 
 scaleRadius = (model, minRadius, maxRadius) ->
     largest = 1
-    if model
-        fluxes = (reaction.flux_value for reaction in model.reactions)
-        largest = Math.max.apply(Math, fluxes)
 
+    threshold = 40
+    fluxes = []
+    fluxes = (reaction.flux_value for reaction in model.reactions)
+
+
+    largest = Math.max.apply(Math, fluxes)
+    minimum = Math.min.apply(Math, fluxes)
     return d3.scale.linear()
         .domain([0, largest])
         .range([minRadius, maxRadius])
