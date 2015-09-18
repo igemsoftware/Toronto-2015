@@ -29,9 +29,11 @@ class System
 
         # Used by createReactionNode
         # TODO get parameters from elsewhere
+
         @radiusScale = utilities.scaleRadius(@data, 5, 15)
         @thicknesScale = utilities.scaleRadius(@data, 1, 5)
         @colourScale = utilities.scaleRadius(@data, 144, 255)
+        
         # Bind functions to 'this' so they have access to system's properties
         creators.createMetabolite = creators.createMetabolite.bind(this)
         creators.createReaction = creators.createReaction.bind(this)
@@ -123,7 +125,7 @@ class System
 
         return [metabolites, reactions]
 
-    
+
 
     #create a metabolite on the current running graph
     createNewMetabolite: (id, name) ->

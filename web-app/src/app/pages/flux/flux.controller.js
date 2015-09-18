@@ -18,15 +18,16 @@ function FluxCtrl($http, UrlProvider, ModalService) {
     this.data = {};
     this.loading = true;
 
-    this.loadNStartModel();
+    this.startConsortiaFlux(data);
+    //this.loadNStartModel();
 }
 
 FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
 
 FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
-        console.log(data);
-        console.log(res.data);
+        // console.log(data);
+        // console.log(res.data);
         this.startConsortiaFlux(res.data);
     };
 
@@ -34,7 +35,7 @@ FluxCtrl.prototype.loadNStartModel = function() {
         console.log(err);
     };
 
-    var requestUrl = this.UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel;
+    var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
 
     this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
 };

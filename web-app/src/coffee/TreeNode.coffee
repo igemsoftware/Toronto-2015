@@ -30,5 +30,5 @@ class TreeNode
                 # console.log("Making #{child}")
                 @children[child] = new TreeNode(child, new System(systemAttr))
                 @children[child].parent = this
-
+                console.log @children[child]
 module.exports = TreeNode

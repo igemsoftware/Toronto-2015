@@ -195,6 +195,7 @@ Network = (function() {
       ctx: this.viewController.ctx
     };
     this.root = new TreeNode('root', new System(systemAttr));
+    console.log(this.root);
     this.viewController.startCanvas(this.root.system);
     this.currentLevel = this.root;
     this.deleted = {
@@ -665,6 +666,7 @@ TreeNode = (function() {
         };
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
+        console.log(this.children[child]);
       }
     }
   }
@@ -967,6 +969,8 @@ ViewController = (function() {
 
   ViewController.prototype.draw = function() {
     var i, j, len, len1, link, node, ref, ref1, results;
+    console.log(this.activeGraph.nodes);
+    console.log(this.activeGraph.links);
     ref = this.activeGraph.links;
     for (i = 0, len = ref.length; i < len; i++) {
       link = ref[i];
@@ -986,12 +990,11 @@ ViewController = (function() {
       this.stats.begin();
       this.clear();
       this.draw();
-      this.stats.end();
+      return this.stats.end();
     } else {
       this.clear();
-      this.draw();
+      return this.draw();
     }
-    return requestAnimationFrame(this.render.bind(this));
   };
 
   return ViewController;

@@ -20,7 +20,7 @@ class Network
             ctx : @viewController.ctx
         @root = new TreeNode('root', new System(systemAttr))
         #@root.system.initializeForce()
-
+        console.log(@root)
         # Start the visualization
         @viewController.startCanvas(@root.system)
         @currentLevel = @root
