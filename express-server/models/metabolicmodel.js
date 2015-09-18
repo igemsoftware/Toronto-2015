@@ -34,7 +34,10 @@ var MetabolicModelSchema = new mongoose.Schema({
 		compartment: String,
 		id: String
 	}],
-  	id: String
+  	id: {
+		type: String,
+		required : true
+	}
 });
 
 MetabolicModelSchema.methods.dictifyReactionMetabolites = function dictifyReactionMetabolites(cb) {
