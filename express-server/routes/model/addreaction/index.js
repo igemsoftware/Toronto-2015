@@ -25,9 +25,10 @@ var addreaction = function(req, res, next) {
                 newModel = new MetabolicModel(model)
                 newModel._id = mongoose.Types.ObjectId();
                 newModel.save(function(err, model) {
-                    if (err)
+                    if (err){
                         console.log(err)
-                    return res.send(err)
+                        return res.send(err)
+                    }
                     res.send("You successfully added model " + model.id)
                 })
             })
