@@ -1,61 +1,53 @@
 var router = require('express').Router();
+var fs = require('fs');
 
 var MetabolicModel = App.Model('metabolicmodel');
 
-function compareMetabolites(specieId, masterMetabolites) {
+function writeModel(id, cb) {
+    MetabolicModel.findOne({id: id}, function(err, model) {
+        if (err) {
+            res.status(500).send('500 Internal Server Error');
+            return;
+        }
 
-	// Build dict with id:metabolite
-	var masterMetabolitesIds = new Object();
-	masterMetabolites.forEach(function(metabolite) {
-		masterMetabolitesIds[metabolite.id] = metabolite;
-	});
+        if (!model) {
+            res.status(204).send('204 no content. The model ' + id + ' does not exist.');
+            return;
+        } else {
+            model.transform(function(model) {
+                fileName = 'temp/' + id + '_' + (new Date()).getTime() + '.json';
 
-	// Build dict with name:metabolite
-	var masterMetabolitesNames = new Object();
-	masterMetabolites.forEach(function(metabolite) {
-		masterMetabolitesNames[metabolite.name] = metabolite;
-	});
+                fs.writeFile(fileName, function(err) {
+                    if (err) {
+                        res.status(500).send('500 Internal Server Error');
+                        return;
+                    }
 
-	MetabolicModel.findOne({id: specieId}, function(err, model) {
-		model.metabolites.forEach(function(metabolite) {
-
-			if (metabolite.id in masterMetabolitesIds) {
-				console.log('same id: ', specieId, metabolite.id);
-
-				if (metabolite.compartment === 'e') {
-					console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-				}
-			}
-
-			if (metabolite.name in masterMetabolitesNames) {
-				console.log('same name: ', specieId, metabolite.name, metabolite.id)
-
-				if (metabolite.compartment === 'e') {
-					console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-				}
-			}
-		})
-	});
+                    cb(fileName);
+                });
+            });
+        }
+    });
 }
 
 function createCommunity(req, res, next) {
-	// Retrieve Master model for Master Metabolites
-	MetabolicModel.findOne({id: req.body.master}, function(err, masterModel) {
-		if (err) {
-			res.status(500).send('500 Internal Server Error');
-			return;
-		}
+    // Given an array of model ids
+    // res.send(req.body.models);
 
-		req.body.species.forEach(function(specie) {
-			// Compare everything but master with master
-			if (specie !== req.body.master) {
-				console.log(specie);
-				compareMetabolites(specie, masterModel.metabolites);
-			}
-		})
+    var files = [];
 
-		res.send('Creating community');
-	});
+    var checkProgress = function(file) {
+        files.push(file);
+
+        if (files.length === req.body.models.length) {
+            res.send(files);
+        }
+    };
+
+    req.body.models.forEach(function(model) {
+        writeModel(model, checkProgress);
+    });
+
 }
 
 router.post('/', createCommunity);
