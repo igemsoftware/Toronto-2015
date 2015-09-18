@@ -8,7 +8,7 @@ function stringify(object) {
 		if ( typeof(object[key]) === 'object' && Object.keys(object[key]).length > 0 ) {
 			stringify(object[key]);
 		} else if ( typeof(object[key]) === 'object' ) {
-			object[key] = new String();
+			object[key] = '';
 		}
 	});
 }
@@ -18,7 +18,8 @@ function saveModel(req, res, next) {
 	stringify(req.body);
 
 	req.body.reactions.forEach(function(reaction) {
-		var tempMetabs = new Array()
+        // Metabolite conversion
+		var tempMetabs = [];
 
 		Object.keys(reaction.metabolites).forEach(function(key) {
 			tempMetabs.push({
@@ -28,13 +29,18 @@ function saveModel(req, res, next) {
 		});
 
 		reaction.metabolites = tempMetabs;
+
+        // Species Insertion
+        reaction.species = [{
+            name: req.body.id
+        }];
 	});
 
 	var model = new MetabolicModel(req.body);
 
 	model.save(function(err, savedModel) {
 		if (err) {
-			console.log(err)
+			console.log(err);
 			res.status(500).send('500 Internal Server Error\n');
 		}
 

@@ -4,13 +4,13 @@ var MetabolicModel = App.Model('metabolicmodel');
 
 function findAll(req, res, next) {
 	MetabolicModel.find(function(err, models) {
-		var ids = new Array();
+		var ids = [];
 		models.forEach(function(model) {
 			ids.push(model.id);
 		});
 
 		res.send(ids);
-	})
+	});
 }
 
 router.get('/', findAll);

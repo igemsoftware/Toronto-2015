@@ -14,7 +14,10 @@ var MetabolicModelSchema = new mongoose.Schema({
 		metabolites: [{
 			id: String,
 			stoichiometric_coefficient: Number
-		}]
+		}],
+        species: [{
+            name: String
+        }]
 	}],
 	description: String,
  	notes: String,
@@ -40,7 +43,7 @@ MetabolicModelSchema.methods.dictifyReactionMetabolites = function dictifyReacti
 	var model = JSON.parse(JSON.stringify(this));
 
 	model.reactions.forEach(function(reaction) {
-		metabolitesDict = new Object();
+		metabolitesDict = {};
 
 		reaction.metabolites.forEach(function(metabolite) {
 			metabolitesDict[metabolite.id] = metabolite.stoichiometric_coefficient;
@@ -50,6 +53,6 @@ MetabolicModelSchema.methods.dictifyReactionMetabolites = function dictifyReacti
 	});
 
 	cb(model);
-}
+};
 
 module.exports = mongoose.model('metabolicmodel', MetabolicModelSchema);
