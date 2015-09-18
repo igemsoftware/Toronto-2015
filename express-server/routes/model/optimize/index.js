@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var fs = require('fs')
+var fs = require('fs');
 var cp = require('child_process');
 
 MetabolicModel = App.Model('metabolicmodel');
@@ -14,7 +14,7 @@ router.get('/:id', function(req, res, next) {
 		if (!model) {
 			res.status(204).send('204 no content. That model does not exist.\n');
 		} else {
-			model.dictifyReactionMetabolites(function(model) {
+			model.transform(function(model) {
 				fileName = 'temp/' + req.params.id + '.json';
 
 				fs.writeFile(fileName, JSON.stringify(model), function(err) {
@@ -23,8 +23,8 @@ router.get('/:id', function(req, res, next) {
 					} else {
 
 						var results = {
-					        output   : new String(),
-					        errorlog : new String(),
+					        output   : '',
+					        errorlog : '',
 					        exitcode : null
 					    };
 
@@ -32,9 +32,9 @@ router.get('/:id', function(req, res, next) {
 							'python-scripts/optimize.py',
 							fileName,
 							'temp/' + req.params.id
-						]
+						];
 
-						var optimizeScript = cp.spawn('python', args)
+						var optimizeScript = cp.spawn('python', args);
 
 						// get stdout
 						optimizeScript.stdout.on('data', function(stdout) {
@@ -58,7 +58,7 @@ router.get('/:id', function(req, res, next) {
 				});
 			});
 		}
-	})
-})
+	});
+});
 
 module.exports = router;

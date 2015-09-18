@@ -25,7 +25,7 @@ router.get('/:id', function(req,res, next) {
 		if (!model) {
 			res.status(204).send('204 no content. That model does not exist.\n');
 		} else {
-			model.dictifyReactionMetabolites(function(model) {
+			model.transform(function(model) {
 				res.send(model);
 			});
 		}

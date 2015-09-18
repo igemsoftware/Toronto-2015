@@ -17,6 +17,54 @@ function saveModel(req, res, next) {
 
 	stringify(req.body);
 
+    // Metabolites Dictionary
+    var metabolitesDict = {};
+    req.body.metabolites.forEach(function(metabolite) {
+        metabolitesDict[metabolite.id] = metabolite;
+        // metabolite.subsystems = [{
+        //     name: reaction.subsystem
+        // }];
+        metabolite.subsystems = [];
+    });
+
+    req.body.reactions.forEach(function(reaction) {
+        Object.keys(reaction.metabolites).forEach(function(metabolite) {
+            if (metabolitesDict[metabolite].subsystems.indexOf(reaction.subsystem) === -1) {
+                metabolitesDict[metabolite].subsystems.push({
+                    name:reaction.subsystem
+                });
+            }
+        });
+    });
+
+    // Insert subsystems into metabolites
+    // req.body.reactions.forEach(function(reaction) {
+    //     console.log(reaction.id);
+    //     if (reaction.subsystem === '')
+    //         reaction.subsystem = 'Unassigned';
+    //
+    //     Object.keys(reaction.metabolites).forEach(function(metabolite) {
+    //         if (!metabolitesDict[metabolite].subsystems) {
+    //             metabolitesDict[metabolite].subsystems =[{
+    //                 name: reaction.subsystem
+    //             }];
+    //         } else {
+    //             metabolitesDict[metabolite].subsystems.forEach(function(subsystem) {
+    //                 if (subsystem.name !== reaction.subsystem)
+    //                     if (metabolitesDict[metabolite].subsystems) {
+    //                         metabolitesDict[metabolite].subsystems.push({
+    //                             name: reaction.subsystem
+    //                         });
+    //                     } else {
+    //                         metabolitesDict[metabolite].subsystems = [{
+    //                             name: reaction.subsystem
+    //                         }];
+    //                     }
+    //             });
+    //         }
+    //     });
+    // });
+
 	req.body.reactions.forEach(function(reaction) {
         // Metabolite conversion
 		var tempMetabs = [];
@@ -35,6 +83,23 @@ function saveModel(req, res, next) {
             name: req.body.id
         }];
 	});
+
+    // var metabsArray = [];
+    // Object.keys(metabolitesDict).forEach(function(metabolite) {
+    //     metabsArray.push(metabolitesDict[metabolite]);
+    // });
+    // req.body.metabolites = metabsArray;
+
+
+    req.body.metabolites.forEach(function(metabolite) {
+        console.log(metabolite.subsystems);
+    });
+
+    req.body.metabolites.forEach(function(metabolite) {
+        metabolite.species = [{
+            name: req.body.id
+        }];
+    });
 
 	var model = new MetabolicModel(req.body);
 
