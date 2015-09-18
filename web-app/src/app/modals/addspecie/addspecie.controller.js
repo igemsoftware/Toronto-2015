@@ -3,9 +3,16 @@
 
 angular.module('ConsortiaFlux')
 
-.controller('AddSpecieModal', ['$scope', 'close', function($scope, close) {
+.controller('AddSpecieModal', ['$scope', '$http', 'UrlProvider', 'close',
+    function($scope, $http, UrlProvider, close) {
 
     var result = 'wheee';
+    $scope.loading = true;
+
+    $http.get(UrlProvider.baseUrl + '/model/retrieve').then(function(data) {
+        $scope.loading = false;
+        $scope.species = data.data;
+    });
 
     $scope.display = true;
 

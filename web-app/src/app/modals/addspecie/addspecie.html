@@ -1,6 +1,16 @@
 <div ng-show="display" class="modal">
-    inside add specie
+    <div ng-show="loading">
+        Retrieving species list...
+        <i ng-show="loading" class="fa fa-5x fa-spin fa-spinner"></i>
+    </div>
+    <div ng-show="!loading">
+        <ul>
+            <li ng-repeat="specie in species">
+                {{specie}}
+            </li>
+        </ul>
+    </div>
 
-     <a href ng-click="close()">Close</a>
+    <a href ng-click="close()">Close</a>
 </div>
 <div class="fade" ng-show="display"></div>

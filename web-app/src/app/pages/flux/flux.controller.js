@@ -18,7 +18,7 @@ angular.module('ConsortiaFlux')
         }).then(function(modal) {
 
             // modal.element.modal();
-    
+
             modal.close.then(function(result) {
                 console.log(result);
                 $scope.message = result ? "You said Yes" : "You said No";
@@ -26,9 +26,9 @@ angular.module('ConsortiaFlux')
         });
     };
 
-    $http.get(UrlProvider.baseUrl + '/model/retrieve').then(function(data) {
-        console.log(data.data);
-    });
+    // $http.get(UrlProvider.baseUrl + '/model/retrieve').then(function(data) {
+    //     console.log(data.data);
+    // });
 
     var sortables = {
         index: -1,
