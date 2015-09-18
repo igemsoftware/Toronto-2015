@@ -149,10 +149,22 @@ canvas {
           #sidebar ul li a:hover ul {
             left: 0; }
 
-.modal {
+a {
+  text-decoration: none; }
+  a:hover {
+    text-decoration: none; }
+
+.mymodal {
+  max-height: 90%;
+  overflow-y: scroll;
   position: absolute;
   width: 600px;
-  height: 200px;
+  padding: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
   top: 50%;
   left: 50%;
   -webkit-transform: translateX(-50%) translateY(-50%);
@@ -160,8 +172,27 @@ canvas {
   -ms-transform: translateX(-50%) translateY(-50%);
   -o-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  background-color: white;
+  background-color: #F5F5F5;
+  border-bottom: 2px solid gainsboro;
   z-index: 100; }
+
+.closeButton {
+  color: white;
+  display: inline-block;
+  background-color: #EF5350;
+  padding: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  border-bottom: 2px solid #eb2521; }
+  .closeButton:hover {
+    background-color: #f3817f;
+    color: white; }
+
+.right {
+  float: right; }
 
 .fade {
   position: fixed;
@@ -191,3 +222,10 @@ canvas {
   display: none; }
   #nodetext.showing {
     display: block; }
+
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer; }
+
+.list-group ul {
+  margin: 0;
+  padding: 0; }
