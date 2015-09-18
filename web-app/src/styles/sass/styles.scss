@@ -22,6 +22,10 @@ html, body {
     height: 100%;
 }
 
+.take-remaining-width {
+    overflow: hidden;
+}
+
 body {
     background-image: url('../images/bg/subtle-pattern-10.jpg');
     background-repeat: repeat;
@@ -128,7 +132,7 @@ canvas {
 }
 
 
-#sidebar {
+#topbar {
     position: absolute;
     display: inline-block;
     width: 100%;
@@ -213,6 +217,12 @@ a {
     background-color: $grey-100;
     border-bottom: 2px solid darken($grey-100, 10%);
     z-index: 100;
+
+
+    i {
+        display: block;
+        text-align: center;
+    }
 }
 
 .closeButton {
@@ -232,6 +242,10 @@ a {
 
 .right {
     float: right;
+}
+
+.left {
+    float: left;
 }
 
 .fade {

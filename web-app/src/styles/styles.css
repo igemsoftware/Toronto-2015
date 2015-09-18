@@ -31,6 +31,9 @@ html, body {
   width: 100%;
   height: 100%; }
 
+.take-remaining-width {
+  overflow: hidden; }
+
 body {
   background-image: url("../images/bg/subtle-pattern-10.jpg");
   background-repeat: repeat;
@@ -107,13 +110,13 @@ canvas {
   #splash .button:hover.purple {
     background-color: #bc37d3; }
 
-#sidebar {
+#topbar {
   position: absolute;
   display: inline-block;
   width: 100%;
   height: 50px;
   background-color: rgba(97, 97, 97, 0.9); }
-  #sidebar h3 {
+  #topbar h3 {
     float: left;
     font-family: "Dancing Script", cursive;
     padding: 0;
@@ -123,30 +126,30 @@ canvas {
     color: white;
     line-height: 50px;
     font-size: 2em; }
-    #sidebar h3:hover {
+    #topbar h3:hover {
       color: #CE93D8; }
-  #sidebar ul {
+  #topbar ul {
     margin: 0;
     padding: 0; }
-    #sidebar ul li {
+    #topbar ul li {
       list-style: none;
       float: left;
       height: 50px;
       line-height: 50px;
       text-align: center; }
-      #sidebar ul li a {
+      #topbar ul li a {
         position: relative;
         color: white;
         text-decoration: none; }
-        #sidebar ul li a i {
+        #topbar ul li a i {
           font-size: 30px;
           width: 50px;
           padding: 10px; }
-        #sidebar ul li a:hover {
+        #topbar ul li a:hover {
           color: #42A5F5; }
-          #sidebar ul li a:hover i {
+          #topbar ul li a:hover i {
             background-color: #616161; }
-          #sidebar ul li a:hover ul {
+          #topbar ul li a:hover ul {
             left: 0; }
 
 a {
@@ -175,6 +178,9 @@ a {
   background-color: #F5F5F5;
   border-bottom: 2px solid gainsboro;
   z-index: 100; }
+  .mymodal i {
+    display: block;
+    text-align: center; }
 
 .closeButton {
   color: white;
@@ -193,6 +199,9 @@ a {
 
 .right {
   float: right; }
+
+.left {
+  float: left; }
 
 .fade {
   position: fixed;

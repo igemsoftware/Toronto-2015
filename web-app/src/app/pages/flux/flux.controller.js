@@ -10,25 +10,19 @@ angular.module('ConsortiaFlux')
 .controller('FluxCtrl', ['$scope', '$http', 'UrlProvider', 'ModalService',
     function($scope, $http, UrlProvider, ModalService) {
 
+    $scope.currentModel = 'E coli';
+
     $scope.addSpecie = function() {
-        // Just provide a template url, a controller and call 'showModal'.
         ModalService.showModal({
             templateUrl: "app/modals/addspecie/addspecie.html",
             controller: "AddSpecieModal"
         }).then(function(modal) {
-
-            // modal.element.modal();
-
             modal.close.then(function(result) {
                 console.log(result);
-                $scope.message = result ? "You said Yes" : "You said No";
+                $scope.currentModel = result;
             });
         });
     };
-
-    // $http.get(UrlProvider.baseUrl + '/model/retrieve').then(function(data) {
-    //     console.log(data.data);
-    // });
 
     var sortables = {
         index: -1,
