@@ -31,6 +31,7 @@ class System
         # TODO get parameters from elsewhere
         @radiusScale = utilities.scaleRadius(@data, 5, 15)
         @thicknesScale = utilities.scaleRadius(@data, 1, 5)
+        @colourScale = utilities.scaleRadius(@data, 144, 255)
         # Bind functions to 'this' so they have access to system's properties
         creators.createMetabolite = creators.createMetabolite.bind(this)
         creators.createReaction = creators.createReaction.bind(this)
@@ -60,16 +61,7 @@ class System
         @nodes = new Array()
         @links = new Array()
         # The force layout provided by D3
-        @deleted = {
-            reactions: new Object()
-            metabolites: new Object()
-            species: new Object()
-        }
-        @added = {
-            reactions: new Object()
-            metabolites: new Object()
-            species: new Object()
-        }
+
         @initializeForce()
 
 
@@ -82,7 +74,7 @@ class System
         # for metabolite in @data.metabolites
             # Create a new Metabolite
             # TODO params: metabolite, ctx, metaboliteRadius?
-            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false, @ctx)
+            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius)
             m.species = metabolite.species
             m.subsystems = metabolite.subsystems
 
@@ -131,19 +123,7 @@ class System
 
         return [metabolites, reactions]
 
-    deleteNode: (id, name) ->
-        @graph.destroyVertex(id)
-        toDelete = null
-        for node in @nodes
-            if node.id is id and node.name is name
-                toDelete = node
-                node.deleted = true
-        if toDelete.type is "r"
-            @deleted.reactions[toDelete.id] = toDelete.name
-        else if toDelete.type is "m"
-            @deleted.metabolites[toDelete.id] = toDelete.name
-        else if toDelete.type is "specie"
-            @deleted.species[toDelete.id] = toDelete.name
+    
 
     #create a metabolite on the current running graph
     createNewMetabolite: (id, name) ->
@@ -195,6 +175,7 @@ class System
                 source : src
                 target : reaction
                 thickness : @thicknesScale(reaction.flux_value)
+                colourScale: @colourScale
 
             @links.push(new Link(linkAttr, @ctx))
             linkAttr =
@@ -202,6 +183,7 @@ class System
                 source : reaction
                 target : tgt
                 thickness : @thicknesScale(reaction.flux_value)
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, @ctx))
         else
             linkAttr =
@@ -209,6 +191,7 @@ class System
                 source : src
                 target : tgt
                 thickness : @thicknesScale(src.flux_value or tgt.flux_value)
+                colourScale: @colourScale
             @links.push(new Link(linkAttr, @ctx))
 
 
@@ -301,7 +284,7 @@ class System
         # for metabolite in @data.metabolites
             # Create a new Metabolite
             # TODO params: metabolite, ctx, metaboliteRadius?
-            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius, false)
+            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius)
             m.species = metabolite.species
 
             # Create a node (vertex) for this Metabolite in system.graph

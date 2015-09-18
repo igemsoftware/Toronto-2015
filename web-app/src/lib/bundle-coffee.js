@@ -70,21 +70,23 @@ var Link;
 
 Link = (function() {
   function Link(attr, ctx) {
+    var scale;
     this.attr = attr;
     this.ctx = ctx;
     this.id = this.attr.id;
     this.source = this.attr.source;
     this.target = this.attr.target;
     this.thickness = this.attr.thickness;
+    this.colourScale = this.attr.colourScale;
     this.appendSubstratesAndProducts();
     this.flux_value = this.source.flux_value || this.target.flux_value;
-    this.colour = "black";
+    scale = this.colourScale(Math.abs(this.flux_value));
     if (this.flux_value === 0) {
       this.colour = "black";
     } else if (this.flux_value > 0) {
-      this.colour = "green";
+      this.colour = "rgb(40," + scale + ",40)";
     } else {
-      this.colour = "red";
+      this.colour = "rgb(" + scale + ",40,40)";
     }
   }
 
@@ -195,6 +197,15 @@ Network = (function() {
     this.root = new TreeNode('root', new System(systemAttr));
     this.viewController.startCanvas(this.root.system);
     this.currentLevel = this.root;
+    this.deleted = {
+      reactions: new Array(),
+      metabolites: new Array()
+    };
+    this.added = {
+      reactions: new Object(),
+      metabolites: new Object(),
+      species: new Object()
+    };
   }
 
   Network.prototype.enterSpecie = function(node) {
@@ -205,6 +216,26 @@ Network = (function() {
   Network.prototype.exitSpecie = function(node) {
     this.currentLevel = this.currentLevel.parent;
     return this.viewController.setActiveGraph(this.currentLevel.system);
+  };
+
+  Network.prototype.deleteNode = function(id, system) {
+    var i, len, node, ref;
+    ref = system.nodes;
+    for (i = 0, len = ref.length; i < len; i++) {
+      node = ref[i];
+      if (node.id === id) {
+        if (node.type === "r") {
+          system.graph.destroyVertex(id);
+          this.deleted.reactions.push(id);
+          node.deleted = true;
+        } else if (node.type === "m") {
+          system.graph.destroyVertex(id);
+          this.deleted.metabolites.push(id);
+          node.deleted = true;
+        }
+      }
+    }
+    return console.log(this.deleted);
   };
 
   return Network;
@@ -353,6 +384,7 @@ System = (function() {
     this.compartmentRadius = 50;
     this.radiusScale = utilities.scaleRadius(this.data, 5, 15);
     this.thicknesScale = utilities.scaleRadius(this.data, 1, 5);
+    this.colourScale = utilities.scaleRadius(this.data, 144, 255);
     creators.createMetabolite = creators.createMetabolite.bind(this);
     creators.createReaction = creators.createReaction.bind(this);
     creators.createCompartment = creators.createCompartment.bind(this);
@@ -366,16 +398,6 @@ System = (function() {
     this.graph = new Graph();
     this.nodes = new Array();
     this.links = new Array();
-    this.deleted = {
-      reactions: new Object(),
-      metabolites: new Object(),
-      species: new Object()
-    };
-    this.added = {
-      reactions: new Object(),
-      metabolites: new Object(),
-      species: new Object()
-    };
     this.initializeForce();
   }
 
@@ -385,7 +407,7 @@ System = (function() {
     reactions = new Object();
     for (j = 0, len = metaboliteData.length; j < len; j++) {
       metabolite = metaboliteData[j];
-      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false, this.ctx);
+      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius);
       m.species = metabolite.species;
       m.subsystems = metabolite.subsystems;
       metabolites[metabolite.id] = m;
@@ -416,27 +438,6 @@ System = (function() {
       }
     }
     return [metabolites, reactions];
-  };
-
-  System.prototype.deleteNode = function(id, name) {
-    var j, len, node, ref, toDelete;
-    this.graph.destroyVertex(id);
-    toDelete = null;
-    ref = this.nodes;
-    for (j = 0, len = ref.length; j < len; j++) {
-      node = ref[j];
-      if (node.id === id && node.name === name) {
-        toDelete = node;
-        node.deleted = true;
-      }
-    }
-    if (toDelete.type === "r") {
-      return this.deleted.reactions[toDelete.id] = toDelete.name;
-    } else if (toDelete.type === "m") {
-      return this.deleted.metabolites[toDelete.id] = toDelete.name;
-    } else if (toDelete.type === "specie") {
-      return this.deleted.species[toDelete.id] = toDelete.name;
-    }
   };
 
   System.prototype.createNewMetabolite = function(id, name) {
@@ -493,14 +494,16 @@ System = (function() {
         id: source.id + "-" + reaction.id,
         source: src,
         target: reaction,
-        thickness: this.thicknesScale(reaction.flux_value)
+        thickness: this.thicknesScale(reaction.flux_value),
+        colourScale: this.colourScale
       };
       this.links.push(new Link(linkAttr, this.ctx));
       linkAttr = {
         id: reaction.id + "-" + target.id,
         source: reaction,
         target: tgt,
-        thickness: this.thicknesScale(reaction.flux_value)
+        thickness: this.thicknesScale(reaction.flux_value),
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else {
@@ -508,7 +511,8 @@ System = (function() {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: this.thicknesScale(src.flux_value || tgt.flux_value)
+        thickness: this.thicknesScale(src.flux_value || tgt.flux_value),
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     }
@@ -575,7 +579,7 @@ System = (function() {
     var j, k, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
     for (j = 0, len = metaboliteData.length; j < len; j++) {
       metabolite = metaboliteData[j];
-      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius, false);
+      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius);
       m.species = metabolite.species;
       this.fullResGraph.addVertex(metabolite.id, m);
     }
@@ -694,6 +698,8 @@ ViewController = (function() {
     this.isDraggingNode = false;
     this.clientX = 0;
     this.clientY = 0;
+    this.maxZoomOut = 7.5;
+    this.maxZoomIn = 0.05;
     document.getElementById(this.wrapperId).appendChild(this.c);
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
@@ -843,7 +849,7 @@ ViewController = (function() {
   };
 
   mousewheelHandler = function(e) {
-    var delta, factor, i, len, pt, ref, specie, wheel, zoom;
+    var delta, factor, pt, wheel, zoom;
     this.clientX = e.clientX;
     this.clientY = e.clientY;
     e.preventDefault();
@@ -859,25 +865,15 @@ ViewController = (function() {
     }
     factor = zoom;
     pt = this.transformedPoint(this.lastX, this.lastY);
+    if (this.xform.a <= this.maxZoomIn && factor <= 1) {
+      return;
+    } else if (this.xform.a >= this.maxZoomOut && factor >= 1) {
+      return;
+    }
     this.ctx.translate(pt.x, pt.y);
     this.xform = this.xform.translate(pt.x, pt.y);
     this.ctx.scale(factor, factor);
     this.xform = this.xform.scaleNonUniform(factor, factor);
-    if (this.activeGraph === this.network) {
-      ref = this.network.species;
-      for (i = 0, len = ref.length; i < len; i++) {
-        specie = ref[i];
-        if (specie.checkCollision(pt.x, pt.y)) {
-          if (specie.r * this.xform.a >= this.c.width && specie.r * this.xform.a >= this.c.height) {
-            this.network.ecie(specie);
-          }
-        }
-      }
-    } else {
-      if (this.xform.a <= 0.02) {
-        this.network.exitSpecie();
-      }
-    }
     this.ctx.translate(-pt.x, -pt.y);
     return this.xform = this.xform.translate(-pt.x, -pt.y);
   };
@@ -892,13 +888,14 @@ ViewController = (function() {
   };
 
   ViewController.prototype.appendText = function(node, e) {
-    var product, products, substrate, substrates, that;
+    var htmlText, product, products, substrate, substrates, that;
     this.nodetext.addClass('showing');
     this.nodetext.css({
       'left': e.clientX,
       'top': e.clientY
     });
     that = this;
+    htmlText = "";
     if (node.type === 'r') {
       substrates = (function() {
         var i, len, ref, results;
@@ -920,26 +917,27 @@ ViewController = (function() {
         }
         return results;
       })();
-      this.nodetext.html(substrates + " --- (" + node.name + ") ---> " + products + "<br>");
-      this.nodetext.append("<button id='delete'>Delete Reaction</button><br>");
-    } else {
-      this.nodetext.html(node.name + "<br>");
-      this.nodetext.append("<button id='delete'>Delete Node</button><br>");
-      if (node.type === 'Compartment') {
-        this.nodetext.append("<button id='enter'>Enter Specie</button><br>");
-        $("#enter").click(function() {
-          return that.network.enterSpecie(node);
-        });
-      }
+      htmlText += substrates + " --- (" + node.name + ") ---> " + products + "<br>";
+      htmlText += "<button id='delete'>Delete Reaction</button><br>";
+    } else if (node.type === 'm') {
+      htmlText += node.name + "<br>";
+      htmlText += "<button id='delete'>Delete Node</button><br>";
+    } else if (node.type === 'Compartment' && (this.network.currentLevel.children[node.id] != null)) {
+      htmlText += node.name + "<br>";
+      htmlText += "<button id='enter'>Enter Node</button><br>";
     }
     if (this.network.root.system !== this.activeGraph) {
-      this.nodetext.append("<button id='network'>Return to network</button><br>");
-      $("#network").click(function() {
-        return that.network.exitSpecie();
-      });
+      htmlText += "<button id='network'>Return to Previous level</button><br>";
     }
-    return $("#delete").click(function() {
-      return that.system.deleteNode(node);
+    this.nodetext.html(htmlText);
+    $("#delete").click(function() {
+      return that.network.deleteNode(node.id, that.activeGraph);
+    });
+    $("#enter").click(function() {
+      return that.network.enterSpecie(node);
+    });
+    return $("#network").click(function() {
+      return that.network.exitSpecie();
     });
   };
 
@@ -1028,7 +1026,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else if (src.type === "m" && tgt.type === "m") {
@@ -1048,7 +1047,8 @@ module.exports = {
         id: source.id + "-" + reaction.id,
         source: src,
         target: reaction,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       this.links.push(new Link(linkAttr, ctx));
       linkAttr = {
@@ -1063,7 +1063,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, ctx));
     }
@@ -1078,7 +1079,8 @@ module.exports = {
         source: src,
         target: tgt,
         fluxValue: 0,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else if (src.type === "m" && tgt.type === "m") {
@@ -1100,7 +1102,8 @@ module.exports = {
         target: reaction,
         fluxValue: 0,
         r: radius,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       this.links.push(new Link(linkAttr, this.ctx));
       linkAttr = {
@@ -1109,7 +1112,8 @@ module.exports = {
         target: tgt,
         fluxValue: 0,
         r: radius,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return this.links.push(new Link(linkAttr, this.ctx));
     } else {
@@ -1157,7 +1161,7 @@ module.exports = {
     };
     return new Compartment(compartmentAttributes, this.ctx);
   },
-  createMetabolite: function(name, id, radius, updateOption, ctx) {
+  createMetabolite: function(name, id, radius) {
     var metabolite, nodeAttributes;
     nodeAttributes = {
       x: utilities.rand(this.width),
@@ -1167,10 +1171,7 @@ module.exports = {
       id: id,
       type: "m"
     };
-    metabolite = new Metabolite(nodeAttributes, ctx);
-    if (updateOption) {
-      this.viewController.updateOptions(name, id);
-    }
+    metabolite = new Metabolite(nodeAttributes, this.ctx);
     return metabolite;
   },
   createLink: function(src, tgt, name, thickness) {
@@ -1180,7 +1181,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return new Link(linkAttr, this.ctx);
     } else if (src.type === "m" && tgt.type === "r") {
@@ -1188,7 +1190,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return new Link(linkAttr, this.ctx);
     } else {
@@ -1196,7 +1199,8 @@ module.exports = {
         id: src.id + "-" + tgt.id,
         source: src,
         target: tgt,
-        thickness: thickness
+        thickness: thickness,
+        colourScale: this.colourScale
       };
       return new Link(linkAttr, this.ctx);
     }

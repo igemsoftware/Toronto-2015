@@ -26,7 +26,17 @@ class Network
         @currentLevel = @root
 
         # console.log(@root)
+        @deleted = {
+            reactions: new Array()
+            metabolites: new Array()
 
+        }
+
+        @added = {
+            reactions: new Object()
+            metabolites: new Object()
+            species: new Object()
+        }
 
     enterSpecie: (node) ->
         #find node
@@ -37,6 +47,22 @@ class Network
     exitSpecie: (node) ->
         @currentLevel = @currentLevel.parent
         @viewController.setActiveGraph(@currentLevel.system)
+
+    deleteNode: (id, system) ->
+        #Making sure to destroy vertex IFF r or m type
+        for node in system.nodes
+            if node.id is id
+                if node.type is "r"
+                    system.graph.destroyVertex(id)
+                    @deleted.reactions.push(id)
+                    node.deleted = true
+                else if node.type is "m"
+                    system.graph.destroyVertex(id)
+                    @deleted.metabolites.push(id)
+                    node.deleted = true
+        console.log(@deleted)
+
+
 
 
 module.exports = Network

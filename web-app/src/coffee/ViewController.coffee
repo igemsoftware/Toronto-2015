@@ -15,6 +15,8 @@ class ViewController
         @clientX = 0
         @clientY = 0
 
+        @maxZoomOut = 7.5
+        @maxZoomIn = 0.05
         # Append it to the DOM
         #tried to disable select, failed misribly.
         document.getElementById(@wrapperId).appendChild(@c)
@@ -186,6 +188,13 @@ class ViewController
 
         factor = zoom
         pt = @transformedPoint(@lastX, @lastY)
+        if @xform.a <= @maxZoomIn and factor <= 1
+            return
+        else if @xform.a >= @maxZoomOut and factor >= 1
+            return
+
+
+            #or @xform.a >= 7.5
 
         # Translate,
         @ctx.translate(pt.x, pt.y)
@@ -193,15 +202,9 @@ class ViewController
         # scale,
         @ctx.scale(factor, factor)
         @xform = @xform.scaleNonUniform(factor, factor)
-        if @activeGraph is @network
-            for specie in @network.species
-                if specie.checkCollision(pt.x, pt.y)
-                    #a or d works doesnt matter since we're not doing complicated transofmrations
-                    if specie.r*@xform.a >= @c.width and specie.r*@xform.a >=@c.height
-                        @network.ecie(specie)
-        else
-            if @xform.a <= 0.02
-                @network.exitSpecie()
+
+
+
         # and translate again.
         @ctx.translate(-pt.x, -pt.y)
         @xform = @xform.translate(-pt.x, -pt.y)
@@ -220,27 +223,32 @@ class ViewController
 
         })
         that = this
+        htmlText = ""
         if node.type is 'r'
             # console.log(node)
             substrates = (substrate.name for substrate in node.inNeighbours)
             products = (product.name for product in node.outNeighbours)
-            @nodetext.html("#{substrates} --- (#{node.name}) ---> #{products}<br>")
-            @nodetext.append("<button id='delete'>Delete Reaction</button><br>")
-        else
-            @nodetext.html("#{node.name}<br>")
-            @nodetext.append("<button id='delete'>Delete Node</button><br>")
-            if node.type is 'Compartment'
-                @nodetext.append("<button id='enter'>Enter Specie</button><br>")
-                $("#enter").click(->
-                    that.network.enterSpecie(node)
-                )
+            htmlText+= ("#{substrates} --- (#{node.name}) ---> #{products}<br>")
+            htmlText+= ("<button id='delete'>Delete Reaction</button><br>")
+        else if node.type is 'm'
+            htmlText+= ("#{node.name}<br>")
+            htmlText+= ("<button id='delete'>Delete Node</button><br>")
+        else if node.type is 'Compartment' and @network.currentLevel.children[node.id]?
+            htmlText += ("#{node.name}<br>")
+            htmlText += ("<button id='enter'>Enter Node</button><br>")
+
         if @network.root.system isnt @activeGraph
-            @nodetext.append("<button id='network'>Return to network</button><br>")
-            $("#network").click(->
-                that.network.exitSpecie()
-            )
+            htmlText += ("<button id='network'>Return to Previous level</button><br>")
+
+        @nodetext.html(htmlText)
         $("#delete").click(->
-            that.system.deleteNode(node)
+            that.network.deleteNode(node.id, that.activeGraph)
+        )
+        $("#enter").click(->
+            that.network.enterSpecie(node)
+        )
+        $("#network").click(->
+            that.network.exitSpecie()
         )
 
     setActiveGraph: (system) ->
