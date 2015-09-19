@@ -195,7 +195,7 @@ Network = (function() {
       ctx: this.viewController.ctx
     };
     this.root = new TreeNode('root', new System(systemAttr));
-    console.log(this.root);
+    this.root.system.initializeForce();
     this.viewController.startCanvas(this.root.system);
     this.currentLevel = this.root;
     this.deleted = {

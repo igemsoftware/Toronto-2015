@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var MetabolicModelSchema = new mongoose.Schema({
-
 	reactions: [{
 		subsystem: String,
 		name: String,
@@ -15,7 +14,10 @@ var MetabolicModelSchema = new mongoose.Schema({
 		metabolites: [{
 			id: String,
 			stoichiometric_coefficient: Number
-		}]
+		}],
+        species: [{
+            name: String
+        }]
 	}],
 	description: String,
  	notes: String,
@@ -32,28 +34,51 @@ var MetabolicModelSchema = new mongoose.Schema({
 		_bound: Number,
 		formula: String,
 		compartment: String,
-		id: String
+		id: String,
+        species: [{
+            name: String
+        }],
+        subsystems: [{
+            name: String
+        }]
 	}],
-  	id: {
-		type: String,
-		required : true
-	}
+  	id: String
 });
 
-MetabolicModelSchema.methods.dictifyReactionMetabolites = function dictifyReactionMetabolites(cb) {
+MetabolicModelSchema.methods.transform = function transform(cb) {
 	var model = JSON.parse(JSON.stringify(this));
 
 	model.reactions.forEach(function(reaction) {
-		metabolitesDict = new Object();
-
-		reaction.metabolites.forEach(function(metabolite) {
+		metabolitesDict = {};
+	    reaction.metabolites.forEach(function(metabolite) {
 			metabolitesDict[metabolite.id] = metabolite.stoichiometric_coefficient;
 		});
-
 		reaction.metabolites = metabolitesDict;
+
+        speciesArray = [];
+        reaction.species.forEach(function(specie) {
+            speciesArray.push(specie.name);
+        });
+        reaction.species = speciesArray;
 	});
 
+    model.metabolites.forEach(function(metabolite) {
+        speciesArray = [];
+
+        metabolite.species.forEach(function(specie) {
+            speciesArray.push(specie.name);
+        });
+
+        metabolite.species = speciesArray;
+
+        subsystemsArray = [];
+        metabolite.subsystems.forEach(function(subsystem) {
+            subsystemsArray.push(subsystem.name);
+        });
+        metabolite.subsystems = subsystemsArray;
+    });
+
 	cb(model);
-}
+};
 
 module.exports = mongoose.model('metabolicmodel', MetabolicModelSchema);

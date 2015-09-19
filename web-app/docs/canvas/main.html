@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>main.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>main.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p><strong>Classes</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Canvas = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Canvas"</span>
+Node   = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Node"</span>
+Link   = <span class="hljs-built_in">require</span> <span class="hljs-string">"./Link"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Setup <a href="https://github.com/kof/animation-frame">AnimationFrame</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>AnimationFrame = <span class="hljs-built_in">window</span>.AnimationFrame
+AnimationFrame.shim()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><strong>Static Variables</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>BG = <span class="hljs-string">"white"</span>
+W = <span class="hljs-built_in">window</span>.innerWidth
+H = <span class="hljs-built_in">window</span>.innerHeight</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>The painters <code>&lt;canvas&gt;</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>CANVAS = <span class="hljs-keyword">new</span> Canvas(<span class="hljs-string">"canvas"</span>, W, H)
+sTime = (<span class="hljs-keyword">new</span> Date()).getTime()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>For some convenience</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>ctx = CANVAS.ctx
+<span class="hljs-function"><span class="hljs-title">rand</span> = <span class="hljs-params">(range)</span> -&gt;</span>
+    <span class="hljs-keyword">return</span> Math.floor(Math.random() * range)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p><strong>Live Variables</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>By <em>live</em>, these will be actively accessed/modified throughout runtime.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>The list of <em>Nodes</em></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>nodes = (<span class="hljs-keyword">new</span> Node(rand(W), rand(H), <span class="hljs-number">5</span>, ctx) <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> [<span class="hljs-number">0.</span>.<span class="hljs-number">.500</span>])</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Modified by <code>checkCollisions</code>, enables O(1) runtime when a node is already hovered</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>currentActiveNode = <span class="hljs-literal">null</span>
+links = (<span class="hljs-keyword">new</span> Link(rand(nodes.length),rand(nodes.length)) <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p><strong>Functions</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p><strong>checkCollisions</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">checkCollisions</span> = <span class="hljs-params">(x, y)</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> currentActiveNode?
+            <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes
+                <span class="hljs-keyword">if</span> n.checkCollision(x,y)
+                    n.hover = <span class="hljs-literal">true</span>
+                    currentActiveNode = n
+                <span class="hljs-keyword">else</span>
+                    n.hover = <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> currentActiveNode.checkCollision(x,y)
+                currentActiveNode = <span class="hljs-literal">null</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p><strong>For zooming</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>scale = <span class="hljs-number">1</span>
+svg = <span class="hljs-built_in">document</span>.createElementNS(<span class="hljs-string">'http://www.w3.org/2000/svg'</span>,<span class="hljs-string">'svg'</span>)
+xform = svg.createSVGMatrix()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p><strong>transformedPoint</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">transformedPoint</span> = <span class="hljs-params">(x, y)</span> -&gt;</span>
+    pt = svg.createSVGPoint()
+    pt.x = x
+    pt.y = y
+    <span class="hljs-keyword">return</span> pt.matrixTransform(xform.inverse())</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p><strong>For dragging</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>dragStart = <span class="hljs-literal">null</span>
+dragScaleFactor = <span class="hljs-number">1.5</span>
+lastX = W <span class="hljs-regexp">//</span> <span class="hljs-number">2</span>
+lastY = H <span class="hljs-regexp">//</span> <span class="hljs-number">2</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p><strong>Mouse Events</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p><strong>mousedown</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mousedown</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    lastX = e.clientX - CANVAS.c.offsetLeft
+    lastY = e.clientY - CANVAS.c.offsetTop
+    dragStart = transformedPoint(lastX, lastY)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p><strong>mouseup</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mouseup</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    dragStart = <span class="hljs-literal">null</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p><strong>mousemove</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mousemove</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    e.preventDefault()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Collisons</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    tPt = transformedPoint(e.clientX, e.clientY)
+    checkCollisions(tPt.x, tPt.y)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Dragging</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    lastX = e.clientX - CANVAS.c.offsetLeft
+    lastY = e.clientY - CANVAS.c.offsetTop
+
+    <span class="hljs-keyword">if</span> dragStart?
+        tPt = transformedPoint(lastX, lastY)
+        dX = (tPt.x - dragStart.x) * dragScaleFactor
+        dY = (tPt.y - dragStart.y) * dragScaleFactor
+        xform = xform.translate(dX, dY)
+        ctx.translate(dX, dY)
+        cameraX -= dX
+        cameraY -= dY</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p><strong>mousewheel</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">mousewheel</span> = <span class="hljs-params">(e)</span> -&gt;</span>
+    e.preventDefault()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p><code>n</code> or <code>-n</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    wheel = event.wheelDelta / <span class="hljs-number">120</span>
+    zoom = <span class="hljs-number">1</span> + wheel / <span class="hljs-number">2</span>
+    
+    delta = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> e.wheelDelta?
+        delta = e.wheelDelta/<span class="hljs-number">120</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">if</span> e.detail?
+            delta = -e.detail
+
+    pt = transformedPoint(lastX, lastY)
+    ctx.translate(pt.x, pt.y)
+    xform = xform.translate(pt.x, pt.y)
+    factor = zoom
+    ctx.scale(factor, factor)
+    xform = xform.scaleNonUniform(factor, factor)
+    ctx.translate(-pt.x, -pt.y)
+    xform = xform.translate(-pt.x, -pt.y)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Creating event listeners</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>CANVAS.c.addEventListener(<span class="hljs-string">"mousedown"</span>, mousedown, <span class="hljs-literal">false</span>)
+CANVAS.c.addEventListener(<span class="hljs-string">"mouseup"</span>, mouseup, <span class="hljs-literal">false</span>)
+CANVAS.c.addEventListener(<span class="hljs-string">"mousemove"</span>, mousemove, <span class="hljs-literal">false</span>)
+CANVAS.c.addEventListener(<span class="hljs-string">"mousewheel"</span>, mousewheel, <span class="hljs-literal">false</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p><strong>Render Pipeline</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Clear the canvas</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">clear</span> = -&gt;</span>
+    ctx.fillStyle = BG
+    p1 = transformedPoint(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>)
+    p2 = transformedPoint(W,H)
+    ctx.fillRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
+    ctx.fill()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Draw nodes and links</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">draw</span> = -&gt;</span>
+    n.draw() <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nodes
+    
+    <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> links
+        ctx.moveTo(nodes[link.source].x, nodes[link.source].y)
+        ctx.lineTo(nodes[link.target].x, nodes[link.target].y)
+    ctx.stroke()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Update node x,y values</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">update</span> = -&gt;</span>
+    delta = (<span class="hljs-keyword">new</span> Date()).getTime() - sTime
+    n.y += Math.sin(delta/(Math.PI*<span class="hljs-number">100</span>))*(i/<span class="hljs-number">100</span> + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> n,i <span class="hljs-keyword">in</span> nodes
+    n.x += Math.sin(delta/(Math.PI*<span class="hljs-number">250</span>))*(i/<span class="hljs-number">100</span> + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> n,i <span class="hljs-keyword">in</span> nodes
+<span class="hljs-function">
+<span class="hljs-title">render</span> = -&gt;</span>
+    stats.begin()
+    
+    clear()
+    draw()
+    update()
+    
+    stats.end()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Request next frame</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    requestAnimationFrame(render)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p><strong>Start the render loop</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>render()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

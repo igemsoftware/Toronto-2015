@@ -18,8 +18,8 @@ function FluxCtrl($http, UrlProvider, ModalService) {
     this.data = {};
     this.loading = true;
 
-    // this.startConsortiaFlux(data);
-    this.loadNStartModel();
+    this.startConsortiaFlux(data);
+    // this.loadNStartModel();
 }
 
 FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
@@ -27,7 +27,7 @@ FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
 FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
         // console.log(data);
-        // console.log(res.data);
+        console.log(res.data);
         this.startConsortiaFlux(res.data);
     };
 

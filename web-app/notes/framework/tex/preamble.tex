@@ -1,0 +1,118 @@
+\documentclass[letterpaper]{article}
+
+% Geometry
+\usepackage[letterpaper, top=2.54cm, bottom=2.54cm, left=2.54cm, right=2.54cm]{geometry}
+
+% Fancy Header
+\usepackage{fancyhdr}
+% Change header bottom bar thickness
+\renewcommand{\headrulewidth}{0pt}
+
+% Hyperlinks
+% -option hidelinks disables red boxes around links
+\usepackage[hidelinks]{hyperref}
+
+% Colours
+\usepackage{color}
+% define before tikz or pstricks
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{grey}{gray}{0.4}
+
+% For pictures
+\usepackage{graphicx}
+
+% For special character support
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% New center environment with no padding
+\newenvironment{centernop}[1][\topsep]
+  {\setlength{\topsep}{#1}\par\kern\topsep\centering}% \begin{centernop}[<len>]
+  {\par\kern\topsep}% \end{centernop}
+
+% New bottom paragraph environment
+\newenvironment{bottompar}{\par\vspace*{\fill}}{\clearpage}
+
+% Tikz
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+
+% Landscape pages
+\usepackage{lscape}
+
+% Phylogenetic Trees
+% -http://cbr.jic.ac.uk/dicks/software/newicktree/
+% -requires compiling with xelatex
+%\usepackage{newicktree}
+
+% Qtree
+%\usepackage{qtree}
+
+% Enumitem for formatting enumerated lists
+\usepackage{enumitem}
+
+% For hanging indents
+\usepackage[notquote]{hanging}
+
+% Listings
+\usepackage{listings}
+\lstset{
+	tabsize=2,
+	basicstyle=\ttfamily,
+	aboveskip=0pt,
+	belowskip=\baselineskip
+}
+
+% requires --shell-escape
+\usepackage{minted}
+
+% Courier
+% -for \ttfamily to work in listings
+\usepackage{courier}
+
+% Paragraph box
+\usepackage{pbox}
+
+% Math symbols and other symbols
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% Math tools
+\usepackage{mathtools}
+% \ceil{} and \floor{} functions
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% Tilde macro
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+
+% Margin paragraph commands
+\DeclareRobustCommand{\mymarginpar}[1]{%
+ \mbox{}\marginpar[\raggedleft#1]{\raggedright#1}
+ \vspace{-\baselineskip}
+}
+\DeclareRobustCommand{\mpconsider}{%
+ \mymarginpar{\textit{Consider}}
+}
+\DeclareRobustCommand{\mpclaim}{%
+ \mymarginpar{\textbf{Claim}}
+}
+\DeclareRobustCommand{\mpex}{%
+ \mymarginpar{Ex.}
+}
+\DeclareRobustCommand{\mpnote}{%
+ \mymarginpar{\textit{Note}}
+}
+\DeclareRobustCommand{\mpproof}{%
+ \mymarginpar{\textbf{Proof}}
+}
+\def\mpreadings{\mymarginpar{\textit{Readings}}}
+\def\mpselftest{\mymarginpar{\textit{Self test}}}
+
+% Quick Commands
+\def\N{\mathbb{N}}
+\def\R{\mathbb{R}}
+\def\implies{\Rightarrow}
+\def\and{\wedge}
+\def\Or{\vee}
