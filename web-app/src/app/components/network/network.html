@@ -1,0 +1,29 @@
+<div ng-controller="NetworkCtrl" class="fill">
+    <div id="network"></div>
+    <div id="sidebar" class="{{getLockedClass()}}">
+        <div id="sidebar-controls" class="center">
+            <i ng-click="expandSidebar()"class="fa fa-chevron-left fa-2x" lx-ripple="{{rippleColour}}"></i>
+            <i ng-show="!locked" ng-click="lockControl()" class="fa fa-lock fa-2x" lx-ripple="{{rippleColour}}"></i>
+            <i ng-show="locked" ng-click="lockControl()" class="fa fa-unlock fa-2x" lx-ripple="{{rippleColour}}"></i>
+            <i ng-click="deflateSidebar()" class="fa fa-chevron-right fa-2x" lx-ripple="{{rippleColour}}"></i>
+        </div>
+        <ul ng-show="deflated" id="species-list">
+            <li ng-repeat="s in species">
+                {{s.SPECIES}}
+            </li>
+        </ul>
+        <div ng-show="!deflated">
+            <table ng-table="tableParams" class="table">
+                <tr ng-repeat="s in $data">
+                    <td data-title="'Domain'" sortable="'DOMAIN'"> {{s.DOMAIN}} </td>
+                    <td data-title="'Phylum'" sortable="'PHYLUM'"> {{s.PHYLUM}} </td>
+                    <td data-title="'Class'" sortable="'CLASS'"> {{s.CLASS}} </td>
+                    <td data-title="'Order'" sortable="'ORDER'"> {{s.ORDER}} </td>
+                    <td data-title="'Family'" sortable="'FAMILY'"> {{s.FAMILY}} </td>
+                    <td data-title="'Species'" sortable="'SPECIES'"> {{s.SPECIES}} </td>
+                    <td data-title="'Strain'" sortable="'STRAIN'"> {{s.STRAIN}} </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

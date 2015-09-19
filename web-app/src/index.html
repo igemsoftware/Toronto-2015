@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="ConsortiaFlux" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>drawee</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/angular-tooltips/dist/angular-tooltips.min.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../bower_components/flexboxgrid/dist/flexboxgrid.css" />
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../bower_components/ng-table/dist/ng-table.min.css" />
+    <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css" />
+    <!-- endbower -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="styles/styles.css">
+    <!-- endinject -->
+</head>
+
+<body ng-controller="BodyCtrl">
+    <div ui-view class="fill"></div>
+
+    <script src="iJO1366.js"></script>
+    <script src="toydata.js"></script>
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/angular-modal-service/dst/angular-modal-service.js"></script>
+    <script src="../bower_components/angular-tooltips/dist/angular-tooltips.min.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/animation-frame/AnimationFrame.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/d3/d3.js"></script>
+    <script src="../bower_components/graph.js/dist/graph.full.min.js"></script>
+    <script src="../bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="../bower_components/stats.js/build/stats.min.js"></script>
+    <!-- endbower -->
+
+
+    <div id="nodetext">
+
+    </div>
+
+    <!-- inject:js -->
+    <script src="lib/bundle-coffee.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/modals/addspecie/addspecie.controller.js"></script>
+    <script src="app/pages/data/data.controller.js"></script>
+    <script src="app/pages/home/home.controller.js"></script>
+    <script src="app/pages/flux/flux.controller.js"></script>
+    <script src="app/components/network/network.controller.js"></script>
+    <script src="app/components/header/header.controller.js"></script>
+    <script src="app/components/forcelayout/layout.controller.js"></script>
+    <script src="app/services/UrlProvider.js"></script>
+    <!-- endinject -->
+
+    <script>
+    var sortables = {
+        index       : -1,
+        identifiers : ['species', 'compartments', 'subsystems']
+    };
+
+    var networkAttributes = {
+        id               : 'root',
+        name             : 'root',
+        width            : window.innerWidth,
+        height           : window.innerHeight,
+        backgroundColour : 'white',
+        metaboliteRadius : 10,
+        useStatic        : false,
+        everything       : false,
+        hideObjective    : true,
+        data             : data,
+        sortables        : sortables,
+        showStats        : false
+    };
+
+    // hyperFlux = new ConsortiaFluxVisualization(networkAttributes);
+    </script>
+
+</body>
+
+</html>

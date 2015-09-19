@@ -1,0 +1,17 @@
+<div ng-show="display" class="mymodal">
+    <div ng-show="loading">
+        Retrieving species list...
+        <i ng-show="loading" class="fa fa-5x fa-spin fa-spinner"></i>
+    </div>
+    <div ng-show="!loading">
+        <accordion>
+            <accordion-group ng-repeat="specie in species" heading="{{specie}}">
+                wheeeee
+                <button ng-click="choose(specie)" type="button" class="btn btn-primary right">Use</button>
+            </accordion-group>
+        </accordion>
+    </div>
+
+    <a class="closeButton right" href ng-click="close()">Close</a>
+</div>
+<div class="fade" ng-show="display"></div>

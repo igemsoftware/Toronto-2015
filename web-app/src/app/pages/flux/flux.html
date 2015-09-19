@@ -1,0 +1,38 @@
+<div ng-controller="FluxCtrl as fluxCtrl">
+    <div id="topbar">
+        <div class="left">
+            <ul>
+                <li>
+                    <a href=#>
+                        <h3>ConsortiaFlux</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href ng-click="fluxCtrl.addSpecie()" tooltips title="Choose specie(s)" tooltip-side="bottom">
+                        <i class="fa fa-exchange"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href=# tooltips title="Optimize" tooltip-side="bottom">
+                        <i class="fa fa-crosshairs"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="right take-remaining-width">
+            <ul>
+                <li>
+                    <a href>
+                        <span class="model">
+                            {{fluxCtrl.currentModel}}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="canvas-wrapper">
+
+    </div>
+    <!-- <div ng-include src='"app/components/network/network.html"' class="view"></div> -->
+</div>
