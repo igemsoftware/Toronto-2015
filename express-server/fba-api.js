@@ -4,11 +4,13 @@ require('colors');
 var express = require('express');
 var app = express();
 
+
 // ==== App ====
 var App = global.App = require('./lib/App');
 
 // ==== DB Connection ====
 connection = App.Lib('connection')
+var url = "localhost:9001/"
 connection.mongodb(); //wat
 // mysqlConn = new Object();
 // connection.mysql(function(connection) {

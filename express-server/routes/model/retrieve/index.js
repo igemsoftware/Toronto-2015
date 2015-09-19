@@ -4,13 +4,13 @@ var MetabolicModel = App.Model('metabolicmodel');
 
 function findAll(req, res, next) {
 	MetabolicModel.find(function(err, models) {
-		var ids = [];
+		var ids = new Array();
 		models.forEach(function(model) {
 			ids.push(model.id);
 		});
 
 		res.send(ids);
-	});
+	})
 }
 
 router.get('/', findAll);
@@ -25,7 +25,7 @@ router.get('/:id', function(req,res, next) {
 		if (!model) {
 			res.status(204).send('204 no content. That model does not exist.\n');
 		} else {
-			model.transform(function(model) {
+			model.dictifyReactionMetabolites(function(model) {
 				res.send(model);
 			});
 		}
