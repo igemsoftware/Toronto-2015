@@ -1,0 +1,24 @@
+{
+  "name": "igem-registry-json-api",
+  "version": "1.0.0",
+  "description": "Usage",
+  "main": "parts-registry-api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igemsoftware/Toronto-2015.git"
+  },
+  "author": "iGEM UofT",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/igemsoftware/Toronto-2015/issues"
+  },
+  "homepage": "https://github.com/igemsoftware/Toronto-2015#readme",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "jquery": "^2.1.4",
+    "request": "^2.61.0"
+  }
+}
