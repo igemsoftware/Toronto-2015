@@ -18,8 +18,8 @@ function FluxCtrl($http, UrlProvider, ModalService) {
     this.data = {};
     this.loading = true;
 
-    this.startConsortiaFlux(data);
-    // this.loadNStartModel();
+    //this.startConsortiaFlux(data);
+    this.loadNStartModel();
 }
 
 FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
@@ -27,8 +27,12 @@ FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
 FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
         // console.log(data);
-        console.log(res.data);
-        this.startConsortiaFlux(res.data);
+        if(this.ConsortiaFluxTool !== undefined){
+            
+            this.ConsortiaFluxTool.changeSpecie(res.data)
+        }
+        else
+            this.startConsortiaFlux(res.data);
     };
 
     this.errorCatch = function(err) {
@@ -69,9 +73,10 @@ FluxCtrl.prototype.addSpecie = function() {
     this.onModal = function(modal) {
         modal.close.then(this.onModalClose.bind(this));
     };
-
+    //Change species
     this.onModalClose = function(result) {
         this.currentModel = result;
+        this.loadNStartModel()
     };
 
     this.ModalService.showModal({
@@ -79,3 +84,7 @@ FluxCtrl.prototype.addSpecie = function() {
         controller: "AddSpecieModal"
     }).then(this.onModal.bind(this));
 };
+
+FluxCtrl.prototype.optimize = function() {
+    alert(this.currentModel);
+}

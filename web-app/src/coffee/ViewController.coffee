@@ -1,4 +1,4 @@
-# Canvas
+``# Canvas
 class ViewController
     # **Constructor**
     constructor: (@wrapperId, @id, @width, @height, @BG, @network, @showStats) ->

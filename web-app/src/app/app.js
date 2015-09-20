@@ -17,7 +17,7 @@ angular.module('ConsortiaFlux', ['ui.router', 'ngTable', '720kb.tooltips', 'angu
         .state('main.flux', {
             url: '/flux',
             templateUrl: 'app/pages/flux/flux.html',
-            // controller: 'FluxCtrl'
+            //controller: 'FluxCtrl'
         });
 })
 

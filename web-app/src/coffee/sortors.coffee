@@ -9,7 +9,6 @@ module.exports =
                 metaboliteDict[metabolite.id] = metabolite
 
             pushedMetabolites = new Array()
-
             # Loop through BARE data
             for reaction in @data.reactions
                 for specie in reaction.species
@@ -25,24 +24,24 @@ module.exports =
                             pushedMetabolites.push(metabolite)
                             @parsedData[specie].metabolites.push(metaboliteDict[metabolite])
 
-        compartmentor: ->
-            mappings =
-                iJO1366: 'E. coli'
+        compartmentor: (system)->
+            # mappings =
+            #     iJO1366: 'E. coli'
+            #system.data = data
 
-            species = new Array()
-
-            for metabolite in @data.metabolites
+            species = []
+            for metabolite in system.data.metabolites
                 for specie in metabolite.species
                     if specie not in species
                         species.push(specie)
 
             for specie in species
-                @graph.addVertex(specie, creators.createCompartment(specie, mappings[specie]))
+                system.graph.addVertex(specie, creators.createCompartment(specie, specie))
 
-        sortor: ->
+        sortor: (system)->
             # Loop through every Reaction
-            for reaction of @reactions
-                r = @reactions[reaction]
+            for reaction of system.reactions
+                r = system.reactions[reaction]
 
                 for specie in r.species
                     # Case 1: loop through substrates, then products. Can produce
@@ -52,26 +51,26 @@ module.exports =
                     for substrate in r.substrates
                         if substrate.compartment is 'e'
                             # Construct `e ->`
-                            if not @graph.hasVertex(r.id)
-                                @graph.addVertex(r.id, r)
-                            if not @graph.hasVertex(substrate.id)
-                                @graph.addVertex(substrate.id, substrate)
-                            if not @graph.hasEdge(substrate.id, r.id)
-                                @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
+                            if not system.graph.hasVertex(r.id)
+                                system.graph.addVertex(r.id, r)
+                            if not system.graph.hasVertex(substrate.id)
+                                system.graph.addVertex(substrate.id, substrate)
+                            if not system.graph.hasEdge(substrate.id, r.id)
+                                system.graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
 
                             # Loop through the products for this particular reaction
                             # Are they extracellular, or within the cell?
                             for product in r.products
                                 if product.compartment is 'e'
                                     # Construct `-> e` (To complete `e -> e`)
-                                    if not @graph.hasVertex(product.id)
-                                        @graph.addVertex(product.id, product)
-                                    if not @graph.hasEdge(r.id, product.id)
-                                        @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
+                                    if not system.graph.hasVertex(product.id)
+                                        system.graph.addVertex(product.id, product)
+                                    if not system.graph.hasEdge(r.id, product.id)
+                                        system.graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
                                 else
                                     # Construct `-> specie` (To complete `e -> specie`)
-                                    if not @graph.hasEdge(r.id, specie)
-                                        @graph.addEdge(r.id, specie, "#{r.id} -> #{specie}")
+                                    if not system.graph.hasEdge(r.id, specie)
+                                        system.graph.addEdge(r.id, specie, "#{r.id} -> #{specie}")
 
                     # Case 2: loop through products, then substrates. Can produce
                     # a. `-> e`
@@ -80,24 +79,25 @@ module.exports =
                     for product in r.products
                         if product.compartment is 'e'
                             # Construct `-> e`
-                            if not @graph.hasVertex(r.id)
-                                @graph.addVertex(r.id, r)
-                            if not @graph.hasVertex(product.id)
-                                @graph.addVertex(product.id, product)
-                            if not @graph.hasEdge(r.id, product.id)
-                                @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
+                            if not system.graph.hasVertex(r.id)
+                                system.graph.addVertex(r.id, r)
+                            if not system.graph.hasVertex(product.id)
+                                system.graph.addVertex(product.id, product)
+                            if not system.graph.hasEdge(r.id, product.id)
+                                system.graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
 
                             for substrate in r.substrates
                                 if substrate.compartment is 'e'
                                     # Construct `e ->` (To complete `e -> e`)
-                                    if not @graph.hasVertex(substrate.id)
-                                        @graph.addVertex(substrate.id, substrate)
-                                    if not @graph.hasEdge(substrate.id, r.id)
-                                        @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{product.id}")
+                                    if not system.graph.hasVertex(substrate.id)
+                                        system.graph.addVertex(substrate.id, substrate)
+                                    if not system.graph.hasEdge(substrate.id, r.id)
+                                        system.graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{product.id}")
                                 else
                                     # Construct `specie ->` (To complete `specie -> e`)
-                                    if not @graph.hasEdge(specie, r.id)
-                                        @graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
+                                    if not system.graph.hasEdge(specie, r.id)
+                                        system.graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
+
     compartments:
         parser: ->
             # Give back data for `c` and `p`
@@ -139,7 +139,7 @@ module.exports =
                                 @parsedData[cpt].metabolites.push(metaboliteDict[metabolite])
                                 pushedMetabolites[cpt].push(metabolite)
 
-        compartmentor: ->
+        compartmentor: (system)->
             sorter = 'compartment'
 
             mappings =
@@ -147,48 +147,48 @@ module.exports =
                 p: 'periplasm'
                 e: 'extracellular'
 
-            for metabolite of @metabolites
-                m = @metabolites[metabolite]
-                if not @graph.hasVertex(m[sorter])
-                    @graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]]))
+            for metabolite of system.metabolites
+                m = system.metabolites[metabolite]
+                if not system.graph.hasVertex(m[sorter])
+                    system.graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]]))
 
-        sortor: ->
-            for reaction of @reactions
-                r = @reactions[reaction]
+        sortor: (system)->
+            for reaction of system.reactions
+                r = system.reactions[reaction]
 
                 if r.substrateCompartments.length is 1 and r.productCompartments.length is 1 and r.substrateCompartments[0] is r.productCompartments[0]
                     continue
 
-                if not @graph.hasVertex(r.id)
-                    @graph.addVertex(r.id, r)
+                if not system.graph.hasVertex(r.id)
+                    system.graph.addVertex(r.id, r)
 
                 for cpt in r.substrateCompartments
-                    @graph.addEdge(cpt, r.id, "#{cpt} -> #{r.id}")
+                    system.graph.addEdge(cpt, r.id, "#{cpt} -> #{r.id}")
 
                 for cpt in r.productCompartments
-                    @graph.addEdge(r.id, cpt, "{r.id} -> #{cpt}")
+                    system.graph.addEdge(r.id, cpt, "{r.id} -> #{cpt}")
 
     subsystems:
         parser: ->
             # console.log('In the subsystems parser')
 
-        compartmentor: ->
+        compartmentor:(system) ->
             sorter = 'subsystem'
 
-            for metabolite of @metabolites
-                m = @metabolites[metabolite]
+            for metabolite of system.metabolites
+                m = system.metabolites[metabolite]
                 for subsystem in m.subsystems
-                    if not @graph.hasVertex(subsystem)
-                        @graph.addVertex(subsystem, creators.createCompartment(subsystem, subsystem))
+                    if not system.graph.hasVertex(subsystem)
+                        system.graph.addVertex(subsystem, creators.createCompartment(subsystem, subsystem))
 
-        sortor: ->
+        sortor: (system) ->
             # Reactions have one subsystem.
             # Metabolites may belong to more than one reaction, and therefore
             # may have more than one subsystem.
 
             # Loop through each Reaction
-            for reaction of @reactions
-                r = @reactions[reaction]
+            for reaction of system.reactions
+                r = system.reactions[reaction]
 
                 # What is exchanged between subsystems? Metabolites.
                 # Consider reactions which have substrates or products which
@@ -197,27 +197,27 @@ module.exports =
                 for substrate in r.substrates
                     if substrate.subsystems.length > 1
                         # Safe to append Reaction now
-                        if not @graph.hasVertex(r.id)
-                            @graph.addVertex(r.id, r)
+                        if not system.graph.hasVertex(r.id)
+                            system.graph.addVertex(r.id, r)
 
                         # Append Metabolite as well
-                        if not @graph.hasVertex(substrate.id)
-                            @graph.addVertex(substrate.id, substrate)
+                        if not system.graph.hasVertex(substrate.id)
+                            system.graph.addVertex(substrate.id, substrate)
 
                         # Create the edges for M -> R -> SS
-                        @graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
-                        @graph.addEdge(r.id, r.subsystem, "#{r.id} -> #{r.subsystem}")
+                        system.graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
+                        system.graph.addEdge(r.id, r.subsystem, "#{r.id} -> #{r.subsystem}")
 
                 for product in r.products
                     if product.subsystems.length > 1
                         # Safe to append Reaction now
-                        if not @graph.hasVertex(r.id)
-                            @graph.addVertex(r.id, r)
+                        if not system.graph.hasVertex(r.id)
+                            system.graph.addVertex(r.id, r)
 
                         # Append Metabolite as well
-                        if not @graph.hasVertex(product.id)
-                            @graph.addVertex(product.id, product)
+                        if not system.graph.hasVertex(product.id)
+                            system.graph.addVertex(product.id, product)
 
                         # Create the edges for SS -> R -> M
-                        @graph.addEdge(r.subsystem, r.id, "#{r.subsystem} -> #{r.id}")
-                        @graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")
+                        system.graph.addEdge(r.subsystem, r.id, "#{r.subsystem} -> #{r.id}")
+                        system.graph.addEdge(r.id, product.id, "#{r.id} -> #{product.id}")

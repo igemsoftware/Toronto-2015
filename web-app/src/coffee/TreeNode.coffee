@@ -10,12 +10,10 @@ class TreeNode
         @children = new Object()
 
         # Build a computed layout for the current system
-        @system.buildSystem(@system.data)
+        # @system.buildSystem(@system.data)
         # console.log(@system)
 
-
-        # Create a child for each key in parsedData
-        # console.log(@system.parsedData)
+        #Create a child for each key in parsedData
         for child of @system.parsedData
             if @system.sortables.index < @system.sortables.identifiers.length - 1
                 systemAttr =
@@ -30,5 +28,5 @@ class TreeNode
                 # console.log("Making #{child}")
                 @children[child] = new TreeNode(child, new System(systemAttr))
                 @children[child].parent = this
-                console.log @children[child]
+
 module.exports = TreeNode

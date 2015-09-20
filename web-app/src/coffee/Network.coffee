@@ -4,34 +4,44 @@ System = require './System'
 
 # The M for our MVC
 class Network
-    constructor: (attr) ->
+    constructor: (@attr) ->
         # The VC for our MVC
-        @viewController = new ViewController(attr.wrapperId, 'canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats)
+        @viewController = new ViewController(@attr.wrapperId, 'canvas', @attr.width, @attr.height, @attr.backgroundColour, this, @attr.showStats)
+        @initalized = false
+        @changeSpecie(@attr.data)
+        @initalized = true
 
         # Create our root TreeNode
         # Will recursively create children
+
+    changeSpecie: (model) ->
+        @attr.sortables.index = -1
         systemAttr =
-            data : attr.data
-            width : attr.width
-            height : attr.height
-            hideObjective : attr.hideObjective
-            everything : attr.everything
-            sortables : attr.sortables
+            data : model
+            width : @attr.width
+            height : @attr.height
+            hideObjective : @attr.hideObjective
+            everything : @attr.everything
+            sortables : @attr.sortables
             ctx : @viewController.ctx
         @root = new TreeNode('root', new System(systemAttr))
         @root.system.initializeForce()
-        # console.log(@root)
-        # Start the visualization
-        @viewController.startCanvas(@root.system)
-        @currentLevel = @root
 
+        # console.log(@root)
+        console.log(@root.system.graph.vertexCount())
+
+        # Start the visualization
+        if @initalized
+            @viewController.setActiveGraph(@root.system)
+        else
+            @viewController.startCanvas(@root.system)
+
+        @currentLevel = @root
         # console.log(@root)
         @deleted = {
             reactions: new Array()
             metabolites: new Array()
-
         }
-
         @added = {
             reactions: new Object()
             metabolites: new Object()

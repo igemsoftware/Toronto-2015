@@ -183,31 +183,44 @@ System = require('./System');
 
 Network = (function() {
   function Network(attr) {
+    this.attr = attr;
+    this.viewController = new ViewController(this.attr.wrapperId, 'canvas', this.attr.width, this.attr.height, this.attr.backgroundColour, this, this.attr.showStats);
+    this.initalized = false;
+    this.changeSpecie(this.attr.data);
+    this.initalized = true;
+  }
+
+  Network.prototype.changeSpecie = function(model) {
     var systemAttr;
-    this.viewController = new ViewController(attr.wrapperId, 'canvas', attr.width, attr.height, attr.backgroundColour, this, attr.showStats);
+    this.attr.sortables.index = -1;
     systemAttr = {
-      data: attr.data,
-      width: attr.width,
-      height: attr.height,
-      hideObjective: attr.hideObjective,
-      everything: attr.everything,
-      sortables: attr.sortables,
+      data: model,
+      width: this.attr.width,
+      height: this.attr.height,
+      hideObjective: this.attr.hideObjective,
+      everything: this.attr.everything,
+      sortables: this.attr.sortables,
       ctx: this.viewController.ctx
     };
     this.root = new TreeNode('root', new System(systemAttr));
     this.root.system.initializeForce();
-    this.viewController.startCanvas(this.root.system);
+    console.log(this.root.system.graph.vertexCount());
+    if (this.initalized) {
+      this.viewController.setActiveGraph(this.root.system);
+    } else {
+      this.viewController.startCanvas(this.root.system);
+    }
     this.currentLevel = this.root;
     this.deleted = {
       reactions: new Array(),
       metabolites: new Array()
     };
-    this.added = {
+    return this.added = {
       reactions: new Object(),
       metabolites: new Object(),
       species: new Object()
     };
-  }
+  };
 
   Network.prototype.enterSpecie = function(node) {
     this.currentLevel = this.currentLevel.children[node.id];
@@ -400,6 +413,8 @@ System = (function() {
     this.nodes = new Array();
     this.links = new Array();
     this.initializeForce();
+    console.log("About to build system");
+    this.buildSystem();
   }
 
   System.prototype.buildMetabolitesAndReactions = function(metaboliteData, reactionData) {
@@ -521,8 +536,9 @@ System = (function() {
 
   System.prototype.buildSystem = function() {
     var edge, flux, from, iterator, results, to, value, vertex;
-    sortors[this.type].compartmentor();
-    sortors[this.type].sortor();
+    console.log(this);
+    sortors[this.type].compartmentor(this);
+    sortors[this.type].sortor(this);
     iterator = this.graph.vertices();
     while (!(vertex = iterator.next()).done) {
       value = vertex.value[1];
@@ -652,7 +668,6 @@ TreeNode = (function() {
     this.system = system;
     this.parent = null;
     this.children = new Object();
-    this.system.buildSystem(this.system.data);
     for (child in this.system.parsedData) {
       if (this.system.sortables.index < this.system.sortables.identifiers.length - 1) {
         systemAttr = {
@@ -666,7 +681,6 @@ TreeNode = (function() {
         };
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
-        console.log(this.children[child]);
       }
     }
   }
@@ -679,6 +693,7 @@ module.exports = TreeNode;
 
 
 },{"./System":8}],10:[function(require,module,exports){
+;
 var ViewController;
 
 ViewController = (function() {
@@ -1362,13 +1377,10 @@ module.exports = {
       }
       return results;
     },
-    compartmentor: function() {
-      var i, j, k, len, len1, len2, mappings, metabolite, ref, ref1, results, specie, species;
-      mappings = {
-        iJO1366: 'E. coli'
-      };
-      species = new Array();
-      ref = this.data.metabolites;
+    compartmentor: function(system) {
+      var i, j, k, len, len1, len2, metabolite, ref, ref1, results, specie, species;
+      species = [];
+      ref = system.data.metabolites;
       for (i = 0, len = ref.length; i < len; i++) {
         metabolite = ref[i];
         ref1 = metabolite.species;
@@ -1382,15 +1394,15 @@ module.exports = {
       results = [];
       for (k = 0, len2 = species.length; k < len2; k++) {
         specie = species[k];
-        results.push(this.graph.addVertex(specie, creators.createCompartment(specie, mappings[specie])));
+        results.push(system.graph.addVertex(specie, creators.createCompartment(specie, specie)));
       }
       return results;
     },
-    sortor: function() {
+    sortor: function(system) {
       var product, r, reaction, results, specie, substrate;
       results = [];
-      for (reaction in this.reactions) {
-        r = this.reactions[reaction];
+      for (reaction in system.reactions) {
+        r = system.reactions[reaction];
         results.push((function() {
           var i, j, k, len, len1, len2, ref, ref1, ref2, results1;
           ref = r.species;
@@ -1401,28 +1413,28 @@ module.exports = {
             for (j = 0, len1 = ref1.length; j < len1; j++) {
               substrate = ref1[j];
               if (substrate.compartment === 'e') {
-                if (!this.graph.hasVertex(r.id)) {
-                  this.graph.addVertex(r.id, r);
+                if (!system.graph.hasVertex(r.id)) {
+                  system.graph.addVertex(r.id, r);
                 }
-                if (!this.graph.hasVertex(substrate.id)) {
-                  this.graph.addVertex(substrate.id, substrate);
+                if (!system.graph.hasVertex(substrate.id)) {
+                  system.graph.addVertex(substrate.id, substrate);
                 }
-                if (!this.graph.hasEdge(substrate.id, r.id)) {
-                  this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
+                if (!system.graph.hasEdge(substrate.id, r.id)) {
+                  system.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
                 }
                 ref2 = r.products;
                 for (k = 0, len2 = ref2.length; k < len2; k++) {
                   product = ref2[k];
                   if (product.compartment === 'e') {
-                    if (!this.graph.hasVertex(product.id)) {
-                      this.graph.addVertex(product.id, product);
+                    if (!system.graph.hasVertex(product.id)) {
+                      system.graph.addVertex(product.id, product);
                     }
-                    if (!this.graph.hasEdge(r.id, product.id)) {
-                      this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                    if (!system.graph.hasEdge(r.id, product.id)) {
+                      system.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
                     }
                   } else {
-                    if (!this.graph.hasEdge(r.id, specie)) {
-                      this.graph.addEdge(r.id, specie, r.id + " -> " + specie);
+                    if (!system.graph.hasEdge(r.id, specie)) {
+                      system.graph.addEdge(r.id, specie, r.id + " -> " + specie);
                     }
                   }
                 }
@@ -1435,14 +1447,14 @@ module.exports = {
               for (l = 0, len3 = ref3.length; l < len3; l++) {
                 product = ref3[l];
                 if (product.compartment === 'e') {
-                  if (!this.graph.hasVertex(r.id)) {
-                    this.graph.addVertex(r.id, r);
+                  if (!system.graph.hasVertex(r.id)) {
+                    system.graph.addVertex(r.id, r);
                   }
-                  if (!this.graph.hasVertex(product.id)) {
-                    this.graph.addVertex(product.id, product);
+                  if (!system.graph.hasVertex(product.id)) {
+                    system.graph.addVertex(product.id, product);
                   }
-                  if (!this.graph.hasEdge(r.id, product.id)) {
-                    this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
+                  if (!system.graph.hasEdge(r.id, product.id)) {
+                    system.graph.addEdge(r.id, product.id, r.id + " -> " + product.id);
                   }
                   results2.push((function() {
                     var len4, n, ref4, results3;
@@ -1451,33 +1463,33 @@ module.exports = {
                     for (n = 0, len4 = ref4.length; n < len4; n++) {
                       substrate = ref4[n];
                       if (substrate.compartment === 'e') {
-                        if (!this.graph.hasVertex(substrate.id)) {
-                          this.graph.addVertex(substrate.id, substrate);
+                        if (!system.graph.hasVertex(substrate.id)) {
+                          system.graph.addVertex(substrate.id, substrate);
                         }
-                        if (!this.graph.hasEdge(substrate.id, r.id)) {
-                          results3.push(this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + product.id));
+                        if (!system.graph.hasEdge(substrate.id, r.id)) {
+                          results3.push(system.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + product.id));
                         } else {
                           results3.push(void 0);
                         }
                       } else {
-                        if (!this.graph.hasEdge(specie, r.id)) {
-                          results3.push(this.graph.addEdge(specie, r.id, specie + " -> " + r.id));
+                        if (!system.graph.hasEdge(specie, r.id)) {
+                          results3.push(system.graph.addEdge(specie, r.id, specie + " -> " + r.id));
                         } else {
                           results3.push(void 0);
                         }
                       }
                     }
                     return results3;
-                  }).call(this));
+                  })());
                 } else {
                   results2.push(void 0);
                 }
               }
               return results2;
-            }).call(this));
+            })());
           }
           return results1;
-        }).call(this));
+        })());
       }
       return results;
     }
@@ -1542,7 +1554,7 @@ module.exports = {
       }
       return results;
     },
-    compartmentor: function() {
+    compartmentor: function(system) {
       var m, mappings, metabolite, results, sorter;
       sorter = 'compartment';
       mappings = {
@@ -1551,31 +1563,31 @@ module.exports = {
         e: 'extracellular'
       };
       results = [];
-      for (metabolite in this.metabolites) {
-        m = this.metabolites[metabolite];
-        if (!this.graph.hasVertex(m[sorter])) {
-          results.push(this.graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]])));
+      for (metabolite in system.metabolites) {
+        m = system.metabolites[metabolite];
+        if (!system.graph.hasVertex(m[sorter])) {
+          results.push(system.graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]])));
         } else {
           results.push(void 0);
         }
       }
       return results;
     },
-    sortor: function() {
+    sortor: function(system) {
       var cpt, i, len, r, reaction, ref, results;
       results = [];
-      for (reaction in this.reactions) {
-        r = this.reactions[reaction];
+      for (reaction in system.reactions) {
+        r = system.reactions[reaction];
         if (r.substrateCompartments.length === 1 && r.productCompartments.length === 1 && r.substrateCompartments[0] === r.productCompartments[0]) {
           continue;
         }
-        if (!this.graph.hasVertex(r.id)) {
-          this.graph.addVertex(r.id, r);
+        if (!system.graph.hasVertex(r.id)) {
+          system.graph.addVertex(r.id, r);
         }
         ref = r.substrateCompartments;
         for (i = 0, len = ref.length; i < len; i++) {
           cpt = ref[i];
-          this.graph.addEdge(cpt, r.id, cpt + " -> " + r.id);
+          system.graph.addEdge(cpt, r.id, cpt + " -> " + r.id);
         }
         results.push((function() {
           var j, len1, ref1, results1;
@@ -1583,56 +1595,56 @@ module.exports = {
           results1 = [];
           for (j = 0, len1 = ref1.length; j < len1; j++) {
             cpt = ref1[j];
-            results1.push(this.graph.addEdge(r.id, cpt, "{r.id} -> " + cpt));
+            results1.push(system.graph.addEdge(r.id, cpt, "{r.id} -> " + cpt));
           }
           return results1;
-        }).call(this));
+        })());
       }
       return results;
     }
   },
   subsystems: {
     parser: function() {},
-    compartmentor: function() {
+    compartmentor: function(system) {
       var m, metabolite, results, sorter, subsystem;
       sorter = 'subsystem';
       results = [];
-      for (metabolite in this.metabolites) {
-        m = this.metabolites[metabolite];
+      for (metabolite in system.metabolites) {
+        m = system.metabolites[metabolite];
         results.push((function() {
           var i, len, ref, results1;
           ref = m.subsystems;
           results1 = [];
           for (i = 0, len = ref.length; i < len; i++) {
             subsystem = ref[i];
-            if (!this.graph.hasVertex(subsystem)) {
-              results1.push(this.graph.addVertex(subsystem, creators.createCompartment(subsystem, subsystem)));
+            if (!system.graph.hasVertex(subsystem)) {
+              results1.push(system.graph.addVertex(subsystem, creators.createCompartment(subsystem, subsystem)));
             } else {
               results1.push(void 0);
             }
           }
           return results1;
-        }).call(this));
+        })());
       }
       return results;
     },
-    sortor: function() {
+    sortor: function(system) {
       var i, len, product, r, reaction, ref, results, substrate;
       results = [];
-      for (reaction in this.reactions) {
-        r = this.reactions[reaction];
+      for (reaction in system.reactions) {
+        r = system.reactions[reaction];
         ref = r.substrates;
         for (i = 0, len = ref.length; i < len; i++) {
           substrate = ref[i];
           if (substrate.subsystems.length > 1) {
-            if (!this.graph.hasVertex(r.id)) {
-              this.graph.addVertex(r.id, r);
+            if (!system.graph.hasVertex(r.id)) {
+              system.graph.addVertex(r.id, r);
             }
-            if (!this.graph.hasVertex(substrate.id)) {
-              this.graph.addVertex(substrate.id, substrate);
+            if (!system.graph.hasVertex(substrate.id)) {
+              system.graph.addVertex(substrate.id, substrate);
             }
-            this.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
-            this.graph.addEdge(r.id, r.subsystem, r.id + " -> " + r.subsystem);
+            system.graph.addEdge(substrate.id, r.id, substrate.id + " -> " + r.id);
+            system.graph.addEdge(r.id, r.subsystem, r.id + " -> " + r.subsystem);
           }
         }
         results.push((function() {
@@ -1642,20 +1654,20 @@ module.exports = {
           for (j = 0, len1 = ref1.length; j < len1; j++) {
             product = ref1[j];
             if (product.subsystems.length > 1) {
-              if (!this.graph.hasVertex(r.id)) {
-                this.graph.addVertex(r.id, r);
+              if (!system.graph.hasVertex(r.id)) {
+                system.graph.addVertex(r.id, r);
               }
-              if (!this.graph.hasVertex(product.id)) {
-                this.graph.addVertex(product.id, product);
+              if (!system.graph.hasVertex(product.id)) {
+                system.graph.addVertex(product.id, product);
               }
-              this.graph.addEdge(r.subsystem, r.id, r.subsystem + " -> " + r.id);
-              results1.push(this.graph.addEdge(r.id, product.id, r.id + " -> " + product.id));
+              system.graph.addEdge(r.subsystem, r.id, r.subsystem + " -> " + r.id);
+              results1.push(system.graph.addEdge(r.id, product.id, r.id + " -> " + product.id));
             } else {
               results1.push(void 0);
             }
           }
           return results1;
-        }).call(this));
+        })());
       }
       return results;
     }

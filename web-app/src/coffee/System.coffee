@@ -11,10 +11,11 @@ class System
         # Sortables and type
         attr.sortables.index+=1
         @sortables = attr.sortables
-        @type = @sortables.identifiers[@sortables.index]
 
+        @type = @sortables.identifiers[@sortables.index]
         # Store attributes as properties of System
         @data = attr.data
+
 
         @width = attr.width
         @height = attr.height
@@ -65,7 +66,8 @@ class System
         # The force layout provided by D3
 
         @initializeForce()
-
+        console.log("About to build system")
+        @buildSystem()
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
         metabolites = new Object()
@@ -202,8 +204,9 @@ class System
     # Applies `sortor` functions to construct @graph
     # Once @graph is built, loop through vertices and edges to create nodes and links
     buildSystem: ->
-        sortors[@type].compartmentor()
-        sortors[@type].sortor()
+        console.log(this)
+        sortors[@type].compartmentor(this)
+        sortors[@type].sortor(this)
 
         # Push all Metabolites and ReactionNodes into @nodes
         iterator = @graph.vertices()
