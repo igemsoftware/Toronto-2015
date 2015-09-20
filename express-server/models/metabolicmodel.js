@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var fs = require('fs')
+var fs = require('fs');
 var MetabolicModelSchema = new mongoose.Schema({
 	reactions: [{
 		subsystem: String,
@@ -42,12 +42,11 @@ var MetabolicModelSchema = new mongoose.Schema({
             name: String
         }]
 	}],
-  	id: String
+  	id: String // NOTE is a primary key
 });
 
 MetabolicModelSchema.methods.transform = function transform(cb) {
 	var model = JSON.parse(JSON.stringify(this));
-	fs.writeFile("asdfasd.json", JSON.stringify(model), function(err){})
 	model.reactions.forEach(function(reaction) {
 		metabolitesDict = {};
 	    reaction.metabolites.forEach(function(metabolite) {
