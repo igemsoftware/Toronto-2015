@@ -75,9 +75,7 @@ function saveModel(req, res, next) {
 				stoichiometric_coefficient: reaction.metabolites[key]
 			});
 		});
-
 		reaction.metabolites = tempMetabs;
-
         // Species Insertion
         reaction.species = [{
             name: req.body.id

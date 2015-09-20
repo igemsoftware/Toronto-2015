@@ -15,19 +15,19 @@ router.get('/:id', function(req, res, next) {
 			res.status(204).send('204 no content. That model does not exist.\n');
 		} else {
 			model.transform(function(model) {
+				//console.log("here")
+				//fs.writeFile("asdfasd.json", JSON.stringify(model), function(err){})
 				var fileName = 'temp/' + req.params.id + '.json';
 
 				fs.writeFile(fileName, JSON.stringify(model), function(err) {
 					if (err) {
 						res.status(500).send('500 Internal Server Error');
 					} else {
-
 						var results = {
 					        output   : '',
 					        errorlog : '',
 					        exitcode : null
 					    };
-
                         var currentTime = (new Date()).getTime();
                         var solutionFile = 'temp/' + req.params.id + '_' + currentTime;
 
