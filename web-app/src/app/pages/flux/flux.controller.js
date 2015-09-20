@@ -28,7 +28,7 @@ FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
         // console.log(data);
         if(this.ConsortiaFluxTool !== undefined){
-            
+
             this.ConsortiaFluxTool.changeSpecie(res.data)
         }
         else
@@ -86,5 +86,15 @@ FluxCtrl.prototype.addSpecie = function() {
 };
 
 FluxCtrl.prototype.optimize = function() {
-    alert(this.currentModel);
+    this.receiver = function(res) {
+        this.ConsortiaFluxTool.changeSpecie(res.data)
+    };
+
+    this.errorCatch = function(err) {
+        console.log(err);
+    };
+
+    var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
+
+    this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
 }
