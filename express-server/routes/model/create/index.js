@@ -27,6 +27,7 @@ function saveModel(req, res, next) {
         metabolite.subsystems = [];
     });
 
+    // TODO fix same subsystem pushed twice
     req.body.reactions.forEach(function(reaction) {
         Object.keys(reaction.metabolites).forEach(function(metabolite) {
             if (metabolitesDict[metabolite].subsystems.indexOf(reaction.subsystem) === -1) {

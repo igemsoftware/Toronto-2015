@@ -29,7 +29,7 @@ FluxCtrl.prototype.loadNStartModel = function() {
         // console.log(data);
         if(this.ConsortiaFluxTool !== undefined){
 
-            this.ConsortiaFluxTool.changeSpecie(res.data)
+            this.ConsortiaFluxTool.changeSpecie(res.data);
         }
         else
             this.startConsortiaFlux(res.data);
@@ -69,6 +69,7 @@ FluxCtrl.prototype.startConsortiaFlux = function(data) {
     this.ConsortiaFluxTool = new ConsortiaFluxVisualization(networkAttributes);
 };
 
+// TODO addSpecie -> addModel, or seperate communities models and specie models
 FluxCtrl.prototype.addSpecie = function() {
     this.onModal = function(modal) {
         modal.close.then(this.onModalClose.bind(this));
@@ -76,7 +77,30 @@ FluxCtrl.prototype.addSpecie = function() {
     //Change species
     this.onModalClose = function(result) {
         this.currentModel = result;
-        this.loadNStartModel()
+
+        if (this.currentModel === 'community') {
+            this.receiver = function(res) {
+                console.log(res.data);
+
+                if(this.ConsortiaFluxTool !== undefined){
+                    this.ConsortiaFluxTool.changeSpecie(res.data);
+                }
+                else {
+                    this.startConsortiaFlux(res.data);
+                }
+            };
+
+            this.errorCatch = function(err) {
+                console.log(err);
+            };
+
+            var requestUrl = this.UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel;
+
+            this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+
+        } else {
+            this.loadNStartModel();
+        }
     };
 
     this.ModalService.showModal({
@@ -87,7 +111,7 @@ FluxCtrl.prototype.addSpecie = function() {
 
 FluxCtrl.prototype.optimize = function() {
     this.receiver = function(res) {
-        this.ConsortiaFluxTool.changeSpecie(res.data)
+        this.ConsortiaFluxTool.changeSpecie(res.data);
     };
 
     this.errorCatch = function(err) {
@@ -97,4 +121,4 @@ FluxCtrl.prototype.optimize = function() {
     var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
 
     this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-}
+};

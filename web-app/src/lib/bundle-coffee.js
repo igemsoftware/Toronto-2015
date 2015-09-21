@@ -413,7 +413,6 @@ System = (function() {
     this.nodes = new Array();
     this.links = new Array();
     this.initializeForce();
-    console.log("About to build system");
     this.buildSystem();
   }
 
@@ -536,7 +535,6 @@ System = (function() {
 
   System.prototype.buildSystem = function() {
     var edge, flux, from, iterator, results, to, value, vertex;
-    console.log(this);
     sortors[this.type].compartmentor(this);
     sortors[this.type].sortor(this);
     iterator = this.graph.vertices();

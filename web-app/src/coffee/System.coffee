@@ -66,7 +66,7 @@ class System
         # The force layout provided by D3
 
         @initializeForce()
-        console.log("About to build system")
+        # console.log("About to build system")
         @buildSystem()
 
     buildMetabolitesAndReactions: (metaboliteData, reactionData) ->
@@ -204,7 +204,7 @@ class System
     # Applies `sortor` functions to construct @graph
     # Once @graph is built, loop through vertices and edges to create nodes and links
     buildSystem: ->
-        console.log(this)
+        # console.log(this)
         sortors[@type].compartmentor(this)
         sortors[@type].sortor(this)
 
