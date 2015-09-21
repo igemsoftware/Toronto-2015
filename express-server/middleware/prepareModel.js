@@ -83,15 +83,6 @@ function prepareModel(req, res, next) {
         reaction.metabolites = tempMetabs;
     });
 
-
-    // Give reaction.flux_value as 0
-    model.reactions.forEach(function(reaction) {
-        if (!reaction.flux_value) {
-            reaction.flux_value = 0;
-        }
-    });
-
-
     // TODO reaction.species, metabolite.species for single models
     next();
 }

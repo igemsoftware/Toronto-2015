@@ -59,6 +59,13 @@ MetabolicModelSchema.methods.transform = function transform(cb) {
             speciesArray.push(specie.name);
         });
         reaction.species = speciesArray;
+
+
+        // Give reaction.flux_value as 0 if non-existent
+        // TODO do this form python
+        if (!reaction.flux_value) {
+            reaction.flux_value = 0;
+        }
 	});
 
     model.metabolites.forEach(function(metabolite) {
