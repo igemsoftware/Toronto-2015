@@ -83,6 +83,7 @@ FluxCtrl.prototype.addSpecie = function() {
                 console.log(res.data);
 
                 if(this.ConsortiaFluxTool !== undefined){
+                    this.ConsortiaFluxTool.attr.everything = true;
                     this.ConsortiaFluxTool.changeSpecie(res.data);
                 }
                 else {
