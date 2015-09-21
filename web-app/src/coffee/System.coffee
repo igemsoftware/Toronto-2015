@@ -45,13 +45,12 @@ class System
         [@metabolites, @reactions] = @buildMetabolitesAndReactions(@data.metabolites, @data.reactions)
 
         # Bind sortors to 'this'
-        sortors[@type].compartmentor = sortors[@type].compartmentor.bind(this)
-        sortors[@type].sortor = sortors[@type].sortor.bind(this)
-
+        # sortors[@type].compartmentor = sortors[@type].compartmentor.bind(this)
+        # sortors[@type].sortor = sortors[@type].sortor.bind(this)
         @parsedData = new Object()
         # Bind and run parser for the current 'type'
         # Mutates @parsedData
-        (sortors[@type].parser.bind(this))()
+        sortors[@type].parser(this)
 
         #console.log(@parsedData)
 
@@ -117,12 +116,16 @@ class System
                 if reaction.metabolites[metaboliteId] > 0
                     source = reaction.id
                     target = metaboliteId
+                    if not reactions[source]? or not  metabolites[target]?
+                        continue
                     r.addLink(creators.createLink(reactions[source], metabolites[target], reaction.name,
                                                     @thicknesScale(reaction.flux_value)))
                 # metabolite is a substrate
                 else if reaction.metabolites[metaboliteId] < 0
                     source = metaboliteId
                     target = reaction.id
+                    if not reactions[target]? or not  metabolites[source]?
+                        continue
                     r.addLink(creators.createLink(metabolites[source], reactions[target], reaction.name, @thicknesScale(reaction.flux_value)))
 
         return [metabolites, reactions]

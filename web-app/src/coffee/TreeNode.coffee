@@ -14,8 +14,13 @@ class TreeNode
         # console.log(@system)
 
         #Create a child for each key in parsedData
+        console.log("Number of children to look at ", Object.keys(@system.parsedData))
+        currentIndex = @system.sortables.index
+    
         for child of @system.parsedData
-            if @system.sortables.index < @system.sortables.identifiers.length - 1
+            console.log("Contemplating #{child} at #{@system.sortables.identifiers[currentIndex]} level")
+            if currentIndex < @system.sortables.identifiers.length - 1 and child isnt "e" and child isnt "Community"
+                @system.sortables.index = currentIndex
                 systemAttr =
                     data          : @system.parsedData[child]
                     width         : @system.width
@@ -25,7 +30,7 @@ class TreeNode
                     sortables     : @system.sortables
                     ctx           : @system.ctx
 
-                # console.log("Making #{child}")
+                console.log("Making #{child}")
                 @children[child] = new TreeNode(child, new System(systemAttr))
                 @children[child].parent = this
 

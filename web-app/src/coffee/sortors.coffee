@@ -3,26 +3,26 @@ creators = require './creators'
 
 module.exports =
     species:
-        parser: ->
+        parser:(system) ->
             metaboliteDict = new Object()
-            for metabolite in @data.metabolites
+            for metabolite in system.data.metabolites
                 metaboliteDict[metabolite.id] = metabolite
 
             pushedMetabolites = new Array()
             # Loop through BARE data
-            for reaction in @data.reactions
+            for reaction in system.data.reactions
                 for specie in reaction.species
-                    if not @parsedData[specie]?
-                        @parsedData[specie] = new Object()
-                        @parsedData[specie].metabolites = new Array()
-                        @parsedData[specie].reactions = new Array()
+                    if not system.parsedData[specie]?
+                        system.parsedData[specie] = new Object()
+                        system.parsedData[specie].metabolites = new Array()
+                        system.parsedData[specie].reactions = new Array()
 
-                    @parsedData[specie].reactions.push(reaction)
+                    system.parsedData[specie].reactions.push(reaction)
 
                     for metabolite of reaction.metabolites
                         if metabolite not in pushedMetabolites
                             pushedMetabolites.push(metabolite)
-                            @parsedData[specie].metabolites.push(metaboliteDict[metabolite])
+                            system.parsedData[specie].metabolites.push(metaboliteDict[metabolite])
 
         compartmentor: (system)->
             # mappings =
@@ -32,7 +32,7 @@ module.exports =
             species = []
             for metabolite in system.data.metabolites
                 for specie in metabolite.species
-                    if specie not in species
+                    if not (specie in species)
                         species.push(specie)
 
             for specie in species
@@ -48,8 +48,10 @@ module.exports =
                     # a. `e ->`
                     # b. `e -> e`
                     # c. `e -> specie`
+
                     for substrate in r.substrates
                         if substrate.compartment is 'e'
+
                             # Construct `e ->`
                             if not system.graph.hasVertex(r.id)
                                 system.graph.addVertex(r.id, r)
@@ -99,20 +101,26 @@ module.exports =
                                         system.graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
 
     compartments:
-        parser: ->
+        parser: (system)->
             # Give back data for `c` and `p`
             metaboliteDict = new Object()
-            for metabolite in @data.metabolites
+            for metabolite in system.data.metabolites
+                if metabolite.id is "Ecoli-K12-MG1655-M2051-c"
+                    console.log(system)
                 metaboliteDict[metabolite.id] = metabolite
 
             pushedMetabolites = new Object()
             pushedReactions = new Object()
 
             # Loop through reaction objects
-            for reaction in @data.reactions
+            for reaction in system.data.reactions
                 # Determine compartments involved with this reaction
                 compartments = new Array()
                 for metabolite of reaction.metabolites
+                    if not metaboliteDict[metabolite]?
+                        #NOTE this is failing because reaction doesnt contain metabolite in dic, but it's located in the other specie
+                        console.log(metabolite)
+
                     if metaboliteDict[metabolite].compartment not in compartments
                         compartments.push(metaboliteDict[metabolite].compartment)
 
@@ -120,23 +128,23 @@ module.exports =
                 for cpt in compartments
                     if cpt isnt 'e'
                         # Create an empty parsedData[cpt] object if required
-                        if not @parsedData[cpt]?
-                            @parsedData[cpt] = new Object()
-                            @parsedData[cpt].metabolites = new Array()
-                            @parsedData[cpt].reactions = new Array()
+                        if not system.parsedData[cpt]?
+                            system.parsedData[cpt] = new Object()
+                            system.parsedData[cpt].metabolites = new Array()
+                            system.parsedData[cpt].reactions = new Array()
 
                             pushedMetabolites[cpt] = new Array()
                             pushedReactions[cpt] = new Array()
 
                         # Add reaction if not already there
                         if reaction.id not in pushedReactions[cpt]
-                            @parsedData[cpt].reactions.push(reaction)
+                            system.parsedData[cpt].reactions.push(reaction)
                             pushedReactions[cpt].push(reaction.id)
 
                         # Add metabolites if not already there
                         for metabolite of reaction.metabolites
                             if metabolite not in pushedMetabolites[cpt]
-                                @parsedData[cpt].metabolites.push(metaboliteDict[metabolite])
+                                system.parsedData[cpt].metabolites.push(metaboliteDict[metabolite])
                                 pushedMetabolites[cpt].push(metabolite)
 
         compartmentor: (system)->

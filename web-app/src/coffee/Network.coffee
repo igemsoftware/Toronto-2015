@@ -15,6 +15,7 @@ class Network
         # Will recursively create children
 
     changeSpecie: (model) ->
+        console.log(model)
         @attr.sortables.index = -1
         systemAttr =
             data : model
@@ -27,8 +28,7 @@ class Network
         @root = new TreeNode('root', new System(systemAttr))
         @root.system.initializeForce()
 
-        # console.log(@root)
-        console.log(@root.system.graph.vertexCount())
+        console.log(@root)
 
         # Start the visualization
         if @initalized

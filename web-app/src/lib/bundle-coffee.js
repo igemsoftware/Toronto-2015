@@ -137,7 +137,8 @@ module.exports = Link;
 },{}],4:[function(require,module,exports){
 var Metabolite, Node,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
+  hasProp = {}.hasOwnProperty,
+  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Node = require("./Node");
 
@@ -148,7 +149,11 @@ Metabolite = (function(superClass) {
     this.ctx = ctx;
     Metabolite.__super__.constructor.call(this, attr, this.ctx);
     this.specie = attr.specie;
-    this.compartment = this.id.split('_')[this.id.split('_').length - 1];
+    if (indexOf.call(this.id, "_") >= 0) {
+      this.compartment = this.id.split('_')[this.id.split('_').length - 1];
+    } else {
+      this.compartment = this.id.split('-')[this.id.split('-').length - 1];
+    }
   }
 
   Metabolite.prototype.draw = function() {
@@ -192,6 +197,7 @@ Network = (function() {
 
   Network.prototype.changeSpecie = function(model) {
     var systemAttr;
+    console.log(model);
     this.attr.sortables.index = -1;
     systemAttr = {
       data: model,
@@ -204,7 +210,7 @@ Network = (function() {
     };
     this.root = new TreeNode('root', new System(systemAttr));
     this.root.system.initializeForce();
-    console.log(this.root.system.graph.vertexCount());
+    console.log(this.root);
     if (this.initalized) {
       this.viewController.setActiveGraph(this.root.system);
     } else {
@@ -404,10 +410,8 @@ System = (function() {
     creators.createCompartment = creators.createCompartment.bind(this);
     creators.createLink = creators.createLink.bind(this);
     ref = this.buildMetabolitesAndReactions(this.data.metabolites, this.data.reactions), this.metabolites = ref[0], this.reactions = ref[1];
-    sortors[this.type].compartmentor = sortors[this.type].compartmentor.bind(this);
-    sortors[this.type].sortor = sortors[this.type].sortor.bind(this);
     this.parsedData = new Object();
-    (sortors[this.type].parser.bind(this))();
+    sortors[this.type].parser(this);
     this.fullResGraph = new Graph();
     this.graph = new Graph();
     this.nodes = new Array();
@@ -444,10 +448,16 @@ System = (function() {
         if (reaction.metabolites[metaboliteId] > 0) {
           source = reaction.id;
           target = metaboliteId;
+          if ((reactions[source] == null) || (metabolites[target] == null)) {
+            continue;
+          }
           r.addLink(creators.createLink(reactions[source], metabolites[target], reaction.name, this.thicknesScale(reaction.flux_value)));
         } else if (reaction.metabolites[metaboliteId] < 0) {
           source = metaboliteId;
           target = reaction.id;
+          if ((reactions[target] == null) || (metabolites[source] == null)) {
+            continue;
+          }
           r.addLink(creators.createLink(metabolites[source], reactions[target], reaction.name, this.thicknesScale(reaction.flux_value)));
         }
       }
@@ -661,13 +671,17 @@ System = require('./System');
 
 TreeNode = (function() {
   function TreeNode(id, system) {
-    var child, systemAttr;
+    var child, currentIndex, systemAttr;
     this.id = id;
     this.system = system;
     this.parent = null;
     this.children = new Object();
+    console.log("Number of children to look at ", Object.keys(this.system.parsedData));
+    currentIndex = this.system.sortables.index;
     for (child in this.system.parsedData) {
-      if (this.system.sortables.index < this.system.sortables.identifiers.length - 1) {
+      console.log("Contemplating " + child + " at " + this.system.sortables.identifiers[currentIndex] + " level");
+      if (currentIndex < this.system.sortables.identifiers.length - 1 && child !== "e" && child !== "Community") {
+        this.system.sortables.index = currentIndex;
         systemAttr = {
           data: this.system.parsedData[child],
           width: this.system.width,
@@ -677,6 +691,7 @@ TreeNode = (function() {
           sortables: this.system.sortables,
           ctx: this.system.ctx
         };
+        console.log("Making " + child);
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
       }
@@ -940,6 +955,8 @@ ViewController = (function() {
     } else if (node.type === 'Compartment' && (this.network.currentLevel.children[node.id] != null)) {
       htmlText += node.name + "<br>";
       htmlText += "<button id='enter'>Enter Node</button><br>";
+    } else if (node.type === 'Compartment') {
+      htmlText += node.name + "<br>";
     }
     if (this.network.root.system !== this.activeGraph) {
       htmlText += "<button id='network'>Return to Previous level</button><br>";
@@ -1331,16 +1348,16 @@ creators = require('./creators');
 
 module.exports = {
   species: {
-    parser: function() {
+    parser: function(system) {
       var i, j, len, len1, metabolite, metaboliteDict, pushedMetabolites, reaction, ref, ref1, results, specie;
       metaboliteDict = new Object();
-      ref = this.data.metabolites;
+      ref = system.data.metabolites;
       for (i = 0, len = ref.length; i < len; i++) {
         metabolite = ref[i];
         metaboliteDict[metabolite.id] = metabolite;
       }
       pushedMetabolites = new Array();
-      ref1 = this.data.reactions;
+      ref1 = system.data.reactions;
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         reaction = ref1[j];
@@ -1350,28 +1367,28 @@ module.exports = {
           results1 = [];
           for (k = 0, len2 = ref2.length; k < len2; k++) {
             specie = ref2[k];
-            if (this.parsedData[specie] == null) {
-              this.parsedData[specie] = new Object();
-              this.parsedData[specie].metabolites = new Array();
-              this.parsedData[specie].reactions = new Array();
+            if (system.parsedData[specie] == null) {
+              system.parsedData[specie] = new Object();
+              system.parsedData[specie].metabolites = new Array();
+              system.parsedData[specie].reactions = new Array();
             }
-            this.parsedData[specie].reactions.push(reaction);
+            system.parsedData[specie].reactions.push(reaction);
             results1.push((function() {
               var results2;
               results2 = [];
               for (metabolite in reaction.metabolites) {
                 if (indexOf.call(pushedMetabolites, metabolite) < 0) {
                   pushedMetabolites.push(metabolite);
-                  results2.push(this.parsedData[specie].metabolites.push(metaboliteDict[metabolite]));
+                  results2.push(system.parsedData[specie].metabolites.push(metaboliteDict[metabolite]));
                 } else {
                   results2.push(void 0);
                 }
               }
               return results2;
-            }).call(this));
+            })());
           }
           return results1;
-        }).call(this));
+        })());
       }
       return results;
     },
@@ -1384,7 +1401,7 @@ module.exports = {
         ref1 = metabolite.species;
         for (j = 0, len1 = ref1.length; j < len1; j++) {
           specie = ref1[j];
-          if (indexOf.call(species, specie) < 0) {
+          if (!(indexOf.call(species, specie) >= 0)) {
             species.push(specie);
           }
         }
@@ -1493,22 +1510,28 @@ module.exports = {
     }
   },
   compartments: {
-    parser: function() {
+    parser: function(system) {
       var compartments, cpt, i, j, len, len1, metabolite, metaboliteDict, pushedMetabolites, pushedReactions, reaction, ref, ref1, ref2, results;
       metaboliteDict = new Object();
-      ref = this.data.metabolites;
+      ref = system.data.metabolites;
       for (i = 0, len = ref.length; i < len; i++) {
         metabolite = ref[i];
+        if (metabolite.id === "Ecoli-K12-MG1655-M2051-c") {
+          console.log(system);
+        }
         metaboliteDict[metabolite.id] = metabolite;
       }
       pushedMetabolites = new Object();
       pushedReactions = new Object();
-      ref1 = this.data.reactions;
+      ref1 = system.data.reactions;
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         reaction = ref1[j];
         compartments = new Array();
         for (metabolite in reaction.metabolites) {
+          if (metaboliteDict[metabolite] == null) {
+            console.log(metabolite);
+          }
           if (ref2 = metaboliteDict[metabolite].compartment, indexOf.call(compartments, ref2) < 0) {
             compartments.push(metaboliteDict[metabolite].compartment);
           }
@@ -1519,15 +1542,15 @@ module.exports = {
           for (k = 0, len2 = compartments.length; k < len2; k++) {
             cpt = compartments[k];
             if (cpt !== 'e') {
-              if (this.parsedData[cpt] == null) {
-                this.parsedData[cpt] = new Object();
-                this.parsedData[cpt].metabolites = new Array();
-                this.parsedData[cpt].reactions = new Array();
+              if (system.parsedData[cpt] == null) {
+                system.parsedData[cpt] = new Object();
+                system.parsedData[cpt].metabolites = new Array();
+                system.parsedData[cpt].reactions = new Array();
                 pushedMetabolites[cpt] = new Array();
                 pushedReactions[cpt] = new Array();
               }
               if (ref3 = reaction.id, indexOf.call(pushedReactions[cpt], ref3) < 0) {
-                this.parsedData[cpt].reactions.push(reaction);
+                system.parsedData[cpt].reactions.push(reaction);
                 pushedReactions[cpt].push(reaction.id);
               }
               results1.push((function() {
@@ -1535,20 +1558,20 @@ module.exports = {
                 results2 = [];
                 for (metabolite in reaction.metabolites) {
                   if (indexOf.call(pushedMetabolites[cpt], metabolite) < 0) {
-                    this.parsedData[cpt].metabolites.push(metaboliteDict[metabolite]);
+                    system.parsedData[cpt].metabolites.push(metaboliteDict[metabolite]);
                     results2.push(pushedMetabolites[cpt].push(metabolite));
                   } else {
                     results2.push(void 0);
                   }
                 }
                 return results2;
-              }).call(this));
+              })());
             } else {
               results1.push(void 0);
             }
           }
           return results1;
-        }).call(this));
+        })());
       }
       return results;
     },
@@ -1681,20 +1704,17 @@ rand = function(range) {
 };
 
 scaleRadius = function(model, minRadius, maxRadius) {
-  var fluxes, largest, minimum, reaction, threshold;
+  var fluxes, j, largest, len, minimum, reaction, ref, threshold;
   largest = 1;
   threshold = 40;
   fluxes = [];
-  fluxes = (function() {
-    var j, len, ref, results;
-    ref = model.reactions;
-    results = [];
-    for (j = 0, len = ref.length; j < len; j++) {
-      reaction = ref[j];
-      results.push(reaction.flux_value);
+  ref = model.reactions;
+  for (j = 0, len = ref.length; j < len; j++) {
+    reaction = ref[j];
+    if (reaction.flux != null) {
+      fluxes.push(reaction.flux);
     }
-    return results;
-  })();
+  }
   largest = Math.max.apply(Math, fluxes);
   minimum = Math.min.apply(Math, fluxes);
   return d3.scale.linear().domain([0, largest]).range([minRadius, maxRadius]);

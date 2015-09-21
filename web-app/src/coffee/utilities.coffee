@@ -7,7 +7,9 @@ scaleRadius = (model, minRadius, maxRadius) ->
 
     threshold = 40
     fluxes = []
-    fluxes = (reaction.flux_value for reaction in model.reactions)
+    for reaction in model.reactions
+        if reaction.flux?
+            fluxes.push(reaction.flux)
 
 
     largest = Math.max.apply(Math, fluxes)

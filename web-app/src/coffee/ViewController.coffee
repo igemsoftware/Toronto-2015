@@ -236,6 +236,8 @@ class ViewController
         else if node.type is 'Compartment' and @network.currentLevel.children[node.id]?
             htmlText += ("#{node.name}<br>")
             htmlText += ("<button id='enter'>Enter Node</button><br>")
+        else if node.type is 'Compartment'
+            htmlText += ("#{node.name}<br>")
 
         if @network.root.system isnt @activeGraph
             htmlText += ("<button id='network'>Return to Previous level</button><br>")
