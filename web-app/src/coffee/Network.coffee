@@ -35,7 +35,7 @@ class Network
             @viewController.startCanvas(@root.system)
 
         @currentLevel = @root
-
+        
         @species = new Object()
         for specie of @root.system.parsedData
             if specie isnt "Community"
@@ -43,7 +43,6 @@ class Network
                     addedReactions : new Array()
                     deletedReactions: new Array()
                 }
-        console.log(@species)
     enterSpecie: (node) ->
         #find node
         @currentLevel = @currentLevel.children[node.id]
@@ -62,7 +61,7 @@ class Network
                     @species[specie].deletedReactions.push(node)
                     system.graph.destroyVertex(node.id)
                     node.deleted = true
-        
+
 
 
 
