@@ -118,6 +118,7 @@ FluxCtrl.prototype.addSpecie = function() {
 
 FluxCtrl.prototype.optimize = function() {
     this.receiver = function(res) {
+        this.ConsortiaFluxTool.attr.everything = false //sets the default to false
         this.ConsortiaFluxTool.changeSpecie(res.data);
     };
 

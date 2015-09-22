@@ -188,10 +188,10 @@ class ViewController
 
         factor = zoom
         pt = @transformedPoint(@lastX, @lastY)
-        if @xform.a <= @maxZoomIn and factor <= 1
-            return
-        else if @xform.a >= @maxZoomOut and factor >= 1
-            return
+        # if @xform.a <= @maxZoomIn and factor <= 1
+        #     return
+        # else if @xform.a >= @maxZoomOut and factor >= 1
+        #     return
 
 
             #or @xform.a >= 7.5
@@ -211,7 +211,7 @@ class ViewController
 
     tick: () ->
         if @currentActiveNode? and @isDraggingNode
-            tPt = @canvas.transformedPoint(@clientX, @clientY)
+            tPt = @transformedPoint(@clientX, @clientY)
             @currentActiveNode.x = tPt.x
             @currentActiveNode.y = tPt.y
 
@@ -229,7 +229,7 @@ class ViewController
             substrates = (substrate.name for substrate in node.inNeighbours)
             products = (product.name for product in node.outNeighbours)
             htmlText+= ("#{substrates} --- (#{node.name}) ---> #{products}<br>")
-            htmlText+= ("Flux: #{node.flux_value}")
+            htmlText+= ("Flux: #{node.flux_value}<br>")
             htmlText+= ("<button id='delete'>Delete Reaction</button><br>")
         else if node.type is 'm'
             htmlText+= ("#{node.name}<br>")
@@ -258,28 +258,6 @@ class ViewController
         @populateOptions(@activeGraph.nodes)
         @activeGraph.force.stop()
         @activeGraph = system
-        # if not system.force?
-        #
-        #     system.initalizeForce()
-        #
-
-        # @activeGraph = graph
-        # #reset Matrix
-        # @xform = @svg.createSVGMatrix()
-        # scale = 0.25 #zoomed out 4x for reset
-        #
-        # if @network is @activeGraph
-        #     @ctx.setTransform(1,0,0,1,0,0)
-        # else
-        #     @ctx.setTransform(scale,0,0,scale,0,0)
-        #     @xform.a = scale
-        #     @xform.d = scale
-        #     # @xform.translate(-@c.width/2, -@c.height/2)
-        #     # @ctx.translate(-@c.width/2, -@c.height/2)
-        # @populateOptions(@activeGraph.nodes)
-        #
-        # #we can check later if the force is not null so we dont re-initalize
-
         @activeGraph.force.on("tick", @tick.bind(this)).start()
         @activeGraph.force.resume()
 

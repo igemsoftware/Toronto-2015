@@ -894,11 +894,6 @@ ViewController = (function() {
     }
     factor = zoom;
     pt = this.transformedPoint(this.lastX, this.lastY);
-    if (this.xform.a <= this.maxZoomIn && factor <= 1) {
-      return;
-    } else if (this.xform.a >= this.maxZoomOut && factor >= 1) {
-      return;
-    }
     this.ctx.translate(pt.x, pt.y);
     this.xform = this.xform.translate(pt.x, pt.y);
     this.ctx.scale(factor, factor);
@@ -910,7 +905,7 @@ ViewController = (function() {
   ViewController.prototype.tick = function() {
     var tPt;
     if ((this.currentActiveNode != null) && this.isDraggingNode) {
-      tPt = this.canvas.transformedPoint(this.clientX, this.clientY);
+      tPt = this.transformedPoint(this.clientX, this.clientY);
       this.currentActiveNode.x = tPt.x;
       return this.currentActiveNode.y = tPt.y;
     }
@@ -947,7 +942,7 @@ ViewController = (function() {
         return results;
       })();
       htmlText += substrates + " --- (" + node.name + ") ---> " + products + "<br>";
-      htmlText += "Flux: " + node.flux_value;
+      htmlText += "Flux: " + node.flux_value + "<br>";
       htmlText += "<button id='delete'>Delete Reaction</button><br>";
     } else if (node.type === 'm') {
       htmlText += node.name + "<br>";
