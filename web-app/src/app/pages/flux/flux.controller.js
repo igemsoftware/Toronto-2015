@@ -29,11 +29,10 @@ FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
 FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
         // console.log(data);
-        if(this.ConsortiaFluxTool !== undefined){
+        if (this.ConsortiaFluxTool !== undefined) {
             this.ConsortiaFluxTool.attr.everything = true
             this.ConsortiaFluxTool.changeSpecie(res.data);
-        }
-        else{
+        } else {
             res.data.everything = true
             this.startConsortiaFlux(res.data);
         }
@@ -87,11 +86,10 @@ FluxCtrl.prototype.addSpecie = function() {
         if (this.currentModel === 'community') {
             this.receiver = function(res) {
 
-                if(this.ConsortiaFluxTool !== undefined){
+                if (this.ConsortiaFluxTool !== undefined) {
                     this.ConsortiaFluxTool.attr.everything = true;
                     this.ConsortiaFluxTool.changeSpecie(res.data);
-                }
-                else {
+                } else {
                     this.startConsortiaFlux(res.data);
                 }
             };
@@ -131,5 +129,18 @@ FluxCtrl.prototype.optimize = function() {
 };
 
 FluxCtrl.prototype.addReaction = function() {
-    
+    this.onModal = function(modal) {
+        modal.close.then(this.onModalClose.bind(this));
+    };
+
+    this.onModalClose = function(result) {
+        alert(result);
+    };
+    this.ModalService.showModal({
+        templateUrl: "app/modals/addreaction/addreaction.html",
+        controller: "AddReactionModal",
+        inputs: {
+            ConsortiaFluxTool: this.ConsortiaFluxTool
+        }
+    }).then(this.onModal.bind(this));
 }

@@ -196,7 +196,7 @@ Network = (function() {
   }
 
   Network.prototype.changeSpecie = function(model) {
-    var specie, systemAttr;
+    var results, specie, systemAttr;
     this.attr.sortables.index = -1;
     systemAttr = {
       data: model,
@@ -216,15 +216,18 @@ Network = (function() {
     }
     this.currentLevel = this.root;
     this.species = new Object();
+    results = [];
     for (specie in this.root.system.parsedData) {
       if (specie !== "Community") {
-        this.species[specie] = {
+        results.push(this.species[specie] = {
           addedReactions: new Array(),
           deletedReactions: new Array()
-        };
+        });
+      } else {
+        results.push(void 0);
       }
     }
-    return console.log(this.species);
+    return results;
   };
 
   Network.prototype.enterSpecie = function(node) {

@@ -1,0 +1,35 @@
+<div ng-show="display" class="mymodal">
+    <h1>Add Reaction</h1>
+
+
+
+    name: <input ng-model="name"></input><br>
+    id:  <input ng-model="id"></input><br>
+    Subsystem: <input ng-model="subsystem"></input><br>
+    EC Number: <input ng-model="EC_Number"></input> <br>
+    Upper bound: <input ng-model="upper_bound"></input><br>
+    Lower bound: <input ng-model="lower_bound"></input><br>
+    Objective Coefficient <input ng-model="objective_coefficient"></input><br>
+    Metabolites:
+    <select ng-model="metabolites">
+      <option ng-repeat="metabolite in metabolites track by $index" value="{{metabolite.id}}">{{metabolite.name}}</option>
+    </select>
+    Metabolite coefficient: <input ng-model="metabolite_cofficient"></input><br>
+    <br>
+    Reversible: <select ng-model="reversible">
+                    <option value="true">true</option>
+                    <option value="false" selected="selected">false</option>
+                </select>
+                <br>
+    Outside: <input ng-model="outside"></input> <br>
+    Species: <select ng-model="species">
+      <option ng-repeat="specie in species track by $index" value="{{specie}}">{{specie}}</option>
+    </select>
+    <br>
+    <!-- Work with registry -->
+    Gene Aassociation: <input ng-model="gene_association"></input><br>
+
+    <a class="closeButton right" href ng-click="close()">Close</a>
+</div>
+
+<div class="fade" ng-show="display"></div>
