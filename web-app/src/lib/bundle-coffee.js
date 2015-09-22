@@ -243,6 +243,7 @@ Network = (function() {
   };
 
   Network.prototype.addReaction = function(reactionObject) {
+    console.log(reactionObject);
     this.species[reactionObject.species[0]].addedReactions.push(reactionObject);
     return this.viewController.activeGraph.addReaction(reactionObject);
   };
@@ -915,7 +916,6 @@ ViewController = (function() {
       'left': e.clientX,
       'top': e.clientY
     });
-    console.log(node);
     that = this;
     htmlText = "";
     if (node.type === 'r') {
@@ -1548,7 +1548,6 @@ module.exports = {
       results = [];
       for (metabolite in system.metabolites) {
         m = system.metabolites[metabolite];
-        console.log(m);
         if (!system.graph.hasVertex(m[sorter])) {
           results.push(system.graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]])));
         } else {

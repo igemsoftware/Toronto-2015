@@ -150,9 +150,9 @@ FluxCtrl.prototype.optimize = function() {
             console.log(err);
         };
 
-        var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
+        this.requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
 
-        this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+        this._http.get(this.requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
     }
 };
 

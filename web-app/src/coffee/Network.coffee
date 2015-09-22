@@ -53,6 +53,7 @@ class Network
         @viewController.setActiveGraph(@currentLevel.system)
 
     addReaction: (reactionObject) ->
+        console.log(reactionObject)
         @species[reactionObject.species[0]].addedReactions.push(reactionObject)
         @viewController.activeGraph.addReaction(reactionObject)
 
