@@ -3,6 +3,7 @@ utilities = require './utilities'
 creators = require './creators'
 sortors = require './sortors'
 Link  = require './Link'
+Reaction = require './Reaction'
 
 
 
@@ -144,64 +145,44 @@ class System
         metabolite = new Metabolite(metaboliteAttr, @ctx)
         @added.metabolites[id] = name
 
-
-    #Adds a brand new reaction/link to the current RUNNING graph
-    #name and ID are optional if there is just a link
-    #Source/target is an object with name and id
-    createNewReactionOrLink: (source, target, id, name) ->
-        src = null
+    findNode: (id) ->
         for node in @nodes
-            if source.id is node.id and source.name is node.name
-                src = node
-            else if target.id is node.id and target.name is node.name
-                tgt = node
-        if not src? or not tgt?
-            alert("No self linking!")
-        else if src.type is "r" and tgt.type is "m" or src.type is "m" and tgt.type is "r"
-            linkAttr =
-                id : "#{src.id}-#{tgt.id}"
-                source : src
-                target : tgt
-                thickness : @thicknesScale(tgt.flux_value or tgt.flux_value)
-            @links.push(new Link(linkAttr, @ctx))
-        else if src.type is "m" and tgt.type is "m"
-            reactionAttributes =
-                x : utilities.rand(@width)
-                y : utilities.rand(@height)
-                r : 1
-                name : name
-                id : id
-                type : "r"
-                flux_value : flux
-                colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
-            reaction = new Reaction(reactionAttributes, @ctx)
-            @added.reactions[reactionAttributes.id] = name
-            @nodes.push(reaction)
-            linkAttr =
-                id : "#{source.id}-#{reaction.id}"
-                source : src
-                target : reaction
-                thickness : @thicknesScale(reaction.flux_value)
-                colourScale: @colourScale
+            if node.id is id
+                return node
+        return null
+    addReaction: (reactionObject) ->
+        reaction = new Reaction({
+            x : utilities.rand(@width)
+            y : utilities.rand(@height)
+            r : 5
+            name : reactionObject.name
+            id : reactionObject.id
+            type : "r"
+            flux_value : 0
+            colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
 
-            @links.push(new Link(linkAttr, @ctx))
-            linkAttr =
-                id : "#{reaction.id}-#{target.id}"
-                source : reaction
-                target : tgt
-                thickness : @thicknesScale(reaction.flux_value)
-                colourScale: @colourScale
-            @links.push(new Link(linkAttr, @ctx))
-        else
-            linkAttr =
-                id : "#{src.id}-#{tgt.id}"
-                source : src
-                target : tgt
-                thickness : @thicknesScale(src.flux_value or tgt.flux_value)
-                colourScale: @colourScale
-            @links.push(new Link(linkAttr, @ctx))
+        }, @ctx)
+        @nodes.push(reaction)
+        for metabolite of reactionObject.metabolites
+            if reactionObject.metabolites[metabolite] > 0
+                source = reaction
+                target = @findNode(metabolite)
+            else
+                source = @findNode(metabolite)
+                target = reaction
 
+            @links.push(new Link({
+                id : reaction.id
+                source : source
+                target : target
+                thickness : 1
+                flux_value : 0
+                colourScale: @colourScale
+            }, @ctx))
+            console.log(source)
+            console.log(target)
 
+        @force.start()
 
     # **buildSystem**
     # Applies `sortor` functions to construct @graph

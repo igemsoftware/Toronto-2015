@@ -134,7 +134,7 @@ FluxCtrl.prototype.addReaction = function() {
     };
 
     this.onModalClose = function(result) {
-        alert(result);
+        this.ConsortiaFluxTool.addReaction(result);
     };
     this.ModalService.showModal({
         templateUrl: "app/modals/addreaction/addreaction.html",

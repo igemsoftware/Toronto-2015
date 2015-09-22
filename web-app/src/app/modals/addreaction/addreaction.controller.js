@@ -4,6 +4,7 @@
 angular.module('ConsortiaFlux')
 
 .controller('AddReactionModal', ['$scope', '$http', 'UrlProvider', 'ConsortiaFluxTool', 'close',
+
     function($scope, $http, UrlProvider, ConsortiaFluxTool, close) {
         $scope.display = true;
         var metabolites = new Array()
@@ -23,14 +24,16 @@ angular.module('ConsortiaFlux')
         $scope.outside = "null"
         $scope.species = species
 
+        $scope.addMetabolite = function(){
+
+        }
 
         $scope.close = function(result) {
             $scope.display = false;
             // if(typeof($scope.upper_bound) !== 'number' ||
             //     typeof($scope.objective_coefficient) !== 'number' ||
             //assumes one metabolite atm
-
-            metabolite = new Object()
+            //TODO LOW PRIORITY make check for specie for metabolite voided for e
 
             var reaction = {
                 "EC_Number": $scope.EC_Number || "",
@@ -45,11 +48,12 @@ angular.module('ConsortiaFlux')
                 "name": $scope.name,
                 "species": [
                     $scope.species
-                ]
+                ],
+                "metabolites": {}
             }
-            reaction.metabolites[$scope.metabolites] = $scope.metabolite_cofficient
-            console.log(reaction)
-            close($scope.foo);
+            reaction.metabolites[$scope.myMetab.id] = $scope.metabolite_cofficient
+
+            close(reaction);
         };
 
         var ReactionSchema = {
@@ -71,4 +75,5 @@ angular.module('ConsortiaFlux')
             "name": "Sink needed to allow p-Cresol to leave system",
         }
     }
+
 ]);
