@@ -3704,10 +3704,4 @@ R3704	H+ exchange
 R3705	K+ exchange
 R3706	Mn2+ exchange
 R3707	Ni2+ exchange
-R3708	Mn+2 exchange
-R3709	Fe+2 exchange
-R3710	Co2+ transport via diffusionR3710	Co2+ exchange
-R3711	Sulfite  transport via diffusionR3711	Co2+ exchange
-R3712	Co2+ transport via diffusion
-R3712	Co2+ exchange
-R3713	Sulfite  transport via diffusion
+R3707	Co2+ exchange

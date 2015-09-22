@@ -2042,12 +2042,11 @@ M2041	D-Proline[p]
 M2042	D-Proline[e]
 M2043	Sulfoquinovosyldiacylglycerol
 M2044	Sulfite[p]
-M2045	Sulfite[e]M2046	Co2+
+M2045	Sulfite[e]
+M2046	Co2+
 M2047	Cu2+
 M2048	Deamino-NAD+
 M2049	Fe2+
 M2050	Fe3+
 M2051	H+
 M2052	Mn2+
-M2052	Co2+
-M2053	Sulfite[e]
