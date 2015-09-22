@@ -240,6 +240,11 @@ Network = (function() {
     return this.viewController.setActiveGraph(this.currentLevel.system);
   };
 
+  Network.prototype.addReaction = function(reactionObject) {
+    this.species[reactionObject.species[0]].addedReactions.push(reactionObject);
+    return this.viewController.activeGraph.addReaction(reactionObject);
+  };
+
   Network.prototype.deleteNode = function(id, system) {
     var i, len, node, ref, results, specie;
     ref = system.nodes;
@@ -384,7 +389,7 @@ module.exports = Reaction;
 
 
 },{"./Node":6,"./utilities":16}],8:[function(require,module,exports){
-var Compartment, Link, System, creators, sortors, utilities;
+var Compartment, Link, Reaction, System, creators, sortors, utilities;
 
 Compartment = require('./Compartment');
 
@@ -395,6 +400,8 @@ creators = require('./creators');
 sortors = require('./sortors');
 
 Link = require('./Link');
+
+Reaction = require('./Reaction');
 
 System = (function() {
   function System(attr) {
@@ -487,68 +494,51 @@ System = (function() {
     return this.added.metabolites[id] = name;
   };
 
-  System.prototype.createNewReactionOrLink = function(source, target, id, name) {
-    var j, len, linkAttr, node, reaction, reactionAttributes, ref, src, tgt;
-    src = null;
+  System.prototype.findNode = function(id) {
+    var j, len, node, ref;
     ref = this.nodes;
     for (j = 0, len = ref.length; j < len; j++) {
       node = ref[j];
-      if (source.id === node.id && source.name === node.name) {
-        src = node;
-      } else if (target.id === node.id && target.name === node.name) {
-        tgt = node;
+      if (node.id === id) {
+        return node;
       }
     }
-    if ((src == null) || (tgt == null)) {
-      return alert("No self linking!");
-    } else if (src.type === "r" && tgt.type === "m" || src.type === "m" && tgt.type === "r") {
-      linkAttr = {
-        id: src.id + "-" + tgt.id,
-        source: src,
-        target: tgt,
-        thickness: this.thicknesScale(tgt.flux_value || tgt.flux_value)
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
-    } else if (src.type === "m" && tgt.type === "m") {
-      reactionAttributes = {
-        x: utilities.rand(this.width),
-        y: utilities.rand(this.height),
-        r: 1,
-        name: name,
-        id: id,
-        type: "r",
-        flux_value: flux,
-        colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
-      };
-      reaction = new Reaction(reactionAttributes, this.ctx);
-      this.added.reactions[reactionAttributes.id] = name;
-      this.nodes.push(reaction);
-      linkAttr = {
-        id: source.id + "-" + reaction.id,
-        source: src,
-        target: reaction,
-        thickness: this.thicknesScale(reaction.flux_value),
+    return null;
+  };
+
+  System.prototype.addReaction = function(reactionObject) {
+    var link, metabolite, reaction, source, target;
+    reaction = new Reaction({
+      x: utilities.rand(this.width),
+      y: utilities.rand(this.height),
+      r: 5,
+      name: reactionObject.name,
+      id: reactionObject.id,
+      type: "r",
+      flux_value: 0,
+      colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
+    }, this.ctx);
+    this.nodes.push(reaction);
+    for (metabolite in reactionObject.metabolites) {
+      if (reactionObject.metabolites[metabolite] > 0) {
+        source = reaction;
+        target = this.findNode(metabolite);
+      } else {
+        source = this.findNode(metabolite);
+        target = reaction;
+      }
+      link = new Link({
+        id: reaction.id,
+        source: source,
+        target: target,
+        thickness: 5,
+        flux_value: 0,
         colourScale: this.colourScale
-      };
-      this.links.push(new Link(linkAttr, this.ctx));
-      linkAttr = {
-        id: reaction.id + "-" + target.id,
-        source: reaction,
-        target: tgt,
-        thickness: this.thicknesScale(reaction.flux_value),
-        colourScale: this.colourScale
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
-    } else {
-      linkAttr = {
-        id: src.id + "-" + tgt.id,
-        source: src,
-        target: tgt,
-        thickness: this.thicknesScale(src.flux_value || tgt.flux_value),
-        colourScale: this.colourScale
-      };
-      return this.links.push(new Link(linkAttr, this.ctx));
+      }, this.ctx);
+      link.colour = "black";
+      this.links.push(link);
     }
+    return this.force.start();
   };
 
   System.prototype.buildSystem = function() {
@@ -672,7 +662,7 @@ System = (function() {
 module.exports = System;
 
 
-},{"./Compartment":1,"./Link":3,"./creators":12,"./sortors":15,"./utilities":16}],9:[function(require,module,exports){
+},{"./Compartment":1,"./Link":3,"./Reaction":7,"./creators":12,"./sortors":15,"./utilities":16}],9:[function(require,module,exports){
 var System, TreeNode;
 
 System = require('./System');
@@ -1235,26 +1225,6 @@ module.exports = {
       };
       return new Link(linkAttr, this.ctx);
     }
-  },
-  createLeaf: function(graph) {
-    var inNeighbour, outNeighbour, reactionNode, results;
-    results = [];
-    for (inNeighbour in graph.inNeighbours) {
-      results.push((function() {
-        var results1;
-        results1 = [];
-        for (outNeighbour in graph.outNeighbours) {
-          if (inNeighbour !== outNeighbour) {
-            reactionNode = this.createReactionNode(graph.value);
-            results1.push(this.createLinks(inNeighbour, reactionNode, outNeighbour));
-          } else {
-            results1.push(void 0);
-          }
-        }
-        return results1;
-      }).call(this));
-    }
-    return results;
   }
 };
 

@@ -67,33 +67,3 @@ module.exports =
                 thickness : thickness
                 colourScale: @colourScale
             return new Link(linkAttr, @ctx)
-
-    # System injected
-    # createLinks: (s1, reactionNode, s2) ->
-    #     # console.log(reactionNode.flux_value)
-    #     source = @compartments[s1]
-    #     target = reactionNode
-    #     link =
-    #         id : "#{source.name}-#{target.name}"
-    #         source : source
-    #         target : target
-    #         r : @metaboliteRadius
-    #         linkScale : utilities.scaleRadius(null, 1, 5)
-    #     @links.push(new Link(link, @ctx))
-    #     source = reactionNode
-    #     target = @compartments[s2]
-    #     link =
-    #         id : "#{source.name}-#{target.name}"
-    #         source : source
-    #         target : target
-    #         r : @metaboliteRadius
-    #         linkScale : utilities.scaleRadius(null, 1, 5)
-    #     @links.push(new Link(link, @ctx))
-
-    # System injected
-    createLeaf: (graph) ->
-        for inNeighbour of graph.inNeighbours
-            for outNeighbour of graph.outNeighbours
-                if inNeighbour isnt outNeighbour
-                    reactionNode = @createReactionNode(graph.value)
-                    @createLinks(inNeighbour, reactionNode, outNeighbour)

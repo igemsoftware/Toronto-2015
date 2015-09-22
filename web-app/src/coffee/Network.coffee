@@ -35,7 +35,7 @@ class Network
             @viewController.startCanvas(@root.system)
 
         @currentLevel = @root
-        
+
         @species = new Object()
         for specie of @root.system.parsedData
             if specie isnt "Community"
@@ -52,6 +52,10 @@ class Network
     exitSpecie: (node) ->
         @currentLevel = @currentLevel.parent
         @viewController.setActiveGraph(@currentLevel.system)
+
+    addReaction: (reactionObject) ->
+        @species[reactionObject.species[0]].addedReactions.push(reactionObject)
+        @viewController.activeGraph.addReaction(reactionObject)
 
     deleteNode: (id, system) ->
         #Making sure to destroy vertex IFF r or m type
