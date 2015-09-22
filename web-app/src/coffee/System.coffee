@@ -84,6 +84,7 @@ class System
 
             metabolites[metabolite.id] = m
 
+
         # Loop through each reaction in the metabolic model provided
         for reaction in reactionData
         # for reaction in @data.reactions

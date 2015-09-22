@@ -164,6 +164,9 @@ module.exports =
 
             for metabolite of system.metabolites
                 m = system.metabolites[metabolite]
+                console.log(m)
+                # if m["species"][0] is "Mb_iUPDATE"
+                #     console.log(m)
                 if not system.graph.hasVertex(m[sorter])
                     system.graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]]))
 

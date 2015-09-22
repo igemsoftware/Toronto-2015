@@ -148,8 +148,9 @@ Metabolite = (function(superClass) {
   function Metabolite(attr, ctx) {
     this.ctx = ctx;
     Metabolite.__super__.constructor.call(this, attr, this.ctx);
-    this.specie = attr.specie;
-    if (indexOf.call(this.id, "_") >= 0) {
+    if (indexOf.call(this.id, "_") >= 0 && indexOf.call(this.id, "-") >= 0) {
+      this.compartment = this.id.slice(this.id.lastIndexOf("-") + 1, this.id.length);
+    } else if (indexOf.call(this.id, "_") >= 0) {
       this.compartment = this.id.split('_')[this.id.split('_').length - 1];
     } else {
       this.compartment = this.id.split('-')[this.id.split('-').length - 1];
@@ -214,6 +215,7 @@ Network = (function() {
     } else {
       this.viewController.startCanvas(this.root.system);
     }
+    console.log(this.root);
     this.currentLevel = this.root;
     this.species = new Object();
     results = [];
@@ -913,6 +915,7 @@ ViewController = (function() {
       'left': e.clientX,
       'top': e.clientY
     });
+    console.log(node);
     that = this;
     htmlText = "";
     if (node.type === 'r') {
@@ -1545,6 +1548,7 @@ module.exports = {
       results = [];
       for (metabolite in system.metabolites) {
         m = system.metabolites[metabolite];
+        console.log(m);
         if (!system.graph.hasVertex(m[sorter])) {
           results.push(system.graph.addVertex(m[sorter], creators.createCompartment(m[sorter], mappings[m[sorter]])));
         } else {

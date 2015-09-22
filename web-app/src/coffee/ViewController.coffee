@@ -222,6 +222,7 @@ class ViewController
             'top': e.clientY
 
         })
+        console.log(node)
         that = this
         htmlText = ""
         if node.type is 'r'

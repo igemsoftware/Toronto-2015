@@ -4,8 +4,10 @@ class Metabolite extends Node
     constructor: (attr, @ctx) ->
         super(attr, @ctx)
 
-        @specie = attr.specie
-        if "_" in @id
+
+        if "_" in @id and "-" in @id
+            @compartment = @id.slice(@id.lastIndexOf("-") + 1, @id.length)
+        else if "_" in  @id
             @compartment = @id.split('_')[@id.split('_').length - 1]
         else
             @compartment = @id.split('-')[@id.split('-').length - 1]

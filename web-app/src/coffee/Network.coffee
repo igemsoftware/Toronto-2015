@@ -33,9 +33,8 @@ class Network
             @viewController.setActiveGraph(@root.system)
         else
             @viewController.startCanvas(@root.system)
-
+        console.log(@root)
         @currentLevel = @root
-
         @species = new Object()
         for specie of @root.system.parsedData
             if specie isnt "Community"
