@@ -507,7 +507,7 @@ System = (function() {
   };
 
   System.prototype.addReaction = function(reactionObject) {
-    var metabolite, reaction, source, target;
+    var link, metabolite, reaction, source, target;
     reaction = new Reaction({
       x: utilities.rand(this.width),
       y: utilities.rand(this.height),
@@ -527,16 +527,16 @@ System = (function() {
         source = this.findNode(metabolite);
         target = reaction;
       }
-      this.links.push(new Link({
+      link = new Link({
         id: reaction.id,
         source: source,
         target: target,
-        thickness: 1,
+        thickness: 5,
         flux_value: 0,
         colourScale: this.colourScale
-      }, this.ctx));
-      console.log(source);
-      console.log(target);
+      }, this.ctx);
+      link.colour = "black";
+      this.links.push(link);
     }
     return this.force.start();
   };

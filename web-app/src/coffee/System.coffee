@@ -170,18 +170,16 @@ class System
             else
                 source = @findNode(metabolite)
                 target = reaction
-
-            @links.push(new Link({
+            link = new Link({
                 id : reaction.id
                 source : source
                 target : target
-                thickness : 1
+                thickness : 5
                 flux_value : 0
                 colourScale: @colourScale
-            }, @ctx))
-            console.log(source)
-            console.log(target)
-
+            }, @ctx)
+            link.colour = "black"
+            @links.push(link)
         @force.start()
 
     # **buildSystem**
