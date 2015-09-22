@@ -24,24 +24,30 @@ function FluxCtrl($http, UrlProvider, ModalService) {
 
 FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
 
+
+//retrieve UNOPTIMIZED data
 FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
         // console.log(data);
         if(this.ConsortiaFluxTool !== undefined){
-
+            this.ConsortiaFluxTool = true
             this.ConsortiaFluxTool.changeSpecie(res.data);
         }
-        else
+        else{
+            res.data.everything = true
             this.startConsortiaFlux(res.data);
+        }
+
+
     };
 
     this.errorCatch = function(err) {
         console.log(err);
     };
 
-    var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
-
+    var requestUrl = this.UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel;
     this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+
 };
 
 FluxCtrl.prototype.startConsortiaFlux = function(data) {
@@ -59,7 +65,7 @@ FluxCtrl.prototype.startConsortiaFlux = function(data) {
         backgroundColour: 'white',
         metaboliteRadius: 10,
         useStatic: false,
-        everything: false,
+        everything: data.everything,
         hideObjective: true,
         data: data,
         sortables: sortables,
