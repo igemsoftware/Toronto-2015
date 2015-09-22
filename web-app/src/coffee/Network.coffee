@@ -35,21 +35,15 @@ class Network
             @viewController.startCanvas(@root.system)
 
         @currentLevel = @root
-        console.log(@root)
 
         @species = new Object()
         for specie of @root.system.parsedData
-            console.log(specie)
-        @deleted = {
-            reactions: new Array()
-            metabolites: new Array()
-        }
-        @added = {
-            reactions: new Object()
-            metabolites: new Object()
-            species: new Object()
-        }
-
+            if specie isnt "Community"
+                @species[specie] = {
+                    addedReactions : new Array()
+                    deletedReactions: new Array()
+                }
+        console.log(@species)
     enterSpecie: (node) ->
         #find node
         @currentLevel = @currentLevel.children[node.id]
@@ -64,14 +58,13 @@ class Network
         #Making sure to destroy vertex IFF r or m type
         for node in system.nodes
             if node.id is id
-                if node.type is "r"
-                    system.graph.destroyVertex(id)
-                    @deleted.reactions.push(id)
+                for specie in node.species
+                    @species[specie].deletedReactions.push(node)
+                    system.graph.destroyVertex(node.id)
                     node.deleted = true
-                else if node.type is "m"
-                    system.graph.destroyVertex(id)
-                    @deleted.metabolites.push(id)
-                    node.deleted = true
+        
+
+
 
 
 

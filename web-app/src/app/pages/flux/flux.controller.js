@@ -131,5 +131,5 @@ FluxCtrl.prototype.optimize = function() {
 };
 
 FluxCtrl.prototype.addReaction = function() {
-    alert('Adding a reaction to ' + this.currentModel);
+    
 }
