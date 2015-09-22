@@ -71,15 +71,6 @@ function createCommunity(req, res, next) {
                 community: community
             };
             next();
-            // community = new Community(community);
-            //
-            // community.save(function(err, community) {
-            //     req.ConsortiaFlux = {
-            //         community: community
-            //     };
-            //
-            //     next();
-            // });
         }
     };
 
@@ -94,11 +85,11 @@ function optimizeCommunity(req, res, next) {
         files.push(member.file);
     });
 
-    console.log(files);
+    var outputFile = App.config().staticStore + '/communities/' + req.ConsortiaFlux.community.name;
 
     params = {
         input: files,
-        output: req.ConsortiaFlux.community.name
+        output: outputFile
     };
 
     args = ['cFBA-Pipeline/run.py', JSON.stringify(params)];
@@ -124,14 +115,53 @@ function optimizeCommunity(req, res, next) {
     // script finished
     optimizeScript.on('close', function(code) {
         results.exitcode = code;
-        res.send(results);
+
+        req.ConsortiaFlux.community.model = outputFile + '.json';
+        req.ConsortiaFlux.community.solution = outputFile + '_solution.json';
+
+        fs.readFile(req.ConsortiaFlux.community.model, function(err, model) {
+            if (err) {
+                res.status(500).send('500 Internal Server Error');
+                return;
+            }
+
+            req.ConsortiaFlux.model = JSON.parse(model);
+            next();
+        });
+    });
+}
+
+function saveCommunityModel(req, res, next) {
+    model = new MetabolicModel(req.ConsortiaFlux.model);
+
+    model.save(function(err, model) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('500 Internal Server Error');
+            return;
+        }
+
+        if (model) {
+            community = new Community(req.ConsortiaFlux.community);
+
+            community.save(function(err, community) {
+                if (err) {
+                    res.status(500).send('500 Internal Server Error');
+                    return;
+                }
+
+                res.send(community);
+            });
+        }
     });
 }
 
 router.post('/', [
     checkIfCommunityExists,
     createCommunity,
-    optimizeCommunity
+    optimizeCommunity,
+    App.MW('prepareModel'),
+    saveCommunityModel
 ]);
 
 module.exports = router;

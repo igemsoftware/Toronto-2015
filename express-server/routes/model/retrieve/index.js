@@ -16,7 +16,6 @@ function findAll(req, res, next) {
 router.get('/', findAll);
 
 router.get('/:id', function(req,res, next) {
-    console.log('Retreiveing model');
 	MetabolicModel.findOne({id: req.params.id}, function(err, model) {
 		if (err) {
 			res.status(500).send('500 Internal Server Error\n');
