@@ -4,25 +4,32 @@ creators = require './creators'
 module.exports =
     species:
         parser:(system) ->
+            # Metabolite dictionary for quick-access later
             metaboliteDict = new Object()
             for metabolite in system.data.metabolites
                 metaboliteDict[metabolite.id] = metabolite
 
-            pushedMetabolites = new Array()
-            # Loop through BARE data
+            # Object to store pushed metabolites for each specie
+            pushedMetabolites = {}
+            # pushedMetabolites = new Array()
+
             for reaction in system.data.reactions
-                for specie in reaction.species
-                    if not system.parsedData[specie]?
-                        system.parsedData[specie] = new Object()
-                        system.parsedData[specie].metabolites = new Array()
-                        system.parsedData[specie].reactions = new Array()
+                # Reactions only ever have one specie
+                # TODO modify bare data to accomodate this
+                specie = reaction.species[0]
 
-                    system.parsedData[specie].reactions.push(reaction)
+                if not system.parsedData[specie]?
+                    system.parsedData[specie] = {}
+                    system.parsedData[specie].metabolites = []
+                    system.parsedData[specie].reactions = []
+                    pushedMetabolites[specie] = []
 
-                    for metabolite of reaction.metabolites
-                        if metabolite not in pushedMetabolites
-                            pushedMetabolites.push(metabolite)
-                            system.parsedData[specie].metabolites.push(metaboliteDict[metabolite])
+                system.parsedData[specie].reactions.push(reaction)
+
+                for metabolite of reaction.metabolites
+                    if metabolite not in pushedMetabolites[specie]
+                        pushedMetabolites[specie].push(metabolite)
+                        system.parsedData[specie].metabolites.push(metaboliteDict[metabolite])
 
         compartmentor: (system)->
             # mappings =

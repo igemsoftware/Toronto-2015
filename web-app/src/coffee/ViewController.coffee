@@ -1,4 +1,4 @@
-``# Canvas
+# Canvas
 class ViewController
     # **Constructor**
     constructor: (@wrapperId, @id, @width, @height, @BG, @network, @showStats) ->
@@ -229,6 +229,7 @@ class ViewController
             substrates = (substrate.name for substrate in node.inNeighbours)
             products = (product.name for product in node.outNeighbours)
             htmlText+= ("#{substrates} --- (#{node.name}) ---> #{products}<br>")
+            htmlText+= ("Flux: #{node.flux_value}")
             htmlText+= ("<button id='delete'>Delete Reaction</button><br>")
         else if node.type is 'm'
             htmlText+= ("#{node.name}<br>")

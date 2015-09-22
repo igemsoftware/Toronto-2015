@@ -706,7 +706,6 @@ module.exports = TreeNode;
 
 
 },{"./System":8}],10:[function(require,module,exports){
-;
 var ViewController;
 
 ViewController = (function() {
@@ -948,6 +947,7 @@ ViewController = (function() {
         return results;
       })();
       htmlText += substrates + " --- (" + node.name + ") ---> " + products + "<br>";
+      htmlText += "Flux: " + node.flux_value;
       htmlText += "<button id='delete'>Delete Reaction</button><br>";
     } else if (node.type === 'm') {
       htmlText += node.name + "<br>";
@@ -1356,36 +1356,29 @@ module.exports = {
         metabolite = ref[i];
         metaboliteDict[metabolite.id] = metabolite;
       }
-      pushedMetabolites = new Array();
+      pushedMetabolites = {};
       ref1 = system.data.reactions;
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         reaction = ref1[j];
+        specie = reaction.species[0];
+        if (system.parsedData[specie] == null) {
+          system.parsedData[specie] = {};
+          system.parsedData[specie].metabolites = [];
+          system.parsedData[specie].reactions = [];
+          pushedMetabolites[specie] = [];
+        }
+        system.parsedData[specie].reactions.push(reaction);
         results.push((function() {
-          var k, len2, ref2, results1;
-          ref2 = reaction.species;
+          var results1;
           results1 = [];
-          for (k = 0, len2 = ref2.length; k < len2; k++) {
-            specie = ref2[k];
-            if (system.parsedData[specie] == null) {
-              system.parsedData[specie] = new Object();
-              system.parsedData[specie].metabolites = new Array();
-              system.parsedData[specie].reactions = new Array();
+          for (metabolite in reaction.metabolites) {
+            if (indexOf.call(pushedMetabolites[specie], metabolite) < 0) {
+              pushedMetabolites[specie].push(metabolite);
+              results1.push(system.parsedData[specie].metabolites.push(metaboliteDict[metabolite]));
+            } else {
+              results1.push(void 0);
             }
-            system.parsedData[specie].reactions.push(reaction);
-            results1.push((function() {
-              var results2;
-              results2 = [];
-              for (metabolite in reaction.metabolites) {
-                if (indexOf.call(pushedMetabolites, metabolite) < 0) {
-                  pushedMetabolites.push(metabolite);
-                  results2.push(system.parsedData[specie].metabolites.push(metaboliteDict[metabolite]));
-                } else {
-                  results2.push(void 0);
-                }
-              }
-              return results2;
-            })());
           }
           return results1;
         })());
