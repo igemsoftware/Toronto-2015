@@ -30,7 +30,7 @@ FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
         // console.log(data);
         if(this.ConsortiaFluxTool !== undefined){
-            this.ConsortiaFluxTool = true
+            this.ConsortiaFluxTool.attr.everything = true
             this.ConsortiaFluxTool.changeSpecie(res.data);
         }
         else{
@@ -86,7 +86,6 @@ FluxCtrl.prototype.addSpecie = function() {
 
         if (this.currentModel === 'community') {
             this.receiver = function(res) {
-                console.log(res.data);
 
                 if(this.ConsortiaFluxTool !== undefined){
                     this.ConsortiaFluxTool.attr.everything = true;
@@ -130,3 +129,7 @@ FluxCtrl.prototype.optimize = function() {
 
     this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
 };
+
+FluxCtrl.prototype.addReaction = function() {
+    alert('Adding a reaction to ' + this.currentModel);
+}

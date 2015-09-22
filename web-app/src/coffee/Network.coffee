@@ -15,7 +15,6 @@ class Network
         # Will recursively create children
 
     changeSpecie: (model) ->
-        console.log(model)
         @attr.sortables.index = -1
         systemAttr =
             data : model
@@ -28,7 +27,6 @@ class Network
         @root = new TreeNode('root', new System(systemAttr))
         @root.system.initializeForce()
 
-        console.log(@root)
 
         # Start the visualization
         if @initalized
@@ -37,7 +35,11 @@ class Network
             @viewController.startCanvas(@root.system)
 
         @currentLevel = @root
-        # console.log(@root)
+        console.log(@root)
+
+        @species = new Object()
+        for specie of @root.system.parsedData
+            console.log(specie)
         @deleted = {
             reactions: new Array()
             metabolites: new Array()
@@ -70,7 +72,6 @@ class Network
                     system.graph.destroyVertex(id)
                     @deleted.metabolites.push(id)
                     node.deleted = true
-        console.log(@deleted)
 
 
 

@@ -196,8 +196,7 @@ Network = (function() {
   }
 
   Network.prototype.changeSpecie = function(model) {
-    var systemAttr;
-    console.log(model);
+    var specie, systemAttr;
     this.attr.sortables.index = -1;
     systemAttr = {
       data: model,
@@ -210,13 +209,17 @@ Network = (function() {
     };
     this.root = new TreeNode('root', new System(systemAttr));
     this.root.system.initializeForce();
-    console.log(this.root);
     if (this.initalized) {
       this.viewController.setActiveGraph(this.root.system);
     } else {
       this.viewController.startCanvas(this.root.system);
     }
     this.currentLevel = this.root;
+    console.log(this.root);
+    this.species = new Object();
+    for (specie in this.root.system.parsedData) {
+      console.log(specie);
+    }
     this.deleted = {
       reactions: new Array(),
       metabolites: new Array()
@@ -239,23 +242,28 @@ Network = (function() {
   };
 
   Network.prototype.deleteNode = function(id, system) {
-    var i, len, node, ref;
+    var i, len, node, ref, results;
     ref = system.nodes;
+    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       node = ref[i];
       if (node.id === id) {
         if (node.type === "r") {
           system.graph.destroyVertex(id);
           this.deleted.reactions.push(id);
-          node.deleted = true;
+          results.push(node.deleted = true);
         } else if (node.type === "m") {
           system.graph.destroyVertex(id);
           this.deleted.metabolites.push(id);
-          node.deleted = true;
+          results.push(node.deleted = true);
+        } else {
+          results.push(void 0);
         }
+      } else {
+        results.push(void 0);
       }
     }
-    return console.log(this.deleted);
+    return results;
   };
 
   return Network;
@@ -676,10 +684,8 @@ TreeNode = (function() {
     this.system = system;
     this.parent = null;
     this.children = new Object();
-    console.log("Number of children to look at ", Object.keys(this.system.parsedData));
     currentIndex = this.system.sortables.index;
     for (child in this.system.parsedData) {
-      console.log("Contemplating " + child + " at " + this.system.sortables.identifiers[currentIndex] + " level");
       if (currentIndex < this.system.sortables.identifiers.length - 1 && child !== "e" && child !== "Community") {
         this.system.sortables.index = currentIndex;
         systemAttr = {
@@ -691,7 +697,6 @@ TreeNode = (function() {
           sortables: this.system.sortables,
           ctx: this.system.ctx
         };
-        console.log("Making " + child);
         this.children[child] = new TreeNode(child, new System(systemAttr));
         this.children[child].parent = this;
       }
