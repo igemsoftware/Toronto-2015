@@ -16,7 +16,7 @@ function writeModel(id, cb) {
             res.status(204).send('204 no content. The model ' + id + ' does not exist.');
             return;
         } else {
-            cb(id, model.fileName);
+            cb(id, model.file);
         }
     });
 }
@@ -57,9 +57,8 @@ function checkIfCommunityExists(req, res, next) {
             return;
         }
 
-        if (!communities) {
-            res.status(204).send('204 no communities yet');
-            return;
+        if (communities.length === 0) {
+            next();
         } else {
             communities.forEach(function(community) {
                 var currentSet = new sets.Set([]);
@@ -70,6 +69,8 @@ function checkIfCommunityExists(req, res, next) {
 
                 if (requestSet.equals(currentSet)) {
                     res.send('Cannot create community ' + req.body.name + ' , a community with the same models already exists\n');
+                } else {
+                    next();
                 }
             });
         }
