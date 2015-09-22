@@ -35,7 +35,7 @@ def createDict(content):
     for i in c:
         line = i.split("\t")
         if len(line) == 1:
-                    return ret        
+                    return ret
         ret[simplifyName(line[1])] = line[0]
     return ret
 
@@ -51,19 +51,19 @@ def removeDuplicates(ms):
     for m in ms:
         if m["id"] not in check:
             check += [m["id"]]
-            
+
             ret += [m]
     return ret
 #===============================================================================
 
 
 #Get exisitng content of metaboliteDictionary
-file = open("Output/metaboliteDictionary.txt")
+file = open(outputDir + "metaboliteDictionary.txt")
 metaContent = file.read();
 file.close()
 
 #Get exisitng content of reactionDictionary
-file = open("Output/reactionDictionary.txt")
+file = open(outputDir + "reactionDictionary.txt")
 reactContent = file.read();
 file.close()
 
@@ -80,17 +80,16 @@ metabolites = {} #collection of all metabolites across the community
 reactions = {} #collection of all reactions across the community
 community = {} #keyed by species and valued by the species' JSON data
 
+# with open(outputDir + "cmd.json", 'w') as outfile:
+#     json.dump(cmd, outfile)
 
-cmd = json.loads(sys.argv[1])
-with open("Output/cmd.json", 'w') as outfile:
-    json.dump(cmd, outfile)
-    
 #print(cmdjson)
 #Loop through species to add to dictionary
 for filename in cmd["input"]:
 #for filename in os.listdir(os.getcwd()+"/Input/Species"):
     #Opens the JSON
-    with open("Input/Species/"+filename) as data_file:
+    # with open("Input/Species/"+filename) as data_file:
+    with open(filename) as data_file:
         data = json.load(data_file)
     speciesName = filename.split(".")[0]
     #print(speciesName)
@@ -106,7 +105,7 @@ for filename in cmd["input"]:
             oldMnew[m["id"]] = newID
             m["id"] = newID
             eMetabolites += [newID]
-            
+
         else:
             #print(m["name"])
             #for k in mDict:
@@ -131,7 +130,7 @@ for filename in cmd["input"]:
                 metaInReacts[oldMnew[k]] += [r["id"]]
         reactions[r["id"]] = data["reactions"][i]
         speciesR[speciesName] += [r["id"]]
-    
+
     community[speciesName] = data
     ecMeta[speciesName] = eMetabolites
 
@@ -141,17 +140,17 @@ for s in species:
     i = 0
     for meta in ecMeta[s]:
         for r in metaInReacts[meta]:
-            
+
             if(r not in speciesR[s]):
                 speciesR[s] += [r]
-                
+
                 check = list(reactions[r]["metabolites"].keys())
-                
+
                 for ch in range(len(check)):
                     check[ch] = metabolites[check[ch]]
                 if(containsE(check, ecMeta[s]) and (reactions[r]["objective_coefficient"] == 0)):
                     community[s]["reactions"] += [reactions[r]]
-                    
+
                     ks = list(reactions[r]["metabolites"].keys())
                     for j in ks:
                         if(j not in speciesM[s]):
@@ -163,7 +162,7 @@ for s in species:
 
     community[s]["metabolites"] = removeDuplicates(community[s]["metabolites"])
     community[s]["reactions"] = removeDuplicates(community[s]["reactions"])
-    
-    with open('Output/Species/'+s+".json", 'w') as outfile:
+
+    with open(outputDir + 'Species/'+s+".json", 'w') as outfile:
         json.dump(community[s], outfile)
         print(s)
