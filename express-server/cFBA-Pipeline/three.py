@@ -1,5 +1,8 @@
-import json
 import os
+import json
+import sys
+cmd = json.loads(sys.argv[1])
+outputDir = os.getcwd() + "/cFBA-Pipeline/Output/"
 import cobra
 
 # Loop through species to add to dictionary

@@ -25,6 +25,7 @@ module.exports = {
     },
     dev: {
         port: 9001,
+        python: 'venv/cobrapy/bin/python',
         staticStore: 'static',
 
         mongodb: {

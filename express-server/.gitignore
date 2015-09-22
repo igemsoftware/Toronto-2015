@@ -1,2 +1,4 @@
+cFBA-Pipeline/Ouput/**/*.json
+venv
 temp/*.json
 static/**/*.json

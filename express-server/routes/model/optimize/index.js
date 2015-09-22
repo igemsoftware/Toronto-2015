@@ -6,7 +6,6 @@ MetabolicModel = App.Model('metabolicmodel');
 
 router.get('/:id', function(req, res, next) {
 	MetabolicModel.findOne({id: req.params.id}, function(err, model) {
-		console.log("here")
 		if (err) {
 			res.status(500).send('500 Internal Server Error');
 			return;

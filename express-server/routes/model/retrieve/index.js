@@ -3,7 +3,7 @@ var router = require('express').Router();
 var MetabolicModel = App.Model('metabolicmodel');
 
 function findAll(req, res, next) {
-	MetabolicModel.find(function(err, models) {
+	MetabolicModel.find().select('id').lean().exec(function(err, models) {
 		var ids = [];
 		models.forEach(function(model) {
 			ids.push(model.id);
@@ -16,6 +16,7 @@ function findAll(req, res, next) {
 router.get('/', findAll);
 
 router.get('/:id', function(req,res, next) {
+    console.log('Retreiveing model');
 	MetabolicModel.findOne({id: req.params.id}, function(err, model) {
 		if (err) {
 			res.status(500).send('500 Internal Server Error\n');

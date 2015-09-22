@@ -5,7 +5,10 @@ var CommunitySchema = new mongoose.Schema({
     members: [{
         model: String, // valid model id
         file: String
-    }]
+    }],
+    model: String,
+    solution: String,
+    optimizedModel: String
 });
 
 module.exports = mongoose.model('community', CommunitySchema);

@@ -1,6 +1,8 @@
 import os
 import json
 import sys
+cmd = json.loads(sys.argv[1])
+outputDir = os.getcwd() + "/cFBA-Pipeline/Output/"
 
 #Functions======================================================================
 def simplifyName(name):
@@ -92,7 +94,8 @@ for filename in cmd["input"]:
     with open(filename) as data_file:
         data = json.load(data_file)
     speciesName = filename.split(".")[0]
-    #print(speciesName)
+    speciesName = speciesName.split('/')[len(speciesName.split('/')) - 1]
+    
     speciesM[speciesName] = []
     oldMnew = {} #dictionary of old metabolite ids to new metabolite ids
     eMetabolites = [] #a list of all external metabolites

@@ -5,7 +5,7 @@ route="communitymodel/create"
 header="Content-Type:application/json"
 method="POST"
 
-curl -X $method $host/$route -d "@community.json" -H $header
+curl -X $method $host/$route -d "@E. Coli K12 and M. barkeri.json" -H $header
 
 # species=`ls $speciesFolder`
 # for specie in $species
