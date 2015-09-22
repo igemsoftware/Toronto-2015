@@ -1,11 +1,12 @@
 var router = require('express').Router();
 var fs = require('fs');
+var sets = require('simplesets');
 
 var MetabolicModel = App.Model('metabolicmodel');
 var Community = App.Model('community');
 
 function writeModel(id, cb) {
-    MetabolicModel.findOne({id: id}, function(err, model) {
+    MetabolicModel.findOne({id: id}, 'id file', function(err, model) {
         if (err) {
             res.status(500).send('500 Internal Server Error');
             return;
@@ -15,18 +16,7 @@ function writeModel(id, cb) {
             res.status(204).send('204 no content. The model ' + id + ' does not exist.');
             return;
         } else {
-            model.transform(function(model) {
-                fileName = App.config().static + '/' + id + '_' + (new Date()).getTime() + '.json';
-
-                fs.writeFile(fileName, function(err) {
-                    if (err) {
-                        res.status(500).send('500 Internal Server Error');
-                        return;
-                    }
-
-                    cb(id, fileName);
-                });
-            });
+            cb(id, model.fileName);
         }
     });
 }
@@ -34,20 +24,16 @@ function writeModel(id, cb) {
 function createCommunity(req, res, next) {
     // Given an array of <valid?> model ids
     var community = {};
-    console.log(req.body);
     community.name = req.body.name;
     community.members = [];
 
-    var checkProgress = function(model, file) {
+    var checkProgress = function(modelId, file) {
         community.members.push({
-            model: model,
+            model: modelId,
             file: file
         });
 
         if (community.members.length === req.body.models.length) {
-            // res.send(files);
-
-            console.log(community);
             community = new Community(community);
             console.log(community);
 
@@ -60,21 +46,32 @@ function createCommunity(req, res, next) {
     req.body.models.forEach(function(model) {
         writeModel(model, checkProgress);
     });
-
 }
 
-
 function checkIfCommunityExists(req, res, next) {
-    Community.findOne({name: req.body.name}, function(err, community) {
+    var requestSet = new sets.Set(req.body.models);
+
+    Community.find('members', function(err, communities) {
         if (err) {
             res.status(500).send('500 Internal Server Error');
             return;
         }
 
-        if (!community) {
-            next();
+        if (!communities) {
+            res.status(204).send('204 no communities yet');
+            return;
         } else {
-            res.send('Cannot create community "' + req.body.name + '"\n');
+            communities.forEach(function(community) {
+                var currentSet = new sets.Set([]);
+
+                community.members.forEach(function(member) {
+                    currentSet.add(member.model);
+                });
+
+                if (requestSet.equals(currentSet)) {
+                    res.send('Cannot create community ' + req.body.name + ' , a community with the same models already exists\n');
+                }
+            });
         }
     });
 }

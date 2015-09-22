@@ -1,4 +1,4 @@
 {
-    "name": "E. Coli, Rhodobacter, Methano",
-    "models": ["iJO1366","Mb_iUPDATE","iRsp1095"]
+    "name": "E. Coli K12 and M. barkeri",
+    "models": ["Mb_iUPDATE", "iJO1366"]
 }

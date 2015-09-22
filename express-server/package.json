@@ -27,6 +27,7 @@
     "mongoose": "^4.0.5",
     "morgan": "^1.6.0",
     "mysql": "^2.9.0",
-    "serve-index": "^1.7.2"
+    "serve-index": "^1.7.2",
+    "simplesets": "^1.2.0"
   }
 }

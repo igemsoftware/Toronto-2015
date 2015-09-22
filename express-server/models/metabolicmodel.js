@@ -6,6 +6,7 @@ var MetabolicModelSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    file: String,
 	reactions: [{
 		subsystem: String,
 		name: String,
@@ -46,8 +47,7 @@ var MetabolicModelSchema = new mongoose.Schema({
         subsystems: [{
             name: String
         }]
-	}],
-    file: String
+	}]
 });
 
 MetabolicModelSchema.methods.transform = function transform(cb) {
