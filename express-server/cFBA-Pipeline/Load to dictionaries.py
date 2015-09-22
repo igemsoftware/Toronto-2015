@@ -1,5 +1,7 @@
 import os
 import json
+import codecs
+
 
 
 #Functions======================================================================
@@ -72,11 +74,20 @@ for filename in os.listdir(os.getcwd()+"/Input/Species"):
 
 #Save dictionary files    
 #metaContent = metaContent.strip()
-metaDict = open("Output/metaboliteDictionary.txt", "w")
-metaDict.write(metaContent)
-metaDict.close()
+
+
+with codecs.open("Output/metaboliteDictionary.txt", 'w', encoding='utf-8') as out:  
+    out.write(metaContent)
+    
+#metaDict = open("Output/metaboliteDictionary.txt", "w")
+#print(metaContent)
+#metaDict.write(metaContent)
+#metaDict.close()
 
 #reactContent = reactContent.strip()
-reactDict = open("Output/reactionDictionary.txt", "w")
-reactDict.write(reactContent)
-reactDict.close()
+#reactDict = open("Output/reactionDictionary.txt", "w")
+#reactDict.write(reactContent)
+
+with codecs.open("Output/reactionDictionary.txt", 'w', encoding='utf-8') as out:  
+    out.write(reactContent)
+#reactDict.close()

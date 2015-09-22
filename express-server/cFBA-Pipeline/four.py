@@ -40,8 +40,8 @@ for filename in os.listdir(os.getcwd()+"/Output/Solution2"):
 
 z = zvalues(biomasses)
 bc = biomassC(z)
-print(bc)
-
+#print(bc)
+dMetabolites = {}
 cMetabolites = []
 cReactions = []
 community = {}
@@ -64,12 +64,24 @@ for filename in os.listdir(os.getcwd()+"/Output/Species"):
     
     for m in data["metabolites"]:
         if m["id"] not in cMetabolites:
+            m["species"] = [speciesName]
             cMetabolites += [m["id"]]
             metabolites += [m]
+            dMetabolites[m["id"]] = metabolites.index(m)
+            #print()
+        else:
+            if m["compartment"] == "e":
+                metabolites[dMetabolites[m["id"]]]["species"] += [speciesName]
+                #print(metabolites[dMetabolites[m["id"]]]["species"])
+                #print(metabolites[dMetabolites[m["id"]]]["id"])
+                #m["species"] += [speciesName]
+                #print(speciesName)
+                #print(m["id"])
     for r in data["reactions"]:
         if r["id"] not in cReactions:
             if r["objective_coefficient"] == 0:
                 cReactions += [r["id"]]
+                r["species"] = [speciesName]
                 reactions += [r]
             else:
                 cBiomassObjectiveFunc[speciesName] = r
@@ -101,9 +113,9 @@ counter = 0
 for k in cBiomassObjectiveFunc:
     ms = cBiomassObjectiveFunc[k]["metabolites"]
     for m in ms:
-        OF["metabolites"][m] = bc[counter]*ms[m]
-    counter += 1
-    
+        if counter < len(bc):
+            OF["metabolites"][m] = bc[counter]*ms[m]
+            counter += 1
 community["reactions"] += [OF]
 
 with open(os.getcwd()+"/Output/Community/community.json", 'w') as outfile:

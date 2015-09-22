@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 
 #Functions======================================================================
 def simplifyName(name):
@@ -80,13 +81,19 @@ reactions = {} #collection of all reactions across the community
 community = {} #keyed by species and valued by the species' JSON data
 
 
+cmd = json.loads(sys.argv[1])
+with open("Output/cmd.json", 'w') as outfile:
+    json.dump(cmd, outfile)
+    
+#print(cmdjson)
 #Loop through species to add to dictionary
-for filename in os.listdir(os.getcwd()+"/Input/Species"):
+for filename in cmd["input"]:
+#for filename in os.listdir(os.getcwd()+"/Input/Species"):
     #Opens the JSON
     with open("Input/Species/"+filename) as data_file:
         data = json.load(data_file)
     speciesName = filename.split(".")[0]
-    print(speciesName)
+    #print(speciesName)
     speciesM[speciesName] = []
     oldMnew = {} #dictionary of old metabolite ids to new metabolite ids
     eMetabolites = [] #a list of all external metabolites
@@ -95,13 +102,17 @@ for filename in os.listdir(os.getcwd()+"/Input/Species"):
         m = data["metabolites"][i]
         m["compartment"] = m["compartment"][0].lower()
         if(m["compartment"] == "e"):
-            newID = mDict[simplifyName(m["name"])]+"-"+m["compartment"]
+            newID = mDict[simplifyName(m["name"].encode("UTF-8"))]+"-"+m["compartment"]
             oldMnew[m["id"]] = newID
             m["id"] = newID
             eMetabolites += [newID]
             
         else:
-            newID = speciesName+"-"+mDict[simplifyName(m["name"])]+"-"+m["compartment"]
+            #print(m["name"])
+            #for k in mDict:
+            #    if "aminopropionitrile" in k:
+            #        print(k)
+            newID = speciesName+"-"+mDict[simplifyName(m["name"].encode("UTF-8"))]+"-"+m["compartment"]
             oldMnew[m["id"]] = newID
             m["id"] = newID
         metabolites[m["id"]] = data["metabolites"][i]
@@ -111,7 +122,7 @@ for filename in os.listdir(os.getcwd()+"/Input/Species"):
     speciesR[speciesName] = []
     for i in range(len(data["reactions"])):
         r = data["reactions"][i]
-        r["id"] = speciesName+"-"+rDict[simplifyName(r["name"])]
+        r["id"] = speciesName+"-"+rDict[simplifyName(r["name"].encode("UTF-8"))]
         ms = list(r["metabolites"].keys())
         for k in ms:
             r["metabolites"][oldMnew[k]] = r["metabolites"][k]
@@ -152,5 +163,7 @@ for s in species:
 
     community[s]["metabolites"] = removeDuplicates(community[s]["metabolites"])
     community[s]["reactions"] = removeDuplicates(community[s]["reactions"])
+    
     with open('Output/Species/'+s+".json", 'w') as outfile:
         json.dump(community[s], outfile)
+        print(s)

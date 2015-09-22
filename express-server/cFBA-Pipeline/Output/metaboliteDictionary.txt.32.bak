@@ -1,0 +1,5020 @@
+M1	D-fructofuranose 1,6-bisphosphate(4-)
+M2	D-glyceraldehyde 3-phosphate
+M3	glycerone phosphate
+M4	H2O
+M5	acetaldehyde
+M6	NAD(+)
+M7	H(+)
+M8	NADH(2-)
+M9	acetate
+M10	ethanol
+M11	pyruvate
+M12	Thiamine diphosphate
+M13	CO(2)
+M14	2-Hydroxyethyl-ThPP
+M15	[Dihydrolipoyllysine-residue acetyltransferase] S-acetyldihydrolipoyllysine
+M16	Enzyme N6-(lipoyl)lysine
+M17	dihydrolipoylprotein
+M18	acetyl-CoA(4-)
+M19	CoA
+M20	ATP
+M21	ADP
+M22	phosphoenolpyruvate
+M23	2-phospho-D-glycerate
+M24	3-phospho-D-glycerate
+M25	3-phosphonato-D-glyceroyl phosphate(4-)
+M26	phosphate
+M27	beta-D-fructofuranose 6-phosphate(2-)
+M28	alpha-D-glucose 6-phosphate(2-)
+M29	alpha-D-glucose 1-phosphate(2-)
+M30	beta-D-glucose 6-phosphate(2-)
+M31	beta-D-glucose
+M32	alpha-D-glucose
+M33	oxaloacetate
+M34	NADP(+)
+M35	NADPH
+M36	diphosphate(3-)
+M37	AMP
+M38	ferrocytochrome c
+M39	ferricytochrome c
+M40	AH2
+M41	fumarate(2-)
+M42	succinate(2-)
+M43	an oxidized electron acceptor
+M44	2-oxoglutarate
+M45	3-Carboxy-1-hydroxypropyl-ThPP
+M46	[Dihydrolipoyllysine-residue succinyltransferase] S-succinyldihydrolipoyllysine
+M47	succinyl-CoA(5-)
+M48	oxalatosuccinate(3-)
+M49	isocitrate(3-)
+M50	(S)-malate
+M51	cis-aconitate(3-)
+M52	citrate
+M53	bicarbonate
+M54	5-phosphoribosyl diphosphate
+M55	alpha-D-ribose 1,5-bisphosphate
+M56	2-dehydro-3-deoxy-6-phosphonato-D-gluconate(3-)
+M57	2-deoxy-D-ribofuranose 5-phosphate(2-)
+M58	Deoxyribose
+M59	D-ribose 5-phosphate
+M60	beta-D-ribose
+M61	sedoheptulose 7-phosphate(2-)
+M62	D-xylulose 5-phosphate(2-)
+M63	D-ribulose 5-phosphate(2-)
+M64	D-erythrose 4-phosphate(2-)
+M65	6-phospho-2-dehydro-D-gluconate(3-)
+M66	6-phosphonatooxy-D-gluconate
+M67	2-dehydro-D-gluconate
+M68	6-O-phosphono-D-glucono-1,5-lactone
+M69	D-gluconate
+M70	D-glucono-1,5-lactone
+M71	Ubiquinol
+M72	D-glucopyranose
+M73	Ubiquinone
+M74	FAD
+M75	FADH2
+M76	alpha-D-ribose 1-phosphate(2-)
+M77	acetyl phosphate(2-)
+M78	UDP-D-glucose(2-)
+M79	UTP (3-)
+M80	UDP-alpha-D-glucuronate(3-)
+M81	2-dehydro-3-deoxy-D-gluconate
+M82	D-altronate
+M83	2,5-dioxopentanoate
+M84	Protein histidine
+M85	D-fructofuranose 1-phosphate(2-)
+M86	beta-D-fructofuranose
+M87	Protein N(pi)-phospho-L-histidine
+M88	D-mannopyranose 6-phosphate(2-)
+M89	alpha-D-mannose 1-phosphate(2-)
+M90	GTP
+M91	GDP-alpha-D-mannose
+M92	alginate
+M93	D-glyceraldehyde
+M94	GDP-D-mannuronate
+M95	(S)-lactaldehyde
+M96	L-fuculose 1-phosphate(2-)
+M97	UDP-alpha-D-galactose
+M98	5-dehydro-4-deoxy-D-glucarate(2-)
+M99	D-glucarate
+M100	D-galactarate
+M101	2-dehydro-3-deoxy-D-glucarate(2-)
+M102	D-glucurono-6,3-lactone
+M103	(2E)-Octadecenoyl-[acp]
+M104	3-Hydroxyoctadecanoyl-[acp]
+M105	3-Oxostearoyl-[acp]
+M106	holo-[acyl-carrier protein]
+M107	carboxyacetyl-[acyl-carrier protein]
+M108	palmitoyl-[acyl-carrier protein]
+M109	acetyl-[acyl-carrier protein]
+M110	acetoacetyl-[acyl-carrier protein]
+M111	3-oxopalmitoyl-[acyl-carrier protein]
+M112	myristoyl-[acyl-carrier protein]
+M113	3-Oxotetradecanoyl-[acp]
+M114	a dodecanoyl-[acp]
+M115	3-Oxododecanoyl-[acp]
+M116	decanoyl-[acyl-carrier protein]
+M117	3-Oxodecanoyl-[acp]
+M118	octanoyl-[acyl-carrier protein]
+M119	3-Oxooctanoyl-[acp]
+M120	Hexanoyl-[acp]
+M121	3-Oxohexanoyl-[acp]
+M122	Butyryl-[acp]
+M123	trans-Hexadec-2-enoyl-[acp]
+M124	(3R)-3-Hydroxypalmitoyl-[acyl-carrier protein]
+M125	trans-Tetradec-2-enoyl-[acp]
+M126	(3R)-3-Hydroxytetradecanoyl-[acyl-carrier protein]
+M127	trans-Dodec-2-enoyl-[acp]
+M128	(R)-3-Hydroxydodecanoyl-[acp]
+M129	trans-Dec-2-enoyl-[acp]
+M130	(3R)-3-Hydroxydecanoyl-[acyl-carrier protein]
+M131	trans-Oct-2-enoyl-[acp]
+M132	(3R)-3-Hydroxyoctanoyl-[acyl-carrier protein]
+M133	trans-Hex-2-enoyl-[acp]
+M134	(R)-3-Hydroxyhexanoyl-[acp]
+M135	But-2-enoyl-[acyl-carrier protein]
+M136	(3R)-3-Hydroxybutanoyl-[acyl-carrier protein]
+M137	malonyl-CoA(5-)
+M138	Holo-[carboxylase]
+M139	Carboxybiotin-carboxyl-carrier protein
+M140	palmitoyl-CoA
+M141	(E)-hexadec-2-enoyl-CoA
+M142	myristoyl-CoA(4-)
+M143	trans-tetradec-2-enoyl-CoA
+M144	lauroyl-CoA(4-)
+M145	trans-dodec-2-enoyl-CoA(4-)
+M146	trans-dec-2-enoyl-CoA
+M147	decanoyl-CoA
+M148	octanoyl-CoA(4-)
+M149	trans-oct-2-enoyl-CoA
+M150	trans-hex-2-enoyl-CoA
+M151	hexanoyl-CoA
+M152	crotonoyl-CoA(4-)
+M153	butanoyl-CoA
+M154	acetoacetyl-CoA(4-)
+M155	(S)-3-hydroxybutanoyl-CoA(4-)
+M156	trans,cis-Lauro-2,6-dienoyl-CoA
+M157	cis,cis-3,6-Dodecadienoyl-CoA
+M158	(R)-3-hydroxybutanoyl-CoA(4-)
+M159	3-oxohexanoyl-CoA
+M160	(S)-3-hydroxyhexanoyl-CoA
+M161	3-oxooctanoyl-CoA
+M162	(S)-3-hydroxyoctanoyl-CoA
+M163	3-oxodecanoyl-CoA
+M164	(S)-3-hydroxydecanoyl-CoA
+M165	a reduced rubredoxin
+M166	an oxidized rubredoxin
+M167	3-oxolauroyl-CoA
+M168	(S)-3-hydroxylauroyl-CoA
+M169	aldehyde
+M170	a primary alcohol
+M171	glutaryl-CoA(5-)
+M172	3-oxotetradecanoyl-CoA
+M173	(S)-3-hydroxytetradecanoyl-CoA
+M174	fatty acid anion
+M175	3-oxopalmitoyl-CoA(4-)
+M176	(S)-3-hydroxypalmitoyl-CoA
+M177	palmitate
+M178	acetoacetate
+M179	(3S)-3-hydroxy-3-methylglutaryl-CoA(5-)
+M180	(R)-3-hydroxybutanoate
+M181	S-adenosyl-L-homocysteine
+M182	2-Polyprenyl-6-methoxyphenol
+M183	S-adenosyl-L-methionine
+M184	2-Polyprenyl-6-hydroxyphenol
+M185	2-methoxy-6-(all-trans-octaprenyl)phenol
+M186	3-(all-trans-octaprenyl)benzene-1,2-diol
+M187	dioxygen
+M188	2-Polyprenylphenol
+M189	2-octaprenylphenol
+M190	4-Hydroxy-3-polyprenylbenzoate
+M191	4-hydroxy-3-octaprenylbenzoate
+M192	2-Polyprenyl-3-methyl-5-hydroxy-6-methoxy-1,4-benzoquinone
+M193	Ubiquinone-8
+M194	5-hydroxy-6-methoxy-3-methyl-2-octaprenyl-1,4-benzoquinone
+M195	4-hydroxybenzoate
+M196	chorismate(2-)
+M197	4-hydroxybenzoyl-CoA(4-)
+M198	homogentisate
+M199	3-(4-hydroxyphenyl)pyruvate
+M200	all-trans-Polyprenyl diphosphate
+M201	all-trans-Octaprenyl diphosphate
+M202	Phylloquinone
+M203	demethylphylloquinone
+M204	Menaquinone
+M205	2-Demethylmenaquinone
+M206	2-Polyprenyl-3-methyl-6-methoxy-1,4-benzoquinone
+M207	2-Hexaprenyl-3-methyl-5-hydroxy-6-methoxy-1,4-benzoquinone
+M208	2-Hexaprenyl-3-methyl-6-methoxy-1,4-benzoquinone
+M209	2-Polyprenyl-6-methoxy-1,4-benzoquinone
+M210	6-methoxy-2-octaprenyl-1,4-benzoquinone
+M211	2-Octaprenyl-3-methyl-6-methoxy-1,4-benzoquinone
+M212	Menaquinol
+M213	phyllohydroquinone
+M214	thioredoxin
+M215	GDP(2-)
+M216	thioredoxin disulfide
+M217	dGDP
+M218	(S)-2-ureidoglycine
+M219	NH4(+)
+M220	(-)-ureidoglycolate
+M221	L-glutamine zwitterion
+M222	5-phosphonato-D-ribosylaminium(1-)
+M223	L-glutamate
+M224	N(1)-(5-phospho-D-ribosyl)glycinamide(1-)
+M225	glycine
+M226	N(2)-formyl-N(1)-(5-phospho-D-ribosyl)glycinamide(2-)
+M227	(6S)-5,6,7,8-tetrahydrofolate
+M228	10-formyltetrahydrofolate(2-)
+M229	2-(Formamido)-N1-(5-prime-phosphoribosyl)acetamidine
+M230	5-amino-1-(5-phosphonato-D-ribosyl)imidazol-3-ium
+M231	5-amino-1-(5-phospho-D-ribosyl)imidazole-4-carboxamide(2-)
+M232	5-formamido-1-(5-phospho-D-ribosyl)imidazole-4-carboxamide(2-)
+M233	(2S)-2-[5-amino-1-(5-O-phosphonato-beta-D-ribosyl)imidazole-4-carboxamido]succinate
+M234	L-aspartate(1-)
+M235	5-amino-1-(5-phosphonato-D-ribosyl)imidazole-4-carboxylate
+M236	A 3'-phosphopolynucleotide
+M237	3',5'-cyclic AMP(1-)
+M238	DNA
+M239	dATP
+M240	dADP
+M241	N(6)-(1,2-dicarboxylatoethyl)-AMP(4-)
+M242	IMP(2-)
+M243	adenosine
+M244	adenine
+M245	dAMP
+M246	2'-deoxyadenosine
+M247	2'-deoxyinosine
+M248	inosine
+M249	IDP
+M250	ITP(3-)
+M251	5'-xanthylate(2-)
+M252	GMP(3-)
+M253	hypoxanthine
+M254	guanosine
+M255	9H-xanthine
+M256	xanthosine
+M257	guanine
+M258	urea
+M259	glyoxylate
+M260	5-hydroxy-2-oxo-4-ureido-2,5-dihydro-1H-imidazole-5-carboxylate
+M261	5-hydroxyisouric acid
+M262	guanosine 3',5'-bis(diphosphate)
+M263	guanosine 3'-diphosphate 5'-triphosphate
+M264	dGMP(2-)
+M265	dGTP(3-)
+M266	2'-deoxyguanosine
+M267	P(1),P(4)-bis(5'-adenosyl) tetraphosphate(4-)
+M268	sulfate
+M269	adenosine 5'-phosphosulfate
+M270	3'-phosphoadenosine-5'-phosphosulfate
+M271	7,9-dihydro-1H-purine-2,6,8(3H)-trione
+M272	XTP(3-)
+M273	triphosphate(4-)
+M274	ADP-D-ribose
+M275	dIDP
+M276	dITP
+M277	dIMP
+M278	3',5'-cyclic GMP(1-)
+M279	5-amino-4-imidazolecarboxyamide
+M280	carbamoyl phosphate(2-)
+M281	5-carboxylatoamino-1-(5-O-phosphonato-D-ribosyl)imidazole(3-)
+M282	UDP
+M283	dUDP
+M284	UMP(2-)
+M285	N-carbamoyl-L-aspartate(2-)
+M286	(S)-dihydroorotate
+M287	orotate
+M288	orotidine 5'-phosphate(3-)
+M289	CTP(3-)
+M290	uracil
+M291	uridine
+M292	5,6-dihydrouracil
+M293	N-carbamoyl-beta-alaninate
+M294	CDP
+M295	CMP
+M296	cytidine
+M297	cytosine
+M298	dCDP
+M299	dCTP(3-)
+M300	dUTP(3-)
+M301	dCMP(2-)
+M302	2'-deoxycytidine
+M303	dUMP
+M304	(6R)-5,10-methylenetetrahydrofolate
+M305	dTMP
+M306	dihydrofolate(2-)
+M307	dTTP(3-)
+M308	dTDP
+M309	thymidine
+M310	5-methylcytosine
+M311	thymine
+M312	5,6-dihydrothymine
+M313	3-ureido-isobutyrate
+M314	L-asparagine zwitterion
+M315	hydrogen peroxide
+M316	(N(omega)-L-arginino)succinate(1-)
+M317	L-citrulline zwitterion
+M318	L-argininium(1+)
+M319	L-alanine zwitterion
+M320	(S)-1-pyrroline-5-carboxylate
+M321	2-ammonio-2-deoxy-D-glucopyranose 6-phosphate(1-)
+M322	L-2,4-diazaniumylbutyrate
+M323	L-aspartate 4-semialdehyde
+M324	choline
+M325	betaine aldehyde
+M326	betaine
+M327	D-glycerate
+M328	3-phospho-hydroxypyruvate
+M329	3-hydroxypyruvate
+M330	L-cystathionine dizwitterion
+M331	2-oxobutanoate
+M332	L-cysteine zwitterion
+M333	L-allothreonine zwitterion
+M334	4-phosphonato-L-aspartic acid(2-)
+M335	O-phospho-L-serine
+M336	sarcosine
+M337	formaldehyde
+M338	L-serine
+M339	L-threonine zwitterion
+M340	O-phosphonato-L-homoserine(2-)
+M341	L-homoserine zwitterion
+M342	S(8)-aminomethyldihydrolipoylprotein
+M343	lipoylprotein
+M344	D-serine zwitterion
+M345	methylglyoxal
+M346	ammonioacetone
+M347	creatine zwitterion
+M348	3-sn-phosphatidyl-L-serine
+M349	a CDP-diacylglycerol
+M350	L-tryptophan zwitterion
+M351	(1S,2R)-1-C-(indol-3-yl)glycerol 3-phosphate(2-)
+M352	O-succinyl-L-homoserinate(1-)
+M353	hydrogen sulfide
+M354	homocysteine zwitterion
+M355	4-methylthio-2-oxobutanoate
+M356	L-methionine zwitterion
+M357	formate
+M358	1,2-dihydroxy-3-keto-5-methylthiopentene
+M359	3-(methylthio)propionate
+M360	carbon monoxide(1+)
+M361	S-methyl-5-thio-alpha-D-ribose 1-phosphate(2-)
+M362	S-methyl-5-thio-D-ribulose 1-phosphate(2-)
+M363	5-S-methyl-5-thio-alpha-D-ribofuranose
+M364	5'-S-methyl-5'-thioadenosine
+M365	5-methyltetrahydrofolate(2-)
+M366	5-methyltetrahydropteroyltri-L-glutamate(4-)
+M367	tetrahydropteroyltri-L-glutamate(4-)
+M368	S-(5-deoxy-D-ribos-5-yl)-L-homocysteine zwitterion
+M369	methanethiol
+M370	O-acetyl-L-serine zwitterion
+M371	trioxidosulfanidosulfate(1-)
+M372	HSO(3)(-)
+M373	S-sulfo-L-cysteine
+M374	2-aminoacrylic acid
+M375	L-cystine zwitterion
+M376	3-disulfanyl-L-alanine zwitterion
+M377	3-mercaptopyruvate
+M378	O-acetyl-L-homoserine zwitterion
+M379	[Dihydrolipoyllysine-residue (2-methylpropanoyl)transferase] S-(2-methylbutanoyl)dihydrolipoyllysine
+M380	2-Methyl-1-hydroxybutyl-TPP
+M381	[Dihydrolipoyllysine-residue (2-methylpropanoyl)transferase] S-(2-methylpropanoyl)dihydrolipoyllysine
+M382	2-Methyl-1-hydroxypropyl-TPP
+M383	[Dihydrolipoyllysine-residue (2-methylpropanoyl)transferase] S-(3-methylbutanoyl)dihydrolipoyllysine
+M384	3-Methyl-1-hydroxybutyl-TPP
+M385	(3R)-beta-leucine zwitterion
+M386	3-oxo-4-methylpentanoate
+M387	3-methylglutaconyl-CoA
+M388	3-methylbut-2-enoyl-CoA
+M389	3-hydroxyisovaleryl-CoA
+M390	isovaleryl-CoA
+M391	(S)-3-methyl-2-oxovalerate
+M392	4-methyl-2-oxopentanoate
+M393	L-leucine zwitterion
+M394	3-methyl-2-oxobutanoate
+M395	L-valine zwitterion
+M396	2-methylacetoacetyl-CoA(4-)
+M397	propionyl-CoA(4-)
+M398	3-hydroxy-2-isobutyrate
+M399	(S)-methylmalonate semialdehyde
+M400	2-methylbut-2-enoyl-CoA
+M401	(2S,3S)-3-hydroxy-2-methylbutanoyl-CoA(4-)
+M402	2-methylbutanoyl-CoA
+M403	L-isoleucine zwitterion
+M404	methylmalonate(2-)
+M405	methacrylyl-CoA
+M406	(S)-3-hydroxyisobutyryl-CoA
+M407	isobutyryl-CoA
+M408	(S)-3-aminoisobutyric acid zwitterion
+M409	5-methyl-3-oxo-4-hexenoyl-CoA
+M410	3-hydroxy-5-methylhex-4-enoyl-CoA
+M411	(2E)-5-methylhexa-2,4-dienoyl-CoA
+M412	5-methylhex-4-enoyl-CoA
+M413	7-methyl-3-oxooct-6-enoyl-CoA OK
+M414	3-hydroxy-3-(4-methylpent-3-en-1-yl)glutaryl-CoA(5-)
+M415	citraconate(2-)
+M416	D-erythro-3-methylmalate(2-)
+M417	(R)-3-hydroxy-3-methyl-2-oxopentanoate
+M418	(2R,3R)-2,3-dihydroxy-3-methylpentanoate
+M419	(2S)-2-isopropylmalate(2-)
+M420	2-isopropylmaleate(2-)
+M421	(2S)-2-isopropyl-3-oxosuccinate(2-)
+M422	(2R,3S)-3-isopropylmalate(2-)
+M423	2,3-dihydroxy-3-methylbutanoate
+M424	(S)-2-hydroxy-2-ethyl-3-oxobutanoate
+M425	3-hydroxy-3-methyl-2-oxobutanoate
+M426	2-acetyllactate
+M427	D-citramalate(2-)
+M428	UDP-N-acetylmuramoyl-L-alanyl-D-glutamyl-6-carboxy-L-lysyl-D-alanyl-D-alanine
+M429	UDP-N-acetylmuramoyl-L-alanyl-D-gamma-glutamyl-meso-2,6-diaminoheptanedioate(4-)
+M430	D-alanyl-D-alanine
+M431	(4S)-4-hydroxy-2,3,4,5-tetrahydro-(2S)-dipicolinate
+M432	(S)-2,3-dihydrodipicolinate
+M433	(S)-2,3,4,5-tetrahydrodipicolinate(2-)
+M434	L-2-succinylamino-6-oxoheptanedioate(3-)
+M435	N-(3-carboxylatopropionyl)-LL-2,6-diaminopimelate(2-)
+M436	(2S,6S)-2,6-diaminopimelic acid dizwitterion
+M437	meso-2,6-diaminopimelic acid dizwitterion
+M438	L-lysinium(1+)
+M439	UDP-N-acetylmuramoyl-L-alanyl-D-glutamate(4-)
+M440	but-1-ene-1,2,4-tricarboxylate
+M441	(2R)-homocitrate
+M442	2-oxoadipate(2-)
+M443	[Dihydrolipoyllysine-residue succinyltransferase] S-glutaryldihydrolipoyllysine
+M444	a reduced electron-transfer flavoprotein
+M445	Electron-transferring flavoprotein
+M446	glutarate(2-)
+M447	5-oxopentanoate
+M448	5-aminopentanoate
+M449	4-trimethylammoniobutanal
+M450	4-(trimethylammonio)butanoate
+M451	penicillin
+M452	6-aminopenicillanic acid zwitterion
+M453	penicilloic acid
+M454	L-ornithinium(1+)
+M455	N-acetyl-L-glutamate(2-)
+M456	N-acetyl-L-gamma-glutamyl phosphate(3-)
+M457	2-acetamido-5-oxopentanoate
+M458	N(2)-acetyl-L-ornithine zwitterion
+M459	L-proline
+M460	a peptide
+M461	1-pyrroline-3-hydroxy-5-carboxylate
+M462	trans-4-hydroxy-L-proline zwitterion
+M463	4-hydroxy-L-glutamate(1-)
+M464	L-4-hydroxyglutamate semialdehyde
+M465	D-4-hydroxy-2-oxoglutarate
+M466	N-carbamoylsarcosinate
+M467	N-methylhydantoin
+M468	5-guanidino-2-oxopentanoate
+M469	4-guanidiniumylbutanal
+M470	4-guanidinobutanoic acid zwitterion
+M471	4-aminobutanoate
+M472	4-guanidiniumylbutanamide(1+)
+M473	agmatinium(2+)
+M474	putrescine
+M475	N-carbamoylputrescinium(1+)
+M476	N(2)-(3-carboxylatopropionyl)-L-arginine(1-)
+M477	N(2)-succinyl-L-ornithinate(1-)
+M478	N-(3-carboxylatopropanoyl)-L-glutamate(3-)
+M479	N-succinyl-L-glutamic 5-semialdehyde(2-)
+M480	L-glutamic 5-semialdehyde zwitterion
+M481	L-gamma-glutamyl phosphate(2-)
+M482	gamma-L-glutamylputrescinium(1+)
+M483	gamma-glutamyl-gamma-aminobutyraldehyde
+M484	4-(L-gamma-glutamylamino)butanoate
+M485	4-ammoniobutanal
+M486	4-acetamidobutanal
+M487	N-acetylputrescinium
+M488	4-acetamidobutanoate
+M489	cis-4-hydroxy-D-proline zwitterion
+M490	creatinine
+M491	carboxyspermidine
+M492	spermidine(3+)
+M493	carboxynorspermidine
+M494	bis(3-azaniumylpropyl)azanium
+M495	N-acetyl-L-citrullinate
+M496	N-formimidoyl-L-glutamate(1-)
+M497	N-formyl-L-glutamate(2-)
+M498	formamide
+M499	4-Imidazolone-5-propanoate
+M500	trans-urocanate
+M501	L-histidine zwitterion
+M502	histaminium
+M503	imidazole-4-acetate
+M504	imidazole-4-acetaldehyde
+M505	N(tele)-methylhistaminium
+M506	1-methylimidazole-4-acetaldehyde
+M507	1-(5-phospho-D-ribosyl)-ATP
+M508	L-histidinal
+M509	L-histidinol(1+)
+M510	3-(imidazol-4-yl)-2-oxopropyl phosphate(2-)
+M511	L-histidinol phosphate(1-)
+M512	D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate(2-)
+M513	1-(5-phospho-D-ribosyl)-5-[(5-phospho-D-ribosylamino)methylideneamino]imidazole-4-carboxamide(4-)
+M514	5-[(5-phospho-1-deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-D-ribosyl)imidazole-4-carboxamide
+M515	1-(5-phosphoribosyl)-5'-AMP
+M516	L-Normetanephrine
+M517	3-methoxy-4-hydroxyphenylglycolaldehyde
+M518	noradrenaline
+M519	3,4-dihydroxymandelaldehyde
+M520	3,4-dihydroxyphenylethyleneglycol
+M521	Metanephrine
+M522	methylammonium
+M523	R-adrenaline
+M524	dopamine
+M525	3,4-dihydroxyphenylacetaldehyde
+M526	3-methoxytyramine
+M527	(4-hydroxy-3-methoxyphenyl)acetaldehyde
+M528	L-dopa zwitterion
+M529	4-maleylacetoacetate
+M530	4-fumarylacetoacetate(2-)
+M531	tyramine
+M532	(4-hydroxyphenyl)acetaldehyde
+M533	L-tyrosine zwitterion
+M534	4-hydroxy-2-oxopentanoate
+M535	phenylacetyl-CoA(4-)
+M536	phenylacetate
+M537	2-Hydroxy-2,4-pentadienoate
+M538	L-phenylalanine
+M539	phenylethylamine
+M540	phenylacetaldehyde
+M541	(2-hydroxyphenyl)acetate
+M542	keto-phenylpyruvate
+M543	D-phenylalanine zwitterion
+M544	2-phenylacetamide
+M545	(2E)-3-phenylprop-2-enoate
+M546	(2E)-3-(cis-5,6-dihydroxycyclohexa-1,3-dien-1-yl)prop-2-enoate
+M547	3-phenylpropionate
+M548	3-(cis-5,6-dihydroxycyclohexa-1,3-dienyl)propanoate
+M549	benzoate
+M550	N-benzoylglycine
+M551	5,6,7,8-tetrahydrobiopterin
+M552	D-erythro-7,8-dihydrobiopterin
+M553	2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA
+M554	oxepin-CoA
+M555	3-oxo-5,6-dehydrosuberyl-CoA semialdehyde
+M556	3-oxo-5,6-dehydrosuberyl-CoA
+M557	2,3-didehydroadipoyl-CoA
+M558	3-hydroxyadipyl-CoA
+M559	3-oxoadipyl-CoA(5-)
+M560	trans-dienelactone
+M561	maleylacetate
+M562	2-chloro-cis,cis-muconate(2-)
+M563	3-chlorocatechol
+M564	2,5-dichloro-trans-dienelactone
+M565	2,5-dichloro-4-oxohex-2-enedioate(2-)
+M566	2,3,5-trichloro-cis,cis-muconate(2-)
+M567	3,4,6-trichlorocatechol
+M568	benzene
+M569	cis-1,2-dihydrobenzene-1,2-diol
+M570	catechol
+M571	4-carboxylatomethylenebut-2-en-4-olide
+M572	cis-2-chloro-4-carboxylatomethylenebut-2-en-1,4-olide
+M573	2-chloromaleylacetate
+M574	3-chloro-cis,cis-muconate(2-)
+M575	4-chlorocatechol
+M576	Cl(-)
+M577	protoanemonin
+M578	cis-Acetylacrylate
+M579	tetrachloro-cis,cis-muconate(2-)
+M580	tetrachlorocatechol
+M581	2,3,5-Trichlorodienelactone
+M582	2,3,5-trichloromaleylacetic acid
+M583	3,4-dihydroxybenzoate
+M584	3-carboxy-cis,cis-muconate(3-)
+M585	(1E)-4-oxobut-1-ene-1,2,4-tricarboxylate
+M586	2-hydroxy-4-oxobutane-1,2,4-tricarboxylate
+M587	4-hydroxy-4-methyl-2-oxoglutarate(2-)
+M588	2-(carboxylatomethyl)-5-oxo-2,5-dihydro-2-furoate(2-)
+M589	5-oxo-4,5-dihydro-2-furylacetate
+M590	(1R,6S)-1,6-dihydroxycyclohexa-2,4-diene-1-carboxylate
+M591	3-oxoadipate
+M592	5-oxo-2,5-dihydro-2-furylacetate
+M593	cis,cis-muconate
+M594	3-Carboxy-2-hydroxymuconate semialdehyde
+M595	2,3-dihydroxybenzoate
+M596	(3E)-2-oxohex-3-enedioate
+M597	2-Hydroxymuconate semialdehyde
+M598	4-Fluoromuconolactone
+M599	fluoride
+M600	5-Fluoromuconolactone
+M601	2-fluoromuconate
+M602	3-fluorocatechol
+M603	3-fluorobenzoate
+M604	5-Fluorocyclohexadiene-cis,cis-1,2-diol-1-carboxylate
+M605	4-fluorobenzoate
+M606	4-Fluorocyclohexadiene-cis,cis-1,2-diol-1-carboxylate
+M607	4-Fluorocatechol
+M608	2-fluorobenzoate
+M609	2-Fluorocyclohexadiene-cis,cis-1,2-diol-1-carboxylate
+M610	6-Fluorocyclohexadiene-cis,cis-1,2-diol-1-carboxylate
+M611	3-Fluoro-cis,cis-muconate
+M612	3-Fluorocyclohexadiene-cis,cis-1,2-diol-1-carboxylate
+M613	3,5-dibromo-4-oxidobenzonitrile(1-)
+M614	3,5-Dibromo-4-hydroxybenzamide
+M615	superoxide
+M616	Cinnavalininate
+M617	3-hydroxyanthranilate
+M618	5-hydroxykynurenamine
+M619	quinoline-4,6-diol
+M620	5-hydroxy-L-kynurenine
+M621	5-hydroxy-L-tryptophan zwitterion
+M622	serotonin
+M623	3-Hydroxykynurenamine
+M624	quinoline-4,8-diol
+M625	indole-3-acetamide
+M626	tryptaminium
+M627	(5-hydroxyindol-3-yl)acetaldehyde
+M628	indole-3-acetaldehyde
+M629	indole-3-acetate
+M630	(5-hydroxyindol-3-yl)acetate
+M631	indole-3-acetonitrile
+M632	7-phospho-2-dehydro-3-deoxy-D-arabino-heptonate
+M633	5-O-(1-carboxylatovinyl)-3-phosphonatoshikimate
+M634	indole
+M635	1-(2-carboxylatophenylamino)-1-deoxy-D-ribulose 5-phosphate(3-)
+M636	N-(5-phosphonato-beta-D-ribosyl)anthranilate
+M637	anthranilate
+M638	prephenate
+M639	L-arogenate(1-)
+M640	3-phosphoshikimate
+M641	shikimate
+M642	3-Dehydroshikimate
+M643	(-)-3-dehydroquinate
+M644	(-)-quinate
+M645	pyrroloquinoline quinone
+M646	pyrroloquinoline quinol(3-)
+M647	acryloyl-CoA(4-)
+M648	3-hydroxypropanoyl-CoA(4-)
+M649	3-oxopropanoate
+M650	beta-alanine zwitterion
+M651	(R)-pantothenate
+M652	(R)-pantoate
+M653	3-ammoniopropanal
+M654	ammonioacetaldehyde
+M655	taurine
+M656	(5-L-Glutamyl)-peptide
+M657	5-Glutamyl-taurine
+M658	hydrogen phosphonatoacetate(2-)
+M659	phosphonoacetaldehyde
+M660	N-acetyl demethylphosphinothricin
+M661	demethyl-phosphinothricin
+M662	(2-aminoethyl)phosphonic acid zwitterion
+M663	hydrogen selenide
+M664	selenous acid
+M665	selenophosphate
+M666	methylselenol
+M667	L-selenomethionine
+M668	Sem-tRNA(Met)
+M669	tRNA(Met)
+M670	L-selenocysteine zwitterion
+M671	L-selenocystathionine
+M672	selenic acid
+M673	adenosine 5'-phosphoselenate
+M674	L-selenocysteinyl-tRNA(Sec)
+M675	L-seryl-tRNA(Sec)
+M676	selenohomocysteine
+M677	Methylselenic acid
+M678	gamma-Glutamyl-beta-cyanoalanine
+M679	3-cyano-L-alaninate
+M680	linamarin
+M681	2-hydroxy-2-methylpropanenitrile
+M682	gamma-glutamyl-beta-aminopropiononitrile
+M683	Œ≤-aminopropionitrile
+M684	(2R)-2-hydroxy-2-methylbutanenitrile
+M685	lotaustralin
+M686	dhurrin
+M687	(S)-4-hydroxymandelonitrile
+M688	(R)-prunasin
+M689	mandelonitrile
+M690	(R)-amygdalin
+M691	UDP-N-acetylmuramoyl-L-alaninate(3-)
+M692	UDP-N-acetyl-alpha-D-muramate
+M693	D-glutamate
+M694	D-glutamine
+M695	D-alanine zwitterion
+M696	R-S-Cysteinylglycine
+M697	S-alkyl-L-cysteine
+M698	R-S-Glutathione
+M699	glutathione
+M700	glutathione disulfide(2-)
+M701	L-gamma-glutamyl-L-cysteinate(1-)
+M702	L-cysteinylglycine
+M703	an L-amino acid
+M704	5-L-glutamyl amino acid
+M705	hexyl group
+M706	RX
+M707	Cellulose
+M708	cellobiose
+M709	D-glucoside
+M710	CDP-D-glucose(2-)
+M711	linear maltodextrin
+M712	starch
+M713	maltose
+M714	ADP-D-glucose
+M715	alpha,alpha-trehalose
+M716	alpha-maltose 1-phosphate
+M717	UDP-N-acetyl-alpha-D-glucosamine(2-)
+M718	N-acetyl-alpha-D-glucosamine 1-phosphate(2-)
+M719	alpha-D-glucosamine 1-phosphate(1-)
+M720	UDP-N-acetyl-3-O-(1-carboxylatovinyl)-alpha-D-glucosamine
+M721	N-acetyl-alpha-D-mannosamine
+M722	N-acetylneuraminate
+M723	N,N'-diacetylchitobiose
+M724	N-acetyl-D-glucosamine
+M725	chitin
+M726	chitosan
+M727	CDP-4-dehydro-6-deoxy-D-glucose(2-)
+M728	CDP-4-dehydro-3,6-dideoxy-D-glucose(2-)
+M729	1D-myo-inositol 3-phosphate(2-)
+M730	myo-inositol
+M731	dTDP-4-dehydro-6-deoxy-L-mannose(2-)
+M732	dTDP-6-deoxy-beta-L-mannose
+M733	dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+M734	dTDP-alpha-D-glucose
+M735	CMP-3-deoxy-D-manno-octulosonate
+M736	3-deoxy-D-manno-octulosonate
+M737	8-phosphonato-3-deoxy-D-manno-oct-2-ulosonate(3-)
+M738	lipid IVA(4-)
+M739	lipid A disaccharide
+M740	UDP-2,3-bis(3-hydroxytetradecanoyl)-D-glucosamine(2-)
+M741	lipid X(2-)
+M742	D-glycero-beta-D-manno-heptose 7-phosphate
+M743	D-glycero-beta-D-manno-heptose 1,7-bisphosphate
+M744	D-glycero-beta-D-manno-heptose 1-phosphate
+M745	ADP-D-glycero-D-manno-heptose(2-)
+M746	(KDO)2-(lauroyl)-lipid IVA
+M747	(KDO)2-lipid IVA
+M748	(KDO)-lipid IVA
+M749	D-arabinose 5-phosphate
+M750	UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-D-glucosamine(1-)
+M751	UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine
+M752	D-glycero-alpha-D-manno-heptose 1,7-bisphosphate
+M753	D-glycero-alpha-D-manno-heptose 1-phosphate
+M754	D-glycero-alpha-D-manno-heptose 7-phosphate
+M755	Undecaprenyl diphosphate
+M756	ditrans,octacis-undecaprenyl phosphate
+M757	undecaprenyldiphosphonato-N-acetyl-(N-acetylglucosaminyl)muramoyl-L-alanyl-gamma-D-glutamyl-L-lysyl-D-alanyl-D-alanine
+M758	undecaprenyldiphosphonato-N-acetylmuramoyl-L-alanyl-D-gamma-glutamyl-L-lysyl-D-alanyl-D-alanine
+M759	UDP-N-acetyl-alpha-D-muramoyl-L-alanyl-gamma-D-glutamyl-L-lysyl-D-alanyl-D-alanine
+M760	UDP-N-acetylmuramoyl-L-alanyl-D-gamma-glutamyl-L-lysine(3-)
+M761	N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminopimelyl-D-alanyl-D-alanine-diphosphoundecaprenol
+M762	N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminopimelyl-D-alanyl-D-alanine-diphosphoundecaprenyl-N-acetylglucosamine
+M763	a triacylglycerol
+M764	1,2-diacyl-sn-glycerol
+M765	a monoacylglycerol
+M766	a 1,2-diacylglycerol-3-phosphate
+M767	1-acyl-sn-glycerol 3-phosphate
+M768	acyl-CoA
+M769	sn-glycerol 3-phosphate(2-)
+M770	alditol
+M771	1D-myo-inositol 4-phosphate(2-)
+M772	1D-myo-inositol 1-phosphate(2-)
+M773	sn-glycero-3-phosphoethanolamine zwitterion
+M774	ethanolamine
+M775	3-(3-sn-phosphatidyl)-sn-glycerol 1-phosphate
+M776	L-alpha-glycerophosphocholine
+M777	a cardiolipin
+M778	15(S)-HPETE(1-)
+M779	15(S)-HETE(1-)
+M780	5(S)-HPTE
+M781	5-hydroxy-6E,8Z,11Z,14Z-icosatetraenoate
+M782	leukotriene C4
+M783	leukotriene D4
+M784	OPC4-3-ketoacyl-CoA
+M785	jasmonoyl-CoA
+M786	OPC6-3-ketoacyl-CoA
+M787	OPC4-CoA
+M788	OPC8-3-ketoacyl-CoA
+M789	OPC6-CoA
+M790	ribonucleoside triphosphate
+M791	ribonucleoside diphosphate
+M792	(R)-S-lactoylglutathionate(1-)
+M793	(R)-lactate
+M794	(S)-lactate
+M795	acetyl AMP
+M796	biphenyl
+M797	(1S,2R)-3-phenylcyclohexa-3,5-diene-1,2-diol
+M798	4-chlorobiphenyl
+M799	(1S,2R)-3-(4-chlorophenyl)cyclohexa-3,5-diene-1,2-diol
+M800	p-toluate
+M801	cis-1,2-dihydroxy-4-methylcyclohexa-3,5-diene-1-carboxylate
+M802	o-toluate
+M803	1,6-dihydroxy-2-methylcyclohexa-2,4-diene-1-carboxylate
+M804	m-toluate
+M805	1,2-Dihydroxy-3-methylcyclohexa-3,5-dienecarboxylate
+M806	4-methylcatechol
+M807	3-methylcatechol
+M808	4-methylbenzyl alcohol
+M809	p-xylene
+M810	3-methylbenzyl alcohol
+M811	m-xylene
+M812	2-Methylbenzyl alcohol
+M813	o-xylene
+M814	p-cumate
+M815	cis-5,6-dihydroxy-4-isopropylcyclohexa-1,3-dienecarboxylate
+M816	2,3-dihydroxy-p-cumate
+M817	p-cumic aldehyde
+M818	p-cumic alcohol
+M819	p-cymene
+M820	2-Hydroxy-3-carboxy-6-oxo-7-methylocta-2,4-dienoate
+M821	2-Hydroxy-6-oxo-7-methylocta-2,4-dienoate
+M822	isobutyrate
+M823	2-Hydroxy-6-keto-2,4-heptadienoate
+M824	2-Hydroxy-cis-hex-2,4-dienoate
+M825	4-hydroxy-2-oxohexanoate
+M826	propanal
+M827	5-methyl-2-oxo-3-hexene-1,6-dioate
+M828	toluene
+M829	toluene-cis-1,2-dihydrodiol
+M830	3-methyl-cis,cis-muconate
+M831	4-carboxylatomethyl-4-methylbut-2-en-1,4-olide(1-)
+M832	3-Chloro-2-methyldienelactone
+M833	3-chloro-2-methyl-maleylacetate
+M834	2-chloro-5-methyl-dienelactone
+M835	2-chloro-5-methyl-maleylacetate
+M836	4-carboxylatomethyl-3-methylbut-2-en-1,4-olide(1-)
+M837	reduced ferredoxin
+M838	oxidized ferredoxin
+M839	benzyl alcohol
+M840	phthalate(2-)
+M841	1,2-Dihydrophthalic acid
+M842	trans-3-Chloroallyl aldehyde
+M843	3-chloroprop-2-en-1-ol
+M844	cis-3-Chloroallyl aldehyde
+M845	cis-3-chloroprop-2-en-1-ol
+M846	3-chloroacrylate
+M847	cis-3-Chloroacrylic acid
+M848	chloroacetaldehyde
+M849	2-chloroethanol
+M850	chloroacetate
+M851	trichloroethene
+M852	1-naphthaldehyde
+M853	(1-naphthyl)methanol
+M854	2-naphthaldehyde
+M855	(2-naphthyl)methanol
+M856	vanillate
+M857	benzonitrile
+M858	benzamide
+M859	gallate
+M860	2-hydroxy-3-oxopropanoate
+M861	4-hydroxy-2-oxoglutarate(2-)
+M862	glycolate
+M863	2-phosphonatoglycolate(3-)
+M864	D-ribulose 1,5-bisphosphate(4-)
+M865	2-hydroxylamino-4,6-dinitrotoluene
+M866	2,4,6-trinitrotoluene
+M867	4-hydroxylamino-2,6-dinitrotoluene
+M868	propanoyl phosphate
+M869	(2R,3S)-2-methylcitrate
+M870	(Z)-but-2-ene-1,2,3-tricarboxylate
+M871	(2S,3R)-3-hydroxybutane-1,2,3-tricarboxylate
+M872	(R)-methylmalonyl-CoA(5-)
+M873	propanoyl-AMP(1-)
+M874	propionate
+M875	prop-2-ynal
+M876	prop-2-yn-1-ol
+M877	propynoate
+M878	1-aminocyclopropanecarboxylic acid zwitterion
+M879	3-oxo-3-phenylpropionyl-CoA
+M880	benzoyl-CoA
+M881	ethylbenzene
+M882	cis-1,2-dihydro-3-ethylcatechol
+M883	2-Hydroxy-6-oxo-octa-2,4-dienoate
+M884	phenylacetonitrile
+M885	acrylamide
+M886	acrylate
+M887	acrylonitrile
+M888	3-Vinylcatechol
+M889	3-ethenylcyclohexa-3,5-diene-1,2-diol
+M890	poly(3-hydroxybutyrate)
+M891	butanal
+M892	maleate(2-)
+M893	itaconate(2-)
+M894	itaconyl-CoA(5-)
+M895	(6R)-5,10-methenyltetrahydrofolate
+M896	folate
+M897	5-Formyltetrahydrofolate
+M898	N-formylmethionyl-tRNA(fMet)
+M899	Met-tRNA(Met)
+M900	S-formylglutathionate(1-)
+M901	S-(hydroxymethyl)glutathione(1-)
+M902	methanol
+M903	a reduced amicyanin
+M904	Amicyanin
+M905	5,10-methylenetetrahydromethanopterin(3-)
+M906	5,6,7,8-tetrahydromethanopterin(3-)
+M907	thiamine(1+) monophosphate(2-)
+M908	Thiamine
+M909	4-amino-5-hydroxymethyl-2-methylpyrimidine
+M910	5-(2-hydroxyethyl)-4-methylthiazole
+M911	2-iminoacetate
+M912	C15815
+M913	4-methyl-5-(2-phosphonatooxyethyl)thiazole(2-)
+M914	1-deoxy-D-xylulose 5-phosphate(2-)
+M915	[Enzyme]-S-sulfanylcysteine
+M916	C15813
+M917	C15814
+M918	[Enzyme]-cysteine
+M919	2-Methyl-4-amino-5-hydroxymethylpyrimidine diphosphate
+M920	4-amino-2-methyl-5-phosphonatomethylpyrimidine(2-)
+M921	1-deoxy-L-glycero-tetrulose 4-phosphate
+M922	flavin mononucleotide
+M923	riboflavin
+M924	2,5-diamino-4-hydroxy-6-(5-phosphonatoribosylamino)pyrimidine(3-)
+M925	5-amino-6-(5-phospho-D-ribosylamino)uracil
+M926	5-amino-6-(5-phospho-D-ribitylamino)uracil
+M927	6,7-dimethyl-8-(1-D-ribityl)lumazine
+M928	5-amino-6-(D-ribitylamino)uracil
+M929	FMNH2
+M930	5,6-dimethylbenzimidazole
+M931	pyridoxaminium(1+)
+M932	pyridoxal
+M933	pyridoxamine 5'-phosphate(1-)
+M934	pyridoxal 5'-phosphate
+M935	pyridoxine 5'-phosphate(2-)
+M936	pyridoxine
+M937	4-(phosphonooxy)-L-threonine
+M938	4-hydroxy-L-threonine
+M939	(2S)-2-amino-3-oxo-4-(phosphonatooxy)butanoate
+M940	(R)-3-hydroxy-2-oxo-4-(phosphonatoooxy)butanoate
+M941	4-O-phosphonato-D-erythronate(3-)
+M942	3-ammonio-2-oxopropyl phosphate(1-)
+M943	deamido-NAD(2-)
+M944	nicotinate beta-D-ribonucleotide
+M945	Iminoaspartate
+M946	quinolinate(2-)
+M947	maleamate
+M948	6-hydroxynicotinate
+M949	pyridine-2,5-diol
+M950	beta-D-ribosylnicotinate
+M951	nicotinate
+M952	beta-nicotinamide D-ribonucleotide
+M953	beta-nicotinamide D-riboside
+M954	nicotinamide
+M955	N-formylmaleamate
+M956	3'-dephospho-CoA(2-)
+M957	D-pantetheine 4'-phosphate
+M958	pantetheine
+M959	N-[(R)-4-phosphonatopantothenoyl]-L-cysteinate
+M960	N-[(R)-pantothenoyl]-L-cysteinate
+M961	(R)-4'-phosphopantothenate
+M962	2-dehydropantoate
+M963	biotinyl-5'-AMP
+M964	Apo-[carboxylase]
+M965	biotin
+M966	dethiobiotin(1-)
+M967	e(-)
+M968	a sulfur acceptor
+M969	5'-deoxyadenosine
+M970	7,8-diaminononanoate cation
+M971	8-amino-7-oxononanoic acid zwitterion
+M972	S-adenosyl-4-methylthio-2-oxobutanoate
+M973	pimeloyl-CoA(5-)
+M974	Pimelyl-[acyl-carrier protein]
+M975	Pimelyl-[acyl-carrier protein] methyl ester
+M976	Malonyl-[acp] methyl ester
+M977	3-Ketoglutaryl-[acp] methyl ester
+M978	3-Hydroxyglutaryl-[acp] methyl ester
+M979	Enoylglutaryl-[acp] methyl ester
+M980	3-Ketopimeloyl-[acp] methyl ester
+M981	Glutaryl-[acp] methyl ester
+M982	3-Hydroxypimeloyl-[acp] methyl ester
+M983	Enoylpimeloyl-[acp] methyl ester
+M984	Lipoyl-[acp]
+M985	a [lipoyl-carrier protein] N6-lipoyl-L-lysine
+M986	apoprotein
+M987	Protein N6-(octanoyl)lysine
+M988	4-amino-4-deoxychorismate(1-)
+M989	4-aminobenzoate
+M990	Tetrahydrofolyl-[Glu](n)
+M991	a tetrahydrofolate-glutamate
+M992	7,8-dihydropteroate
+M993	2-Amino-4-hydroxy-6-hydroxymethyl-7,8-dihydropteridine diphosphate
+M994	2-amino-6-(hydroxymethyl)-7,8-dihydropteridin-4-ol
+M995	7,8-dihydroneopterin
+M996	glycolaldehyde
+M997	7,8-dihydroneopterin 3'-triphosphate(4-)
+M998	2,5-Diamino-6-(5'-triphosphoryl-3',4'-trihydroxy-2'-oxopentyl)- amino-4-oxopyrimidine
+M999	triaminopyrimidine triphosphate
+M1000	Formamidopyrimidine nucleoside triphosphate
+M1001	6-pyruvoyl-5,6,7,8-tetrahydropterin
+M1002	cyclic pyranopterin monophosphate hydrate
+M1003	Molybdopterin
+M1004	6-carboxy-5,6,7,8-tetrahydropterin
+M1005	7-carboxy-7-deazaguanine
+M1006	7-cyano-7-deazaguanine
+M1007	7-ammoniomethyl-7-deazaguanine
+M1008	4-amino-6-chloro-1,3,5-triazin-2-ol
+M1009	ammelide
+M1010	4-ethylamino-6-isopropylamino-1,3,5-triazin-2-ol
+M1011	N-isopropylammelide
+M1012	ethylamine
+M1013	protoporphyrinogen(2-)
+M1014	coproporphyrinogen III(4-)
+M1015	heme b
+M1016	Farnesyl diphosphate
+M1017	ferroheme o
+M1018	Fe(2+)
+M1019	Protoporphyrin
+M1020	Mg(2+)
+M1021	Mg-protoporphyrin
+M1022	uroporphyrinogen III(8-)
+M1023	preuroporphyrinogen(8-)
+M1024	dihydrosirohydrochlorin
+M1025	uroporphyrinogen I
+M1026	coproporphyrinogen I
+M1027	porphobilinogen(1-)
+M1028	5-aminolevulinate
+M1029	(S)-4-amino-5-oxopentanoic acid zwitterion
+M1030	L-glutamyl-tRNA(Glu)
+M1031	tRNA(Glu)
+M1032	siroheme
+M1033	sirohydrochlorin
+M1034	cobalt-factor III
+M1035	cobalt-sirohydrochlorin
+M1036	cobalt-precorrin 4
+M1037	cobalt-precorrin 3
+M1038	cobalt-precorrin 5
+M1039	cobalt-precorrin-6A
+M1040	cobalt-dihydro-precorrin 6
+M1041	precorrin-3A(7-)
+M1042	precorrin-3B(7-)
+M1043	precorrin-4(8-)
+M1044	precorrin-5(8-)
+M1045	precorrin-6A
+M1046	precorrin-6B
+M1047	precorrin-8X(7-)
+M1048	hydrogenobyrinate
+M1049	hydrogenobyrinate a,c-diamide
+M1050	Co(2+)
+M1051	cob(II)yrinic acid a,c diamide(4-)
+M1052	cob(II)yrinate(6-)
+M1053	cobalt-precorrin-8X
+M1054	Cob(I)yrinate a,c diamide
+M1055	adenosylcob(III)yrinate a,c-diamide
+M1056	adenosylcobyrate
+M1057	cob(I)inamide
+M1058	adenosylcobinamide
+M1059	adenosylcobinamide phosphate(1-)
+M1060	adenosylcobinamide-GDP
+M1061	adenosylcobalamin
+M1062	alpha-ribazole
+M1063	alpha-ribazole 5'-phosphate(2-)
+M1064	heme a
+M1065	(2R)-2-hydroxypropylammonium
+M1066	(R)-1-ammoniopropan-2-yl phosphate(1-)
+M1067	Cobalt-precorrin 5B
+M1068	2-C-methyl-D-erythritol 4-phosphate(2-)
+M1069	4-CDP-2-C-methyl-D-erythritol(2-)
+M1070	4-CDP-2-C-methyl-D-erythritol 2-phosphate
+M1071	2-C-methyl-D-erythritol 2,4-cyclic diphosphate(2-)
+M1072	1-hydroxy-2-methyl-2-(E)-butenyl 4-diphosphate
+M1073	(R)-mevalonate
+M1074	Dimethylallyl diphosphate
+M1075	Isopentenyl diphosphate
+M1076	Geranyl diphosphate
+M1077	Geranylgeranyl diphosphate
+M1078	perillyl aldehyde
+M1079	perillate
+M1080	3-Hydroxy-2,6-dimethyl-5-methylene-heptanoyl-CoA
+M1081	trans-2-Methyl-5-isopropylhexa-2,5-dienoyl-CoA
+M1082	cis-2-Methyl-5-isopropylhexa-2,5-dienoyl-CoA
+M1083	lutein
+M1084	alpha-cryptoxanthin
+M1085	3'-hydroxyechinenone
+M1086	echinenone
+M1087	adonirubin
+M1088	canthaxanthin
+M1089	astaxanthin
+M1090	adonixanthin
+M1091	zeaxanthin
+M1092	beta-cryptoxanthin
+M1093	all-trans-beta-carotene
+M1094	zeinoxanthin
+M1095	alpha-carotene
+M1096	nitrite
+M1097	nitroethane
+M1098	carbamate
+M1099	isocyanic acid
+M1100	cystathionine
+M1101	adenosine 3',5'-bisphosphate
+M1102	6-oxohexanoate
+M1103	adipate(2-)
+M1104	L-isoleucyl-tRNA(Ile)
+M1105	tRNA(Ile)
+M1106	L-histidyl-tRNA(His)
+M1107	tRNA(His)
+M1108	L-phenylalanyl-tRNA(Phe)
+M1109	tRNA(Phe)
+M1110	Arg-tRNA(Arg)
+M1111	tRNA(Arg)
+M1112	Gln-tRNA(Gln)
+M1113	tRNA(Gln)
+M1114	tRNA(Cys)
+M1115	L-cysteinyl-tRNA(Cys)
+M1116	glycyl-tRNA(Gly)
+M1117	tRNA(Gly)
+M1118	tRNA(Asp)
+M1119	L-aspartyl-tRNA(Asn)
+M1120	L-seryl-tRNA(Ser)
+M1121	tRNA(Ser)
+M1122	L-valyl-tRNA(Val)
+M1123	tRNA(Val)
+M1124	Ala-tRNA(Ala)
+M1125	tRNA(Ala)
+M1126	
+M1127	L-lysyl-tRNA(Lys)
+M1128	Leu-tRNA(Leu)
+M1129	tRNA(Leu)
+M1130	L-threonyl-tRNA(Thr)
+M1131	tRNA(Thr)
+M1132	L-tryptophyl-tRNA(Trp)
+M1133	tRNA(Trp)
+M1134	L-tyrosyl-tRNA(Tyr)
+M1135	tRNA(Tyr)
+M1136	L-prolyl-tRNA(Pro)
+M1137	tRNA(Pro)
+M1138	Asn-tRNA(Asn)
+M1139	tRNA(Sec)
+M1140	(2E,6Z,9Z,12Z,15Z,18Z)-Tetracosahexa-2,6,9,12,15,18-enoyl-CoA
+M1141	(6Z,9Z,12Z,15Z,18Z)-3-Hydroxytetracosapenta-6,9,12,15,18-enoyl-CoA
+M1142	stearoyl-CoA(4-)
+M1143	stearate
+M1144	oleoyl-CoA(4-)
+M1145	oleate
+M1146	3-oxooctadecanoyl-CoA(4-)
+M1147	3-hydroxyoctadecanoyl-CoA(4-)
+M1148	(2E,6Z,9Z,12Z,15Z,18Z,21Z)-Tetracosahepta-2,6,9,12,15,18,21-enoyl- CoA
+M1149	(6Z,9Z,12Z,15Z,18Z,21Z)-3-Hydroxytetracosahexa-6,9,12,15,18,21- enoyl-CoA
+M1150	a nitrile
+M1151	aldoxime
+M1152	N-acetyl-D-mannosamine-6-phosphate
+M1153	N-acetylneuraminate-9-phosphate
+M1154	nitric oxide
+M1155	5-formimidoyltetrahydrofolate(2-)
+M1156	N,N-dimethylglycine zwitterion
+M1157	sedoheptulose 1,7-bisphosphate(4-)
+M1158	a quinol
+M1159	a quinone
+M1160	polynucleotide
+M1161	tRNA containing 6-isopentenyladenosine
+M1162	4-hydroxycinnamyl alcohol
+M1163	p-hydroxyphenyl lignin
+M1164	coniferol
+M1165	guaiacyl lignin
+M1166	sinapyl alcohol
+M1167	syringal lignin
+M1168	a reduced cytochrome cL
+M1169	Cytochrome cL
+M1170	2-methylserine zwitterion
+M1171	retinal
+M1172	all-trans-retinol
+M1173	an oligophosphate
+M1174	salicylate
+M1175	isochorismate(2-)
+M1176	cis-beta-D-glucosyl-2-hydroxycinnamate
+M1177	cis-2-coumarate
+M1178	1-deoxy-1-imino-D-erythrose 4-phosphate
+M1179	3-amino-3-deoxy-D-fructose 6-phosphate
+M1180	5-chlorohydroxyquinol
+M1181	2,5-dichloro-p-quinol
+M1182	cob(I)alamin
+M1183	Methylcobalamin
+M1184	H2
+M1185	3-phenylphenol
+M1186	(S)-malyl-CoA
+M1187	4-Carboxy-2-hydroxymuconate semialdehyde
+M1188	2-hydroxyphytanoyl-CoA(4-)
+M1189	phytanoyl-CoA(4-)
+M1190	acetoin
+M1191	an unsulfurated sulfur acceptor
+M1192	2-methylthio-N-6-isopentyl adenosine-37 tRNA
+M1193	N-6-isopentyl adenosine-37 tRNA
+M1194	S-sulfanyl-[acceptor]
+M1195	a 2-hydroxy-3-methyl-branched 2,3,4-saturated fatty acyl-CoA
+M1196	a 3-methyl-branched 2,3,4-saturated fatty acyl-CoA
+M1197	4-methyl-3-oxoadipyl-CoA
+M1198	4-methyl-3-oxoadipate
+M1199	succinyl-CoA
+M1200	a protein with correct disulfide bonds
+M1201	a protein with incorrect disulfide bonds
+M1202	phenol
+M1203	aryl sulfate
+M1204	a nucleoside monophosphate
+M1205	ribonucleoside
+M1206	UDP-N-acetylmuramoyl-L-alanyl-Œ≥-D-glutamyl-L-lysyl-D-alanine
+M1207	N-acetylmuramoyl-L-alanyl-Œ≥-D-glutamyl-L-lysyl- D-alanyl-diphosphoundecaprenol
+M1208	UDP-N-acetylmuramoyl-L-alanyl-gamma-D-glutamyl-L-lysyl-D-alanyl-D-alanine(3-)
+M1209	acetoacetyl-CoA
+M1210	a [2-oxoglutarate dehydrogenase E2 protein] N6-dihydrolipoyl-L-lysine
+M1211	a [2-oxoglutarate dehydrogenase E2 protein] N6-S-succinyldihydrolipoyl-L-lysine
+M1212	a [2-oxoglutarate dehydrogenase E2 protein] N6-lipoyl-L-lysine
+M1213	3-oxo monocarboxylic acid
+M1214	3-oxo-fatty acyl-CoA(4-)
+M1215	L-glutamine residue
+M1216	an ubiquinol
+M1217	L-2-amino-3-oxobutanoate
+M1218	N-acetylmuramoyl-L-alanyl-D-glutamyl-L-lysyl-D-alanine-diphosphoundecaprenyl-N-acetylglucosamine
+M1219	thiamine(1+)
+M1220	an oxidized electron-transfer flavoprotein
+M1221	lipoamide
+M1222	(R)-dihydrolipoamide
+M1223	an [apo BCAA dehydrogenase E2 protein] N6-lipoyl-L-lysine
+M1224	an [apo BCAA dehydrogenase E2 protein] N6-dihydrolipoyl-L-lysine
+M1225	N-acetylglucosamine--N-acetylmuramyl-(pentapeptide) pyrophosphoryl-decaprenol
+M1226	N-acetylmuramoyl-pentapeptide-diphospho-decaprenol
+M1227	[protein]-disulfide
+M1228	[protein]-dithiol
+M1229	a [pyruvate dehydrogenase E2 protein] N6-lipoyl-L-lysine
+M1230	a [pyruvate dehydrogenase E2 protein] N6-dihydrolipoyl-L-lysine
+M1231	isobutyraldehyde
+M1232	trans-aconitate(3-)
+M1233	(2E)-3-(methoxycarbonyl)pent-2-enedioate(2-)
+M1234	a reduced c-type cytochrome
+M1235	Allantoin
+M1236	urate
+M1237	a medium-chain 2,3,4-saturated fatty acyl CoA
+M1238	a medium-chain trans-2,3-dehydroacyl-CoA
+M1239	a 2,3,4-saturated fatty acyl CoA
+M1240	a trans-2-enoyl-CoA
+M1241	a [lipoyl-carrier protein] N6-dihydrolipoyl-L-lysine
+M1242	a protein-L-tyrosine phosphate
+M1243	a [protein]-L-tyrosine
+M1244	a [glycine-cleavage complex H protein] N6-lipoyl-L-lysine
+M1245	a [glycine-cleavage complex H protein] N6-dihydrolipoyl-L-lysine
+M1246	RNA
+M1247	a 3' phosphooligonucleotide
+M1248	nucleoside 3'-phosphate
+M1249	a phospholipid cyclopropane fatty acid
+M1250	a phospholipid olefinic fatty acid
+M1251	RNase E degradation substrate mRNA
+M1252	a single-stranded RNA
+M1253	a polycistronic tRNA precursor
+M1254	a tRNA precursor with a 5' extension and a long 3' trailer
+M1255	aldehydo-D-ribose
+M1256	RNase E mRNA processing substrate
+M1257	RNase E processing product mRNA
+M1258	a tRNA precursor with a 5' extension and a short 3' extension
+M1259	œâ, mono-trans,octa-cis-decaprenyl diphosphate
+M1260	a peptidoglycan dimer (mycobacteria)
+M1261	5S rRNA
+M1262	9S rRNA
+M1263	a peptidoglycan with D,D cross-links  (mycobacteria)
+M1264	a peptidoglycan with L,D cross-links  (mycobacteria)
+M1265	(Z)-15-tetracosenoyl-CoA
+M1266	nervonate
+M1267	trans,octacis-decaprenyl phosphate
+M1268	3,22-dioxochol-4-en-24-oyl-CoA
+M1269	3-oxo-23,24-bisnorchol-4-en-22-oyl-CoA
+M1270	RNase G degradation substrate mRNA
+M1271	pristanate
+M1272	pristanoyl-CoA
+M1273	malonyl-CoA
+M1274	phytenate: C20H37O2
+M1275	phytenoyl-CoA: C41H68N7O17P3S
+M1276	a biotinylated [BCCP dimer]
+M1277	a carboxylated-biotinylated [BCCP dimer]
+M1278	octanoate
+M1279	an N10-formyl-tetrahydrofolate
+M1280	butyrate
+M1281	1,2-dibutyrin
+M1282	tributyrin
+M1283	a straight chain 2,3,4-saturated fatty acyl CoA
+M1284	a straight chain 2,3,4-saturated fatty acid
+M1285	a dietary all-trans-retinyl ester
+M1286	a 5,10-methylene-tetrahydrofolate
+M1287	selenodiglutathione(2-)
+M1288	glutathioselenol(1-)
+M1289	eicosapentaenoyl-CoA
+M1290	all-cis-5,8,11,14,17-icosapentaenoate
+M1291	4-oxobutanoate
+M1292	4-hydroxybenzoyl-acetyl-CoA
+M1293	3-oxocholest-4-en-26-oate
+M1294	3-oxocholest-4-en-26-oyl-CoA
+M1295	divinyl protochlorophyllide a
+M1296	131-oxo-magnesium-protoporphyrin IX 13-monomethyl ester
+M1297	Œ±-linolenoyl-CoA
+M1298	alpha-linolenate
+M1299	magnesium-protoporphyrin IX 13-monomethyl ester
+M1300	131-hydroxy-magnesium-protoporphyrin IX 13-monomethyl ester
+M1301	chlorophyllide a
+M1302	monovinyl protochlorophyllide a
+M1303	3-[(3aS,4S,7aS)-7a-methyl-1,5-dioxo-octahydro-1H-inden-4-yl]propanoyl-CoA
+M1304	9,17-dioxo-1,2,3,4,10,19-hexanorandrostan-5-oate
+M1305	protein polypeptide chain
+M1306	a 3-methyl-branched 2,3,4-saturated fatty acid
+M1307	a menaquinone
+M1308	a menaquinol
+M1309	a peptide with a leader sequence
+M1310	a leader sequence
+M1311	linoleoyl-CoA(4-)
+M1312	linoleate
+M1313	RNase III mRNA processing substrate
+M1314	RNase III processing product mRNA
+M1315	a 2-methyl branched 2,3,4-saturated fatty acid: 
+M1316	a 2-methyl branched 2,3,4-saturated fatty acyl-CoA: 
+M1317	a protein N-phospho-L-histidine
+M1318	a [protein]-L-histidine
+M1319	caprate
+M1320	5-dehydro-4-deoxy-D-glucuronate
+M1321	4-deoxy-Œ≤-L-threo-hex-4-enopyranuronose
+M1322	a 2,3,4-saturated fatty acid
+M1323	an oligosaccharides with 4-deoxy-Œ±-D-gluc-4-enuronosyl end
+M1324	an uncharged tRNA
+M1325	a tRNA precursor with a short 3' extension
+M1326	4-hydroxy-2-nonenal-[Cys-Gly] conjugate
+M1327	4-hydroxy-2-nonenal-[L-Cys] conjugate
+M1328	a tRNA precursor with a 5' extension
+M1329	[lipoamide acyltransferase] N6-S-[2-methylbutanoyl]dihydrolipoyl-L-lysine
+M1330	a [Cys-Gly]-S-conjugate
+M1331	oxalyl-CoA(5-)
+M1332	oxalate(2-)
+M1333	an [apo BCAA dehydrogenase E2 protein] N6-S-[2-methylpropanoyl]dihydrolipoyl-L-lysine
+M1334	formyl-CoA
+M1335	polypeptide
+M1336	peptidyl-glutamate
+M1337	a protein-L-glutamate--O5-methyl-ester
+M1338	a [apo BCAA dehydrogenase E2 protein] N6-S-[3-methylbutanoyl]dihydrolipoyl-L-lysine
+M1339	beta-lactam
+M1340	a substituted Œ≤-amino acid
+M1341	a phosphoprotein
+M1342	N2-methylguanine2445 in 23S rRNA
+M1343	guanine2445 in 23S rRNA
+M1344	alpha-D-galactose 1-phosphate(2-)
+M1345	hexadecanedioyl-CoA: C37H60N7O19P3S
+M1346	1-C16:0-DCA-2-LPA: C19H35O9P
+M1347	glycerol 1-phosphodiester
+M1348	a D-amino acid
+M1349	a 2-oxocarboxylate
+M1350	acyl-[acyl-carrier protein]
+M1351	(S)-4,5-dihydroxypentane-2,3-dione
+M1352	alpha-D-galactose
+M1353	a methylated methyl acceptor
+M1354	a demethylated methyl acceptor
+M1355	a uridylylated PII protein
+M1356	a PII protein
+M1357	urea-1-carboxylate
+M1358	10-formyltetrahydrofolate-4a-carbinolamine: C20H21N7O8
+M1359	tRNA containing 5,6-dihydrouridine
+M1360	a tRNA precursor
+M1361	a protein with N-terminal methionine
+M1362	4a-hydroxytetrahydrobiopterin
+M1363	q-10-formyldihydrofolate: C20H19N7O7
+M1364	ferrocytochrome b1
+M1365	ferricytochrome b1
+M1366	7,8-dihydrobiopterin
+M1367	D-proline zwitterion
+M1368	a CDP-2,3,4-saturated-diacylglycerol
+M1369	long chain polyphosphate
+M1370	a debranched limit dextrin
+M1371	a limit dextrin with short branches
+M1372	a reduced hydrogenase 3
+M1373	an oxidized hydrogenase 3
+M1374	monocarboxylic acid amide
+M1375	a [glycine-cleavage complex H protein] N6-aminomethyldihydrolipoyl-L-lysine
+M1376	an (3R)-3-hydroxymyristoyl-[acp]
+M1377	a protein containing methylthiolated aspartate
+M1378	a RNA-DNA hybrid
+M1379	apo-[acyl-carrier protein]
+M1380	3-cyanopyridine
+M1381	formyl-L-methionyl peptide
+M1382	methionyl peptide
+M1383	fatty amide
+M1384	a phosphorylated isocitrate dehydrogenase
+M1385	an isocitrate dehydrogenase
+M1386	oligopeptide
+M1387	N-acetyl-L-aspartate(2-)
+M1388	2-aminobut-2-enoate: C4H6NO2
+M1389	peptidylproline (œâ = 180)
+M1390	peptidylproline (œâ = 0)
+M1391	N-acyl-L-aspartic acid
+M1392	(Z)-phenylacetaldoxime
+M1393	laurate
+M1394	semiquinone
+M1395	5-methoxy-2-methyl-3-octaprenylhydroquinone
+M1396	6-methoxy-2-octaprenylhydroquinone
+M1397	alkyl hydroperoxide
+M1398	carbon monoxide
+M1399	cystine zwitterion
+M1400	2'-deoxyribonucleoside triphosphate
+M1401	a tRNA pseudouridine38-40
+M1402	a tRNA uridine38-40
+M1403	peptide-3-hydroxy-L-aspartate
+M1404	a [protein]-L-aspartate
+M1405	phosphate monoester (0)
+M1406	a 3' half-tRNA molecule with a hydroxyl on its 5' end
+M1407	a ligated tRNA
+M1408	4-methylphenol
+M1409	a ThiI sulfur-carrier protein
+M1410	a thiocarboxy-adenylated-[ThiS-Protein]
+M1411	a [ThiI sulfur-carrier protein]-S-sulfanylcysteine
+M1412	a carboxy-adenylated-[ThiS sulfur-carrier protein]
+M1413	a protein L-Œ≤-isoaspartate Œ±-methyl ester
+M1414	a [protein]-L-Œ≤-isoaspartate
+M1415	a stearoyl-[acp]
+M1416	a trans-octadec-2-enoyl-[acp]
+M1417	DNA combined with exogenous DNA to form a recombinational junction
+M1418	resolution of recombinational junction formation of two intact strands
+M1419	a trans tetradec-2-enoyl-[acp]
+M1420	a myristoyl-[acp]
+M1421	a trans hexadecenoyl-[acp]
+M1422	a palmitoyl-[acp]
+M1423	a trans-2-enoyl-[acyl-carrier protein]
+M1424	a 2,3,4-saturated fatty acyl-[acp]
+M1425	an AP(apurinic or apyrimidinic) site created by glycosylic bond cleavage
+M1426	a damaged DNA (purine or pyrimidine)
+M1427	precorrin-3B
+M1428	2,6-diamino-5-formamido-4-hydroxypyrimidine
+M1429	a DNA containing ring-opened 7-methylguanine
+M1430	unknown
+M1431	2-deoxy-alpha-D-ribose 1-phosphate(2-)
+M1432	a crotonyl-[acp]
+M1433	a (R)-3-hydroxybutanoyl-[acp]
+M1434	N7-methylguanine46 in tRNA
+M1435	guanine46 in tRNA
+M1436	a trans dodec-2-enoyl-[acp]
+M1437	2'-deoxyribonucleoside diphosphate
+M1438	a trans-Œî2-decenoyl-[acp]
+M1439	an (R)-3-hydroxydecanoyl-[acp]
+M1440	cobalt-precorrin-7
+M1441	a trans hex-2-enoyl-[acp]
+M1442	a hexanoyl-[acp]
+M1443	beta-D-ribopyranose
+M1444	cobalt-precorrin-6B
+M1445	a trans oct-2-enoyl-[acp]
+M1446	an octanoyl-[acp]
+M1447	cobalt-precorrin-2
+M1448	precorrin-2(7-)
+M1449	a (3R)-3-hydroxyacyl-[acyl-carrier protein]
+M1450	cobyrinate
+M1451	a decanoyl-[acp]
+M1452	cobalt-precorrin-5A
+M1453	a (R)-3-hydroxydodecanoyl-[acp]
+M1454	adenosylcobalamin 5'-phosphate
+M1455	biliverdin(2-)
+M1456	an (R)-3-hydroxypalmitoyl-[acp]
+M1457	a butyryl-[acp]
+M1458	an agarose
+M1459	neoagarotetraose
+M1460	neoagarohexaose
+M1461	peptidoglycan
+M1462	a neoagaro-oligosaccharide
+M1463	a peptidoglycan dimer (tetrapeptide)
+M1464	N-acetylmuramoyl-L-alanyl-D-isoglutaminyl-N-(Œ≤-D-asparaginyl)-L-lysyl-D-alanine-diphosphoundecaprenyl-N-acetylglucosamine
+M1465	an (R)-3-hydroxyhexanoyl-[acp]
+M1466	neoagarobiose
+M1467	a (R)-3-hydroxystearoyl-[acp]
+M1468	a malonyl-[acp]
+M1469	a peptidoglycan dimer (S. aureus)
+M1470	undecaprenyldiphospho-N-acetyl-(N-acetylglucosaminyl)muramoyl-L-alanyl-D-isoglutaminyl-(glycyl)5-L-lysyl-D-alanyl-D-alanine
+M1471	a (R)-3-hydroxyoctanoyl-[acp]
+M1472	a peptidoglycan dimer (meso-diaminopimelate containing)
+M1473	cis,cis-2-amino-3-(3-oxoprop-1-enyl)but-2-enedioate
+M1474	a peptidoglycan dimer (E. faeciums)
+M1475	N-acetylmuramoyl-L-alanyl-D-isoglutaminyl-N-(Œ≤-D-asparaginyl)-L-lysyl-D-alanyl-D-alanine-diphosphoundecaprenyl-N-acetylglucosamine
+M1476	O-phosphonato-L-threonine(2-)
+M1477	(KDO)2-(palmitoleoyl-myristoyl)-lipid A
+M1478	(KDO)2-(palmitoleoyl)-lipid IVA
+M1479	a DNA containing a apyrimidinic site
+M1480	a damaged DNA pyrimidine
+M1481	a palmitoleoyl-[acp]
+M1482	Kdo2-lipid A(6-)
+M1483	a 3'-terminal unsaturated sugar
+M1484	a 5'-phosphopolynucleotide
+M1485	a DNA containing abasic site
+M1486	a purine diphosphate
+M1487	a purine triphosphate
+M1488	a [ThiI sulfur-carrier protein]-L-cysteine
+M1489	a [lipoyl-carrier protein] N6-octanoyl-L-lysine
+M1490	an L-cysteine desulfurase
+M1491	an [L-cysteine desulfurase]-S-sulfanyl-L-cysteine
+M1492	a biotinylated [BCCP monomer]
+M1493	canavaninosuccinate
+M1494	O-ureidohomoserine
+M1495	an epoxyqueuosine34 in tRNA
+M1496	a 7-aminomethyl-7-deazaguanosine34 in tRNA
+M1497	1D-myo-inositol (2) monophosphate
+M1498	tRNA containing 5-methylaminomethyl-2-thiouridylate
+M1499	tRNA containing 5-methylaminomethyl-2-selenouridine
+M1500	ubiquinol-8
+M1501	an oxidized flavodoxin
+M1502	a reduced flavodoxin
+M1503	Œ±-D-galactosyl-diphosphoundecaprenol
+M1504	an oxidized NrdH glutaredoxin-like protein
+M1505	a reduced NrdH glutaredoxin-like protein
+M1506	an electron-transfer-related quinol
+M1507	an electron-transfer-related quinone
+M1508	2,3-dehydroadipyl-CoA
+M1509	a 3-oxo-stearoyl-[acp]
+M1510	ubiquinol-10
+M1511	3-demethylubiquinol-10
+M1512	a cis,cis-delta15,33-3-oxo-C52:2-[acp]
+M1513	a cis,cis-delta15,33-3-hydroxy C52:2-[acp]
+M1514	limit dextrin
+M1515	glycogen
+M1516	a cis,cis-delta5,23-3-oxo-C42:2-[acp]
+M1517	a cis,cis-delta5,23-3-hydroxyC42:2-[acp]
+M1518	a cis-Œî3-decenoyl-[acp]
+M1519	(R)-2-hydroxyglutarate
+M1520	a 3-oxo-cis-Œî5-dodecenoyl-[acp]
+M1521	a long-linear glucan
+M1522	a trans-Œî3-cis-Œî5-dodecenoyl-[acp]
+M1523	a 3R-hydroxy cis Œî5-dodecenoyl-[acp]
+M1524	a [protein]-N5-methyl-L-glutamine
+M1525	a [protein]-L-glutamine
+M1526	3-demethylubiquinol-8
+M1527	a 3-oxo-behenoyl-[acp]
+M1528	a (R)-3-hydroxybehenoyl-[acp]
+M1529	a cis-Œî5-dodecenoyl-[acp]
+M1530	ADP-D-ribosyl-(dinitrogen reductase)
+M1531	a dinitrogen reductase
+M1532	beta-maltose
+M1533	a linear malto-oligosaccharide
+M1534	a 3-oxoacyl-[acp]
+M1535	3-coumarate
+M1536	2,3-dihydroxy-trans-cinnamate
+M1537	a demethylated ubiquinol
+M1538	2-hydroxy-6-ketononatrienedioate
+M1539	a 3-oxo-pimelyl-[acp] methyl ester
+M1540	a 3R-hydroxypimelyl-[acp] methyl ester
+M1541	cyclobutadipyrimidine
+M1542	DNA-Adjacent-Pyrimidines
+M1543	cyanuric acid
+M1544	isopropylaminium
+M1545	a cis,cis-delta7,19-3-oxo-C38:2-[acp]
+M1546	a cis,cis-delta7,19-3-hydroxyC38:2-[acp]
+M1547	single-stranded DNA
+M1548	a single-stranded oligodeoxyribonucleotide
+M1549	ubiquinol-7
+M1550	3-demethylubiquinol-7
+M1551	alpha-maltotriose
+M1552	alpha-maltotetraose
+M1553	a cis,cis-delta21,39-3-oxo-C58:2-[acp]
+M1554	a cis,cis-delta21,39-3-hydroxyC58:2-[acp]
+M1555	a cis,cis-delta11,29-3-oxo-C48:2-[acp]
+M1556	a cis,cis-delta11,29-3-hydroxy C48:2-[acp]
+M1557	deoxyribonucleotide
+M1558	(deoxynucleotides)(m)
+M1559	ubiquinol-9
+M1560	3-demethylubiquinol-9
+M1561	a cis,cis-delta19,31-3-oxo-C50:2-[acp]
+M1562	a cis,cis-delta19,31-3-hydroxyC50:2-[acp]
+M1563	a trans-docos-2-enoyl-[acp]
+M1564	L-saccharopine
+M1565	allysine zwitterion
+M1566	tRNA(Asn)
+M1567	a 3-oxo-cis-Œî7-tetradecenoyl-[acp]
+M1568	a 3R-hydroxy cis Œî7-tetradecenoyl-[acp]
+M1569	propanoyl-CoA
+M1570	a (R)-3-hydroxycerotoyl-[acp]
+M1571	a trans-hexacos-2-enoyl-[acp]
+M1572	ubiquinol-6
+M1573	3-demethylubiquinol-6
+M1574	3-hydroxypropanoate
+M1575	N-substituted aminoacyl-tRNA
+M1576	an N-substituted amino acid
+M1577	a 3-oxo-cis-vaccenoyl-[acp]
+M1578	a (R)-3-hydroxy-cis-vaccenoyl-[acp]
+M1579	a cis,cis-delta13,25-3-oxo-C44:2-[acp]
+M1580	a cis,cis-delta13,25-3-hydroxyC44:2-[acp]
+M1581	an alkylated nucleobase
+M1582	an alkylated DNA
+M1583	an alkylamine
+M1584	a cis-delta19-3-oxo-C38:1-[acp]
+M1585	a cis-delta19-3-hydroxyC38:1-[acp]
+M1586	a cis-delta21-3-oxo-C40:1-[acp]
+M1587	a cis-delta21-3-hydroxyC40:1-[acp]
+M1588	oxalurate
+M1589	oxamate
+M1590	a 3-oxo-palmitoyl-[acp]
+M1591	4-hydroxynon-2-enal
+M1592	4-hydroxy-2-nonenal-glutathione conjugate
+M1593	reduced riboflavin
+M1594	a cis-delta11-3-oxo-C30:1-[acp]
+M1595	a cis-delta11-3-hydroxyC30:1-[acp]
+M1596	a cis-delta9-3-oxo-C28:1-[acp]
+M1597	a cis-delta9-3-hydroxyC28:1-[acp]
+M1598	a cis,cis-delta17,29-3-oxo-C48:2-[acp]
+M1599	a cis,cis-delta17,29-3-hydroxyC48:2-[acp]
+M1600	a 3-oxo-glutaryl-[acp] methyl ester
+M1601	a 3R-hydroxyglutaryl-[acp] methyl ester
+M1602	2,4-dinitrophenyl-S-glutathione
+M1603	1-chloro-2,4-dinitrobenzene
+M1604	a 3-oxo-petroslinoyl-[acp]
+M1605	a (R)-3-hydroxypetroselinoyl-[acp]
+M1606	a cleaved type IV prepillin
+M1607	a type IV prepillin
+M1608	a cis-delta13-3-oxo-C32:1-[acp]
+M1609	a cis-delta13-3-hydroxyC32:1-[acp]
+M1610	hnu
+M1611	a cis-delta15-3-oxo-C34:1-[acp]
+M1612	a cis-delta15-3-hydroxyC34:1-[acp]
+M1613	a cis,cis-delta19,37-3-oxo-C56:2-[acp]
+M1614	a cis,cis-delta19,37-3-hydroxy-C56:2-[acp]
+M1615	HX
+M1616	a glutathione-toxin conjugate
+M1617	a L-prolyl peptide
+M1618	S-methyl-L-methionine zwitterion
+M1619	a cis,cis-delta15,27-3-oxo-C46:2-[acp]
+M1620	a cis,cis-delta15,27-3-hydroxyC46:2-[acp]
+M1621	a cis,cis-delta9,27-3-oxo-C46:2-[acp]
+M1622	a cis,cis-delta9,27-3-hydroxyC46:2-[acp]
+M1623	a cis-delta7-3-oxo-C26:1-[acp]
+M1624	a cis-delta7-3-hydroxyC26:1-[acp]
+M1625	a 3-oxo-myristoyl-[acp]
+M1626	beta-D-galactose
+M1627	a cis,cis-delta13,31-3-oxo-C50:2-[acp]
+M1628	a cis,cis-delta13,31-3-hydroxy C50:2-[acp]
+M1629	a prolipoprotein
+M1630	a cleaved lipoprotein signal peptide
+M1631	lipoprotein
+M1632	a 3-oxo-octanoyl-[acp]
+M1633	a cis,cis-delta9,21-3-oxo-C40:2-[acp]
+M1634	a cis,cis-delta9,21-3-hydroxyC40:2-[acp]
+M1635	a 3-oxo-decanoyl-[acp]
+M1636	a cis,cis-delta17,35-3-oxo-C54:2-[acp]
+M1637	a cis,cis-delta17,35-3-hydroxyC54:2-[acp]
+M1638	a cis,cis-delta5,17-3-oxo-C36:2-[acp]
+M1639	a cis,cis-delta5,17-3-hydroxyC36:2[acp]
+M1640	a supercoiled duplex DNA
+M1641	a 3-oxo-dodecanoyl-[acp]
+M1642	ethyl phosphate(2-)
+M1643	a cis,cis-delta11,23-3-oxo-C42:2-[acp]
+M1644	a cis,cis-delta11,23-3-hydroxyC42:2-[acp]
+M1645	a pimelyl-[acp]
+M1646	ferrocytochrome b5
+M1647	ferricytochrome b5
+M1648	6-methylthiopurine
+M1649	purine-6-thiol
+M1650	ethylene glycol
+M1651	agaropentaose
+M1652	3,6-anhydro-Œ±-L-galactopyranose
+M1653	agarotriose
+M1654	Œ±-L-galactopyranose-6-sulfate-(1,3)-Œ≤-D-galactose
+M1655	a porphyran
+M1656	apo-4'-lycopenoate
+M1657	apo-4'-lycopenal
+M1658	gamma-linolenate
+M1659	a protein-L-methionine-(S)-S-oxide
+M1660	L-1-piperideine-6-carboxylate
+M1661	L-2-aminoadipate
+M1662	agarobiose
+M1663	D-galactopyranose
+M1664	a (R)-3-hydroxylignoceroyl-[acp]
+M1665	a trans-tetracos-2-enoyl-[acp]
+M1666	a (R)-3-hydroxyarachidoyl-[acp]
+M1667	a trans-eicos-2-enoyl-[acp]
+M1668	a peptidoglycan with cleaved N-acetyl-glucosamine
+M1669	c-di-GMP(2-)
+M1670	palmitoleate
+M1671	a trans-Œî3-cis-Œî7-tetradecenoyl-[acp]
+M1672	a cis-Œî7-tetradecenoyl-[acp]
+M1673	a 3R-hydroxy cis Œî9-hexadecenoyl-[acp]
+M1674	a trans-Œî3-cis-Œî9-hexadecenoyl-[acp]
+M1675	a petrosel-2-enoyl-[acp]
+M1676	1-palmitoyl-sn-glycerol 3-phosphate
+M1677	dipalmitoyl phosphatidate
+M1678	phosphatidylglycerophosphate (1-octadecenoyl(9Z), 2-palmitoyl)
+M1679	1-18:1-2-16:0-phosphatidylglycerol
+M1680	a Œî4-hexadecenoyl-[acp]
+M1681	a cis-vaccen-2-enoyl-[acp]
+M1682	a cis-vaccenoyl-[acp]
+M1683	myo-inositol monophosphate
+M1684	cis-vaccenate
+M1685	hydroxylamine
+M1686	1D-myo-inositol 6-phosphate(2-)
+M1687	an oxidized cytochrome c554
+M1688	a reduced cytochrome c554
+M1689	2-acylglycerol
+M1690	a [pyruvate dehydrogenase E2 protein] N6-S-acetyldihydrolipoyl-L-lysine
+M1691	1D-myo-inositol (5)-monophosphate
+M1692	OPC6-trans-2-enoyl-CoA
+M1693	OPC6-3-hydroxyacyl-CoA
+M1694	(R)-lactaldehyde
+M1695	a guanine34 in tRNA
+M1696	3-methylthiopropanal
+M1697	3-methylthiopropanol
+M1698	OPC8-trans-2-enoyl-CoA
+M1699	OPC8-3-hydroxyacyl-CoA
+M1700	queuine
+M1701	queuosine at position 34 of a tRNA
+M1702	1,6-anhydro-N-acetyl-beta-muramate
+M1703	N-acetyl-beta-muramate 6-phosphate
+M1704	a [Co(I) corrinoid Fe-S protein]
+M1705	a [methyl-Co(III) corrinoid Fe-S protein]
+M1706	2-phenylethanol
+M1707	methylacrylyl-CoA
+M1708	3-hydroxy-2-methylpropanoyl-CoA(4-)
+M1709	4-hydroxy-L-glutamate: C5H8NO5
+M1710	3-(2,3-dihydroxyphenyl)propanoate
+M1711	spermine(4+)
+M1712	S-adenosylmethioninaminium
+M1713	ketone
+M1714	a secondary alcohol
+M1715	7,8-dihydromonapterin
+M1716	nitrate
+M1717	double-stranded DNA
+M1718	a negatively supercoiled DNA
+M1719	4-coumaroyl-CoA
+M1720	3-(4-hydroxyphenyl)-3-hydroxy-propionyl-CoA
+M1721	3-methoxy-4-hydroxyphenylglycol
+M1722	serine zwitterion
+M1723	O-phosphonatooxyserine(2-)
+M1724	a (3S)-3-hydroxyacyl-CoA
+M1725	a short RNA Segment
+M1726	peptidyl-cysteine
+M1727	phytol
+M1728	phytenal: C20H38O
+M1729	a cis-2-enoyl-CoA
+M1730	a (3R)-3-hydroxyacyl-CoA
+M1731	icosanoyl-CoA(4-)
+M1732	3-methylbutanal
+M1733	isoamylol
+M1734	OPC4-trans-2-enoyl-CoA
+M1735	OPC4-3-hydroxyacyl-CoA
+M1736	a 3-oxo-hexanoyl-[acp]
+M1737	2-methyl-3-hydroxybutyryl-CoA
+M1738	3-indoleglycolaldehyde
+M1739	indole-3-glycol
+M1740	heptosyl-Kdo2-lipid IVA
+M1741	ADP-L-glycero-beta-D-manno-heptose
+M1742	GlcNAc-1,6-anhMurNAc-L-Ala-Œ≥-D-Glu-DAP-D-Ala
+M1743	N-acetyl-Œ≤-D-glucosamine(anhydrous)-N-acetylmuramate
+M1744	L-alanyl-gamma-D-glutamyl-meso-diaminopimelate-D-alanine
+M1745	a cis-delta19-C38:1-[acp]
+M1746	N-ethylmaleimide
+M1747	N-ethylsuccinimide
+M1748	3-oxo-docosapentaenoyl-CoA
+M1749	3-hydroxy-docosapentaenoyl-CoA
+M1750	2-(4-hydroxyphenyl)ethanol
+M1751	heptosyl-Kdo2-lipid A
+M1752	N-acetylmuramate
+M1753	an acetoacetyl-[acp]
+M1754	isobutanol
+M1755	(heptosyl)2-Kdo2-lipid A
+M1756	a tRNA containing N6-dimethylallyladenosine
+M1757	3-oxo-eicosatrienoyl-CoA
+M1758	3-hydroxy-eicosatrienoyl-CoA
+M1759	a 3-oxo-cis-Œî9-hexadecenoyl-[acp]
+M1760	2,2'-disulfonyl azobenzene
+M1761	3-[(4-amino-6-chloro-1,3,5-triazin-2-yl)amino]benzenesulfonate
+M1762	Reactive Blue 5
+M1763	a cis-delta17-3-oxo-C36:1-[acp]
+M1764	a cis-delta17-3-hydroxyC36:1-[acp]
+M1765	a cis-delta7-C26:1-[acp]
+M1766	fatty aldehyde
+M1767	propan-1-ol
+M1768	a glutaryl-[acp] methyl ester
+M1769	a 3-oxo-docosapentaenoyl [acp]
+M1770	3R-hydroxy-docosapentaenoyl [acp]
+M1771	octanal
+M1772	2-methylbutanal
+M1773	2-methylbutan-1-ol
+M1774	a [biotin-carboxyl-carrier protein monomer]
+M1775	a cis-delta15-C34:1-[acp]
+M1776	a cis,cis-delta7,25-3-oxo-C44:2-[acp]
+M1777	a cis,cis-delta7,25-3-hydroxyC44:2-[acp]
+M1778	4-(dimethylamino)azobenzene
+M1779	N,N-dimethyl-1,4-phenylenediamine
+M1780	aniline
+M1781	an oxidized cytochrome c550
+M1782	a reduced cytochrome c550
+M1783	mutated tRNA
+M1784	a cis-delta5-3-oxo-C24:1-[acp]
+M1785	a cis-delta5-3-hydroxyC24:1-[acp]
+M1786	RNase II degradation substrate mRNA
+M1787	RNase II substrate with no poly-A tail
+M1788	RNase II poly-A substrate mRNA
+M1789	an oxidized azurin
+M1790	a reduced azurin
+M1791	a cis-delta17-C36:1-[acp]
+M1792	an oxidized cytochrome cL
+M1793	a cis-delta9-C28:1-[acp]
+M1794	a cis-delta5-C24:1-[acp]
+M1795	(2-trans-6-trans)-farnesoate
+M1796	(2E,6E)-farnesal
+M1797	a cis-delta11-C30:1-[acp]
+M1798	5-hydroxytryptophol
+M1799	a cis-delta13-C32:1-[acp]
+M1800	3,4-dihydroxymandelate
+M1801	a cis-docos-3-enoyl-[acp]
+M1802	precorrin-7: C44H52N4O14
+M1803	(6S)-5-formyltetrahydrofolate(2-)
+M1804	3-dimethylsulfoniopropionaldehyde
+M1805	S,S-dimethyl-beta-propiothetin
+M1806	hydrogen cyanide
+M1807	isothiocyanic acid
+M1808	a tRNA containing a 3' CCA end
+M1809	a O-sialoglycoprotein
+M1810	UDP-alpha-D-galactofuranose
+M1811	6-(2-azaniumyl-2-carboxylatoethyl)-7,8-dioxo-1,2,3,4,7,8-hexahydroquinoline-2,4-dicarboxylate
+M1812	4,5-dioxo-4,5-dihydro-1H-pyrrolo[2,3-f]quinoline-2,7,9-tricarboxylate
+M1813	an aminated amine donor
+M1814	vanillin
+M1815	vanillylamine
+M1816	a deaminated amine donor
+M1817	beta-D-glucose 1-phosphate(2-)
+M1818	(R)-3-aminoisobutyric acid zwitterion
+M1819	aromatic amino acid
+M1820	an aromatic oxo-acid
+M1821	(3,4-dihydroxyphenyl)acetate
+M1822	3'-phospho-L-histidine
+M1823	lipid
+M1824	an oxidized glutaredoxin
+M1825	a reduced glutaredoxin
+M1826	vanillylmandelate
+M1827	sn-glycerol 1-phosphate(2-)
+M1828	a diacylglycerol prolipoprotein
+M1829	2-amino-5-formylamino-6-(1-D-ribosylamino)pyrimidin-4(3H)-one 5'-phosphate
+M1830	7,8-dihydro-D-neopterin 2',3'-cyclic phosphate(1-)
+M1831	a glutamine synthase
+M1832	adenylyl-glutamine synthase
+M1833	a peptidoglycan with D,D cross-link (S. aureus)
+M1834	feruloyl-CoA
+M1835	ferulate
+M1836	a ThiS sulfur-carrier protein
+M1837	(R,Z)- 2-(2-carboxy-4-methylthiazol-5(2H)-ylidene)ethyl phosphate
+M1838	a N-acetylglucosamine--N-acetylmuramyl-(tetrapeptide) pyrophosphoryl-undecaprenol
+M1839	a lipid II
+M1840	a peptidoglycan with D,D cross-link (E. faecium)
+M1841	leukotriene E4(1-)
+M1842	5-oxo-L-prolinate
+M1843	dipeptide
+M1844	a peptidoglycan with D,D cross-links (meso-diaminopimelate containing)
+M1845	menaquinol-8
+M1846	2-demethylmenaquinol-8
+M1847	2-(2-carboxy-4-methylthiazol-5-yl)ethyl phosphate
+M1848	D-glycero-D-manno-heptose 7-phosphate
+M1849	a (1'-hydroxy-3',5'-dioxo-2'-(3''-oxobutanoyl)cyclohexyl)-3,5-dioxohexanethioate-[PKS-acp]
+M1850	a (1',5'-dihydroxy-3'-oxo-2'-(3''-oxobutanoyl)cyclohexyl)-3,5-dioxohexanethioate-[PKS-acp]
+M1851	2-hydroxyethane-1-sulfonate
+M1852	an alkanesulfonate
+M1853	lipid A-core
+M1854	galactosyl-(glucosyl)3-(heptosyl)3-Kdo2-lipid A-bisphosphate
+M1855	(2E,6E)-farnesol
+M1856	butane-1-sulfonate
+M1857	galactosyl-(glucosyl)2-(heptosyl)3-Kdo2-lipid A-bisphosphate
+M1858	a phenoxyl radical of a phenolic donor
+M1859	a phenolic donor
+M1860	galactosyl-glucosyl-(heptosyl)3-Kdo2-lipid A-bisphosphate
+M1861	oligonucleotide
+M1862	glucosyl-(heptosyl)3-Kdo2-lipid A-bisphosphate
+M1863	glucosyl-(heptosyl)3-Kdo2-lipid A-phosphate
+M1864	glucosyl-(heptosyl)2-Kdo2-lipid A-phosphate
+M1865	Betanidin
+M1866	betanidin quinone
+M1867	glucosyl-(heptosyl)2-Kdo2-lipid A
+M1868	an N-acyl-D-mannosamine
+M1869	an N-acyl-D-glucosamine
+M1870	myristate
+M1871	arachidate
+M1872	precorrin-1(8-)
+M1873	7,8-dihydroneopterin 3'-phosphate(2-)
+M1874	hydroxymethylbilane
+M1875	N-acetyl-D-glucosamine 6-phosphate
+M1876	L-canavanine
+M1877	cellodextrin
+M1878	atrazine
+M1879	a 1,4-Œ≤-D-glucan
+M1880	GDP-D-glucose
+M1881	all-cis-icosa-8,11,14-trienoate
+M1882	dihomo Œ≥-linolenoyl-CoA
+M1883	D-threo-isocitrate(3-)
+M1884	4-methyl-3-oxoadipate-enol-lactone
+M1885	1-(beta-D-ribofuranosyl)-1,4-dihydronicotinamide
+M1886	3-[(3aS,4S,5R,7aS)-5-hydroxy-7a-methyl-1-oxo-octahydro-1H-inden-4-yl]-3-oxopropanoyl-CoA
+M1887	3-[(3aS,4S,5R,7aS)-5-hydroxy-7a-methyl-1-oxo-octahydro-1H-inden-4-yl]-3-hydroxypropanoyl-CoA
+M1888	glutamyl-queuosine at position 34 of a tRNAAsp
+M1889	queuosine at position 34 of a tRNAAsp
+M1890	a carboxy-adenylated small subunit of molybdopterin synthase
+M1891	a thiocarboxylated small subunit of molybdopterin synthase
+M1892	2-methyl-3-oxopropanoate
+M1893	D-galacturonate
+M1894	D-tagaturonate
+M1895	a small subunit of molybdopterin synthase
+M1896	22-hydroxy-3-oxochol-4-en-24-oyl-CoA
+M1897	L-methionyl-tRNA(fMet)
+M1898	molybdic acid
+M1899	adenylyl-molybdopterin
+M1900	MoO2-molybdopterin cofactor
+M1901	molybdopterin(3-)
+M1902	3-methyladenine
+M1903	a DNA containing a purinic site
+M1904	a DNA with alkylated adenine
+M1905	precursor Z
+M1906	plastoquinone-9
+M1907	plastoquinol-9
+M1908	3,24-dioxocholest-4-en-26-oyl-CoA
+M1909	24-hydroxy-3-oxocholest-4-en-26-oyl-CoA
+M1910	L-leucyl-protein
+M1911	a [protein]-L-arginine
+M1912	a relaxed DNA
+M1913	messenger RNA
+M1914	a tRNA containing 5-aminomethyl-2-thiouridine
+M1915	cleaved repressor LexA
+M1916	repressor LexA
+M1917	N-acetyl-beta-D-glucosamine
+M1918	trans-hexadec-2-enal
+M1919	hexadecanal
+M1920	a 2-alkenal
+M1921	an n-alkanal
+M1922	an N-acetyl-D-galactosalaminyl-[glycoprotein]
+M1923	Polysaccharide
+M1924	N-acetyl-beta-D-galactosamine
+M1925	beta-D-GlcpNAc-(1->4)-beta-D-GlcpNAc-(1->4)-beta-D-GlcpNAc
+M1926	mature tRNA
+M1927	a single-stranded oligoribonucleotide
+M1928	(6E)-8-oxogeranial
+M1929	(6E)-8-oxogeraniol
+M1930	(6E)-8-hydroxygeranial
+M1931	an N-acetyl-Œ≤-D-hexosaminide
+M1932	an N-acetyl-Œ≤-D-hexosamine
+M1933	A
+M1934	N-carbamoyl-L-amino acid
+M1935	a 5'-phosphooligonucleotide
+M1936	N-carbamoylglycine
+M1937	hydantoin
+M1938	2-[(1R,6S)-1,6-dihydroxycyclohexa-2,4-dien-1-yl]acetyl-coA
+M1939	Miraxanthin-V
+M1940	Betalamic acid
+M1941	a cis-3-enoyl-CoA
+M1942	a maltooligosyl-trehalose
+M1943	2-trans,5-cis-tetradecadienoyl-CoA
+M1944	3-hydroxy-5-cis-tetradecenoyl-CoA
+M1945	1-methylthio-xylulose 5-phosphate: C6H11O7PS
+M1946	hypoglycin A
+M1947	hypoglycin B
+M1948	glucan
+M1949	peptidoglycan D-alanyl-DAP crosslink
+M1950	peptidoglycan tetrapeptide, glycan chain 1
+M1951	peptidoglycan tetrapeptide, glycan chain 2
+M1952	a short glucan
+M1953	butan-1-ol
+M1954	2-oxo-2H-pyran-4,6-dicarboxylate
+M1955	4-carboxy-2-hydroxymuconate semialdehyde hemiacetal
+M1956	(E)-2-benzylidenesuccinyl-CoA(5-)
+M1957	2-carboxymethyl-3-hydroxyphenylpropionyl-CoA
+M1958	a (5-L-glutamyl)-L-peptide
+M1959	a DNA with uracil
+M1960	[unspecified degradation products]
+M1961	3-trans,5-cis-tetradecadienoyl-CoA
+M1962	3-trans,5-cis-tetradecadienoate
+M1963	a tRNA containing 5-methyluridine54
+M1964	a tRNA uridine54
+M1965	a glucosylated glycogenin
+M1966	a DNA containing 6-O-methylguanine
+M1967	DNA (without 6-O-methylguanine)
+M1968	a protein-S-methyl-L-cysteine
+M1969	(Z)-3-aminoacrylate
+M1970	(Z)-3-aminoperacrylic acid
+M1971	N1-methylguanine9 in tRNA
+M1972	guanine9 in tRNA
+M1973	(Z)-3-ureidoacrylate peracid
+M1974	N1-methylguanine37 in tRNA
+M1975	guanine37 in tRNA
+M1976	N1-methylguanine745 in 23S rRNA
+M1977	guanine745 in 23S rRNA
+M1978	Œ≤-ketovaleryl-CoA
+M1979	3-[(3aS,4S,5R,7aS)-5-hydroxy-7a-methyl-1-oxo-octahydro-1H-indene-4-carboxylate
+M1980	(2S,3S)-2-methylcitrate(3-)
+M1981	(2E)-3-[(3aS,4S,5R,7aS)-5-hydroxy-7a-methyl-1-oxo-octahydro-1H-inden-4-yl]prop-2-enoyl-CoA
+M1982	5-hydroxy-3-[(3aS,4S,5R,7aS)-7a-methyl-1,5-dioxo-octahydro-1H-inden-4-yl]propanoyl-CoA
+M1983	ascorbate
+M1984	L-dehydroascorbate
+M1985	Ascorbate radical
+M1986	a [tRNAIle2]-2-lysidine34
+M1987	a [tRNAIle2]-cytidine34
+M1988	3-Hydroxy-5,9,17-trioxo-4,5:9,10-disecoandrosta-1(10),2-dien-4-oate
+M1989	5-hydroxyindole thiazolidine carboxylate
+M1990	3,4-dihydroxy-9,10-secoandrosta-1,3,5(10)-triene-9,17-dione
+M1991	3-hydroxy-9,10-secoandrosta-1,3,5(10)-triene-9,17-dione
+M1992	9alpha-hydroxyandrosta-1,4-diene-3,17-dione
+M1993	2-carboxyl-cerotoyl-CoA
+M1994	hexacosanoyl-CoA
+M1995	Fe(3+)
+M1996	androstenedione
+M1997	androsta-1,4-diene-3,17-dione
+M1998	(S)-methylmalonyl-CoA
+M1999	6-chloro-2-hydroxy-4-carboxymuconate-6-semialdehyde
+M2000	N(omega)-hydroxyarginine
+M2001	Dopaxanthin
+M2002	L-rhamnofuranose
+M2003	L-rhamnopyranose
+M2004	a kanamycin-3-phosphate
+M2005	kanamycins
+M2006	(6S)-6beta-hydroxy-1,4,5,6-tetrahydronicotinamide adenine dinucleotide
+M2007	2,5-didehydro-D-gluconate
+M2008	butane-2,3-dione
+M2009	3-isopropenyl-6-oxoheptanoate
+M2010	7-hydroxy-4-isopropenyl-7-methyloxepan-2-one
+M2011	oligosaccharides with 4-deoxy-Œ±-L-erythro-hex-4-enopyranuronosyl end
+M2012	arsenite(1-)
+M2013	arsenate(2-)
+M2014	(S)-2-amino-6-oxopimelate
+M2015	(2S,4S)-2-methyl-2,4-dihydroxydihydrofuran-3-one
+M2016	Portulacaxanthin II
+M2017	pyruvate oxime
+M2018	hydroxyl
+M2019	ribose-1-arsenate
+M2020	dihydrolipoate
+M2021	lipoate
+M2022	(Z)-3-ureidoacrylate
+M2023	all-trans-retinyl palmitate
+M2024	5-methyluracil747 in 23S rRNA
+M2025	uracil747 in 23S rRNA
+M2026	formyl-isoglutamine
+M2027	(2R,4S)-2-methyl-2,4-dihydroxydihydrofuran-3-one
+M2028	(R)-methylmalonate-semialdehyde
+M2029	methyl salicylate
+M2030	a 2(R)-hydroperoxy fatty acid
+M2031	(3Z)-2-oxopent-3-enoate
+M2032	methyl (-)-jasmonate
+M2033	jasmonate
+M2034	(6R)-6beta-hydroxy-1,4,5,6-tetrahydronicotinamide adenine dinucleotide
+M2035	4-oxoglutaramate
+M2036	1-pyrroline
+M2037	benzyl-6-hydroxy-2-cyclohexene-on-oyl
+M2038	6-hydroxy-2-cyclohexen-one-carboxylate
+M2039	carboxylic ester
+M2040	6,7-dihydropteridine
+M2041	5,6,7,8-tetrahydropteridine
+M2042	glucose
+M2043	a 5' phosphodinucleotide
+M2044	(2R,4S)-2-methyltetrahydrofuran-2,3,3,4-tetrol
+M2045	methyl indole-3-acetate
+M2046	8-oxo-dGTP
+M2047	7-oxoheptanoyl-[acyl-carrier-protein]: 
+M2048	an all-trans-retinyl ester
+M2049	L-isoglutamine
+M2050	a 7,8-dihydroxy-long-chain acyl-[acp]: 
+M2051	a 7-hydroxy-long-chain acyl-[acp]: 
+M2052	8-oxo-GTP
+M2053	malonyl-CoA methyl ester
+M2054	an enoylglutaryl-[acp] methyl ester
+M2055	a dinucleotide (nucleic acid)
+M2056	(2S,4S)-2-methyl-2,3,3,4-tetrahydroxytetrahydrofuran
+M2057	salicyl-6-hydroxy-2-cyclohexene-on-oyl
+M2058	salicyl alcohol
+M2059	a large-branched glucan
+M2060	an enoylpimelyl-[acp] methyl ester
+M2061	dehydroascorbate (bicyclic form)
+M2062	a pimelyl-[acp] methyl ester
+M2063	cadaverine
+M2064	NMNH
+M2065	trans-2-octadecenoyl-CoA(4-)
+M2066	S-(2-hydroxyacyl)glutathione
+M2067	2-hydroxy carboxylate
+M2068	2,3-diketogulonate
+M2069	pimelate(2-)
+M2070	dimethyl sulfide
+M2071	trimethylsulfonium
+M2072	L-threonate
+M2073	alpha-maltohexaose
+M2074	cyclic-2,3-O-oxalyl-L-threonate
+M2075	a protein with oxidized disulfide bonds
+M2076	a protein with reduced sulfide groups
+M2077	2-carboxy-L-xylonolactone
+M2078	alpha-maltopentaose
+M2079	cyclic- 3,4-O-oxalyl-L-threonate
+M2080	a (R)-2-hydroxy straight chain 2,3,4-saturated fatty acyl CoA
+M2081	a (R)-2-hydroxy straight chain 2,3,4-saturated fatty acid
+M2082	alpha-aminobutyric acid
+M2083	2-carboxy-L-threo-pentonate
+M2084	5-chloroprotocatechuate
+M2085	Na(+)
+M2086	K(+)
+M2087	Ca(2+)
+M2088	glutamate(1-)
+M2089	arbutin 6-phosphate
+M2090	hydroquinone O-beta-D-glucopyranoside
+M2091	salicin-6-phosphate
+M2092	salicin
+M2093	hydroquinone
+M2094	D-arabino-hex-3-ulose 6-phosphate(2-)
+M2095	L-ribulose 5-phosphate(2-)
+M2096	L-Ribulose
+M2097	D-Ribulose
+M2098	D-ribitol 5-phosphate(2-)
+M2099	D-sorbitol-6-phosphate
+M2100	D-mannitol
+M2101	galactitol 1-phosphate
+M2102	galactitol
+M2103	D-tagatose 1,6-bisphosphate
+M2104	D-tagatofuranose 6-phosphate(2-)
+M2105	lactose 6-phosphate
+M2106	D-galactose 6-phosphate
+M2107	stachyose
+M2108	manninotriose
+M2109	sucrose
+M2110	raffinose
+M2111	melibiose
+M2112	lactose
+M2113	Octadecanoyl-[acyl-carrier protein]
+M2114	(1R,6R)-2-(3-carboxylatopropanoyl)-6-hydroxycyclohexa-2,4-diene-1-carboxylate
+M2115	2-succinyl-5-enolpyruvyl-6-hydroxy-3-cyclohexene-1-carboxylate
+M2116	1,4-dihydroxy-2-naphthoyl-CoA(4-)
+M2117	4-(2'-carboxyphenyl)-4-oxobutyryl-CoA
+M2118	2-succinatobenzoate
+M2119	1,4-dihydroxy-2-naphthoate
+M2120	Phytyl diphosphate
+M2121	2'-deoxyuridine
+M2122	pseudouridine 5'-phosphate(2-)
+M2123	3-Mercaptolactate
+M2124	(S)-2-acetamido-6-oxopimelate(2-)
+M2125	N-acetyl-LL-2,6-diaminopimelate(1-)
+M2126	D-lysinium(1+)
+M2127	6-amino-2-oxohexanoic acid zwitterion
+M2128	D-aspartate(1-)
+M2129	3-(indol-3-yl)pyruvate
+M2130	Se-methyl-L-selenocysteine zwitterion
+M2131	D-ornithinium(1+)
+M2132	5-amino-2-oxopentanoic acid zwitterion
+M2133	D-argininium(1+)
+M2134	O-D-alanyl-poly(ribitol phosphate)
+M2135	poly(ribitol phosphate)
+M2136	Sucrose 6-phosphate
+M2137	alpha,alpha-trehalose 6-phosphate(2-)
+M2138	maltose 6'-phosphate(2-)
+M2139	UDP-N-acetyl-alpha-D-mannosamine
+M2140	UDP-N-acetyl-alpha-D-mannosaminouronate
+M2141	2-ammonio-2-deoxy-D-glucopyranose
+M2142	undecaprenyldiphospho-N-acetyl-(N-acetylglucosaminyl)muramoyl-L-alanyl-D-isoglutaminyl-L-lysyl-D-alanyl-D-alanine
+M2143	undecaprenyldiphospho-N-acetyl-(N-acetylglucosaminyl)muramoyl-L-alanyl-D-isoglutaminyl-(glycyl)-L-lysyl-D-alanyl-D-alanine
+M2144	undecaprenyldiphospho-N-acetyl-(N-acetylglucosaminyl)muramoyl-L-alanyl-D-isoglutaminyl-(glycyl)3-L-lysyl-D-alanyl-D-alanine
+M2145	3-D-Glucosyl-1,2-diacylglycerol
+M2146	glycerone
+M2147	a 1-phosphatidyl-1D-myo-inositol
+M2148	choline phosphate
+M2149	a 1,2-diacyl-sn-glycero-3-phosphocholine
+M2150	phosphoethanolamine
+M2151	CDP-glycerol(2-)
+M2152	4-nitrophenyl phosphate
+M2153	4-nitrophenolate
+M2154	Benzoyl phosphate
+M2155	2-hydroxybutyrate
+M2156	(R)-acetoin
+M2157	(R,R)-butane-2,3-diol
+M2158	lipoyl-AMP(1-)
+M2159	globin
+M2160	hemoglobin
+M2161	(R)-5-phosphonatomevalonate(3-)
+M2162	(R)-Mevalonate-5-diphosphate
+M2163	all-trans-Heptaprenyl diphosphate
+M2164	4,4'-diaponeurosporenoate
+M2165	all-trans-4,4'-diaponeurosporene
+M2166	glucosyl-4,4'-diaponeurosporenoate
+M2167	15-cis-4,4'-diapophytoene
+M2168	presqualene diphosphate
+M2169	all-trans-4,4'-diapolycopene
+M2170	4,4'-diapolycopenedial
+M2171	dinitrogen oxide
+M2172	L-ascorbate-6-phosphate
+M2173	LysW-gamma-L-alpha-aminoadipyl 6-phosphate
+M2174	LysW-gamma-L-alpha-aminoadipate 6-semialdehyde
+M2175	glycocholate
+M2176	cholate
+M2177	Taurocholate
+M2178	1-O-(alk-1-enyl)-2-O-acylglycerol
+M2179	1-(alk-1-enyl)-2-acyl-sn-glycero-3-phosphoethanolamine
+M2180	CDP-ethanolamine(1-)
+M2181	dinitrogen
+M2182	hydrogen azide
+M2183	10-Formyltetrahydrofolate
+M2184	1,2-Diacyl-sn-glycerol (didodecanoyl, n-C12:0)
+M2185	1,2-Diacyl-sn-glycerol (ditetradecanoyl, n-C14:0)
+M2186	1,2-Diacyl-sn-glycerol (ditetradec-7-enoyl, n-C14:1)
+M2187	1,2-Diacyl-sn-glycerol (dihexadecanoyl, n-C16:0)
+M2188	1,2-Diacyl-sn-glycerol (dihexadec-9-enoyl, n-C16:1)
+M2189	1,2-Diacyl-sn-glycerol (dioctadecanoyl, n-C18:0)
+M2190	1,2-Diacyl-sn-glycerol (dioctadec-11-enoyl, n-C18:1)
+M2191	(R)-Propane-1,2-diol
+M2192	(S)-Propane-1,2-diol
+M2193	3-Phospho-D-glyceroyl phosphate
+M2194	1,4-dihydroxy-2-napthoyl-CoA
+M2195	1,4-alpha-D-glucan
+M2196	1,5-Diaminopentane
+M2197	1-dodecanoyl-sn-glycerol 3-phosphate
+M2198	1-hexadec-9-enoyl-sn-glycerol 3-phosphate
+M2199	1-hexadecanoyl-sn-glycerol 3-phosphate
+M2200	1-octadec-11-enoyl-sn-glycerol 3-phosphate
+M2201	1-octadecanoyl-sn-glycerol 3-phosphate
+M2202	1-Pyrroline-5-carboxylate
+M2203	1-tetradec-7-enoyl-sn-glycerol 3-phosphate
+M2204	1-tetradecanoyl-sn-glycerol 3-phosphate
+M2205	2,3-diaminopropionate
+M2206	2,3-Dihydro-2,3-dihydroxybenzoate
+M2207	(2,3-Dihydroxybenzoyl)adenylate
+M2208	2,3-dihydroxybenzoylserine
+M2209	2,3-Dihydrodipicolinate
+M2210	(R)-2,3-Dihydroxy-3-methylbutanoate
+M2211	(R)-2,3-Dihydroxy-3-methylpentanoate
+M2212	2,3-Dioxo-L-gulonate
+M2213	(S)-2-[5-Amino-1-(5-phospho-D-ribosyl)imidazole-4-carboxamido]succinate
+M2214	2,5-diketo-D-gluconate
+M2215	2,5-Diamino-6-(ribosylamino)-4-(3H)-pyrimidinone 5'-phosphate
+M2216	LL-2,6-Diaminoheptanedioate
+M2217	meso-2,6-Diaminoheptanedioate
+M2218	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C12:0)
+M2219	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C14:0)
+M2220	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C14:1)
+M2221	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C16:0)
+M2222	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C16:1)
+M2223	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C18:0)
+M2224	2-Acyl-sn-glycero-3-phosphoethanolamine (n-C18:1)
+M2225	2-Acyl-sn-glycero-3-phosphoglycerol (n-C12:0)
+M2226	2-Acyl-sn-glycero-3-phosphoglycerol (n-C14:0)
+M2227	2-Acyl-sn-glycero-3-phosphoglycerol (n-C14:1)
+M2228	2-Acyl-sn-glycero-3-phosphoglycerol (n-C16:0)
+M2229	2-Acyl-sn-glycero-3-phosphoglycerol (n-C16:1)
+M2230	2-Acyl-sn-glycero-3-phosphoglycerol (n-C18:0)
+M2231	2-Acyl-sn-glycero-3-phosphoglycerol (n-C18:1)
+M2232	(S)-2-Aceto-2-hydroxybutanoate
+M2233	2-Aminomalonate semialdehyde
+M2234	1-(2-Carboxyphenylamino)-1-deoxy-D-ribulose 5-phosphate
+M2235	2-Dehydro-3-deoxy-D-arabino-heptonate 7-phosphate
+M2236	2-dodecanoyl-sn-glycerol 3-phosphate
+M2237	2-Dehydro-3-deoxy-D-gluconate 6-phosphate
+M2238	2-Dehydro-3-deoxy-D-galactonate
+M2239	2-Dehydro-3-deoxy-D-galactonate 6-phosphate
+M2240	2-Dehydro-L-gulonate
+M2241	2-Demethylmenaquinone 8
+M2242	2-Deoxy-D-ribose 1-phosphate
+M2243	2-Deoxy-D-ribose 5-phosphate
+M2244	[2Fe-1S] desulfurated iron-sulfur cluster
+M2245	[2Fe-2S] iron-sulfur cluster
+M2246	2-hexadec-9-enoyl-sn-glycerol 3-phosphate
+M2247	2-hexadecanoyl-sn-glycerol 3-phosphate
+M2248	2-Isopropylmaleate
+M2249	cis-2-Methylaconitate
+M2250	2-Methylcitrate
+M2251	2-C-methyl-D-erythritol 4-phosphate
+M2252	2-C-methyl-D-erythritol 2,4-cyclodiphosphate
+M2253	2-octadec-11-enoyl-sn-glycerol 3-phosphate
+M2254	2-octadecanoyl-sn-glycerol 3-phosphate
+M2255	2-Octaprenyl-6-hydroxyphenol
+M2256	2-Octaprenyl-6-methoxy-1,4-benzoquinol
+M2257	2-Octaprenyl-3-methyl-5-hydroxy-6-methoxy-1,4-benzoquinol
+M2258	2-Octaprenyl-3-methyl-6-methoxy- 1,4-benzoquinol
+M2259	2-Octaprenyl-6-methoxyphenol
+M2260	2-oxepin-2(3H)-ylideneacetyl-CoA
+M2261	2-phospho-4-(cytidine 5'-diphospho)-2-C-methyl-D-erythritol
+M2262	D-Glycerate 2-phosphate
+M2263	2-Phosphoglycolate
+M2264	2-Succinyl-6-hydroxy-2,4-cyclohexadiene-1-carboxylate
+M2265	2-tetradec-7-enoyl-sn-glycerol 3-phosphate
+M2266	2-tetradecanoyl-sn-glycerol 3-phosphate
+M2267	2'-(5''-triphosphoribosyl)-3'-dephospho-CoA
+M2268	3',5'-Cyclic GMP
+M2269	3-Aminoacrylate
+M2270	3-Carboxy-2-hydroxy-4-methylpentanoate
+M2271	3-Carboxy-3-hydroxy-4-methylpentanoate
+M2272	3-Carboxy-4-methyl-2-oxopentanoate
+M2273	3-Dehydro-L-gulonate
+M2274	3-keto-L-gulonate-6-phosphate
+M2275	[3Fe-4S] damaged iron-sulfur cluster
+M2276	(3R)-3-Hydroxyacyl-[acyl-carrier protein]
+M2277	(3S)-3-Hydroxyadipyl-CoA
+M2278	(S)-3-Hydroxybutanoyl-CoA
+M2279	(R)-3-hydroxy-cis-dodec-5-enoyl-[acyl-carrier protein]
+M2280	3-hydroxycinnamic acid
+M2281	(R)-3-hydroxy-cis-myristol-7-eoyl-[acyl-carrier protein]
+M2282	(R)-3-hydroxy-cis-palm-9-eoyl-[acyl-carrier protein]
+M2283	(R)-3-hydroxy-cis-vacc-11-enoyl-[acyl-carrier protein]
+M2284	(S)-3-Hydroxydodecanoyl-CoA
+M2285	(R)-3-Hydroxydodecanoyl-[acyl-carrier protein]
+M2286	(R)-3-Hydroxydecanoyl-[acyl-carrier protein]
+M2287	(S)-3-Hydroxyhexadecanoyl-CoA
+M2288	(R)-3-Hydroxyhexanoyl-[acyl-carrier protein]
+M2289	(R)-3-Hydroxytetradecanoyl-[acyl-carrier protein]
+M2290	(R)-3-Hydroxyoctanoyl-[acyl-carrier protein]
+M2291	(R)-3-Hydroxyoctadecanoyl-[acyl-carrier protein]
+M2292	(S)-3-Hydroxyoctadecanoyl-CoA
+M2293	R-3-hydroxypalmitoyl-[acyl-carrier protein]
+M2294	3-(3-hydroxy-phenyl)propionate
+M2295	C'-(3-Indolyl)-glycerol 3-phosphate
+M2296	(S)-3-Methyl-2-oxopentanoate
+M2297	3-oxo-cis-dodec-5-enoyl-[acyl-carrier protein]
+M2298	3-oxo-cis-myristol-7-eoyl-[acyl-carrier protein]
+M2299	3-oxo-cis-palm-9-eoyl-[acyl-carrier protein]
+M2300	3-oxo-cis-vacc-11-enoyl-[acyl-carrier protein]
+M2301	3-Oxododecanoyl-CoA
+M2302	3-Oxododecanoyl-[acyl-carrier protein]
+M2303	3-Oxodecanoyl-[acyl-carrier protein]
+M2304	3-Oxohexadecanoyl-CoA
+M2305	3-Oxohexanoyl-[acyl-carrier protein]
+M2306	3-Oxotetradecanoyl-[acyl-carrier protein]
+M2307	3-Oxooctanoyl-[acyl-carrier protein]
+M2308	3-Oxooctadecanoyl-[acyl-carrier protein]
+M2309	3-Oxooctadecanoyl-CoA
+M2310	3-Oxohexadecanoyl-[acyl-carrier protein]
+M2311	3-Octaprenyl-4-hydroxybenzoate
+M2312	5-O-(1-Carboxyvinyl)-3-phosphoshikimate
+M2313	3-Sulfino-L-alanine
+M2314	4-Aminobutanal
+M2315	4-amino-4-deoxychorismate
+M2316	4-Amino-2-methyl-5-phosphomethylpyrimidine
+M2317	4-(cytidine 5'-diphospho)-2-C-methyl-D-erythritol
+M2318	p-Cresol
+M2319	[4Fe-4S] iron-sulfur cluster
+M2320	4-Methyl-5-(2-hydroxyethyl)-thiazole
+M2321	4-Methyl-5-(2-phosphoethyl)-thiazole
+M2322	4-Phospho-L-aspartate
+M2323	4-Phospho-D-erythronate
+M2324	D-4'-Phosphopantothenate
+M2325	N-((R)-4-Phosphopantothenoyl)-L-cysteine
+M2326	4-(1-D-Ribitylamino)-5-aminouracil
+M2327	5-amino-1-(5-phospho-D-ribosyl)imidazole-4-carboxylate
+M2328	5-Amino-4-oxopentanoate
+M2329	5-Amino-6-(5'-phosphoribitylamino)uracil
+M2330	5-Amino-6-(5'-phosphoribosylamino)uracil
+M2331	5-phosphoribosyl-5-carboxyaminoimidazole
+M2332	5-Dehydro-D-gluconate
+M2333	5-Dehydro-4-deoxy-D-glucarate
+M2334	5'-deoxyribose
+M2335	5-Methylthioadenosine
+M2336	5-Methyltetrahydrofolate
+M2337	5-Methylthio-D-ribose
+M2338	N1-(5-Phospho-alpha-D-ribosyl)-5,6-dimethylbenzimidazole
+M2339	6-hydroxymethyl dihydropterin
+M2340	6-hydroxymethyl-dihydropterin pyrophosphate
+M2341	6-Phospho-D-gluconate
+M2342	6-phospho-D-glucono-1,5-lactone
+M2343	8-Amino-7-oxononanoate
+M2344	acyl carrier protein
+M2345	L-alanine-D-glutamate
+M2346	L-alanine-D-glutamate-meso-2,6-diaminoheptanedioate
+M2347	L-alanine-D-glutamate-meso-2,6-diaminoheptanedioate-D-alanine
+M2348	L-alanine-L-glutamate
+M2349	N1-Acetylspermidine
+M2350	N-Methyltryptophan
+M2351	S-Formylglutathione
+M2352	Aminoacetaldehyde
+M2353	Aminoacetone
+M2354	Acetyl-ACP
+M2355	N-Acetylanthranilate
+M2356	Acetyl-CoA
+M2357	Acetol
+M2358	N-Acetyl-L-glutamyl 5-phosphate
+M2359	N-Acetyl-L-glutamate 5-semialdehyde
+M2360	N-Acetyl-D-glucosamine 1-phosphate
+M2361	6-Acetyl-D-glucose
+M2362	N-Acetyl-L-glutamate
+M2363	Acetyl-maltose
+M2364	N-Acetyl-D-mannosamine
+M2365	N-acetylmuramate 6-phosphate
+M2366	cis-Aconitate
+M2367	trans-Aconitate
+M2368	E-3-carboxy-2-pentenedioate 6-methyl ester
+M2369	N2-Acetyl-L-ornithine
+M2370	O-Acetyl-L-serine
+M2371	Acetoacetyl-ACP
+M2372	Acetyl phosphate
+M2373	Adenosyl cobinamide phosphate
+M2374	ADPglucose
+M2375	ADP-D-glycero-D-manno-heptose
+M2376	ADP-L-glycero-D-manno-heptose
+M2377	ADPribose
+M2378	silver
+M2379	Adenosine-GDP-cobinamide
+M2380	Agmatine
+M2381	2-Amino-4-hydroxy-6-(erythro-1,2,3-trihydroxypropyl)dihydropteridine triphosphate
+M2382	5-Amino-1-(5-Phospho-D-ribosyl)imidazole-4-carboxamide
+M2383	5-amino-1-(5-phospho-D-ribosyl)imidazole
+M2384	beta-Alanine
+M2385	D-Alanine
+M2386	L-Alanine
+M2387	(S)-2-Acetolactate
+M2388	L-Alanyl-tRNA(Ala)
+M2389	D-Allose
+M2390	D-Allose 6-phosphate
+M2391	Allantoate
+M2392	Allulose 6-phosphate
+M2393	S-Adenosylmethioninamine
+M2394	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramic acid
+M2395	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tripeptide
+M2396	N-Acetyl-D-glucosamine(anhydrous)N-Acetylmuramyl-tetrapeptide
+M2397	1,6-anhydrous-N-Acetylmuramate
+M2398	1,6-anhydrous-N-Acetylmuramyl-tripeptide
+M2399	1,6-anhydrous-N-Acetylmuramyl-tetrapeptide
+M2400	P1,P4-Bis(5'-adenosyl) tetraphosphate
+M2401	P1,P5-Bis(5'-adenosyl) pentaphosphate
+M2402	acyl phosphatidylglycerol (n-C12:0)
+M2403	acyl phosphatidylglycerol (n-C14:0)
+M2404	acyl phosphatidylglycerol (n-C14:1)
+M2405	acyl phosphatidylglycerol (n-C16:0)
+M2406	acyl phosphatidylglycerol (n-C16:1)
+M2407	acyl phosphatidylglycerol (n-C18:0)
+M2408	acyl phosphatidylglycerol (n-C18:1)
+M2409	apoprotein [acyl carrier protein]
+M2410	1-Aminopropan-2-ol
+M2411	L-Arabinose
+M2412	O-acetyl-rhamanosyl-N-acetylglucosamyl-undecaprenyl diphosphate
+M2413	aerobactin minus Fe3
+M2414	Aerobactin
+M2415	L-Arginine
+M2416	N(omega)-(L-Arginino)succinate
+M2417	L-Arginyl-tRNA(Arg)
+M2418	L-Asparagine
+M2419	L-Asparaginyl-tRNA(Asn)
+M2420	arsenite
+M2421	arsenate
+M2422	L-Aspartate
+M2423	L-Aspartyl-tRNA(Asp)
+M2424	L-Allo-threonine
+M2425	adenosine thiamine triphosphate
+M2426	Crotonoyl-CoA
+M2427	gamma-butyrobetainyl-CoA
+M2428	branching glycogen
+M2429	bis-molybdenum cofactor
+M2430	bis-molybdopterin mono-guanine dinucleotide
+M2431	bis-molybdopterin guanine dinucleotide
+M2432	d-biotin d-sulfoxide
+M2433	Butyrate (n-C4:0)
+M2434	Butyryl-ACP (n-C4:0ACP)
+M2435	butanesulfonate
+M2436	tungsten bispterin cofactor
+M2437	tungsten bispterin cofactor mono-guanine dinucleotide
+M2438	tungsten bispterin cofactor guanine dinucleotide
+M2439	Calcium
+M2440	cAMP
+M2441	N-Carbamoyl-L-aspartate
+M2442	Cobinamide
+M2443	Carbamoyl phosphate
+M2444	Cadmium
+M2445	cis-dodec-5-enoyl-[acyl-carrier protein] (n-C12:1)
+M2446	cis-dec-3-enoyl-[acyl-carrier protein] (n-C10:1)
+M2447	7-deaza-7-carboxyguanine
+M2448	CDP-1,2-didodecanoylglycerol
+M2449	CDP-1,2-dihexadec-9-enoylglycerol
+M2450	CDP-1,2-dihexadecanoylglycerol
+M2451	CDP-1,2-dioctadec-11-enoylglycerol
+M2452	CDP-1,2-dioctadecanoylglycerol
+M2453	CDP-1,2-ditetradec-7-enoylglycerol
+M2454	CDP-1,2-ditetradecanoylglycerol
+M2455	cis-3-(3-carboxyethyl)-3,5-cyclohexadiene-1,2-diol
+M2456	cis-3-(3-carboxyethenyl)-3,5-cyclohexadiene-1,2-diol
+M2457	Cys-Gly
+M2458	chorismate
+M2459	diacetylchitobiose-6-phosphate
+M2460	trans-Cinnamate
+M2461	L-Citrulline
+M2462	Chloride
+M2463	Coenzyme A
+M2464	core oligosaccharide lipid A
+M2465	cyclopropane phosphatidylethanolamine (dihexadec-9,10-cyclo-anoyl, n-C16:0 cyclo)
+M2466	cyclopropane phosphatidylethanolamine (dioctadec-11,12-cyclo-anoyl, n-C18:0 cyclo)
+M2467	cyclopropane phosphatidylglycerol (dihexadec-9,10-cyclo-anoyl, n-C16:0 cyclo)
+M2468	cyclopropane phosphatidylglycerol (dioctadec-11,12-cyclo-anoyl, n-C18:0 cyclo)
+M2469	coprogen
+M2470	coprogen unloaded (no Fe(III))
+M2471	cyclic pyranopterin monophosphate
+M2472	Coproporphyrinogen III
+M2473	L-Carnitine
+M2474	D-Carnitine
+M2475	D-carnitinyl-CoA
+M2476	L-Carnitinyl-CoA
+M2477	crotonobetaine
+M2478	crotonobetainyl-CoA
+M2479	CTP
+M2480	Cu+
+M2481	Cu2+
+M2482	Cyanate
+M2483	D-Cysteine
+M2484	L-Cysteine
+M2485	L-Cystathionine
+M2486	Deoxyadenosine
+M2487	7,8-Diaminononanoate
+M2488	3,4-dihydroxy-2-butanone 4-phosphate
+M2489	Decanoate (n-C10:0)
+M2490	Decanoyl-ACP (n-C10:0ACP)
+M2491	Decanoyl-CoA (n-C10:0CoA)
+M2492	N6-(1,2-Dicarboxyethyl)-AMP
+M2493	dCMP
+M2494	dCTP
+M2495	Deoxycytidine
+M2496	trans-Dodec-2-enoyl-CoA
+M2497	Dodecanoate (n-C12:0)
+M2498	Dodecanoyl-ACP (n-C12:0ACP)
+M2499	Dodecanoyl-CoA (n-C12:0CoA)
+M2500	Dodecanoly-phosphate (n-C12:0)
+M2501	dGMP
+M2502	Selenodiglutathione
+M2503	Deoxyguanosine
+M2504	dGTP
+M2505	Dihydroxyacetone
+M2506	Dihydroxyacetone phosphate
+M2507	2,3-dihydroxicinnamic acid
+M2508	7,8-Dihydrofolate
+M2509	dehydroglycine
+M2510	Dihydromonapterin
+M2511	dihydromonapterin-triphosphate
+M2512	Dihydroneopterin
+M2513	Dihydroneopterin monophosphate
+M2514	Dihydropteroate
+M2515	4,5-dihydroxy-2,3-pentanedione
+M2516	Deoxyinosine
+M2517	Dimethyl sulfoxide
+M2518	Deamino-NAD+
+M2519	Dephospho-CoA
+M2520	fused thiol:disulfide interchange protein (oxidized)
+M2521	fused thiol:disulfide interchange protein (reduced)
+M2522	Dethiobiotin
+M2523	dTDP-4-acetamido-4,6-dideoxy-D-galactose
+M2524	dTDP-4-amino-4,6-dideoxy-D-galactose
+M2525	dTDP-4-dehydro-6-deoxy-D-glucose
+M2526	dTDP-4-dehydro-6-deoxy-L-mannose
+M2527	dTDPglucose
+M2528	dTDP-L-rhamnose
+M2529	dTTP
+M2530	Deoxyuridine
+M2531	dUTP
+M2532	1-deoxy-D-xylulose
+M2533	1-deoxy-D-xylulose 5-phosphate
+M2534	D-Erythrose 4-phosphate
+M2535	Enoylglutaryl-[acyl-carrier protein] methyl ester
+M2536	D-erythro-1-(Imidazol-4-yl)glycerol 3-phosphate
+M2537	Enterochelin
+M2538	Enoylpimeloyl-[acyl-carrier protein] methyl ester
+M2539	ethanesulfonate
+M2540	D-Fructose 1-phosphate
+M2541	D-Fructose 6-phosphate
+M2542	Flavin adenine dinucleotide oxidized
+M2543	Flavin adenine dinucleotide reduced
+M2544	L-Fuculose 1-phosphate
+M2545	L-fuculose
+M2546	D-Fructose 1,6-bisphosphate
+M2547	ferric 2,3-dihydroxybenzoylserine
+M2548	Fe(III)hydroxamate
+M2549	Fe(III)hydoxamate, unloaded
+M2550	Ferrichrome
+M2551	Ferrichrome minus Fe(III)
+M2552	Fe-enterobactin
+M2553	ferroxamine
+M2554	ferroxamine minus Fe(3)
+M2555	N2-Formyl-N1-(5-phospho-D-ribosyl)glycinamide
+M2556	Flavodoxin reduced
+M2557	flavodoxin semi oxidized
+M2558	N-Formylmethionyl-tRNA
+M2559	FMN
+M2560	Reduced FMN
+M2561	2-(Formamido)-N1-(5-phospho-D-ribosyl)acetamidine
+M2562	5-Formamido-1-(5-phospho-D-ribosyl)imidazole-4-carboxamide
+M2563	D-Fructose
+M2564	fructoselysine
+M2565	fructoselysine Phosphate
+M2566	D-Fructuronate
+M2567	L-Fucose
+M2568	Fumarate
+M2569	D-Glucose 1-phosphate
+M2570	Glyceraldehyde 3-phosphate
+M2571	sn-Glycero-3-phosphocholine
+M2572	sn-Glycero-3-phosphoethanolamine
+M2573	Glycerophosphoglycerol
+M2574	sn-Glycero-3-phospho-1-inositol
+M2575	Glycerophosphoserine
+M2576	D-Glucose 6-phosphate
+M2577	galactosyl-glucosyl-inner core oligosaccharide lipid A
+M2578	D-Galactose
+M2579	alpha-D-Galactose 1-phosphate
+M2580	D-Galactonate
+M2581	L-Galactonate
+M2582	D-Glucosamine 1-phosphate
+M2583	D-Glucosamine 6-phosphate
+M2584	N1-(5-Phospho-D-ribosyl)glycinamide
+M2585	glucosyl-O-acetyl-rhamanosyl-N-acetylglucosamyl-undecaprenyl diphosphate
+M2586	gamma-butyrobetaine
+M2587	GDP
+M2588	GDP-4-dehydro-6-deoxy-D-mannose
+M2589	GDP-L-fucose
+M2590	GDP-D-mannose
+M2591	GDP-4-oxo-L-fucose
+M2592	galactofuranosyl-glucosyl-O-acetyl-rhamanosyl-N-acetylglucosamyl-undecaprenyl diphosphate
+M2593	gamma-glutamyl-gamma aminobutyric acid
+M2594	glucosyl-galactosyl-glucosyl-inner core oligosaccharide lipid A
+M2595	gamma-glutamyl-gamma-butyraldehyde
+M2596	glucosyl-glucosyl-galactosyl-glucosyl-inner core oligosaccharide lipid A
+M2597	gamma-glutamyl-putrescine
+M2598	gamma-hydroxybutyrate
+M2599	glucosyl-inner core oligosaccharide lipid A
+M2600	D-Glucose
+M2601	D-Glucuronate
+M2602	L-Glutamine
+M2603	L-Glutaminyl-tRNA(Gln)
+M2604	L-Glutamate 1-semialdehyde
+M2605	L-Glutamate 5-phosphate
+M2606	L-Glutamate 5-semialdehyde
+M2607	gamma-L-Glutamyl-L-cysteine
+M2608	Glycine betaine
+M2609	Glycerol
+M2610	(R)-Glycerate
+M2611	Glycerol 2-phosphate
+M2612	Glycerol 3-phosphate
+M2613	Glutaryl-[acyl-carrier protein] methyl ester
+M2614	D-Glycero-D-manno-heptose 1,7-bisphosphate
+M2615	D-Glycero-D-manno-heptose 1-phosphate
+M2616	GMP
+M2617	P1,P4-Bis(5'-guanosyl) tetraphosphate
+M2618	glutaredoxin (oxidized)
+M2619	glutaredoxin (reduced)
+M2620	Glutathiolselenolate
+M2621	Oxidized glutathione
+M2622	Reduced glutathione
+M2623	Glutathionylspermidine
+M2624	L-Homocysteine
+M2625	Hexadecanoate (n-C16:0)
+M2626	Hexadecanoyl-phosphate (n-C16:0)
+M2627	Hexadecenoate (n-C16:1)
+M2628	Hexadecanoyl-phosphate (n-C16:1)
+M2629	Hexadecenoyl-CoA (n-C16:1CoA)
+M2630	trans-Hexadec-2-enoyl-CoA
+M2631	cis-hexadec-9-enoyl-[acyl-carrier protein] (n-C16:1)
+M2632	Heme O
+M2633	Hexanoyl-ACP (n-C6:0ACP)
+M2634	Hg2+
+M2635	3-Hydroxyglutaryl-[acyl-carrier protein] methyl ester
+M2636	heptosyl-heptosyl-kdo2-lipidA
+M2637	L-Histidine
+M2638	L-Histidinol phosphate
+M2639	L-Histidinol
+M2640	2-Hydroxy-6-oxonona-2,4-diene-1,9-dioate
+M2641	hydroxymethylglutathione
+M2642	L-Homoserine
+M2643	heptosyl-phospho-heptosyl-heptosyl-kdo2-lipidA
+M2644	3-Hydroxypimeloyl-[acyl-carrier protein] methyl ester
+M2645	Hydroxypyruvate
+M2646	Hexanoate (n-C6:0)
+M2647	Hexanoyl-CoA (n-C6:0CoA)
+M2648	Isochorismate
+M2649	Isocitrate
+M2650	inner core oligosaccharide lipid A (E coli)
+M2651	L-Idonate
+M2652	L-Isoleucine
+M2653	3-(Imidazol-4-yl)-2-oxopropyl phosphate
+M2654	IMP
+M2655	IscS sulfur acceptor protein
+M2656	IscS with bound sulfur
+M2657	IscU scaffold protein
+M2658	IscU with bound [2Fe-2S] cluster
+M2659	IscU with two bound [2Fe-2S] clusters
+M2660	IscU with bound [4Fe-4S] cluster
+M2661	Isethionic acid
+M2662	ITP
+M2663	potassium
+M2664	3-Deoxy-D-manno-2-octulosonate
+M2665	KDO(2)-lipid IV(A) with laurate
+M2666	KDO(2)-lipid IV(A) with palmitoleoyl
+M2667	3-Deoxy-D-manno-octulosonate 8-phosphate
+M2668	kdo-phospho-heptosyl-phospho-heptosyl-heptosyl-kdo2-lipidA
+M2669	D-Lactate
+M2670	L-Lactate
+M2671	D-Lactaldehyde
+M2672	L-Lactaldehyde
+M2673	L-Leucine
+M2674	L-Leucyl-tRNA(Leu)
+M2675	(R)-S-Lactoylglutathione
+M2676	KDO(2)-lipid (A)
+M2677	cold adapted KDO(2)-lipid (A)
+M2678	2,3,2'3'-Tetrakis(beta-hydroxymyristoyl)-D-glucosaminyl-1,6-beta-D-glucosamine 1,4'-bisphosphate
+M2679	2,3-Bis(3-hydroxytetradecanoyl)-beta-D-glucosaminyl 1-phosphate
+M2680	lipoyl-AMP
+M2681	lipoate (protein bound)
+M2682	L-Lysine
+M2683	L-Lysine-tRNA (Lys)
+M2684	L-Lyxose
+M2685	D-Malate
+M2686	L-Malate
+M2687	Malonyl-[acyl-carrier protein]
+M2688	Maltose 6'-phosphate
+M2689	Maltoheptaose
+M2690	Maltohexaose
+M2691	Maltopentaose
+M2692	Maltotriose
+M2693	Maltotetraose
+M2694	D-Mannose
+M2695	D-Mannose 1-phosphate
+M2696	D-Mannose 6-phosphate
+M2697	2(alpha-D-Mannosyl-6-phosphate)-D-glycerate
+M2698	D-Mannonate
+M2699	Mercaptopyruvate
+M2700	D-Methionine
+M2701	L-Methionine
+M2702	5,10-Methenyltetrahydrofolate
+M2703	L-methionine-R-sulfoxide
+M2704	L-Methionine Sulfoxide
+M2705	L-Methionyl-tRNA (Met)
+M2706	magnesium
+M2707	1D-myo-Inositol 1-phosphate
+M2708	methylisocitrate
+M2709	5,10-Methylenetetrahydrofolate
+M2710	S-Methyl-L-methionine
+M2711	Mn2+
+M2712	D-Mannitol 1-phosphate
+M2713	MoaD Protein with bound AMP
+M2714	MoaD Protein with carboxylate
+M2715	MoaD Protein with thiocarboxylate
+M2716	Molybdate
+M2717	molybdenum cofactor
+M2718	molybdopterin cytosine dinucleotide
+M2719	molybdopterin guanine dinucleotide
+M2720	adenylated molybdopterin
+M2721	Menaquinone 8
+M2722	Malonate semialdehyde
+M2723	methanesulfonate
+M2724	(2R,4S)-2-methyl-2,3,3,4-tetrahydroxytetrahydrofuran
+M2725	Myristoyl-ACP (n-C14:0ACP)
+M2726	Nitrous oxide
+M2727	N8-Acetylspermidine
+M2728	Sodium
+M2729	N-3-aminopropyl-1,5-diaminopentane
+M2730	Nicotinamide adenine dinucleotide
+M2731	Nicotinamide adenine dinucleotide - reduced
+M2732	Nicotinamide adenine dinucleotide phosphate
+M2733	Nicotinamide adenine dinucleotide phosphate - reduced
+M2734	Ammonium
+M2735	nickel
+M2736	Nicotinate D-ribonucleotide
+M2737	NMN
+M2738	O16 antigen undecaprenyl diphosphate
+M2739	O2
+M2740	Superoxide anion
+M2741	Octanoyl-ACP (n-C8:0ACP)
+M2742	Octanoyl-CoA (n-C8:0CoA)
+M2743	octadecanoate (n-C18:0)
+M2744	Octadecanoyl-ACP (n-C18:0ACP)
+M2745	Octadecanoyl-phosphate (n-C18:0)
+M2746	octadecenoate (n-C18:1)
+M2747	Octadecanoyl-phosphate (n-C18:1)
+M2748	octanoate (n-C8:0)
+M2749	octanoate (protein bound)
+M2750	cis-octadec-11-enoyl-[acyl-carrier protein] (n-C18:1)
+M2751	trans-Octadec-2-enoyl-CoA
+M2752	Octadecenoyl-CoA (n-C18:1CoA)
+M2753	3-Oxo-glutaryl-[acyl-carrier protein] methyl ester
+M2754	2-Oxo-3-hydroxy-4-phosphobutanoate
+M2755	2-Oxopent-4-enoate
+M2756	3-Oxo-pimeloyl-[acyl-carrier protein] methyl ester
+M2757	Ornithine
+M2758	Orotidine 5'-phosphate
+M2759	Oxalate
+M2760	3-Oxoadipyl-CoA
+M2761	Oxalyl-CoA
+M2762	Oxalureate
+M2763	1,2-didodecanoyl-sn-glycerol 3-phosphate
+M2764	1,2-ditetradecanoyl-sn-glycerol 3-phosphate
+M2765	1,2-ditetradec-7-enoyl-sn-glycerol 3-phosphate
+M2766	1,2-dihexadecanoyl-sn-glycerol 3-phosphate
+M2767	1,2-dihexadec-9-enoyl-sn-glycerol 3-phosphate
+M2768	1,2-dioctadecanoyl-sn-glycerol 3-phosphate
+M2769	1,2-dioctadec-11-enoyl-sn-glycerol 3-phosphate
+M2770	Phenylacetic acid
+M2771	Palmitoyl-ACP (n-C16:0ACP)
+M2772	Pantetheine 4'-phosphate
+M2773	3'-Phosphoadenylyl sulfate
+M2774	Pyridoxine 5'-phosphate
+M2775	phosphatidylethanolamine (didodecanoyl, n-C12:0)
+M2776	phosphatidylethanolamine (ditetradecanoyl, n-C14:0)
+M2777	phosphatidylethanolamine (ditetradec-7-enoyl, n-C14:1)
+M2778	phosphatidylethanolamine (dihexadecanoyl, n-C16:0)
+M2779	phosphatidylethanolamine (dihexadec-9enoyl, n-C16:1)
+M2780	phosphatidylethanolamine (dioctadecanoyl, n-C18:0)
+M2781	phosphatidylethanolamine (dioctadec-11-enoyl, n-C18:1)
+M2782	Phosphatidylglycerol (didodecanoyl, n-C12:0)
+M2783	Phosphatidylglycerol (ditetradecanoyl, n-C14:0)
+M2784	Phosphatidylglycerol (ditetradec-7-enoyl, n-C14:1)
+M2785	Phosphatidylglycerol (dihexadecanoyl, n-C16:0)
+M2786	Phosphatidylglycerol (dihexadec-9-enoyl, n-C16:1)
+M2787	Phosphatidylglycerol (dioctadecanoyl, n-C18:0)
+M2788	Phosphatidylglycerol (dioctadec-11-enoyl, n-C18:1)
+M2789	Phosphatidylglycerophosphate (didodecanoyl, n-C12:0)
+M2790	Phosphatidylglycerophosphate (ditetradecanoyl, n-C14:0)
+M2791	Phosphatidylglycerophosphate (ditetradec-7-enoyl, n-C14:1)
+M2792	Phosphatidylglycerophosphate (dihexadecanoyl, n-C16:0)
+M2793	Phosphatidylglycerophosphate (dihexadec-9-enoyl, n-C16:1)
+M2794	Phosphatidylglycerophosphate (dioctadecanoyl, n-C18:0)
+M2795	Phosphatidylglycerophosphate (dioctadec-11-enoyl, n-C18:1)
+M2796	Phenylacetyl-CoA
+M2797	Protoheme
+M2798	phospho-heptosyl-heptosyl-kdo2-lipidA
+M2799	O-Phospho-L-homoserine
+M2800	phospho-heptosyl-phospho-heptosyl-heptosyl-kdo2-lipidA
+M2801	Phenylpyruvate
+M2802	O-Phospho-4-hydroxy-L-threonine
+M2803	Pimeloyl-[acyl-carrier protein]
+M2804	Pimeloyl-[acyl-carrier protein] methyl ester
+M2805	Palmitoyl-CoA (n-C16:0CoA)
+M2806	Peroxyaminoacrylate
+M2807	Propionate (n-C3:0)
+M2808	Porphobilinogen
+M2809	Diphosphate
+M2810	Protoporphyrinogen IX
+M2811	Inorganic triphosphate
+M2812	Phenylpropanoate
+M2813	5-Phospho-beta-D-ribosylamine
+M2814	N-(5-Phospho-D-ribosyl)anthranilate
+M2815	1-(5-Phosphoribosyl)-AMP
+M2816	1-(5-Phosphoribosyl)-ATP
+M2817	7-cyano-7-carbaguanine
+M2818	7-aminomethyl-7-deazaguanine
+M2819	1-(5-Phosphoribosyl)-5-[(5-phosphoribosylamino)methylideneamino]imidazole-4-carboxamide
+M2820	5-[(5-phospho-1-deoxyribulos-1-ylamino)methylideneamino]-1-(5-phosphoribosyl)imidazole-4-carboxamide
+M2821	L-Prolinylglycine
+M2822	5-Phospho-alpha-D-ribose 1-diphosphate
+M2823	phosphatidylserine (didodecanoyl, n-C12:0)
+M2824	phosphatidylserine (ditetradecanoyl, n-C14:0)
+M2825	phosphatidylserine (ditetradec-7-enoyl, n-C14:1)
+M2826	phosphatidylserine (dihexadecanoyl, n-C16:0)
+M2827	phosphatidylserine (dihexadec-9-enoyl, n-C16:1)
+M2828	phosphatidylserine (dioctadecanoyl, n-C18:0)
+M2829	phosphatidylserine (dioctadec-11-enoyl, n-C18:1)
+M2830	psicoselysine
+M2831	Pyridoxamine 5'-phosphate
+M2832	Pyridoxamine
+M2833	Quinolinate
+M2834	D-Ribose 1,5-bisphosphate
+M2835	alpha-D-Ribose 1-phosphate
+M2836	alpha-D-Ribose 5-phosphate
+M2837	rhamanosyl-N-acetylglucosamyl-undecaprenyl diphosphate
+M2838	N1-(alpha-D-ribosyl)-5,6-dimethylbenzimidazole
+M2839	Ring 1,2-epoxyphenylacetyl-CoA
+M2840	S-Ribosyl-L-homocysteine
+M2841	D-Ribose
+M2842	L-Rhamnulose
+M2843	L-Rhamnulose 1-phosphate
+M2844	L-Rhamnose
+M2845	D-Ribulose 5-phosphate
+M2846	L-Ribulose 5-phosphate
+M2847	Sedoheptulose 1,7-bisphosphate
+M2848	Sedoheptulose 7-phosphate
+M2849	O-Succinylbenzoyl-CoA
+M2850	Selenate
+M2851	Selenide
+M2852	D-Serine
+M2853	L-seryl-AMP
+M2854	Shikimate 5-phosphate
+M2855	N-Succinyl-LL-2,6-diaminoheptanedioate
+M2856	N-Succinyl-2-L-amino-6-oxoheptanedioate
+M2857	selenite
+M2858	sulfur dioxide
+M2859	Sulfite
+M2860	Spermidine
+M2861	Stearoyl-CoA (n-C18:0CoA)
+M2862	N2-Succinyl-L-arginine
+M2863	o-Succinylbenzoate
+M2864	Succinate
+M2865	N2-Succinyl-L-glutamate
+M2866	N2-Succinyl-L-glutamate 5-semialdehyde
+M2867	O-Succinyl-L-homoserine
+M2868	N2-Succinyl-L-ornithine
+M2869	Succinic semialdehyde
+M2870	SufBCD scaffold complex
+M2871	SufBCD with bound [2Fe-2S] cluster
+M2872	SufBCD with two bound [2Fe-2S] clusters
+M2873	SufBCD with bound [4Fe-4S] cluster
+M2874	SufSE sulfur acceptor complex
+M2875	SufSE with bound sulfur
+M2876	sulfoacetate
+M2877	trans-3-cis-11-vacceoyl-[acyl-carrier protein]
+M2878	trans-3-cis-5-dodecenoyl-[acyl-carrier protein]
+M2879	trans-3-cis-7-myristoleoyl-[acyl-carrier protein]
+M2880	trans-3-cis-9-palmitoleoyl-[acyl-carrier protein]
+M2881	D-Tagatose 6-phosphate
+M2882	D-Tagatose 1,6-biphosphate
+M2883	D-tartrate
+M2884	L-tartrate
+M2885	Thiocyanate
+M2886	Tetradecanoyl-CoA (n-C14:0CoA)
+M2887	trans-Dodec-2-enoyl-[acyl-carrier protein]
+M2888	cis-tetradec-7-enoyl-[acyl-carrier protein] (n-C14:1)
+M2889	trans-Dec-2-enoyl-[acyl-carrier protein]
+M2890	Tetradecenoyl-CoA (n-C14:1CoA)
+M2891	2,3,4,5-Tetrahydrodipicolinate
+M2892	trans-Hex-2-enoyl-[acyl-carrier protein]
+M2893	5,6,7,8-Tetrahydrofolate
+M2894	Thiamin
+M2895	Thiamin monophosphate
+M2896	Tetrahydromonapterin
+M2897	L-Threonine
+M2898	trimethylamine
+M2899	Trimethylamine N-oxide
+M2900	trans-Tetradec-2-enoyl-[acyl-carrier protein]
+M2901	trans-Oct-2-enoyl-[acyl-carrier protein]
+M2902	trans-octadec-2-enoyl-[acyl-carrier protein]
+M2903	trans-Hexadec-2-enoyl-[acyl-carrier protein]
+M2904	Oxidized thioredoxin
+M2905	Reduced thioredoxin
+M2906	Trehalose
+M2907	alpha,alpha'-Trehalose 6-phosphate
+M2908	tRNA(Lys)
+M2909	tRNA(SeCys)
+M2910	L-Tryptophan
+M2911	L-Tryptophanyl-tRNA(Trp)
+M2912	Thiosulfate
+M2913	tetradecanoate (n-C14:0)
+M2914	Tetradecanoyl-phosphate (n-C14:0)
+M2915	tetradecenoate (n-C14:1)
+M2916	Tetradecanoyl-phosphate (n-C14:1)
+M2917	tungstate
+M2918	L-Tyrosine
+M2919	UDP-2,3-bis(3-hydroxytetradecanoyl)glucosamine
+M2920	UDP-3-O-(3-hydroxytetradecanoyl)-N-acetylglucosamine
+M2921	UDP-3-O-(3-hydroxytetradecanoyl)-D-glucosamine
+M2922	undecaprenyl phosphate-4-amino-4-formyl-L-arabinose
+M2923	undecaprenyl phosphate-4-amino-4-deoxy-L-arabinose
+M2924	Undecaprenyl-diphospho-N-acetylmuramoyl-(N-acetylglucosamine)-L-ala-D-glu-meso-2,6-diaminopimeloyl-D-ala-D-ala
+M2925	UDP-N-acetyl-3-O-(1-carboxyvinyl)-D-glucosamine
+M2926	UDP-N-acetyl-D-glucosamine
+M2927	UDP-N-acetyl-D-mannosamine
+M2928	UDP-N-acetyl-D-mannosaminouronate
+M2929	Undecaprenyl-diphospho-N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminopimeloyl-D-alanyl-D-alanine
+M2930	UDP-N-acetylmuramoyl-L-alanine
+M2931	UDP-N-acetylmuramoyl-L-alanyl-D-glutamate
+M2932	UDP-N-acetylmuramate
+M2933	Undecaprenyl phosphate
+M2934	uridine 5''-diphospho-{beta}-4-deoxy-4-formamido-L-arabinose
+M2935	uridine 5''-diphospho-{beta}-4-deoxy-4-amino-L-arabinose
+M2936	UDP-4-keto-pyranose
+M2937	UDPglucose
+M2938	UDPgalactose
+M2939	UDP-D-galacto-1,4-furanose
+M2940	UDP-D-glucuronate
+M2941	UDP-N-acetylmuramoyl-L-alanyl-D-gamma-glutamyl-meso-2,6-diaminopimelate
+M2942	UDP-N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminopimeloyl-D-alanyl-D-alanine
+M2943	UDP-N-acetylmuramoyl-L-alanyl-D-gamma-glutamyl-meso-2,6-diaminopimelate-D-alanine
+M2944	UMP
+M2945	Undecaprenyl diphospho N-acetyl-glucosamine
+M2946	Undecaprenyl-diphospho-N-acetylglucosamine-N-acetylmannosaminuronate
+M2947	Undecaprenyl-diphospho N-acetylglucosamine-N-acetylmannosaminuronate-N-acetamido-4,6-dideoxy-D-galactose
+M2948	Uroporphyrinogen III
+M2949	Ureidoacrylate peracid
+M2950	UTP
+M2951	L-Valine
+M2952	tungsten binding cofactor
+M2953	Xanthine
+M2954	XDP
+M2955	Xanthosine 5'-phosphate
+M2956	XTP
+M2957	D-Xylulose 5-phosphate
+M2958	L-Xylulose 5-phosphate
+M2959	D-Xylose
+M2960	D-Xylulose
+M2961	L-Xylulose
+M2962	Zinc
+M2963	2',3'-Cyclic AMP
+M2964	2',3'-Cyclic CMP
+M2965	2',3'-Cyclic GMP
+M2966	2',3'-Cyclic UMP
+M2967	3'-AMP
+M2968	3'-cmp
+M2969	3'-GMP
+M2970	3'-UMP
+M2971	N-Acetyl-D-galactosamine
+M2972	N-Acetyl-D-galactosamine 1-phosphate
+M2973	4-Amino-4-deoxy-L-arabinose modified core oligosaccharide lipid A
+M2974	Arbutin
+M2975	L-Ascorbate
+M2976	Chloramphenicol
+M2977	core oligosaccharide lipid A diphosphate
+M2978	doxorubicin
+M2979	(enterobacterial common antigen)x4 core oligosaccharide lipid A
+M2980	phosphoethanolamine KDO(2)-lipid (A)
+M2981	Fe(III)dicitrate
+M2982	fusidic acid
+M2983	D-Glucosamine
+M2984	D-Glucuronate 1-phosphate
+M2985	hepta-acylated core oligosaccharide lipid A (E. coli)
+M2986	hepta-acylated KDO(2)-lipid (A)
+M2987	2(alpha-D-Mannosyl)-D-glycerate
+M2988	minocycline
+M2989	myo-Inositol hexakisphosphate
+M2990	novobiocin
+M2991	(O16 antigen)x4 core oligosaccharide lipid A
+M2992	Phenethylamine
+M2993	Phosphonate
+M2994	rifampin
+M2995	D-Sorbitol
+M2996	L-Threonine O-3-phosphate
+M2997	tetracycline
+M2998	Phosphotyrosine
+M2999	UDP-N-acetyl-D-galactosamine
+M3000	1-Acyl-sn-glycero-3-phosphoethanolamine (n-C12:0)
+M3001	1-Acyl-sn-glycero-3-phosphoethanolamine (n-C14:0)
+M3002	1-Acyl-sn-glycero-3-phosphoethanolamine (n-C14:1)
+M3003	1-Acyl-sn-glycero-3-phosphoethanolamine (n-C16:0)
+M3004	1-Acyl-sn-glycero-3-phosphoethanolamine (n-C16:1)
+M3005	1-Acyl-sn-glycero-3-phosphoethanolamine (n-C18:0)
+M3006	1-Acyl-sn-glycero-3-phosphoethanolamine (n-C18:1)
+M3007	1-Acyl-sn-glycero-3-phosphoglycerol (n-C12:0)
+M3008	1-Acyl-sn-glycero-3-phosphoglycerol (n-C14:0)
+M3009	1-Acyl-sn-glycero-3-phosphoglycerol (n-C14:1)
+M3010	1-Acyl-sn-glycero-3-phosphoglycerol (n-C16:0)
+M3011	1-Acyl-sn-glycero-3-phosphoglycerol (n-C16:1)
+M3012	1-Acyl-sn-glycero-3-phosphoglycerol (n-C18:0)
+M3013	1-Acyl-sn-glycero-3-phosphoglycerol (n-C18:1)
+M3014	applipoprotein
+M3015	cardiolipin (tetradodecanoyl, n-C12:0)
+M3016	cardiolipin (tetratetradecanoyl, n-C14:0)
+M3017	cardiolipin (tetratetradec-7-enoyl, n-C14:1)
+M3018	cardiolipin (tetrahexadecanoyl, n-C16:0)
+M3019	cardiolipin (tetrahexadec-9-enoyl, n-C16:1)
+M3020	cardiolipin (tetraoctadecanoyl, n-C18:0)
+M3021	cardiolipin (tetraoctadec-11-enoyl, n-C18:1)
+M3022	periplasmic protein disulfide isomerase I (oxidized)
+M3023	periplasmic protein disulfide isomerase I (reduced)
+M3024	protein disulfide isomerase II (oxidized)
+M3025	protein disulfide isomerase II (reduced)
+M3026	periplasmic disulfide isomerase/thiol-disulphide oxidase (oxidized)
+M3027	periplasmic disulfide isomerase/thiol-disulphide oxidase (reduced)
+M3028	(enterobacterial common antigen)x2 undecaprenyl-diphosphate
+M3029	(enterobacterial common antigen)x3 undecaprenyl-diphosphate
+M3030	(enterobacterial common antigen)x4 undecaprenyl-diphosphate
+M3031	two linked disacharide tripeptide murein units (uncrosslinked, middle of chain)
+M3032	two disacharide linked murein units, tripeptide crosslinked tripeptide (A2pm->A2pm) (middle of chain)
+M3033	two disacharide linked murein units, tripeptide crosslinked tetrapeptide (A2pm->D-ala) (middle of chain)
+M3034	two linked disacharide tetrapeptide and tripeptide murein units (uncrosslinked, middle of chain)
+M3035	two linked disacharide tetrapeptide murein units (uncrosslinked, middle of chain)
+M3036	two disacharide linked murein units, tetrapeptide corsslinked tetrapeptide (A2pm->D-ala) (middle of chain)
+M3037	three disacharide linked murein units (tetrapeptide crosslinked tetrapeptide (A2pm->D-ala), one uncrosslinked tetrapaptide) (middle of chain)
+M3038	three disacharide linked murein units (tetrapeptide crosslinked tetrapeptide (A2pm->D-ala) & tetrapeptide corsslinked tetrapeptide (A2pm->D-ala)) (middle of chain)
+M3039	two linked disacharide pentapeptide and tripeptide murein units (uncrosslinked, middle of chain)
+M3040	two linked disacharide pentapeptide and tetrapeptide murein units (uncrosslinked, middle of chain)
+M3041	two linked disacharide pentapeptide murein units (uncrosslinked, middle of chain)
+M3042	three linked disacharide pentapeptide murein units (uncrosslinked, middle of chain)
+M3043	two disacharide linked murein units, pentapeptide corsslinked tripeptide (A2pm->A2pm) (middle of chain)
+M3044	two disacharide linked murein units, pentapeptide crosslinked tetrapeptide (A2pm->D-ala) (middle of chain)
+M3045	three disacharide linked murein units (pentapeptide crosslinked tetrapeptide (A2pm->D-ala) tetrapeptide corsslinked tetrapeptide (A2pm->D-ala)) (middle of chain)
+M3046	(O16 antigen)x2 undecaprenyl diphosphate
+M3047	(O16 antigen)x3 undecaprenyl diphosphate
+M3048	(O16 antigen)x4 undecaprenyl diphosphate
+M3049	3-dehydro-L-gulonate 6-phosphate
+M3050	L-cysteate(1-)
+M3051	3-sulfonatopyruvate(2-)
+M3052	3-sulfinyl-pyruvate
+M3053	(S)-methylmalonyl-CoA(5-)
+M3054	LysW-gamma-L-lysine
+M3055	alpha-Aminoadipate carrier protein LysW
+M3056	LysW-gamma-L-alpha-aminoadipate
+M3057	2-amino-2,3,7-trideoxy-D-lyxo-hept-6-ulosonate
+M3058	methylphosphonate
+M3059	alpha-D-ribose 1-methylphosphonate 5-triphosphate
+M3060	alpha-D-ribose 1-methylphosphonate 5-phosphate
+M3061	methane
+M3062	aminopropylcadaverine
+M3063	(2S)-ethylmalonyl-CoA
+M3064	(S)-ethylmalonyl-CoA
+M3065	5,10-(methanylylidene)tetrahydromethanopterin(2-)
+M3066	N(5)-formyl-5,6,7,8-tetrahydromethanopterin(3-)
+M3067	7,8-didemethyl-8-hydroxy-5-deazariboflavin
+M3068	F420-0(2-)
+M3069	L-lactyl-2-diphospho-5'-guanosine
+M3070	coenzyme F420-1(3-)
+M3071	coenzyme gamma-F420-2(4-)
+M3072	2,5-diamino-6-(1-D-ribitylamino)pyrimidin-4(3H)-one 5'-phosphate
+M3073	(R)-4-phosphonatopantoate
+M3074	tritrans,heptacis-undecaprenyl diphosphate
+M3075	S-Farnesyl protein
+M3076	Protein C-terminal S-farnesyl-L-cysteine
+M3077	15-cis-phytoene
+M3078	(1R,2R,3R)-prephytoene diphosphate
+M3079	all-trans-phytoene
+M3080	all-trans-phytofluene
+M3081	lycopene
+M3082	neurosporene
+M3083	all-trans-zeta-carotene
+M3084	squalene
+M3085	Dolichyl diphosphate
+M3086	Protein asparagine
+M3087	Dolichyl phosphate
+M3088	Dolichyl phosphate D-mannose
+M3089	5-methyl-5,6,7,8-tetrahydromethanopterin
+M3090	5,6,7,8-tetrahydrosarcinapterin
+M3091	5-methyltetrahydrosarcinapterin(4-)
+M3092	2,4-Diamino-6-nitrotoluene
+M3093	2,4-Diamino-6-hydroxylaminotoluene
+M3094	1,3,7-trimethyluric acid
+M3095	3,6,8-Trimethylallantoin
+M3096	L-arabinopyranose
+M3097	D-glucopyranuronate
+M3098	alpha-D-galacturonate
+M3099	a pectin
+M3100	Pectate
+M3101	3-deoxy-D-glycero-hexo-2,5-diulosonate
+M3102	L-Xylulose 1-phosphate
+M3103	D-mannopyranose
+M3104	GDP-4-dehydro-6-deoxy-alpha-D-mannose(2-)
+M3105	GDP-beta-L-fucose(2-)
+M3106	L-rhamnulose 1-phosphate(2-)
+M3107	L-sorbose 1-phosphate
+M3108	D-glucitol 6-phosphate
+M3109	3-beta-D-galactosyl-sn-glycerol
+M3110	Epimelibiose
+M3111	melibiitol
+M3112	D-glucitol
+M3113	alpha-D-galactosyl-(1->3)-1D-myo-inositol
+M3114	galactan
+M3115	a DNA 5-methylcytosine
+M3116	DNA-Cytosines
+M3117	(3S)-3,6-diammoniohexanoate
+M3118	N(2)-(3-carboxylatopropionyl)-L-citrullinate
+M3119	N(pros)-methyl-L-histidine
+M3120	Hordenine
+M3121	N-methyltyraminium
+M3122	hypotaurine zwitterion
+M3123	3-phosphonatopyruvate
+M3124	UDP-alpha-D-galacturonate
+M3125	Levan
+M3126	Arabinan
+M3127	GDP-D-glycero-alpha-D-manno-heptose
+M3128	3-[alpha-D-galactosyl-(1->6)-beta-D-galactosyl]-1,2-diacyl-sn-glycerol
+M3129	1,2-diacyl-3-beta-D-galactosyl-sn-glycerol
+M3130	lactosyl-N-acylsphingosine
+M3131	D-galactosyl-N-acylsphingosine
+M3132	GM4
+M3133	beta-D-glucosyl-(1<->1)-ceramide
+M3134	N-acylsphingosine
+M3135	galactosylceramide sulfate
+M3136	propane-1,2-diol
+M3137	1-phenanthrol
+M3138	CH3-R
+M3139	1-methoxyphenanthrene
+M3140	1-Methoxypyrene
+M3141	1-Hydroxypyrene
+M3142	1-Hydroxy-6-methoxypyrene
+M3143	1,6-Dimethoxypyrene
+M3144	butanoyl phosphate(2-)
+M3145	Thiamin triphosphate
+M3146	oxirane
+M3147	beta-D-GalNAc-(1->4)-[alpha-Neu5Ac-(2->3)]-beta-D-Gal-(1->4)-beta-D-Glc-(1<->1')-Cer
+M3148	UDP-N-acetyl-alpha-D-galactosamine
+M3149	alpha-N-acetylneuraminyl-(2->3)-alpha-D-galactosyl-(1->4)-beta-D-glucosyl-(1<->1)-ceramide
+M3150	N-formimidoylglycine zwitterion
+M3151	N-Acetylgalactosamine
+M3152	N-Acetylgalactosamine 4-sulfate
+M3153	4'-hydroxyacetophenone
+M3154	4-(1-hydroxyethyl)phenol
+M3155	purine ribonucleoside
+M3156	purine nucleobase
+M3157	5'-deoxy-5'-fluoroadenosine
+M3158	5-fluoro-5-deoxy-D-ribose-1-phosphate
+M3159	5'-chloro-5'-deoxyadenosine
+M3160	5-chloro-5-deoxyribose 1-phosphate
+M3161	a pectate
+M3162	alpha-D,alpha-D-digalacturonate
+M3163	a pectate oligosaccharide with 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate end
+M3164	acetylxylan
+M3165	xylan
+M3166	a rhamnogalacturonan type I
+M3167	a 3-O-acetylated rhamnogalacturonan I
+M3168	a 2-O-acetylated rhamnogalacturonan I
+M3169	beta-melibiose
+M3170	1-phosphatidyl-1D-myo-inositol 3,4-bisphosphate
+M3171	1-phosphatidyl-1D-myo-inositol 4-phosphate
+M3172	alpha-D-galactoside
+M3173	CDP-alpha-D-abequose
+M3174	D-mannuronate
+M3175	CMP-N-acetyl-beta-neuraminate
+M3176	[heparan-sulfate]-beta-D-glucuronate
+M3177	[heparan-sulfate]-alpha-L-iduronate
+M3178	3-sulfonatolactate(2-)
+M3179	sulfoacetaldehyde
+M3180	N-acetyl-D-glucosaminyldiphospho-ditrans,octacis-undecaprenol
+M3181	acceptor beta-D-glucuronoside
+M3182	a homogalacturonan
+M3183	methylesterified 1,4-alpha-D-galacturonosyl
+M3184	xylotetraose
+M3185	beta-D-xylose
+M3186	a (1-4)-beta-D-xylan
+M3187	3-dehydrocholate
+M3188	isocholate
+M3189	3alpha,12alpha-dihydroxy-7-oxo-5beta-cholanate
+M3190	7-epicholate
+M3191	3alpha,7alpha-dihydroxy-12-oxo-5beta-cholanate
+M3192	3alpha,7alpha,12beta-trihydroxy-5beta-cholanate
+M3193	beta-D-mannoside
+M3194	beta-D-mannose
+M3195	alpha-D-mannose
+M3196	alpha-D-mannoside
+M3197	a nucleoside 2',3'-cyclic phosphate
+M3198	2-O-(6-phospho-alpha-D-mannosyl)-D-glycerate
+M3199	keto-D-fructuronate
+M3200	GDP-4-dehydro-6-L-deoxygalactose
+M3201	aldehydo-D-xylose
+M3202	keto-D-fructose
+M3203	N-acetyl-9-O-acetylneuraminate
+M3204	6-O-acetyl-beta-D-galactoside
+M3205	a beta-D-galactoside
+M3206	a dolichyl beta-D-glucosyl phosphate
+M3207	a dolichyl phosphate
+M3208	methanophenazine
+M3209	a reduced cofactor F420
+M3210	dihydromethanophenazine
+M3211	an oxidized factor F420
+M3212	a peptidoglycan polymer
+M3213	a peptidoglycan polymer with GlcNAc end
+M3214	a peptidoglycan polymer with 1,6-anhydromuropeptide end
+M3215	a glycopeptide-D-mannosyl-N4-(N-acetyl-D-glucosaminyl)2-asparagine
+M3216	a glycopeptide-D-mannosyl-N4-N-acetyl-D-glucosamine
+M3217	N-acetyl-D-glucosamine-asparagine
+M3218	L-canaline
+M3219	an oligosaccharide with 4-deoxy-alpha-L-threo-hex-4-enuronosyl end
+M3220	beta-D-Man-4,6-pyruvate
+M3221	xanthan
+M3222	acetyl ester
+M3223	guanine at position 15 of an archaeal tRNA
+M3224	preQ0 at position 15 of an archaeal tRNA
+M3225	13-sophorosyloxydocosanoate 6',6''-diacetate
+M3226	13-[O(2')-beta-D-glucopyranosyl-beta-D-glucopyranosyloxy]docosanoate O(6'')-acetate
+M3227	8-oxo-GMP
+M3228	a tRNA 2-thiouridine34
+M3229	a [TusE sulfur carrier protein]-L-cysteine
+M3230	a tRNA uridine34
+M3231	a [TusE sulfur carrier protein]-S-sulfanylcysteine
+M3232	2-oxohept-3-enedioate
+M3233	a pseudouridine2605 in 23S rRNA
+M3234	a 23S rRNA uridine2605
+M3235	4-deoxy-beta-D-gluc-4-enuronosyl-(1->3)-N-acetyl-D-galactosamine
+M3236	2-acetamido-2-deoxy-3-O-(4-deoxy-alpha-L-threo-hex-4-enopyranosyluronate)-6-O-sulfonato-D-galactopyranose(2-)
+M3237	N-acetyl-beta-D-galactosamine 6-sulfate
+M3238	1-O-acetylmaltose
+M3239	2-acetamido-2-deoxy-3-O-(4-deoxy-alpha-L-threo-hex-4-enopyranosyluronate)-4-O-sulfonato-D-galactopyranose(2-)
+M3240	dermatan sulfate
+M3241	chondroitin 6'-sulfate
+M3242	chondroitin 4'-sulfate
+M3243	a GlcMan8(GlcNAc)2-glycoprotein
+M3244	alpha-D-glucosyl-(1->3)-beta-D-mannose
+M3245	a GlcMan9(GlcNAc)2-glycoprotein
+M3246	big endothelin
+M3247	endothelin 1
+M3248	an insertion sequence element IS30
+M3249	an insertion sequence IS30 with integrated transposon
+M3250	a tRNA pseudouridine32
+M3251	a tRNA uridine32
+M3252	a 23S rRNA pseudouridine2457
+M3253	a 23S rRNA uridine2457
+M3254	a 23S rRNA pseudouridine955/2504/2580
+M3255	a 23S rRNA uridine955/2504/2580
+M3256	a 23S rRNA pseudouridine2604
+M3257	a uridine2604 in 23S rRNA
+M3258	a 23S rRNA pseudouridine1911/1915/1917
+M3259	a 23S rRNA uridine1911/1915/1917
+M3260	N(1)-acetylsperminium(3+)
+M3261	GlcNAc-1,6-anhMurNAc-L-Ala-gamma-D-Glu-DAP-D-Ala
+M3262	N-acetyl-beta-D-glucosamine(anhydrous)-N-acetylmuramate
+M3263	(2Z,6Z,10Z,14Z,18Z,22Z,26Z,30Z,34E)-Decaprenyl diphosphate
+M3264	(2-chloro-5-oxo-2,5-dihydro-2-furyl)acetate
+M3265	2-chloro-4-methyl-cis,cis-muconate
+M3266	5-chloro-3-methyl-cis-dienelactone
+M3267	an (S)-2-haloacid
+M3268	(R)-2-hydroxyacid
+M3269	halide
+M3270	alpha-L-fucoside
+M3271	an oligosaccharide
+M3272	a fucose
+M3273	a fucose sulfate
+M3274	a fucoidan
+M3275	pullulans
+M3276	alpha-L-fucopyranose
+M3277	fragments of immunoglobuline G glycopeptide
+M3278	an immunoglobulin G glycopeptide
+M3279	alpha-D-xylose
+M3280	alpha-lactose
+M3281	a (1->5)-alpha-L-arabinan oligosaccharide
+M3282	beta-L-arabinofuranose
+M3283	a non galactosylated galactose acceptor
+M3284	beta-(1->6)-galactobiose
+M3285	3-beta-hydroxyandrost-5-en-17-one 3-sulfate
+M3286	dehydroepiandrosterone
+M3287	4-(beta-D-ribofuranosyl)aminobenzene-5'-phosphate
+M3288	7,8-H2pterin-6-yl-methyl-4-(beta-D-ribofuranosyl)aminobenzene 5'-phosphate
+M3289	an N-acetyl-beta-D-hexosaminide
+M3290	an N-acetyl-beta-D-hexosamine
+M3291	heparin
+M3292	an oligosaccharides with 4-deoxy-alpha-D-gluc-4-enuronosyl end
+M3293	a plant arabinogalactan type I
+M3294	a galactotetraose
+M3295	a 1,4-beta-D-glucan
+M3296	a non glucosylated glucose acceptor
+M3297	beta-D-glucoside
+M3298	DIMBOA beta-D-glucoside
+M3299	DIMBOA
+M3300	an unsaturated sugar
+M3301	heparin glucosamine
+M3302	[heparan sulfate]-alpha-N-acetyl-D-glucosamine-6-O-sulfate
+M3303	[keratan sulfate]-alpha-N-acetyl-D-glucosamine-6-O-sulfate
+M3304	[keratan sulfate]-alpha-N-acetyl-D-glucosamine
+M3305	an L-arabinan
+M3306	D-galacto-hexodialdose
+M3307	a DNA segment
+M3308	a DNA segment in reverse orientation
+M3309	[chondroitin]-N-acetyl-galactosamine
+M3310	[chondroitin]-6-O-sulfo-N-acetylgalactosamine
+M3311	[keratan]-galactose
+M3312	[keratan]-galactose 6'-sulfate
+M3313	a substituted beta-amino acid
+M3314	Aliphatic-N-Acetyl-Diamines
+M3315	an aliphatic alpha,omega-diamine
+M3316	a (2S)-2-hydroxycarboxylate
+M3317	[chondroitin]-4-O-sulfo-N-acetylgalactosamine
+M3318	L-sorbopyranose
+M3319	L-iditol
+M3320	hyaluronate
+M3321	dermatan sulfate disaccharide
+M3322	(R)-methylmalonyl-CoA
+M3323	chloramphenicol 3-acetate
+M3324	peptidylproline (omega = 180)
+M3325	peptidylproline (omega = 0)
+M3326	N-acetyl-alpha-D-glucosamine
+M3327	N-acetyl-alpha-D-glucosaminide
+M3328	N-sulfo-D-glucosamine(1-)
+M3329	a 1-6-alpha-D-glucan
+M3330	a cycloisomaltooligosaccharide
+M3331	a collagen
+M3332	chitodextrin
+M3333	UDP-N-acetyl-beta-D-mannosaminouronate
+M3334	[heparan-sulfate]-2-O-sulfo-alpha-L-iduronate
+M3335	[dermatan-sulfate]-2-O-sulfo-alpha-L-iduronate
+M3336	[dermatan]-alpha-L-iduronate
+M3337	alpha-maltoheptaose
+M3338	beta-D-glucosaminyl-(1->4)-beta-D-glucosamine-6-phosphate
+M3339	8-oxo-dGMP
+M3340	fluoroacetaldehyde
+M3341	fluoroacetate
+M3342	5-fluoro-5-deoxy-d-ribulose-1-phosphate
+M3343	4-fluoro-L-threonine zwitterion
+M3344	alpha-D-glucosiduronic acid
+M3345	deacetylcephalosporin C(1-)
+M3346	cephalosporin C(1-)
+M3347	tripeptide
+M3348	a sialyloligosaccharide
+M3349	a cis-delta-decenoyl-[acp]
+M3350	a trans-D2-decenoyl-[acp]
+M3351	beta-L-fucose 1-phosphate(2-)
+M3352	3-oxo-Delta(4)-steroid
+M3353	a 3-oxo-5-alpha-steroid
+M3354	an inactive ribonucleoside triphosphate reductase
+M3355	an active ribonucleoside triphosphate reductase
+M3356	AP site removed from DNA
+M3357	AP site on DNA created by glycosylase in repair process: 
+M3358	benzaldehyde
+M3359	L-threo-3-phenylserine zwitterion
+M3360	CMP-N-acyl-beta-neuraminate
+M3361	N-acylneuraminate
+M3362	N-acetylmuramoyl-L-alanyl-gamma-D-glutamyl-L-lysyl- D-alanyl-diphosphoundecaprenol
+M3363	2,3-bisphosphonato-D-glycerate(5-)
+M3364	a reduced cytochrome c552
+M3365	an oxidized cytochrome c552
+M3366	an oleoyl-[acp]
+M3367	a [methyl-(Co(III) tetramethylammonium-specific corrinoid protein]
+M3368	coenzyme M
+M3369	a [Co(I) tetramethylammonium-specific corrinoid protein]
+M3370	methyl-CoM(1-)
+M3371	indol-3-ylacetyl-CoA(4-)
+M3372	a [formate C acetyltransferase]-glycine
+M3373	a [formate C acetyltransferase]-glycin -2-yl radical
+M3374	a flavodoxin semiquinone
+M3375	a 3-oxo-cis-D5-dodecenoyl-[acp]
+M3376	L-methionine (S)-S-oxide zwitterion
+M3377	a 3R-hydroxy cis D5-dodecenoyl-[acp]
+M3378	a trans-delta-cis-D5-dodecenoyl-[acp]
+M3379	a cis-D5-dodecenoyl-[acp]
+M3380	ferricytochrome
+M3381	ferrocytochrome
+M3382	a 3-oxo-cis-D7-tetradecenoyl-[acp]
+M3383	a 3R-hydroxy cis D7-tetradecenoyl-[acp]
+M3384	a trans-delta-cis-D7-tetradecenoyl-[acp]
+M3385	a cis-D7-tetradecenoyl-[acp]
+M3386	a 3-oxo-cis-D9-hexadecenoyl-[acp]
+M3387	a 3R-hydroxy cis D9-hexadecenoyl-[acp]
+M3388	a trans-delta-cis-D9-hexadecenoyl-[acp]
+M3389	a trans-keto-meroacyl-AMP
+M3390	a trans-keto-C61-meroacyl-[acp]
+M3391	a cis-keto-meroacyl-AMP
+M3392	a cis-keto-C60-meroacyl-[acp]
+M3393	a trans-methoxy-meroacyl-AMP
+M3394	a trans-methoxy-C60-meroacyl-[acp]
+M3395	a cis-methoxy-meroacyl-AMP
+M3396	a cis-methoxy-C59-meroacyl-[acp]
+M3397	an alpha-meroacyl-AMP
+M3398	a C52-alpha-meroacyl-[acp]
+M3399	3-aminoisobutyric acid
+M3400	N(4)-acetyl-L-2,4-diaminobutyric acid zwitterion
+M3401	Geranoyl-CoA
+M3402	citronellyll-CoA
+M3403	3-maleylpyruvate
+M3404	3-fumarylpyruvate
+M3405	3-(3-hydroxyphenyl)propanoate
+M3406	2,4-dichlorophenol
+M3407	(2,4-dichlorophenoxy)acetate
+M3408	(4-chlorophenoxy)acetate
+M3409	4-chlorophenol
+M3410	L-kynurenine zwitterion
+M3411	N-formyl-L-kynurenine zwitterion
+M3412	N-formylanthranilate
+M3413	3-hydroxy-L-kynurenine zwitterion
+M3414	5-hydroxy-N-formylkynurenine
+M3415	alpha-aminopropionitrile
+M3416	alanine
+M3417	gamma-Amino-gamma-cyanobutanoate
+M3418	UDP-N-2-acetamido-2-deoxy-alpha-D-glucuronate
+M3419	UDP-2-acetamido-2-deoxy-alpha-D-ribo-hex-3-uluronate
+M3420	UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucuronate
+M3421	UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate
+M3422	UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
+M3423	4-phospho-(KDO)-lipid IVA
+M3424	2-Hydroxy-5-methyl-cis,cis-muconate
+M3425	4,5-dihydroxyphthalate(2-)
+M3426	4-Hydroxyphthalate
+M3427	3-hydroxybenzoate
+M3428	anthraniloyl-CoA(4-)
+M3429	cyclopropanecarboxylate
+M3430	Cyclopropanecarboxyl-CoA
+M3431	2-hydroxy-3-oxosuccinate(2-)
+M3432	(2R,3S)-tartrate
+M3433	(R)-3-[(R)-3-hydroxybutanoyloxy]butanoate
+M3434	Poly[(R)-3-hydroxybutanoate]x
+M3435	(R)-malate(2-)
+M3436	mesaconate
+M3437	threo-3-methyl-L-aspartate(1-)
+M3438	Perillyl-CoA
+M3439	(3S)-3-isopropenyl-6-oxoheptanoate
+M3440	(3S)-3-Isopropenyl-6-oxoheptanoyl-CoA
+M3441	(3R)-3-Isopropenyl-6-oxoheptanoyl-CoA
+M3442	(3R)-3-isopropenyl-6-oxoheptanoate
+M3443	trans-2-Methyl-5-isopropylhexa-2,5-dienoic acid
+M3444	cis-2-Methyl-5-isopropylhexa-2,5-dienoic acid
+M3445	cis-3,4-dehydroadipyl-CoA
+M3446	Oleoyl-[acyl-carrier protein]
+M3447	mesaconyl-C4-CoA
+M3448	mesaconyl-C1-CoA
+M3449	Œî2,5-3,4,4-trimethylpimelyl-CoA
+M3450	[(2R)-3,3,4-trimethyl-6-oxo-3,6-dihydro-1H-pyran-2-yl]acetyl-CoA
+M3451	[(1R)-2,2,3-trimethyl-2-oxocyclopent-3-en-1-yl]acetate
+M3452	5-oxo-1,2-campholide
+M3453	a sulfo-aldehyde intermediate
+M3454	S-acetyldihydrolipoamide
+M3455	L-citramalate(2-)
+M3456	beta-D-ManNAcA-(1->4)-alpha-D-GlcNAc-1-diphospho-ditrans,octacis-undecaprenol
+M3457	3-heptaprenyl-4-hydroxybenzoate
+M3458	di-trans,poly-cis-undecaprenol
+M3459	ectoine zwitterion
+M3460	1-carboxylatovinyl carboxylatophosphonate(3-)
+M3461	carboxyphosphinopyruvate
+M3462	L-3-aminobutanoyl-CoA(3-)
+M3463	(5S)-5-amino-3-oxohexanoic acid zwitterion
+M3464	intracellular S0
+M3465	a tRNA: 
+M3466	tRNA containing N1-methylguanine: 
+M3467	3-[hydroxy(oxido)phosphoranyl]pyruvate(2-)
+M3468	2-heptaprenylphenol
+M3469	(3S,5S)-3,5-diammoniohexanoate
+M3470	trehalose-cis-methoxy-mono-mycolate
+M3471	6-O-cis-methoxy-mycolyl-trehalose-6-phosphate
+M3472	3-(all-trans-heptaprenyl)benzene-1,2-diol
+M3473	trans-glutaconyl-CoA
+M3474	2-methoxy-6-(all-trans-heptaprenyl)phenol
+M3475	2-benzylsuccinate(2-)
+M3476	2-methoxy-6-all trans-heptaprenyl-2-methoxy-1,4-benzoquinol
+M3477	6-methoxy-3-methyl-2-all-trans-heptaprenyl-1,4-benzoquinol
+M3478	(R)-2-benzylsuccinyl-CoA(5-)
+M3479	3-methylcrotonyl-CoA
+M3480	3-decaprenyl-4-hydroxybenzoate
+M3481	all-trans-decaprenyl diphosphate
+M3482	a folylpolyglutamate(n): 
+M3483	phenylglyoxylate
+M3484	4-chlorobenzoyl-CoA(4-)
+M3485	4-chlorobenzoate
+M3486	2-decaprenylphenol
+M3487	alpha,alpha'-trehalose 6-mycolate
+M3488	a mycobacterial arabinogalactan
+M3489	mycolyl-arabinogalactan-peptidoglycan complex
+M3490	3-(all-trans-decaprenyl)benzene-1,2-diol
+M3491	chromium(6+)
+M3492	chromium(3+)
+M3493	DNA-6-Methyl-Amino-Purines
+M3494	DNA-Adenines
+M3495	2-hydroxy-5-carboxymuconate-6-semialdehyde
+M3496	2-decaprenyl-6-methoxyphenol
+M3497	cis-prenyl-tRNA
+M3498	E-pyridine-3-aldoxime
+M3499	nonaprenyl-4-hydroxybenzoate
+M3500	Solanesyl diphosphate
+M3501	(2Z,6E)-Farnesyl diphosphate
+M3502	(R)-pantolactone
+M3503	trans,trans,cis-Geranylgeranyl diphosphate
+M3504	ditrans,dicis-Pentaprenyl diphosphate
+M3505	2-decaprenyl-6-methoxyhydroquinone
+M3506	cis-zeatin riboside monophosphate
+M3507	(2S,5S)-carboxymethylproline
+M3508	2,3-dihydroxybenzenesulfonate
+M3509	2-decaprenyl-6-methoxy-3-methylhydroquinone
+M3510	arabinogalactan-cis-methoxy-mycolate
+M3511	(3S,5S)-carbapenam
+M3512	ditrans,tricis-Hexaprenyl diphosphate
+M3513	(5R)-carbapenem
+M3514	N-formyl-L-methioninate
+M3515	(1R,4R)-bornane-2,5-dione
+M3516	(+)-exo-5-hydroxycamphor
+M3517	(3S,5R)-carbapenam
+M3518	indole-3-glyoxal
+M3519	N-formylkynurenine
+M3520	2-nonaprenylphenol
+M3521	indole-3-glycolate
+M3522	ditrans,tetracis-Heptaprenyl diphosphate
+M3523	[(1R)-2,2,3-trimethyl-5-oxocyclopent-3-enyl]acetyl-CoA
+M3524	4-ethylphenol
+M3525	3-(all-trans-nonaprenyl)benzene-1,2-diol
+M3526	arabinogalactan-trans-methoxy-mycolate
+M3527	trehalose-trans-methoxy-mono-mycolate
+M3528	4-hydroxybenzoyl-acetate
+M3529	2-methoxy-6-(all-trans-nonaprenyl)phenol
+M3530	4-hydroxybenzaldehyde
+M3531	tryptophol
+M3532	4-hydroxyphenylglyoxylate
+M3533	2-methoxy-6-all trans-nonaprenyl-2-methoxy-1,4-benzoquinol
+M3534	N-acetylmuramoyl-L-alanyl-D-isoglutaminyl-N-(Œ≤-D-asparatyl)-L-lysyl-D-alanyl-D-alanine-diphosphoundecaprenyl-N-acetylglucosamine
+M3535	(+)-5-chloromuconolactone
+M3536	6-methoxy-3-methyl-2-all-trans-nonaprenyl-1,4-benzoquinol
+M3537	ditrans,pentacis-Octaprenyl diphosphate
+M3538	indole-3-glyoxylate
+M3539	(S)-mandelate
+M3540	alpha-D-FucNAc4-(1->4)-beta-D-ManNAcA-(1->4)-D-GlcNAc-undecaprenyl diphosphate
+M3541	1D-myo-inositol 1,4,5-trisphosphate
+M3542	6-O-trans-methoxy-mycolyl-trehalose-6-phosphate
+M3543	arabinogalactan-cis-keto-mycolate
+M3544	trehalose-cis-keto-mono-mycolate
+M3545	(R)-mandelate
+M3546	coenzyme Q7
+M3547	indole-3-ketol
+M3548	Ubiquinone-9
+M3549	ditrans,hexacis-Nonaprenyl diphosphate
+M3550	Ubiquinone-10
+M3551	arabinogalactan-trans-keto-mycolate
+M3552	trehalose-trans-keto-mono-mycolate
+M3553	9,9'-di-cis-zeta-carotene
+M3554	9,9',15-tri-cis-zeta-carotene
+M3555	a poly-Œ≤-hydroxybutyrate
+M3556	(S)-4-hydroxymandelate
+M3557	(R)-4-hydroxymandelate
+M3558	7,9,9'-tri-cis-neurosporene
+M3559	L-Ala-D-Glu-meso-A2pm
+M3560	N-acyl-D-glutamates(2-)
+M3561	7,7',9,9'-tetra-cis-lycopene
+M3562	tetrahydrofolate-L-glutamate: C24H27N8O9
+M3563	6-O-mycolyl-trehalose-6-phosphate
+M3564	D-mannopyranosyl-1-phosphoheptaprenol
+M3565	6-O-mycolyl-Œ≤-D-mannopyranosyl-1-phosphoheptaprenol
+M3566	Mo(VI)-molybdopterin guanine dinucleotide
+M3567	DNA with G-A mismatch
+M3568	DNA with removed adenine mismatch leaving an AP site
+M3569	2,3-dihydroxy-2,3-dihydrobenzoate
+M3570	9'-cis-neurosporene
+M3571	(S)-acetoin
+M3572	6-O-cis-keto-mycolyl-trehalose-6-phosphate
+M3573	1,2-dichloroethane
+M3574	6-O-cis-methoxy-mycolyl-Œ≤-D-mannopyranosyl-1-phosphoheptaprenol
+M3575	7',9'-cis-lycopene
+M3576	2-aryl-2-methylmalonic acid
+M3577	2-arylpropionate
+M3578	6-O-trans-methoxy-mycolyl-Œ≤-D-mannopyranosyl-1-phosphoheptaprenol
+M3579	methylsuccinyl-CoA
+M3580	6-O-cis-keto-mycolyl-Œ≤-D-mannopyranosyl-1-phosphoheptaprenol
+M3581	a very-long-chain oxoacyl-CoA
+M3582	a very-long-chain (3R)-3-hydroxyacyl-CoA
+M3583	6-O-trans-keto-mycolyl-Œ≤-D-mannopyranosyl-1-phosphoheptaprenol
+M3584	6-O-trans-keto-mycolyl-trehalose-6-phosphate
+M3585	L-alanyl-gamma-D-glutamyl-meso-diaminopimelate
+M3586	2-acylglycerophosphocholine
+M3587	acyl monophosphate
+M3588	benzoylsuccinyl-CoA
+M3589	2-amino-3-hydroxybutanoic acid
+M3590	1-acylglycerophosphocholine
+M3591	UDP-alpha-D-xylose
+M3592	13-[O(2')-Œ≤-D-glucopyranosyl-Œ≤-D-glucopyranosyloxy]docosanoate O(6'')-acetate
+M3593	2-aminobenzenesulfonate
+M3594	a non-lipoylated protein-lipoyl domain: 
+M3595	a lipoylated protein lipoyl-domain: 
+M3596	sugar phosphate
+M3597	reduced putidaredoxin
+M3598	(1R,4R)-camphor
+M3599	oxidized putidaredoxin
+M3600	a ThiS-ThiF acyl-disulfide
+M3601	a ThiF protein
+M3602	a ThiS-ThiI acyl-disulfide
+M3603	N(6)-acetyl-L-lysine zwitterion
+M3604	a deacetylated histone
+M3605	an acetylated histone
+M3606	a petroselinoyl-[acp]
+M3607	a 3-amino-8-[(2E)-2,4-dimethyl-5-oxohex-2-enoyl]-5,7-dihydroxy-6-methyl-1,4,5,6-tetrahydronaphthalene-1,4-dione -[PKS-acp]
+M3608	a 8-(3-amino-5-hydroxyphenyl)-8-hydroxy-3,7-dimethyloctane-2,4,6-trione -[PKS-acp]
+M3609	cis-geranoyl-CoA(4-)
+M3610	geranate
+M3611	glutathionylspermidinium(2+)
+M3612	2-acyl-sn-glycero-3-phosphoethanolamine
+M3613	acetylene
+M3614	ethene
+M3615	2-Naphthoyl-CoA
+M3616	2-naphthoate
+M3617	N-formylmethanofuran(5-)
+M3618	methanofuranate(4-)
+M3619	Coenzyme B
+M3620	CoM-S-S-CoB(4-)
+M3621	(2R)-2-O-phosphonato-3-sulfonatolactate(4-)
+M3622	(R)-3-sulfolactate
+M3623	chlorophyll a
+M3624	chlorophyll b
+M3625	chlorophyllide b
+M3626	3-Vinylbacteriochlorophyllide a
+M3627	3-hydroxyethylchlorophyllide a
+M3628	3-Hydroxyethylbacteriochlorophyllide a
+M3629	Bacteriochlorophyllide a
+M3630	bacteriochlorophyll a
+M3631	Bacteriochlorophyllide b
+M3632	Bacterio-chlorophyll b
+M3633	retinoate
+M3634	heptanal
+M3635	heptanoate
+M3636	4-(Œ≤-D-ribofuranosyl)aminobenzene-5'-phosphate
+M3637	7,8-H2pterin-6-yl-methyl-4-(Œ≤-D-ribofuranosyl)aminobenzene 5'-phosphate
+M3638	a polyisoprenyl diphosphate
+M3639	a 4-hydroxy-3-polyprenylbenzoate
+M3640	N-acetylglutaminylglutamine
+M3641	all-trans-Hexaprenyl diphosphate
+M3642	3-hexaprenyl-4-hydroxybenzoate
+M3643	2-Hydroxyglutaryl-CoA
+M3644	geranial
+M3645	neral
+M3646	a double stranded DNA with 5'-terminal phosphate
+M3647	octadecanal
+M3648	heptadecane
+M3649	D-hexose 6-phosphate
+M3650	D-hexose
+M3651	a dipeptide with proline at carboxy terminal
+M3652	3-hydroxy-5- oxohexanoyl-CoA
+M3653	3-hydroxy-5-oxohexanoate
+M3654	Dihydrophloroglucinol
+M3655	phloroglucinol
+M3656	pyrogallol
+M3657	1,2,3,5-tetrahydroxybenzene
+M3658	nigerose
+M3659	5-chloro-4-hydroxy-2-oxopentanoate
+M3660	5-chloro-5-deoxy-D-ribonate
+M3661	N-acyl-D-aspartic acid
+M3662	pyrimidine nucleoside
+M3663	pyrimidine nucleobase
+M3664	4-hydroxybutyrate
+M3665	4-hydroxybutyryl-CoA(4-)
+M3666	an oxidized nitroaromatic compound
+M3667	a reduced nitroaromatic compound
+M3668	6-(alpha-D-glucosaminyl)-1-phosphatidyl-1D-myo-inositol
+M3669	a 6-(N-acetyl-D-glucosaminyl)-1-phosphatidyl-1D-myo-inositol
+M3670	coenzyme B(3-)
+M3671	p-dihydrocoumaroyl-CoA
+M3672	phloretin
+M3673	isoliquiritigenin
+M3674	a methylated ribosomal protein L11
+M3675	a non-methylated ribosomal protein L11
+M3676	(E)-cinnamoyl-CoA(4-)
+M3677	pinocembrin chalcone
+M3678	2',4,4',6'-tetrahydroxychalcone
+M3679	6-isobutyl-4-hydroxy-2-pyrone
+M3680	7H-purine
+M3681	8-hydroxypurine
+M3682	a dolichyl Œ≤-D-mannosyl phosphate
+M3683	an O-D-mannosyl-protein
+M3684	6,8-dihydroxypurine
+M3685	4-imidazolone
+M3686	4-aminoimidazole
+M3687	5-Amino-4-imidazole carboxylate
+M3688	4-ureido-5-imidazole carboxylate
+M3689	MONOMER0-4166
+M3690	EG10487-MONOMER
+M3691	5,10-methenyl-tetrahydropteroyl-[Œ≥-Glu](n)
+M3692	a purine 2'-deoxyribonucleoside: 
+M3693	a peptidoglycan tetramer with L,D cross-links (L-lys-D-Asn-L-Lys)
+M3694	N-acetylmuramoyl-L-alanyl-D-isoglutaminyl-N-(Œ≤-D-asparatyl)-L-lysyl-D-alanine-diphosphoundecaprenyl-N-acetylglucosamine
+M3695	N-acetylmuramoyl-L-alanyl-D-isoglutaminyl-L-lysyl-D-alanyl-diphosphoundecaprenyl-N-acetylglucosamine
+M3696	N-acetylphosphinatothricinate(2-)
+M3697	phosphinothricin(1-)
+M3698	an oxidized plastocyanin
+M3699	a reduced plastocyanin
+M3700	15,9'-di-cis-phytofluene
+M3701	oleanolate 3 beta-D-glucuronoside
+M3702	oleanolate
+M3703	L-thyroxine acyl Œ≤-D-glucuronide
+M3704	thyroxine
+M3705	N-acetyl-serotonin glucuronide
+M3706	N-acetylserotonin
+M3707	tetraiodothyroacetate ester glucuronide
+M3708	tetraiodothyroacetate
+M3709	5-hydroxytryptophol glucuronide
+M3710	3,5,3'-triiodo-L-thyronine acyl Œ≤-D-glucuronide
+M3711	3,3',5-triiodo-L-thyronine
+M3712	vinylacetyl-CoA(4-)
+M3713	deisopropylatrazine
+M3714	4-amino-6-(ethylamino)-1,3,5-triazin-2-ol
+M3715	nicotine-glucuronide
+M3716	(S)-nicotine
+M3717	L-thyroxine phenolic Œ≤-D-glucuronide
+M3718	mycophenolic acid O-acyl-glucuronide
+M3719	mycophenolate
+M3720	1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+M3721	coenzyme F390 (adenosine)
+M3722	triiodothyroacetate ester glucuronide
+M3723	3,3',5-triiodothyroacetate
+M3724	(-)-cotinine
+M3725	cotinine-glucuronide
+M3726	a glucuronosylated glucuronoside acceptor
+M3727	a non-glucuronosylated glucuronoside acceptor
+M3728	trans-3-hydroxycotinine-glucuronide
+M3729	trans-3-hydroxycotinine
+M3730	3,5,3'-triiodo-L-thyronine phenolic Œ≤-D-glucuronide
+M3731	mycophenolic acid phenolic glucuronide
+M3732	triiodothyroacetate ether glucuronide
+M3733	tetraiodothyroacetate ether glucuronide
+M3734	(5R)-5,6-dihydro-5-(thymidin-7-yl)thymidine (in DNA)
+M3735	thymidylyl-(3'-5')-thymidylate (in DNA)
+M3736	dipicolinate
+M3737	UDP-N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminoheptanedioate-D-alanine(4-)
+M3738	N-acetyl-L-2-aminoadipate 6-phosphate
+M3739	N-acetyl-L-2-aminoadipate semialdehyde
+M3740	a 3-D-glucosyl-1,2-diacylglycerol
+M3741	N-acetylglutaminylglutamine amide
+M3742	indole-5,6-quinone
+M3743	5,6-dihydroxyindole
+M3744	L-dopaquinone zwitterion
+M3745	sucrose 6(F)-phosphate(2-)
+M3746	CMP-N-glycoloyl-beta-neuraminate(2-)
+M3747	N-glycoloylneuraminate
+M3748	prostaglandin H2(1-)
+M3749	PGG2
+M3750	arachidonate
+M3751	p-tolualdehyde
+M3752	m-tolualdehyde
+M3753	o-tolualdehyde
+M3754	1,4-benzoquinone
+M3755	hop-22(29)-ene
+M3756	hopan-22-ol
+M3757	sym-homospermidinium(3+)
+M3758	cyclohexanone
+M3759	cyclohexanol
+M3760	an oxidized pseudoazurin
+M3761	a reduced pseudoazurin
+M3762	4-hydroxy-2-ketopimelate
+M3763	S-acetylphosphopantotheine(2-)
+M3764	a [citrate-lyase] (thiol form)
+M3765	a [citrate-lyase] (acetyl form)
+M3766	phenylmercury acetate
+M3767	cyclic ADP-ribose: C15H20N5O13P2
+M3768	phenoxy radical VI
+M3769	phenoxy radical VIII
+M3770	phenoxy radical VII
+M3771	mercury(0)
+M3772	a ribosomal protein-N-acetyl-L-alanine
+M3773	a ribosomal protein-L-alanine
+M3774	biopterin
+M3775	L-xylo-hexos-2-ulose
+M3776	L-sorbosone 1,4-lactone
+M3777	L-sorbosone 2,6-lactone
+M3778	3-chlorobenzaldehyde
+M3779	3-chlorobenzyl alcohol
+M3780	a tRNA pseudouridine55
+M3781	a tRNA uridine55
+M3782	an aromatic aldehyde
+M3783	2-dehydro-L-idonate
+M3784	a DNA containing pyrimidine dimer
+M3785	leukotriene A4(1-)
+M3786	a nucleoside diphosphate-glucose
+M3787	15S-HETE: C20H32O3
+M3788	lipoxin B4: C20H32O5
+M3789	lipoxin A4: C20H32O5
+M3790	L-Dopachrome
+M3791	leucodopachrome
+M3792	a [citrate-lyase] (citryl form)
+M3793	3-dehydro-2-deoxy-D-gluconate
+M3794	2-deoxy-D-gluconate
+M3795	(+)-dihydrokaempferol
+M3796	cis-3,4-leucopelargonidin
+M3797	(+)-dihydromyricetin
+M3798	(2R,3S,4S)-leucodelphinidin
+M3799	(2R,3S,4S)-leucocyanidin
+M3800	(+)-taxifolin
+M3801	N,N-dimethylaniline N-oxide
+M3802	N,N-dimethylaniline
+M3803	pseudouridine
+M3804	nicotine N(1')-oxide
+M3805	1,4-beta-D-Mannan
+M3806	mannan
+M3807	2-hydroxy fatty acid
+M3808	an oxidized flavoprotein
+M3809	a reduced flavoprotein
+M3810	5-(methylsulfanyl)-2,3-dioxopentyl phosphate(2-)
+M3811	D-cysteine zwitterion
+M3812	4-hydroxyphenylacetate
+M3813	p-Hydroxyphenylacetylglycine
+M3814	4-Hydroxyphenylacetyl-CoA
+M3815	3-hydroxyphenylacetate
+M3816	3-oxopimeloyl-CoA(5-)
+M3817	1,2-bis(4-hydroxyphenyl)propan-2-ol
+M3818	bisphenol A
+M3819	2,3-Bis(4-hydroxyphenyl)-1,2-propanediol
+M3820	2,2-bis(4-hydroxyphenyl)-1-propanol
+M3821	Bis(4-hydroxyphenyl)methane
+M3822	Bis(4-hydroxyphenyl)methanol
+M3823	4,4'-Dihydroxybenzophenone
+M3824	4-Hydroxyphenyl-4-hydroxybenzoate
+M3825	6-hydroxymelatonin
+M3826	melatonin
+M3827	2-aminomuconic 6-semialdehyde
+M3828	2-Aminomuconate
+M3829	isomaltose
+M3830	N-acetyl-D-glucosaminide
+M3831	2,4,6/3,5-pentahydroxycyclohexanone
+M3832	3D-3,5/4-trihydroxycyclohexane-1,2-dione
+M3833	5-deoxy-D-glucuronate
+M3834	5-dehydro-2-deoxy-D-gluconate
+M3835	6-phosphonato-5-dehydro-2-deoxy-D-gluconate(3-)
+M3836	2D-2,3,5/4,6-pentahydroxycyclohexanone
+M3837	1D-chiro-inositol
+M3838	scyllo-inositol
+M3839	1-acyl-sn-glycero-3-phosphoethanolamine
+M3840	2-Hydroxy-5-methyl-cis,cis-muconic semialdehyde
+M3841	acene
+M3842	Anthracene-9,10-dihydrodiol
+M3843	2-hydroxy-4-nitrophenolate
+M3844	benzene-1,2,4-triol
+M3845	paraoxon
+M3846	sulfur
+M3847	parathion
+M3848	nitrobenzene
+M3849	boric acid
+M3850	phenylboronic acid
+M3851	Myrtenol
+M3852	alpha-pinene
+M3853	pinocarveol
+M3854	2,6-Dimethyl-5-methylene-3-oxo-heptanoyl-CoA
+M3855	3-Isopropylbut-3-enoyl-CoA
+M3856	N-acyl-sphingosylphosphocholine
+M3857	CDP-choline(1-)
+M3858	2'-Hydroformononetin
+M3859	vestitone
+M3860	2'-hydroxypseudobaptigenin
+M3861	(+)-Sophorol
+M3862	piceatannol
+M3863	trans-resveratrol
+M3864	beta-D-fructofuranoside
+M3865	dihydroxyphenyl-5-methyloxazoline-VibF
+M3866	a VibB aryl-carrier protein
+M3867	2,3-dihydroxybenzoate-VibB
+M3868	a NRPS VibF
+M3869	norspermidine-2,3-dihydroxybenzoate
+M3870	a L-glutamyl peptide
+M3871	2,3-dihydroxybenzoyl 5'-adenylate(1-)
+M3872	dihydroxyphenyl-5-methyloxazoline-norspermidine-2,3-dihydroxybenzoate
+M3873	vibriobactin
+M3874	3-oxo-24-ethyl-cholest-4-en-26-oate
+M3875	3-oxo-24-ethyl-26-al-cholest-4-ene
+M3876	3,24-dioxo-cholest-4-en-26-oate
+M3877	picolinate
+M3878	3-oxo-24-(isopropanoyl)-cholest-4,24-dien-26-oyl-CoA
+M3879	3-oxo-24-ethyl-cholest-4,24-dien-26-oyl-CoA
+M3880	3-oxo-24-ethyl-cholest-4-en-26-oyl-CoA
+M3881	3-oxo-24-ethyl-26-hydroxy-cholest-4-ene
+M3882	3-oxo-24-ethyl-cholest-4-ene
+M3883	N-ethylglycine zwitterion
+M3884	3-oxo-24-ethyl-cholest-5-ene
+M3885	a dipetide with aspartate at N-terminal
+M3886	(2R,4S)-2,4-diazaniumylpentanoate
+M3887	2-amino-4-oxopentanoic acid zwitterion
+M3888	glycine cleavage system lipoyl carrier
+M3889	2-hydroxychromene-2-carboxylate
+M3890	(3E)-4-(2-hydroxyphenyl)-2-oxobut-3-enoate
+M3891	a prenyl-P-P-GlcNAc-ManNAc-P-Gro-(P-Gro)n
+M3892	a prenyl-P-P-GlcNAc-ManNAc-P-Gro-(P-Gro)m-(Glc)n
+M3893	a peptidoglycan-P-GlcNAc-ManNAc-P-Gro-(P-Gro)m(Glc)n
+M3894	6-O-(1-glycerylphosphonato)-N-acetyl-beta-D-mannosaminyl-(1->4)-N-acetyl-beta-D-glucosaminyl undecaprenyl diphosphate
+M3895	N-acetyl-beta-D-mannosaminyl-(1->4)-N-acetyl-D-glucosaminyl undecaprenyl diphosphate
+M3896	a pentaglycine cross-bridge of peptidoglycan
+M3897	a protein with NXTN motif
+M3898	a protein with NXTN
+M3899	3-hydroxy-isobutyryl-CoA
+M3900	N-(6-aminohexanoyl)-6-aminohexanoic acid zwitterion
+M3901	6-aminohexanoic acid zwitterion
+M3902	trans-2-methylaconitate
+M3903	1D-myo-inositol 1,2-cyclic phosphate(1-)
+M3904	N-acetyl-D-galactosamine 6-phosphate
+M3905	D-galactosamine 6-phosphate
+M3906	sphingosylphosphocholine(1+)
+M3907	an apo glycine-cleavage complex H protein
+M3908	17alpha-hydroxypregn-5-ene-3,20-dione
+M3909	17alpha-hydroxypregnenolone
+M3910	sitosterol
+M3911	cholest-5-en-3-one
+M3912	cholesterol
+M3913	a protein-N5-alkylglutamine
+M3914	an N-acylated aliphatic-L-amino acid
+M3915	an aliphatic L-amino acid
+M3916	5-androstene-3,17-dione
+M3917	a 3-oxo-Œ¥5-steroid
+M3918	a 3Œ≤-hydroxy-Œ¥5-steroid
+M3919	pregn-5-ene-3,20-dione
+M3920	pregnenolone
+M3921	monoamine
+M3922	testosterone
+M3923	campest-4-en-3-one
+M3924	campest-4-en-3beta-ol
+M3925	progesterone
+M3926	(R)-3-hydroxyvaleryl-CoA
+M3927	5-MeOT
+M3928	5-methoxyindoleacetaldehyde
+M3929	2-(alpha-D-galactosyl)-sn-glycerol 3-phosphate(2-)
+M3930	D-galactosylononitol
+M3931	1D-4-O-methyl-myo-inositol
+M3932	galactinol
+M3933	(-)-sophorol
+M3934	a 5-oxoprolyl-peptide
+M3935	6-phosphonato-beta-D-glucosyl-(1->4)-D-glucose(2-)
+M3936	RNase R degradation substrate RNA: 
+M3937	a diribonucleotide: 
+M3938	methyl Œ≤-D-glucoside 6-phosphate
+M3939	(R)-carnitine
+M3940	N(3')-acetyl-2-deoxystreptamine antibiotic
+M3941	a 2-deoxystreptamine antibiotic
+M3942	5alpha-androstane-3,17-dione
+M3943	androsterone
+M3944	(9Z,12Z)-15,16-epoxyoctadeca-9,12-dienoate
+M3945	(9Z,12Z)-15,16-dihydroxyoctadeca-9,12-dienoate
+M3946	(+)-vernolate
+M3947	(9Z)-12,13-dihydroxyoctadeca-9-enoate
+M3948	2-hydroxylaminobenzoate
+M3949	2-nitrobenzoate
+M3950	(12Z,15Z)-9,10-epoxyoctadeca-12,15-dienoate
+M3951	(12Z,15Z)-9,10-dihydroxyoctadeca-12,15-dienoate
+M3952	(9Z,15Z)-12,13-epoxy-octadeca-9,15-dienoate
+M3953	(9Z,15Z)-12,13-dihydroxyoctadeca-9,15-dienoate
+M3954	an aliphatic Œ±,œâ-diamine
+M3955	1,2-diacyl-sn-glycerol 3-diphosphate
+M3956	a 5'-phospho terminated DNA
+M3957	a 3'-hydroxy terminated DNA
+M3958	guanidine
+M3959	2'-deoxynucleoside 5'-phosphate (0)
+M3960	deoxyribonucleoside
+M3961	3-oxocholest-4-en-26-ol
+M3962	cholest-4-en-3-one
+M3963	3-oxocholest-4-en-26-al
+M3964	3-oxo-23,24-bisnorchol-4-en-17-ol-22-oyl-CoA
+M3965	3-oxo-23,24-bisnorchol-4,17(20)-dien-22-oyl-CoA
+M3966	3-oxochol-4,22-dien-24-oyl-CoA
+M3967	an (R)-2-haloacid
+M3968	3-oxochol-4-en-24-oyl-CoA
+M3969	3-oxocholest-4,24-dien-26-oyl-CoA
+M3970	4-(4-deoxy-alpha-D-gluc-4-enuronosyl)-D-galacturonate
+M3971	1-O-Œ≤-D-glucopyranosyl-D-mannitol
+M3972	1,4-beta-D-Xylan
+M3973	D-glucosaminide
+M3974	1D-myo-inositol hexakisphosphate
+M3975	1D-myo-inositol 1,2,4,5,6-pentakisphosphate(10-)
+M3976	(1R,2S)-homoisocitrate
+M3977	2,3-dioxopropyl phosphate
+M3978	O-Phosphoseryl-tRNA(Sec)
+M3979	reduced coenzyme F420
+M3980	dimethylaminium
+M3981	(2S)-2-phospholactate
+M3982	coenzyme alpha-F420-3(5-)
+M3983	O-Phosphoseryl-tRNA(Cys)
+M3984	N-Acetyl-D-glucosaminyldiphosphodolichol
+M3985	oxalo-glutarate
+M3986	dihydromethanopterin
+M3987	demethylated 7,8-dihydromethanopterin
+M3988	O-phospho-L-seryl-tRNACys
+M3989	a 5' half-tRNA molecule with a 2',3' cyclic phosphate on its 3' end
+M3990	a tRNA intron
+M3991	sn-3-O-(geranylgeranyl)glycerol 1-phosphate(2-)
+M3992	2,3-bis-O-(geranylgeranyl)glycerol 1-phosphate(2-)
+M3993	O-phospho-L-seryl-tRNA(Sec)
+M3994	N2-dimethylguanine10 in tRNA
+M3995	an N2-methylguanine10 in tRNA
+M3996	a guanine10 in tRNA
+M3997	2-(3-carboxy-3-aminopropyl)-L-histidine in eEF-2
+M3998	an L-histidine in eEF-2
+M3999	diphthamide in eEF-2
+M4000	diphthine in eEF-2
+M4001	an [eIF5A-precursor]-N-(4-aminobutylidene)-lysine
+M4002	an [eIF5A-precursor]-deoxyhypusine
+M4003	an [eIF5A-precursor]-lysine
+M4004	a [protein]-N-(4-aminobutylidene)-lysine
+M4005	a [protein]-L-lysine
+M4006	propane-1,3-diamine
+M4007	N-[(E)-4-ammoniobutylidene]propane-1,3-diaminium
+M4008	(3E)-5-oxopent-3-ene-1,2,5-tricarboxylate
+M4009	2-[3-carboxy-3-(dimethylammonio)propyl]-L-histidine in eEF-2
+M4010	2-[3-carboxy-3-(methylammonio)propyl]-L-histidine in eEF-2
+M4011	Œ≤-methyl-D-malate
+M4012	Cyclic-Phosphate-Terminated-RNAs
+M4013	3-Prime-Phosphate-Terminated-RNAs
+M4014	sulfoethylcysteine
+M4015	2-(sulfomethyl)thiazolidine-4-carboxylate
+M4016	a 2'-phospho-[ligated tRNA]
+M4017	ADP ribose 1'',2''-cyclic phosphate
+M4018	ADP-D-ribose 1''-phosphate(4-)
+M4019	CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol
+M4020	7,8-H2pterin-6-ylmethyl-l-(4-aminophenyl)-1-deoxy-D-ribitol 5'-phosphate
+M4021	7,8-H2pterin-6-ylmethyl-l-(4-aminophenyl)-1-deoxy-D-ribitol
+M4022	7,8-H2pterin-6-ylmethyl-l-(4-aminophenyl)-1-deoxy-5-[1-Œ± -D- ribofuranosyl 5-phosphate]-D-ribitol
+M4023	7,8-H2pterin-6-ylmethyl-l-(4-aminophenyl)-1-deoxy-5-[1-Œ± -D- ribofuranosyl triphosphate]-D-ribitol
+M4024	2,5-diamino-6-(5-phospho-D-ribitylamino)pyrimidin-4(3H)-one
+M4025	7,8-dihydroneopterin 2'-phosphate
+M4026	[histone]
+M4027	omega-hydroxy fatty acid
+M4028	3-(4-methylpent-3-en-1-yl)pent-2-enedioyl-CoA
+M4029	citronellate
+M4030	(R)-(+)-citronellal
+M4031	(S)-(-)-citronellal
+M4032	(R)-(+)-citronellol
+M4033	(S)-(-)-citronellol
+M4034	N(6)-hydroxy-L-lysine zwitterion
+M4035	5-Carboxy-2-oxohept-3-enedioate
+M4036	2-acyl-sn-glycero-3-phosphoserine
+M4037	1-alkyl-sn-glycero-3-phosphocholine
+M4038	2-acyl-1-alkyl-sn-glycero-3-phosphocholine
+M4039	1-(alk-1-enyl)-sn-glycero-3-phosphoethanolamine
+M4040	1-methylpyrrolinium
+M4041	N-methylputrescinium(2+)
+M4042	5-aminopentanal
+M4043	2-5-Diamino-6-hydroxy-4-5-phosphoribosylamino-pyrimidine
+M4044	2-5-diamino-6-ribitylamino-4-3H-pyrimidinone-5-phosphate
+M4045	2-Carboxy-2-5-dihydro-5-oxofuran-2-acetate
+M4046	2-Inosose
+M4047	2-oxooctanedioic-acid
+M4048	2-phospho-L-lactate
+M4049	2-Propanol
+M4050	2-sulfoacetaldehyde
+M4051	2-sulfomethyl-thiazolidine-4-carboxylic-acid
+M4052	3S-3-6-Diaminohexanoate
+M4053	CDP-2-O-3-hydroxy-geranyl-3-O-geranyl-sn-glycerol
+M4054	2-O-3-hydroxy-geranyl-3-O-geranyl-sn-glycerol
+M4055	2-O-3-hydroxy-geranyl-3-O-geranyl-sn-glyceroserine
+M4056	2-O-3-hydroxy-geranyl-3-O-geranyl-sn-glycerol-1-phospho-3-sn-glycerol
+M4057	2-O-3-hydroxy-geranyl-3-O-geranyl-sn-glycerol-1-phospho-3-sn-glycerol-phosphate
+M4058	2-O-3-hydroxy-geranyl-3-O-geranyl-sn-glycero-1-phospho-myo-inositol
+M4059	2-O-3-hydroxy-phytanyl-3-O-phytanyl-sn-glycero-l-phosphoethanolamine
+M4060	2-O-3-hydroxy-phytanyl-3-O-phytanyl-sn-glycerol-1-phospho-3-sn-glycerol
+M4061	2-O-3-hydroxyl-phytanyl-3-O-phytanyl-sn-glycero-1-phospho-myo-inositol
+M4062	2-O-3-hydroxy-phytanyl-3-O-phytanyl-sn-glycero-l-phosphoserine
+M4063	3-hydroxy-farnesyl-diphosphate
+M4064	3-hydroxy-geranylgeranyl-diphosphate
+M4065	3-hydroxy-geranyl-diphsophate
+M4066	3-Sulfopyruvate
+M4067	4-Hydroxy-benzyl-alcohol
+M4068	5-hydroxybenzimidazole
+M4069	5-Methylthio-5-deoxy-D-ribose-1-phosphate
+M4070	5-Oxo-4-5-dihydrofuran-2-acetate
+M4071	5-Oxoproline
+M4072	R-5-Phosphomevalonate
+M4073	N1-5-Phospho-alpha-D-ribosyl-5-hydroxybenzimidazole
+M4074	N-6-Aminohexanoyl-6-aminohexanoate
+M4075	6-Aminohexanoate
+M4076	7-mercaptoheptanoic-acid
+M4077	7-mercaptoheptanoylthreonine
+M4078	7-oxoheptanoic-acid
+M4079	4-B-D-ribofuranosyl-aminobenzene-5-phosphate
+M4080	R--homo-2citrate
+M4081	R--homo-3citrate
+M4082	S-2-Hydroxyglutarate
+M4083	S-homocitrate
+M4084	Acetone
+M4085	O-Acetyl-L-homoserine
+M4086	Adenosyl-cobyrinate-diamide
+M4087	adenosyl-cobyric-acid
+M4088	Adenosylcobalamin-HBI
+M4089	N-Acetyl-D-glucosaminyl-archaetidylinositol
+M4090	D-1-Aminopropan-2-ol-O-phosphate
+M4091	N-Carbamoyl-beta-alanine
+M4092	2-3-Carboxy-3-aminopropyl-L-histidine
+M4093	L-Carnosine
+M4094	Cob-I-alamin-HBI
+M4095	CDP-2-3-digeranylgeranyl-sn-glycerol
+M4096	2-3-Carboxy-3-methylammonio-propyl-L-histidine
+M4097	Cob-II-yrinate-a-c-diamide
+M4098	cobalt-precorrin-6
+M4099	cobalt-precorrin-8
+M4100	Cu2
+M4101	digeranylgeranylglyceryl-phosphate
+M4102	2-3-di-O-geranylgeranyl-sn-glyceroserine
+M4103	2-3-di-O-geranyl-sn-glycerol-1-phospho-3-sn-glycerol
+M4104	2-3-di-O-geranyl-sn-glycerol-1-phospho-3-sn-glycerol-phosphate
+M4105	2-3-di-O-geranyl-sn-glycero-1-phospho-myo-inositol
+M4106	7-8-dihydropterin-6-ylmethyl-1-4-aminophenyl-1-deoxy-D-ribitol
+M4107	7-8-dihydropterin-6-ylmethyl-1-4-aminophenyl-1-deoxy-5-1-A-D-ribofuranosyl-5-diphosphate-D-ribitol
+M4108	7-8-dihydropterin-6-ylmethyl-1-4-aminophenyl-1-deoxy-D-ribitol-5-phosphate
+M4109	7-8-dihydropterin-6-ylmethyl-1-4-aminophenyl-1-deoxy-5-1-A-D-ribofuranosyl-5-phosphate-D-ribitol
+M4110	7-8-dihydropterin-6-ylmethyl-1-4-aminophenyl-1-deoxy-5-1-A-D-ribofuranosyl-5-triphosphate-D-ribitol
+M4111	7-8-dihydronepterin-2-3-cyclicphosphate
+M4112	7-8-dihydropterin-6-ylmethyl-4-B-D-ribofuranosyl-aminobenzene-5-phosphate
+M4113	6-deoxy-5-ketofructose-1-phosphate
+M4114	dimethylamine
+M4115	didemethylated-7-8-dihydromethanopterin
+M4116	Deamino-NAD
+M4117	3-7-dideoxy-D-threo-hepto-2-amino-6-ulosonate
+M4118	3-7-dideoxy-D-threo-hepto-2-6-diulosonate
+M4119	2-3-O-phytanyl-sn-glycero-1-phosphoethanolamine
+M4120	2-3-di-O-phytanyl-sn-glycerol-1-phospho-3-sn-glycerol
+M4121	2-3-O-phytanyl-sn-glycero-1-phospho-myo-inositol
+M4122	2-3-O-phytanyl-sn-glycero-1-phosphoserine
+M4123	coenzyme-F390-guanosine
+M4124	coenzyme-ferredoxin-420-0
+M4125	coenzyme-ferredoxin-420-1
+M4126	coenzyme-ferredoxin-420-2-oxidized
+M4127	coenzyme-ferredoxin-420-2-reduced
+M4128	coenzyme-ferredoxin-420-3
+M4129	coenzyme-ferredoxin-420-4
+M4130	coenzyme-ferredoxin-420-5
+M4131	coenzyme-ferredoxin-420-6
+M4132	coenzyme-ferredoxin-420-7
+M4133	coenzyme-F430
+M4134	coenzyme-F430-precursor-1
+M4135	coenzyme-F430-precursor-2
+M4136	coenzyme-f430-precursor-3
+M4137	ferredoxin-oxidized-24Fe-4S
+M4138	ferredoxin-reduced-24Fe-4S
+M4139	Fe2
+M4140	Fe3
+M4141	formyltetrahydrosarcinapterin
+M4142	formylmethanofuran-b
+M4143	glucosaminyl-archaetidyl-myo-inositol
+M4144	S-3-O-geranylgeranylglyceryl-phosphate
+M4145	L-Glutamyl-tRNA-Gln
+M4146	Glycerol-1-phosphate
+M4147	cis-homo-2aconitate
+M4148	7-8-dihydromethanopterin
+M4149	cis-homo-3aconitate
+M4150	5-6-7-8-tetrahydromethanopterin
+M4151	tetrahydrosarcinapterin
+M4152	H
+M4153	cis-homoaconitate
+M4154	trans-homoaconitate
+M4155	Hydroxyatrazine
+M4156	2-Hydroxybutane-1-2-4-tricarboxylate
+M4157	Histamine
+M4158	Hydroxymethylglutaryl-CoA
+M4159	heterodisulfide
+M4160	sym-Homospermidine
+M4161	threo-isohomocitrate
+M4162	S-2-indol-3-yl-acetyl-CoA
+M4163	Indolepyruvate
+M4164	lactyl-2-diphospho-5--guanosine
+M4165	methyl-3-hydroxyl-diphosphate
+M4166	methylcoenzyme-m
+M4167	methenyl-tetrahydrosarcinapterin
+M4168	methanofuran-b
+M4169	N5-methyl-tetrahydrosarcinapterin
+M4170	N5-N10-methylene-5-6-7-8-tetrahydrosarcinapterin
+M4171	monomethylamine
+M4172	monomethylated-7-8-dihydromethanoterin
+M4173	Mn2
+M4174	Molybdate-MoO4
+M4175	methanophenazine-oxidized
+M4176	methanophenazine-reduced
+M4177	nitrogen
+M4178	N-epsilon-acetyl-beta-lysine
+M4179	2-oxoheptanedioic-acid
+M4180	2-oxohexanedioic-acid
+M4181	Pimeloyl-CoA
+M4182	Pseudouridine-5-phosphate
+M4183	N1-alpha-D-ribosyl-5-hydroxybenzimidazole
+M4184	D-Ribulose-1-5-bisphosphate
+M4185	15-17-seco-F430-17-acid
+M4186	-threo-iso-homo-2citrate
+M4187	-threo-iso-homo-3citrate
+M4188	unknown-degradation-product-of-cbl1-for-adocbl-HBI-synthesis
+M4189	unknown-riboflavin-degradation-product
+M4190	Oxalosuccinate
+M4191	Homocarnosine
+M4192	N-Ribosylnicotinamide
+M4193	1D-myo-Inositol 3-phosphate
+M4194	3-Hydroxy-3-methyl-2-oxobutanoic acid
+M4195	(R)-2-Methylmalate;
+M4196	Methylmalonate
+M4197	D-3-Amino-isobutanoate
+M4198	5-Hydroxybenzimidazolylcob(I)amide
+M4199	Co-Methyl-Co-5-hydroxybenzimidazolylcobamide
+M4200	5-Hydroxybenzimidazolylcob(I)amide reduced coblat
+M4201	4-phosphopantoate
+M4202	tRNA asparagine acceptor
+M4203	tRNA asparagine acceptor (aspartate)
+M4204	tRNA asparagine acceptor (asparagine)
+M4205	Arabino-3-hexulose-6-P
+M4206	BioB iron-sulfur complex
+M4207	Inactive BioB protein
+M4208	2-amino-5-formylamino-6-ribosylamino-4(3H)-pyrimidinone 50-monophosphate
+M4209	12,18-didecarboxyprecorrin-2
+M4210	Isopentenyl Phosphate
+M4211	L-Cysteate
+M4212	Chloroethane cobalamin
+M4213	Chloroethane
+M4214	Ethylene
+M4215	Chloroethane F430 complex
+M4216	Ethane F430 complex
+M4217	Oxidized F430 (Ni+2)
+M4218	Ethane
+M4219	Flavin cytosine dinucleotide oxidized
+M4220	Flavin guanosine dinucleotide oxidized
+M4221	Dihydrolipolprotein
+M4222	5-Methylthio-5-deoxy-D-ribulose 1-phosphate
+M4223	Nicotinate D-ribonucleoside
+M4224	1-Pyrroline-4-methyl-5-carboxylate
+M4225	L-pyrrolysine
+M4226	trna(pyr-L)
+M4227	5-Hydroxybenzimidazolylcob(I)amide oxidized cobalt
+M4228	UDP-N-acetylglucosamine
+M4229	Poly-aceyl-D-galactosamine
+M4230	Poly-glucuronic acid
+M4231	3-Hydroxy-2-methylpropanoate
+M4232	5-Methyltetrahydropteroyltri-L-glutamate
+M4233	Tetrahydropteroyltri-L-glutamate
+M4234	methanofuran intermediate 1
+M4235	methanofuran intermediate 2
+M4236	methanofuran intermediate 3
+M4237	phosphate ester of dihydrofuran : methanofuran biosynthesis intermediate 4 
+M4238	2,4-substituted-furan
+M4239	2-furaldehyde
+M4240	2-methylamine-furan
+M4241	p-(beta-aminoethyl)phenoxy-methyl-2-(aminomethyl)furan
+M4242	4-[N-gamma-L-glutamyl-)-p-(beta-aminoethyl)phenoxy-methyl]-2-(aminomethyl)furan
+M4243	4-[N-gamma-L-glutamyl-gamma-L-glutamyl-)-p-(beta-aminoethyl)phenoxy-methyl]-2-(aminomethyl)furan
+M4244	4-[N-gamma-L-glutamyl-gamma-L-glutamyl-gamma-L-glutamyl-)-p-(beta-aminoethyl)phenoxy-methyl]-2-(aminomethyl)furan
+M4245	coumarin
+M4246	3-Œ≤-hydroxyandrost-5-en-17-one 3-sulfate
+M4247	[DsrC] persulfide
+M4248	a DsrC protein with an intramolecular disulfide bond
+M4249	a DsrC sulfur carrier protein
+M4250	archaeosine at position 15 of an archaeal tRNA
+M4251	5-formyl-tetrahydrosarcinapterin
+M4252	methylene-tetrahydrosarcinapterin
+M4253	neolinustatin
+M4254	beta-cellobiose
+M4255	(R)-4-hydroxymandelonitrile beta-D-glucoside
+M4256	linustatin
+M4257	a 2-deoxy-D-ribosyl-base
+M4258	nucleobase
+M4259	an apo aryl-carrier protein
+M4260	APO-ENTB
+M4261	ENTB-CPLX
+M4262	a holo aryl-carrier protein
+M4263	a dolichyl Œ≤-D-glucosyl phosphate
+M4264	methyl-1,4-benzoquinone
+M4265	methyl-1,4-benzoquinol
+M4266	VC0771-MONOMER
+M4267	CPLX-7944
+M4268	a protein-L-methionine-(R)-S-oxide
+M4269	2-dehydro-3-deoxy-D-arabinonate
+M4270	D-xylonate
+M4271	L-xylulose 5-phosphate(2-)
+M4272	D-xylono-1,5-lactone
+M4273	N,N-dimethylformamide
+M4274	D-Chondrosamine
+M4275	Undecaprenyl-diphospho-N-acetylmuramoyl-(N-acetylglucosamine)-L-alanyl-gamma-D-glutamyl-L-lysyl-(L-alanyl-L-alanyl)-D-alanyl-D-alanine
+M4276	Undecaprenyl-diphospho-N-acetylmuramoyl-(N-acetylglucosamine)-L-alanyl-gamma-D-glutamyl-L-lysyl-(L-alanyl)-D-alanyl-D-alanine
+M4277	3''-adenylylstreptomycin(2+)
+M4278	streptomycin(3+)
+M4279	methyl ketone
+M4280	CoA-disulfide
+M4281	1,8-diazacyclotetradecane-2,9-dione
+M4282	3-(indol-3-yl)lactate
+M4283	3-amino-L-alanine
+M4284	N-acyl-D-glucosamine 6-phosphate
+M4285	an N-acyl-D-mannosamine 6-phosphate
+M4286	a N-acyl-D-amino acid
+M4287	D-alanyl-(R)-lactic acid
+M4288	a dextran
+M4289	a citrate lyase apo-[acyl-carrier protein]
+M4290	a citrate lyase holo-[acyl-carrier protein]
+M4291	N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine zwitterion
+M4292	N-acetyl-beta-D-glucosaminylamine
+M4293	keto-D-tagatose
+M4294	C15810
+M4295	cob(II)alamin
+M4296	hydroxocobalamin
+M4297	isopenicillin N(1-)
+M4298	N-[(5S)-5-ammonio-5-carboxylatopentanoyl]-L-cysteinyl-D-valinate
+M4299	(3R,6R)-1,3,4,6-tetrachlorocyclohexa-1,4-diene
+M4300	2,4,5-trichlorocyclohexa-2,5-dien-1-ol
+M4301	2,5-dichloro-2,5-cyclohexadiene-1,4-diol
+M4302	beta-hexachlorocyclohexane
+M4303	beta-2,3,4,5,6-Pentachlorocyclohexanol
+M4304	beta-2,3,5,6-Tetrachloro-1,4-cyclohexanediol
+M4305	(E)-1,3-dichloropropene
+M4306	(Z)-1,3-dichloropropene
+M4307	lactoyl-CoA(4-)
+M4308	2-hydroxyglutarate(2-)
+M4309	chlorite
+M4310	chlorate
+M4311	L-xylo-hex-3-ulono-1,4-lactone
+M4312	L-gulono-1,4-lactone
+M4313	a trans-2,trans-4-dienoyl-CoA
+M4314	a trans-3-enoyl-CoA
+M4315	poly(sulfide) macromolecule
+M4316	elemental sulfur
+M4317	a 2-trans-4-cis-dienoyl-CoA
+M4318	trans-Œî2, cis-Œî4-decadienoyl-CoA
+M4319	(S)-2,3-epoxysqualene
+M4320	aspartate(1-)
+M4321	XLXG xyloglucan oligosaccharide
+M4322	XXXG xyloglucan oligosaccharide
+M4323	3'-ketolactose
+M4324	3-keto-beta-D-galactose
+M4325	3-hydroxybenzoyl-CoA(4-)
+M4326	2,5-dihydroxybenzoate
+M4327	3-hydroxy-3-phenylpropionyl-CoA
+M4328	XLLG xyloglucan oligosaccharide
+M4329	3-phenylpropionyl-CoA
+M4330	(S)-linalool
+M4331	(R)-linalool
+M4332	(2R,3S)-Œ≤-methylmalyl-CoA
+M4333	an N-acylated amino acid
+M4334	an N-acylated peptide
+M4335	a small peptide
+M4336	S-sulfanylglutathionate(1-)
+M4337	bisorganyltrisulfane
+M4338	L-4-hydroxy-2-keto-glutarate: C5H4O6
+M4339	all-trans-3,4-didehydrolycopene
+M4340	torulene
+M4341	3-methylbut-2-enal
+M4342	4'-apo-beta-carotenal
+M4343	XXLG xyloglucan oligosaccharide
+M4344	a tRNA pseudouridine65
+M4345	a tRNA uridine65
+M4346	a tRNA pseudouridine13
+M4347	a tRNA uridine13
+M4348	3alpha,7alpha,12alpha-trihydroxy-24-oxo-5beta-cholestan-26-oyl-CoA(4-)
+M4349	choloyl-CoA
+M4350	3Œ±,7Œ±-dihydroxy-24-oxo-5Œ≤-cholestanoyl CoA
+M4351	chenodeoxycholoyl-CoA
+M4352	N-acylneuraminate 9-phosphate
+M4353	1-ammonio-1-deoxy-scyllo-inositol
+M4354	2-oxoglutaramate
+M4355	Mhun_0352...
+M4356	Mhun_0450...
+M4357	Mhun_0174
+M4358	Mhun_2475
+M4359	Mhun_0686...
+M4360	eno
+M4361	Mhun_2610
+M4362	Mhun_1155...
+M4363	glyA
+M4364	Mhun_1271...
+M4365	Gly
+M4366	Malyl-CoA
+M4367	PEP
+M4368	THF
+M4369	5,10-Methylene-THF
+M4370	Methylcorrinoid
+M4371	CO
+M4372	Corrinoid
+M4373	Methanal
+M4374	Mhun_0447...
+M4375	3-Phosphoglycerate
+M4376	Neuberg ester
+M4377	Mhun_1206
+M4378	Mhun_0556...
+M4379	Mhun_0647...
+M4380	N-Methyl-L-glutamate
+M4381	Mhun_2433
+M4382	Methylamine
+M4383	(CH3)2NH
+M4384	(CH3)3N
+M4385	(CH3)3NO
+M4386	Mhun_1628
+M4387	5,10-Methenyltetrahydromethanopterin
+M4388	5-Formyl-H4MPT
+M4389	Mhun_2255
+M4390	Mhun_0444...
+M4391	Coenzyme F420
+M4392	Formylmethanofuran
+M4393	Mhun_1808
+M4394	Mhun_0250...
+M4395	5-Methyl-H4MPT
+M4396	Mhun_2257
+M4397	Mhun_0783...
+M4398	Methyl CoM
+M4399	Mhun_2144...
+M4400	mtrF
+M4401	CoM-S-S-CoB
+M4402	HTP
+M4403	Mhun_1836...
+M4404	CoM
+M4405	(2R)-Phosphosulfolactate
+M4406	Mhun_2976
+M4407	Dexfosfoserine
+M4408	3-Phosphonooxypyruvate
+M4409	Mhun_3063
+M4410	Mhun_1177...
+M4411	Mhun_1744
+M4412	Methanofuran
+M4413	Mhun_0561
+M4414	Mhun_2094...
+M4415	Mhun_1837
+M4416	Mhun_0943
+M4417	Glycerate
+M4418	Mhun_1836
+M4419	Mhun_1838
+M4420	Malate
+M4421	D-arabino-6-Phospho-hex-3-ulose
+M4422	Serine
+M4423	5,10-Methylenetetrahydromethanopterin
+M4424	H4MPT
+M4425	S-(Hydroxymethyl)glutathione
+M4426	H4SPT
+M4427	5,10-Methylene-H4SPT
+M4428	5-Methyl-H4SPT
+M4429	4-Hydroxyphenylpyruvate
+M4430	Mhun_1253
+M4431	Mhun_2444
+M4432	(2S)-Lactyl-2-diphospho-5'-guanosine
+M4433	Mhun_1254
+M4434	Mhun_0850
+M4435	Coenzyme F420-1
+M4436	Coenzyme F420-3
+M4437	Coenzyme F420-0
+M4438	PPi
+M4439	EC:1.2.7.-
+M4440	Acceptor
+M4441	NAD
+M4442	NADH
+M4443	malate dehydrogenase [NAD(P)+]
+M4444	beta-D-Fructose 6-phosphate
+M4445	beta-D-Fructose 1,6-bisphosphate
+M4446	H2O2
+M4447	peroxidase
+M4448	carbon-monoxide dehydrogenase (ferredoxin)
+M4449	phosphoserine phosphatase
+M4450	adenosinetriphosphatase
+M4451	apyrase
+M4452	ATP diphosphatase
+M4453	nucleoside-triphosphatase
+M4454	SAM
+M4455	Methionine
+M4456	NH3
+M4457	Glutamate
+M4458	D-arabinitol
+M4459	xylitol
+M4460	6-phosphonato-2-dehydro-3-deoxy-D-galactate(3-)
+M4461	L-gulonate
+M4462	L-arabinonate
+M4463	L-arabinono-1,4-lactone
+M4464	4-Dedimethylamine-4-oxo-anhydro-7-Cl-tetracycline
+M4465	4-Dedimethylamino-4-oxo-anhydrotetracycline
+M4466	carnitine
+M4467	penicillin N(1-)
+M4468	5-Carboxymethyl-2-hydroxymuconic semialdehyde
+M4469	5-Methoxyindoleacetate
+M4470	UDP-4-deoxy-4-formamido-beta-L-arabinose
+M4471	4-deoxy-4-formamido-alpha-L-arabinopyranosyl di-trans,octa-cis-undecaprenyl phosphate
+M4472	3-hydroxybenzaldehyde
+M4473	bilirubin(2-)
+M4474	hexano-6-lactone
+M4475	6-hydroxyhexanoate
+M4476	pyrazinecarboxamide
+M4477	pyrazine-2-carboxylate
+M4478	a (1->5)-Œ±-L-arabinan oligosaccharide
+M4479	malonate(2-)
+M4480	alpha-L-rhamnopyranose
+M4481	an Œ± L-rhamnoside
+M4482	beta-D-4-deoxy-Delta(4)-GlcpA-(1->4)-beta-D-Glcp-(1->4)-alpha-L-Rhap-(1->3)-beta-D-Glcp
+M4483	beta-D-Glcp-(1->4)-alpha-L-Rhap-(1->3)-beta-D-Glcp
+M4484	N(6')-acetylkanamycin B(4+)
+M4485	kanamycin B(5+)
+M4486	methylesterified 1,4-Œ±-D-galacturonosyl
+M4487	hyaluronate Œ≤1,4 oligosaccharide
+M4488	fructoselysine-6-phosphate
+M4489	3-hydroxypropanal
+M4490	propane-1,3-diol
+M4491	NŒ≤-acetylstreptothricin F
+M4492	streptothricin F
+M4493	6-phospho-beta-D-galactoside
+M4494	a 16S rRNA pseudouridine516
+M4495	a 16S rRNA uridine516
+M4496	gellan
+M4497	a (1‚Üí4)-Œ≤-D-xylan
+M4498	a malonate decarboxylase holo-[acyl-carrier-protein]
+M4499	a malonate decarboxylase apo-[acyl-carrier protein]
+M4500	a cis,cis-delta15,33-C52:2-[acp]
+M4501	a trans-delta2-cis-delta15-C34:2-[acp]
+M4502	a cis,cis-delta5,17-C36:2-[acp]
+M4503	a trans-delta2-cis-delta19-C38:2-[acp]
+M4504	a trans-delta2-cis,cis-9,21-C40:3-[acp]
+M4505	a cis,cis-delta9,21-C40:2-[acp]
+M4506	a cis,cis-delta7,25-C44:2-[acp]
+M4507	a trans-delta2-cis,cis-delta7,25-C44:3-[acp]
+M4508	a cis,cis-delta3,15-C34:2-[acp]
+M4509	a cis,cis-delta15,27-C46:2-[acp]
+M4510	a trans-delta2-cis-cis-delta7-19-C38:3-[acp]
+M4511	a cis,cis-delta7,19-C38:2-[acp]
+M4512	a trans-delta2-cis,cis-delta17,35-C54:3-[acp]
+M4513	a cis,cis-delta17,35-C54:2-[acp]
+M4514	a trans-delta2-cis,cis-delta5,23-C42:3-[acp]
+M4515	a cis,cis-delta5,23-C42:2-[acp]
+M4516	a trans-delta2-cis,cis-delta13,25-C44:3-[acp]
+M4517	a cis,cis-delta13,25-C44:2-[acp]
+M4518	a trans-delta2-cis,cis-delta19,37-C56:3-[acp]
+M4519	a cis,cis-delta19-37-C56:2-[acp]
+M4520	a trans-delta2-cis,cis-delta13,31-C50:3-[acp]
+M4521	a cis,cis-delta13,31-C50:2-[acp]
+M4522	a trans-delta2-cis,cis-delta11,23-C42:3-[acp]
+M4523	a cis,cis-delta11,23-C42:2-[acp]
+M4524	a cis,cis-delta11,29-C48:2-[acp]
+M4525	a trans-delta2-cis-delta13-C32:2-[acp]
+M4526	a trans-delta2-cis,cis-delta9,27-C46:3-[acp]
+M4527	a cis,cis-delta9,27-C46:2-[acp]
+M4528	a [protein]-N6-(3-O-phospho-D-fructosyl)-L-lysine
+M4529	a [protein]-N6-D-fructosyl-L-lysine
+M4530	a trans-delta2-cis-delta7-C26:2-[acp]
+M4531	a malonate decarboxylase (malonyl form)
+M4532	a malonate decarboxylase (acetyl form)
+M4533	eicosatrienoyl-2-enoyl CoA
+M4534	a trans-delta2-cis,cis-5,17-C36:3-[acp]
+M4535	a trans-delta2-cis,cis-delta19,31-C50:3-[acp]
+M4536	a cis,cis-delta19,31-C50:2-[acp]
+M4537	a trans-delta2-cis-delta11-C30:2-[acp]
+M4538	docosapentaenoyl-2-enoyl [acp]
+M4539	a cis,cis-delta3,21-C40:2-[acp]
+M4540	(8Z,11Z,14Z)-3-oxoicosa-8,11,14-trienoyl-CoA
+M4541	3-hydroxy-dihomo Œ≥-linolenoyl-CoA
+M4542	a trans-delta2-cis,cis-delta15,33-C52:3-[acp]
+M4543	a trans-delta2-cis-delta17-C36:2-[acp]
+M4544	a trans-delta2-cis-delta5-C24:2-[acp]
+M4545	a cis,cis-delta17,29-C48:2-[acp]
+M4546	a trans-delta2-cis-delta9-C28:2-[acp]
+M4547	a trans-delta2-cis,cis-delta21,39-C58:3-[acp]
+M4548	a cis,cis-delta21,39-C58:2-[acp]
+M4549	a trans-delta2-cis,cis-delta11,29-C48:3-[acp]
+M4550	dihomo Œ≥-linolenoyl-2-enoyl-CoA
+M4551	a trans-delta2-cis,cis-delta17,29-C48:3-[acp]
+M4552	a trans-delta2-cis,cis-delta15,27-C46:3-[acp]
+M4553	a 2'-O-methylguanosine18 in tRNA
+M4554	a guanosine18 in tRNA
+M4555	petroselinate
+M4556	1(F)-alpha-D-galactosylraffinose
+M4557	a deacetylated peptidoglycan
+M4558	fragments of immunoglobulin IgA1
+M4559	an immunoglobulin IgA1
+M4560	a 23S rRNA pseudouridine746
+M4561	a 23S rRNA uridine746
+M4562	panose
+M4563	isoprimeverose
+M4564	a 1-6-Œ±-D-glucan
+M4565	a dextran fragment
+M4566	CDP-3,6-dideoxy-D-mannose(2-)
+M4567	CDP-3,6-dideoxy-D-glucose(2-)
+M4568	3-oxopristanoyl-CoA(4-)
+M4569	4,8,12-trimethyltridecanoyl-CoA(4-)
+M4570	N-acetyl-serotonin sulfate
+M4571	5-hydroxytryptophol sulfate
+M4572	dopamine 3-O-sulfate
+M4573	tacrolimus (anhydrous)
+M4574	31-O-desmethylFK-506
+M4575	thyroxine sulfate(1-)
+M4576	serotonin O-sulfate
+M4577	6-sulfatoxymelatonin
+M4578	triiodothyronine sulfate
+M4579	(+)-7-iso-jasmonate
+M4580	crocetin dialdehyde
+M4581	crocetin
+M4582	menaquinol-6
+M4583	demethylmenaquinol-6
+M4584	a demethylmenaquinone
+M4585	menaquinol-10
+M4586	demethylmenaquinol-10
+M4587	menaquinol-7
+M4588	demethylmenaquinol-7
+M4589	menaquinol-9
+M4590	demethylmenaquinol-9
+M4591	menaquinol-11
+M4592	demethylmenaquinol-11
+M4593	menaquinol-13
+M4594	demethylmenaquinol-13
+M4595	menaquinol-12
+M4596	demethylmenaquinol-12
+M4597	menaquinone-7
+M4598	demethylmenaquinone-7
+M4599	N-acetyl-L-2-aminoadipate
+M4600	N-acetyl-L-lysine
+M4601	a dolichol
+M4602	3-amino-4-hydroxybenzoate: C7H6NO3
+M4603	3-acetylamino-4-hydroxybenzoate: C9H8NO4
+M4604	3-amino-4-hydroxybenzaldehyde
+M4605	3-acetylamino-4-hydroxybenzaldehyde: C9H9NO3
+M4606	N-acetoxyarylamine
+M4607	an N-hydroxy-arylamine
+M4608	L-galactose 1-phosphate(2-)
+M4609	L-galactopyranose
+M4610	aromatic amine
+M4611	N-phenylacetamide
+M4612	2,3-bis-O-(geranylgeranyl)-sn-glycero-3-phospho-L-serine
+M4613	a short-chain 2,3,4-saturated fatty acyl CoA
+M4614	a short-chain trans-2,3-dehydroacyl-CoA
+M4615	archaetidylethanolamine
+M4616	beta-D-fructofuranose 2,6-bisphosphate(4-)
+M4617	Hexadecenoyl-[acyl-carrier protein]
+M4618	4Œ±-methyl-5Œ±-ergosta-8,14,24(28)-trien-3Œ≤-ol
+M4619	obtusifoliol
+M4620	lanosterol
+M4621	4,4-dimethyl-5alpha-cholesta-8,14,24-trien-3beta-ol
+M4622	Protein N6,N6,N6-trimethyl-L-lysine
+M4623	N(6),N(6),N(6)-trimethyl-L-lysine
+M4624	(7R)-7-(5-carboxy-5-oxopentanamido)cephalosporanate(2-)
+M4625	1-pyrroline-2-carboxylate
+M4626	4-hydroxy-1-pyrroline-2-carboxylate
+M4627	hydantoin-5-propionate
+M4628	homovanillate
+M4629	2,6-dichloro-p-hydroquinone
+M4630	2,6-dichlorophenol
+M4631	4,4'-dihydroxy-alpha-methylstilbene
+M4632	[GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-g-D-Glu-A2pm-D-Ala-D-Ala)]n-diphosphoundecaprenol
+M4633	1-acylglycerone 3-phosphate
+M4634	fatty alcohol
+M4635	Long-chain acid anion
+M4636	O-alkylglycerone phosphate
+M4637	3-hydroxybenzyl alcohol
+M4638	toluene-4-sulfonate
+M4639	9,10-epoxy-9,10-dihydrophenanthrene
+M4640	phenanthrene
+M4641	1,2-epoxy-1,2-dihydrophenanthrene
+M4642	1-methylnaphthalene
+M4643	2-methylnaphthalene
+M4644	Thiobenzamide S-oxide
+M4645	Thiobenzamide
+M4646	Thiobenzamide S,S-dioxide
+M4647	formyl-CoA(4-)
+M4648	4-Acetamido-2-amino-6-nitrotoluene
+M4649	Biocytin
+M4650	alpha-pinene oxide
+M4651	(4R)-limonene 1beta,2beta-epoxide
+M4652	(4R)-limonene
+M4653	a (4S)-1,2-epoxymenth-8-ene
+M4654	(4S)-limonene
+M4655	17alpha-hydroxyprogesterone
+M4656	(25R)-3alpha,7alpha-dihydroxy-5beta-cholestan-26-oyl-CoA(4-)
+M4657	(25S)-3Œ±,7Œ±-dihydroxy-5Œ≤-cholestanoyl-CoA
+M4658	(25R)-3alpha,7alpha,12alpha-trihydroxy-5beta-cholestan-26-oyl-CoA(4-)
+M4659	(25S)-3Œ±,7Œ±,12Œ±-trihydroxy-5Œ≤-cholestanoyl-CoA
+M4660	1,7-dimethylxanthine
+M4661	5-acetamido-6-formamido-3-methyluracil
+M4662	1-chloro-2,2-bis(4'-chlorophenyl)ethylene
+M4663	1-chloro-2,2-bis(4-chlorophenyl)ethane
+M4664	3beta-hydroxy-5beta-pregnan-20-one
+M4665	Pregnanediol
+M4666	2,4,6-trichlorophenol
+M4667	4-sulfomuconolactone
+M4668	UDP-2-acetamido-2,6-dideoxy-beta-L-arabino-hex-4-ulose
+M4669	UDP-4-amino-4,6-dideoxy-N-acetyl-beta-L-altrosamine
+M4670	UDP-2,4-diacetamido-2,4,6-trideoxy-beta-L-altrose
+M4671	2,4-diacetamido-2,4,6-trideoxy-beta-L-altrose
+M4672	pseudaminate
+M4673	D-glucosyllipopolysaccharide
+M4674	1-acyl-sn-glycero-3-phosphoserine
+M4675	Diglucosyl-diacylglycerol
+M4676	Glycerophosphoglycoglycerolipid
+M4677	6-lactoyl-5,6,7,8-tetrahydropterin
+M4678	trichloroacetate
+M4679	bis(beta-glucosyluronate)bilirubin
+M4680	D-Urobilinogen
+M4681	a pectate oligosaccharide with 4-(4-deoxy-Œ±-D-galact-4-enuronosyl)-D-galacturonate end
+M4682	mannotetraose
+M4683	a D-5-monosubstituted hydantoin
+M4684	an L-5-monosubstituted hydantoin
+M4685	L-5-benzyl-hydantoin
+M4686	D-5-benzyl-hydantoin
+M4687	alkylmercury
+M4688	alpha-maltose
+M4689	Mo(VI)-molybdopterin cytosine dinucleotide
+M4690	fecosterol
+M4691	zymosterol
+M4692	24-methylenecycloartanol
+M4693	cycloartenol
+M4694	alpha-D-galactosyl-1,3-beta-D-galactosyl-1,4-N-acetyl-D-glucosamine
+M4695	N-acetyllactosamine
+M4696	Œ±-D-galactosyl-(1,3)-Œ≤-D-galactosyl-(1,4)-N-acetyl-D-glucosaminyl-[glycoprotein]
+M4697	Œ≤-D-galactosyl-1,4-N-acetyl-Œ≤-D-glucosaminyl-[glycoprotein]
+M4698	UDP-alpha-D-6-sulfoquinovose
+M4699	4-pyridoxolactone
+M4700	a DNA-N4-methylcytosine
+M4701	4-amino-5-aminomethyl-2-methylpyrimidine
+M4702	caffeoyl-CoA
+M4703	choline sulfate
+M4704	6-kestotriose
+M4705	6,6-kestotetraose
+M4706	1,6-kestotetraose
+M4707	1(F)-beta-D-fructosylsucrose
+M4708	fructan
+M4709	(3S)-citryl-CoA(6-)
+M4710	avenastenone
+M4711	avenasterol
+M4712	4Œ±-carboxy-stigmasta-7,24(241)-dien-3Œ≤-ol
+M4713	4Œ±-formyl-stigmasta-7,24(241)-dien-3Œ≤-ol
+M4714	4Œ±-hydroxymethyl-stigmasta-7,24(241)-dien-3Œ≤-ol
+M4715	(Z)-24-ethylidenelophenol
+M4716	episterone
+M4717	episterol
+M4718	4Œ±-carboxy-ergosta-7,24(241)-dien-3Œ≤-ol
+M4719	4Œ±-formyl-ergosta-7,24(241)-dien-3Œ≤-ol
+M4720	4Œ±-hydroxymethyl-ergosta-7,24(241)-dien-3Œ≤-ol
+M4721	24-methylidenelophenol
+M4722	cycloeucalenone
+M4723	cycloeucalenol
+M4724	4Œ±-carboxy-4Œ≤,14Œ±-dimethyl-9Œ≤,19-cyclo-5Œ±-ergost-24(241)-en-3Œ≤-ol
+M4725	4Œ±-formyl,4Œ≤,14Œ±-dimethyl-9Œ≤,19-cyclo-5Œ±-ergost-24(241)-en-3Œ≤-ol
+M4726	4Œ±-hydroxymethyl,4Œ≤,14Œ±-dimethyl-9Œ≤,19-cyclo-5Œ±-ergost-24(241)-en-3Œ≤-ol
+M4727	24-epi-campesterol
+M4728	brassicasterol
+M4729	24-methyldesmosterol
+M4730	phytosterol
+M4731	crinosterol
+M4732	campesterol
+M4733	Œî24-25-sitosterol
+M4734	isofucosterol
+M4735	24-methylenecholesterol
+M4736	5-dehydroavenasterol
+M4737	5-dehydro episterol
+M4738	4Œ±-methyl-5Œ±-ergosta-8,24-dien-3Œ≤-ol
+M4739	isoquinoline
+M4740	isoquinolin-1(2H)-one
+M4741	formylaminopyrimidine
+M4742	4,9-dimethyldodeca-2,4,6,8,10-pentaenedial
+M4743	beta-ionone
+M4744	15,15'-dihydroxy-beta-carotene
+M4745	beta-carotene 15,15' epoxide
+M4746	3,5-dichloro-2-methyl-muconate
+M4747	3,5-dichloro-2-methyl-muconolactone
+M4748	5'-hydroxycotinine
+M4749	polyol
+M4750	an aldose
+M4751	3,4-dihydroxybenzaldehyde
+M4752	hydroxyacetone
+M4753	L-arabinitol
+M4754	N'-hydroxymethyl-norcotinine
+M4755	estrone
+M4756	3,17-dioxoandrost-4-en-19-al
+M4757	17beta-estradiol
+M4758	19-oxo-testosterone
+M4759	19-hydroxyandrost-4-ene-3,17-dione
+M4760	19-hydroxytestosterone
+M4761	2'-hydroxynicotine
+M4762	hydroxybupropion
+M4763	bupropion
+M4764	nicotine-Œî1'5'-iminium ion
+M4765	1,5-anhydro-D-mannitol
+M4766	3-methyl-1-(2,4,6-trihydroxyphenyl)butan-1-one
+M4767	4-prenylphlorisovalerophenone
+M4768	diprenylphlorisobutyrophenone
+M4769	4-prenylphlorisobutyrophenone
+M4770	diprenylphlorisovalerophenone
+M4771	a reduced 2[4Fe-4s] ferredoxin
+M4772	an oxidized 2[4Fe-4s] ferredoxin
+M4773	a reduced [2Fe-2S] ferredoxin
+M4774	an oxidized [2Fe-2S] ferredoxin
+M4775	N-acetyl-4-O-acetylneuraminate
+M4776	N-Acetyl-D-glucosaminyl-N-acetylmuramoyl-L-Ala-D-glutamyl-6-carboxy-L-lysine
+M4777	N-Acetyl-D-glucosaminyl-N-acetylmuramoyl-L-Ala-D-glutamyl-6-carboxy-L-lysyl-D-alanine
+M4778	L-methionine (R)-S-oxide zwitterion
+M4779	4-\{[(2-amino-4-hydroxypteridin-6-yl)methyl]amino\}benzoate
+M4780	2-methyl-6-phytyl-1,4-benzoquinol
+M4781	5-Chloro-2-hydroxymuconic semialdehyde
+M4782	2-Hydroxy-6-oxoocta-2,4,7-trienoate
+M4783	(3S)-citramalyl-CoA(5-)
+M4784	Bacteriochlorophyllide d
+M4785	3-Vinylbacteriochlorophyllide d
+M4786	beta-zeacarotene
+M4787	7,8-Dihydro-beta-carotene
+M4788	gamma-carotene
+M4789	delta-carotene
+M4790	Plastoquinone
+M4791	Plastoquinol
+M4792	2,5-dichlorophenol
+M4793	1,2,4-trichlorobenzene
+M4794	1-haloalkanes
+M4795	3-oxosteroid
+M4796	a 3-oxo-D1-steroid
+M4797	cholest-dien-3-one
+M4798	a protein c-terminal s-farnesyl-l-cysteine methyl ester
+M4799	a protein c-terminal S-farnesyl-L-cysteine
+M4800	3-one-23,24-bisnorchol-1,4-dien-22-yl-CoA
+M4801	Œ±-kojibiose
+M4802	4-oxo-4-(pyridin-3-yl)butanoate
+M4803	4-oxo-4-(pyridin-3-yl)butanal
+M4804	pseudooxynicotine
+M4805	a mature protein
+M4806	a protein precursor
+M4807	cyanophycin macromolecule
+M4808	beta-L-aspartyl-L-arginine
+M4809	N-methylmyosmine
+M4810	4-(6-hydroxypyridin-3-yl)-4-oxobutanoate
+M4811	ferrocytochrome b-561
+M4812	ferricytochrome b-561
+M4813	1D-myo-inositol 1,2,3,5,6-pentakisphosphate(10-)
+M4814	2-hydroxy-6-oxohepta-2,4-dienoate
+M4815	cyanophycin primer-L-aspartate
+M4816	cyanophycin primer
+M4817	[cyanophycin]-L-aspartate
+M4818	tetrahydroxoborate(1-)
+M4819	(2S,4S)-2-methyl-2,3,3,4-tetrahydroxytetrahydrofuran-borate
+M4820	an MDO-6-(glycerophospho)-D-glucose
+M4821	an MDO-O-glucose
+M4822	(Z)-2-methyl-ureidoperacrylic acid
+M4823	(Z)-2-hydroxy-3-aminoperacrylic acid
+M4824	alpha-N-peptidyl-L-glutamate
+M4825	a [protein] Œ±-L-glu-Œ±-L-glu
+M4826	2-O-methyluridine2552 in 23S rRNA
+M4827	uridine2552 in 23S rRNA
+M4828	GDP-D-perosamine
+M4829	a trans2,cis-5-dienoyl-CoA
+M4830	a trans3,cis-5-dienoyl-CoA
+M4831	cis-dodec-3-enoyl-CoA(4-)
+M4832	ADP-ribosyl diphthamide
+M4833	Œ≤-D-glucosaminyl-(1->4)-Œ≤-D-glucosamine-6-phosphate
+M4834	2-O-methylguanosine2251 in 23S rRNA
+M4835	guanosine2251 in 23S rRNA
+M4836	biotinate sulfoxide
+M4837	5-methylcytosine1407 in 16S rRNA
+M4838	cytosine1407 in 16S rRNA
+M4839	dihydrosterculate
+M4840	a linolenoyl [acp]
+M4841	3-oxo-eicosatrienoyl [acp]: 
+M4842	a trans-delta18-37-hydroxy-38-methyl-C58:1-[acp]
+M4843	an eicosapentaenoyl-[acp]
+M4844	2-dehydro-3-deoxy-L-rhamnonate
+M4845	L-rhamnonate
+M4846	UDP-4-amino-4-deoxy-beta-L-arabinose
+M4847	UDP-beta-L-threo-pentopyranos-4-ulose(2-)
+M4848	alpha-D-glucose 1,6-bisphosphate(4-)
+M4849	2-methyl-3-oxosuccinate(2-)
+M4850	HAI-1
+M4851	an acyl-homoserine lactone
+M4852	N-(3-oxohexanoyl)homoserine lactone
+M4853	VAI-2
+M4854	AAI
+M4855	N-butyryl-L-homoserine lactone
+M4856	N-(3-oxododecanoyl)homoserine lactone
+M4857	13-[O(2')-Œ≤-D-glucopyranosyl-Œ≤-D-glucopyranosyloxy]docosanoate
+M4858	a sophorosyloxyfatty acid 6',6''-diacetate: 
+M4859	a sophorosyloxyfatty acid  O(6'')-acetate: 
+M4860	a sophorosyloxyfatty acid: 
+M4861	a [glycine-cleavage complex H protein] N6-octanoyl-L-lysine
+M4862	L(or D)-ribulose
+M4863	amino-parathion: C10H16NO3PS
+M4864	diethylthiophosphate
+M4865	4-aminophenol
+M4866	diethylphosphate
+M4867	aryl dialkyl phosphate
+M4868	dialkyl phosphate
+M4869	parathion-methyl
+M4870	dimethylthiophosphate
+M4871	2-(acetamidomethylidene)succinate(2-)
+M4872	5-hydroxy-6-methylpyridine-3-carboxylate
+M4873	5-hydroxy-6-methylpyridine-3,4-dicarboxylate
+M4874	5-formyl-3-hydroxy-2-methylpyidine-4-carboxylate
+M4875	4-pyridoxate
+M4876	23S rRNA
+M4877	rRNA
+M4878	1-palmitoyl-2-linoleoyl-phosphatidylcholine
+M4879	2-18:2(9Z,12Z)-lysophosphatidylcholine
+M4880	tetrathionate(2-)
+M4881	a 1,3-Œ±-D-glucan
+M4882	cleaved type-1 transmembrane domains
+M4883	type-1 transmembrane domains
+M4884	beta-L-rhamnopyranose
+M4885	S-inosyl-L-homocysteine zwitterion
+M4886	Œ≤-aspartyl dipeptide
+M4887	dTDP-4-amino-4,6-dideoxy-D-glucose(1-)
+M4888	a perthiol
+M4889	a DsrEFH complex
+M4890	[DsrEFH complex] persulfide
+M4891	guanidinoacetic acid zwitterion
+M4892	phosphatidyl-N,N-dimethylethanolamine
+M4893	phosphatidyl-N-methylethanolamine
+M4894	N-acyl-sphinganine
+M4895	methoxyneurosporene
+M4896	1-hydroxyneurosporene
+M4897	spheroidene
+M4898	demethylspheroidene
+M4899	spirilloxanthin
+M4900	hydroxyspirilloxanthin
+M4901	3,4,3',4'-Tetrahydrospirilloxanthin
+M4902	3',4'-Dihydrorhodovibrin
+M4903	3,4-Dihydroanhydrorhodovibrin
+M4904	rhodopin
+M4905	anhydrorhodovibrin
+M4906	(3E)-3,4-didehydrorhodopin
+M4907	(3R)-3-methyl-D-ornithine
+M4908	(3R)-3-methyl-D-ornithyl-N(6)-L-lysine
+M4909	products-of-ATP-breakdown
+M4910	(2R,3R)-3-methylglutamyl-5-semialdehyde-N6-lysine
+M4911	tRNA(Pyl)
+M4912	L-pyrrolysyl-tRNA(Pyl)
+M4913	a N-acetyl-D-glucosaminyl-lipopolysaccharide
+M4914	a lipopolysaccharide
+M4915	a [Co(I) dimethylamine-specific corrinoid protein]
+M4916	a [methyl-Co(III) dimethylamine-specific corrinoid protein]
+M4917	a [Co(I) methylamine-specific corrinoid protein]
+M4918	a [methyl-Co(III) methylamine-specific corrinoid protein]
+M4919	1-phosphonato-alpha-D-glucuronate(3-)
+M4920	4-Methylene-2-oxoglutarate
+M4921	2,3-didehydropimeloyl-CoA
+M4922	3-hydroxypimeloyl-CoA(5-)
+M4923	lactaldehyde
+M4924	3-methylsalicylaldehyde
+M4925	2-Hydroxy-3-methylbenzalpyruvate
+M4926	4-hydroxymethylsalicylaldehyde
+M4927	2-Hydroxy-4-hydroxymethylbenzalpyruvate
+M4928	3-Formylsalicylic acid
+M4929	2-Hydroxy-3-carboxybenzalpyruvate
+M4930	Cyromazine
+M4931	N-cyclopropylammeline
+M4932	N-cyclopropylammelide
+M4933	cyclopropylamine
+M4934	2-Hydroxy-4-isopropenylcyclohexane-1-carboxyl-CoA
+M4935	sinapoyl-CoA(4-)
+M4936	5-hydroxy-feruloyl-CoA
+M4937	a [protein]-L-citrulline
+M4938	D-glucosyl-N-acylsphingosine
+M4939	a plant ceramide (I)
+M4940	cis-1,2-dithiane-4,5-diol
+M4941	dithioerythritol
+M4942	organic disulfide
+M4943	an acyl-protein thioester
+M4944	O-palmitoyl-[myelin proteolipid]
+M4945	[myelin proteolipid]
+M4946	3-dehydro-D-sphinganine
+M4947	[tRNAArg2]-adenosine34
+M4948	[tRNAArg2]-inosine34
+M4949	a [procollagen] trans 4-hyroxy-L-proline
+M4950	procollagen L-proline
+M4951	ferric (2,3-dihydroxybenzoylserine)3
+M4952	(2,3-dihydroxybenzoylserine)3
+M4953	iron chelate
+M4954	a siderophore
+M4955	D-lyxose
+M4956	an oligosaccharide with 4-deoxy-Œ±-L-threo-hex-4-enuronosyl end
+M4957	Œ≤-D-Man-4,6-pyruvate
+M4958	3-(2-propenoic acid)-o-benzoquinone
+M4959	cis-caffeate
+M4960	1,2-benzoquinone
+M4961	N(omega),N(omega)-dimethyl-L-arginine
+M4962	feruloyl-polysaccharide
+M4963	theophylline
+M4964	1,3-dimethyluric acid
+M4965	3-methylxanthine
+M4966	3-methylurate
+M4967	1-methyluric acid
+M4968	1-methyl-7H-xanthine
+M4969	D-ribitol
+M4970	N(2)-citryl-N(6)-acetyl-N(6)-hydroxylysine
+M4971	N(6)-acetyl-N(6)-hydroxy-L-lysine zwitterion
+M4972	2,4,6-triaminotoluene
+M4973	Methyl-Co(III) corrinoid protein
+M4974	2-[2-O-(Œ±-D-mannopyranosyl)-Œ±-D-glucopyranosyl]-3-phospho-D-glycerate
+M4975	2-[2-O-(Œ±-D-mannopyranosyl)-Œ±-D-glucopyranosyl]-D-glycerate
+M4976	2-O-(alpha-D-glucopyranosyl)-3-O-phospho-D-glycerate
+M4977	(O(3)S.S.SO(3))(2-)
+M4978	a protein S-farnesyl-L-cysteine
+M4979	an NDP-Œ±-D-glucose
+M4980	a protein L-serine phosphate
+M4981	a [protein]-L-serine
+M4982	N-acetyl-Œ≤-D-galactosaminide-[chondroitin/dermatan]
+M4983	Œ≤-D-glucuronosyl-[chondroitin/dermatan]
+M4984	a [Co(I) trimethylamine-specific corrinoid protein]
+M4985	a [methyl-Co(III) trimethylamine-specific corrinoid protein]
+M4986	ribonucleotide
+M4987	Œ±-N-acetylneuraminyl-(2->3)-Œ≤-D-galactosyl-(1->3)-N-acetyl-D-galactosaminyl-R
+M4988	Œ±-N-acetylneuraminyl-(2->3)-Œ≤-D-galactose-(1->3)-(Œ±-N-acetylneuraminyl-(2->6))-N-acetyl-D-galactosaminyl-R
+M4989	Œ±-N-acetylneuraminyl-2,3-Œ≤-D-galactosyl-1,4-N-acetyl-D-glucosaminyl-glycoprotein
+M4990	beta-D-galactosyl-(1->4)-N-acetyl-beta-D-glucosaminyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-glucosyl-(1<->1)-ceramide
+M4991	alpha-Neup5NAc-(2->3)-beta-D-Galp-(1->4)-beta-D-GlcpNAc-(1->3)-beta-D-Galp-(1->4)-beta-D-Glcp-(1<->1')-Cer
+M4992	a D-2-hydroxyacid
+M4993	App-tRNAHis
+M4994	p-tRNAHis
+M4995	pppGp-tRNAHis
+M4996	delta-tocopherol
+M4997	beta-tocopherol
+M4998	gamma-tocopherol
+M4999	2,3-dimethyl-6-phytyl-1,4-benzoquinol
+M5000	(+)-alpha-tocopherol
+M5001	15,16-dihydrobiliverdin
+M5002	(3Z)-Phycoerythrobilin
+M5003	(3Z)-Phycocyanobilin
+M5004	Divinyl chlorophyllide a
+M5005	Isorenieratene
+M5006	beta-Isorenieratene
+M5007	Chlorobactene
+M5008	(2'S)-Deoxymyxol 2'-(2,4-di-O-methyl-alpha-L-fucoside)
+M5009	myxol-2'-dimethyl-fucoside
+M5010	(2'S)-Deoxymyxol 2'-alpha-L-fucoside
+M5011	myxol-2' fucoside
+M5012	an N-acetylglucosaminyl-diphosphodolichol
+M5013	CMP-2-keto-3-deoxy-D-glycero-D-galacto-nononate
+M5014	2-keto-3-deoxy-D-glycero-D-galacto-nononate
+M5015	Co-methyl-Co-5-hydroxybenzimidazolylcob(I)amide
+M5016	N-carbamoyl-D-amino acid
+M5017	a [methyl-Co(III) methanol-specific corrinoid protein]
+M5018	a [Co(I) methanol-specific corrinoid protein]
+M5019	a protein with LPXTG motif
+M5020	a protein with LPXT

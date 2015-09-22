@@ -18,7 +18,7 @@ for filename in os.listdir(os.getcwd()+"/Output/Species"):
     solution['x_dict'] = model.solution.x_dict
     solution['x'] = model.solution.x
     solution['y_dict'] = model.solution.y_dict
-    solution['y'] = model.solution.x
+    solution['y'] = model.solution.y
     
     with open(os.getcwd()+"/Output/Solution2/"+speciesName + '_solution.json', 'w') as outfile:
         json.dump(solution, outfile)
