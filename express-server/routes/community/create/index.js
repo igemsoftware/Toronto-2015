@@ -142,6 +142,8 @@ function saveCommunityModel(req, res, next) {
         }
 
         if (model) {
+            // TODO don't hard code like this
+            req.ConsortiaFlux.community.id = 'community';
             community = new Community(req.ConsortiaFlux.community);
 
             community.save(function(err, community) {

@@ -1,4 +1,4 @@
-cFBA-Pipeline/Ouput/**/*.json
+cFBA-Pipeline/Output/**/*.json
 venv
 temp/*.json
 static/**/*.json

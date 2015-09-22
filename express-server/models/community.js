@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var CommunitySchema = new mongoose.Schema({
+    id: String,
     name: String,
     members: [{
         model: String, // valid model id
