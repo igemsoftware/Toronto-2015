@@ -112,8 +112,6 @@ module.exports =
             # Give back data for `c` and `p`
             metaboliteDict = new Object()
             for metabolite in system.data.metabolites
-                if metabolite.id is "Ecoli-K12-MG1655-M2051-c"
-                    console.log(system)
                 metaboliteDict[metabolite.id] = metabolite
 
             pushedMetabolites = new Object()
@@ -124,10 +122,6 @@ module.exports =
                 # Determine compartments involved with this reaction
                 compartments = new Array()
                 for metabolite of reaction.metabolites
-                    if not metaboliteDict[metabolite]?
-                        #NOTE this is failing because reaction doesnt contain metabolite in dic, but it's located in the other specie
-                        console.log(metabolite)
-
                     if metaboliteDict[metabolite].compartment not in compartments
                         compartments.push(metaboliteDict[metabolite].compartment)
 

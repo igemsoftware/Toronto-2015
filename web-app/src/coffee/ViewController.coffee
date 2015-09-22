@@ -233,7 +233,6 @@ class ViewController
             htmlText+= ("<button id='delete'>Delete Reaction</button><br>")
         else if node.type is 'm'
             htmlText+= ("#{node.name}<br>")
-            htmlText+= ("<button id='delete'>Delete Node</button><br>")
         else if node.type is 'Compartment' and @network.currentLevel.children[node.id]?
             htmlText += ("#{node.name}<br>")
             htmlText += ("<button id='enter'>Enter Node</button><br>")

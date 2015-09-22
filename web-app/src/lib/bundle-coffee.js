@@ -215,20 +215,16 @@ Network = (function() {
       this.viewController.startCanvas(this.root.system);
     }
     this.currentLevel = this.root;
-    console.log(this.root);
     this.species = new Object();
     for (specie in this.root.system.parsedData) {
-      console.log(specie);
+      if (specie !== "Community") {
+        this.species[specie] = {
+          addedReactions: new Array(),
+          deletedReactions: new Array()
+        };
+      }
     }
-    this.deleted = {
-      reactions: new Array(),
-      metabolites: new Array()
-    };
-    return this.added = {
-      reactions: new Object(),
-      metabolites: new Object(),
-      species: new Object()
-    };
+    return console.log(this.species);
   };
 
   Network.prototype.enterSpecie = function(node) {
@@ -242,23 +238,24 @@ Network = (function() {
   };
 
   Network.prototype.deleteNode = function(id, system) {
-    var i, len, node, ref, results;
+    var i, len, node, ref, results, specie;
     ref = system.nodes;
     results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       node = ref[i];
       if (node.id === id) {
-        if (node.type === "r") {
-          system.graph.destroyVertex(id);
-          this.deleted.reactions.push(id);
-          results.push(node.deleted = true);
-        } else if (node.type === "m") {
-          system.graph.destroyVertex(id);
-          this.deleted.metabolites.push(id);
-          results.push(node.deleted = true);
-        } else {
-          results.push(void 0);
-        }
+        results.push((function() {
+          var j, len1, ref1, results1;
+          ref1 = node.species;
+          results1 = [];
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            specie = ref1[j];
+            this.species[specie].deletedReactions.push(node);
+            system.graph.destroyVertex(node.id);
+            results1.push(node.deleted = true);
+          }
+          return results1;
+        }).call(this));
       } else {
         results.push(void 0);
       }
@@ -951,7 +948,6 @@ ViewController = (function() {
       htmlText += "<button id='delete'>Delete Reaction</button><br>";
     } else if (node.type === 'm') {
       htmlText += node.name + "<br>";
-      htmlText += "<button id='delete'>Delete Node</button><br>";
     } else if (node.type === 'Compartment' && (this.network.currentLevel.children[node.id] != null)) {
       htmlText += node.name + "<br>";
       htmlText += "<button id='enter'>Enter Node</button><br>";
@@ -1509,9 +1505,6 @@ module.exports = {
       ref = system.data.metabolites;
       for (i = 0, len = ref.length; i < len; i++) {
         metabolite = ref[i];
-        if (metabolite.id === "Ecoli-K12-MG1655-M2051-c") {
-          console.log(system);
-        }
         metaboliteDict[metabolite.id] = metabolite;
       }
       pushedMetabolites = new Object();
@@ -1522,9 +1515,6 @@ module.exports = {
         reaction = ref1[j];
         compartments = new Array();
         for (metabolite in reaction.metabolites) {
-          if (metaboliteDict[metabolite] == null) {
-            console.log(metabolite);
-          }
           if (ref2 = metaboliteDict[metabolite].compartment, indexOf.call(compartments, ref2) < 0) {
             compartments.push(metaboliteDict[metabolite].compartment);
           }
