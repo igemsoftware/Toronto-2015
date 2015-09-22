@@ -1,6 +1,11 @@
 var mongoose = require('mongoose');
 var fs = require('fs');
 var MetabolicModelSchema = new mongoose.Schema({
+    // NOTE id is the primary key
+    id: {
+        type: String,
+        unique: true
+    },
 	reactions: [{
 		subsystem: String,
 		name: String,
@@ -42,7 +47,7 @@ var MetabolicModelSchema = new mongoose.Schema({
             name: String
         }]
 	}],
-  	id: String // NOTE is a primary key
+    file: String
 });
 
 MetabolicModelSchema.methods.transform = function transform(cb) {

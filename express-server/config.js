@@ -25,6 +25,7 @@ module.exports = {
     },
     dev: {
         port: 9001,
+        staticStore: 'static',
 
         mongodb: {
             hostname : 'localhost',
@@ -37,7 +38,7 @@ module.exports = {
         mysql: {
             host     : 'localhost',
             user     : 'root',
-            password : '', 
+            password : '',
             database : 'fba'
         }
     }

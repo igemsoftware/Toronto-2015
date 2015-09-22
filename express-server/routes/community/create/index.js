@@ -16,7 +16,7 @@ function writeModel(id, cb) {
             return;
         } else {
             model.transform(function(model) {
-                fileName = 'temp/' + id + '_' + (new Date()).getTime() + '.json';
+                fileName = App.config().static + '/' + id + '_' + (new Date()).getTime() + '.json';
 
                 fs.writeFile(fileName, function(err) {
                     if (err) {
@@ -32,7 +32,7 @@ function writeModel(id, cb) {
 }
 
 function createCommunity(req, res, next) {
-    // Given an array of model ids
+    // Given an array of <valid?> model ids
     var community = {};
     console.log(req.body);
     community.name = req.body.name;
@@ -63,6 +63,7 @@ function createCommunity(req, res, next) {
 
 }
 
+
 function checkIfCommunityExists(req, res, next) {
     Community.findOne({name: req.body.name}, function(err, community) {
         if (err) {
@@ -78,6 +79,9 @@ function checkIfCommunityExists(req, res, next) {
     });
 }
 
-router.post('/', checkIfCommunityExists, createCommunity);
+router.post('/', [
+    checkIfCommunityExists,
+    createCommunity
+]);
 
 module.exports = router;

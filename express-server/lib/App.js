@@ -1,13 +1,13 @@
 /**
  * The main App. Not to be confused with app.
- * 
+ *
  * This is where the loading of:
  *      -config
  *      -middleware
  *      -models
  *      -libraries
  * is handled.
- * 
+ *
  * This module is made globally available from fba-api.js.
  * see: https://nodejs.org/api/globals.html#globals_global
  */
@@ -31,18 +31,17 @@ function tryRequire (moduleName, type) {
     }
 }
 
-
 module.exports = {
     config: function() {
         return (process.env.NODE_ENV === 'prod') ? config.prod : config.dev;
     },
     MW: function(middlewareName) {
-        return tryRequire(middlewareName, 'middleware');    
+        return tryRequire(middlewareName, 'middleware');
     },
     Model: function(modelName) {
-        return tryRequire(modelName, 'model');  
+        return tryRequire(modelName, 'model');
     },
     Lib: function(libName) {
         return tryRequire(libName, 'library');
-    } 
+    }
 };

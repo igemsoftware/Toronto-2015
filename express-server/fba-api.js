@@ -1,4 +1,5 @@
-require('colors');
+var serveIndex = require('serve-index'),
+    colors = require('colors');
 
 // ==== Express ====
 var express = require('express');
@@ -8,21 +9,18 @@ var app = express();
 var App = global.App = require('./lib/App');
 
 // ==== DB Connection ====
-connection = App.Lib('connection')
-connection.mongodb(); //wat
-// mysqlConn = new Object();
-// connection.mysql(function(connection) {
-// 	mysqlConn = connection;
-// });
-
-// above hasn't finished yet which is this is still {}. #callbacks #yolo
-// console.log(mysqlConn)
+connection = App.Lib('connection');
+connection.mongodb();
 
 // ==== Apply global middleware ====
 App.MW('global-middleware').apply(app);
 
 // ==== Initialize Routes (and middlewares)  ====
 App.Lib('router').init(app);
+
+// ==== Static Server ====
+app.use('/static', serveIndex(App.config().staticStore));
+app.use('/static', express.static(App.config().staticStore));
 
 // ==== Listen ====
 var port = App.config().port;

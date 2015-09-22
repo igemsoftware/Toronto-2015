@@ -1,8 +1,9 @@
 var router = require('express').Router();
+var fs = require('fs');
 
 var MetabolicModel = App.Model('metabolicmodel');
 
-// turn all {}'s into empty strings
+// Recursively turn all {}'s into empty strings
 function stringify(object) {
 	Object.keys(object).forEach(function(key) {
 		if ( typeof(object[key]) === 'object' && Object.keys(object[key]).length > 0 ) {
@@ -14,21 +15,19 @@ function stringify(object) {
 }
 
 function saveModel(req, res, next) {
+    var model = req.body;
 
-	stringify(req.body);
+	stringify(model);
 
     // Metabolites Dictionary
     var metabolitesDict = {};
-    req.body.metabolites.forEach(function(metabolite) {
+    model.metabolites.forEach(function(metabolite) {
         metabolitesDict[metabolite.id] = metabolite;
-        // metabolite.subsystems = [{
-        //     name: reaction.subsystem
-        // }];
         metabolite.subsystems = [];
     });
 
     // TODO fix same subsystem pushed twice
-    req.body.reactions.forEach(function(reaction) {
+    model.reactions.forEach(function(reaction) {
         Object.keys(reaction.metabolites).forEach(function(metabolite) {
             if (metabolitesDict[metabolite].subsystems.indexOf(reaction.subsystem) === -1) {
                 metabolitesDict[metabolite].subsystems.push({
@@ -38,38 +37,9 @@ function saveModel(req, res, next) {
         });
     });
 
-    // Insert subsystems into metabolites
-    // req.body.reactions.forEach(function(reaction) {
-    //     console.log(reaction.id);
-    //     if (reaction.subsystem === '')
-    //         reaction.subsystem = 'Unassigned';
-    //
-    //     Object.keys(reaction.metabolites).forEach(function(metabolite) {
-    //         if (!metabolitesDict[metabolite].subsystems) {
-    //             metabolitesDict[metabolite].subsystems =[{
-    //                 name: reaction.subsystem
-    //             }];
-    //         } else {
-    //             metabolitesDict[metabolite].subsystems.forEach(function(subsystem) {
-    //                 if (subsystem.name !== reaction.subsystem)
-    //                     if (metabolitesDict[metabolite].subsystems) {
-    //                         metabolitesDict[metabolite].subsystems.push({
-    //                             name: reaction.subsystem
-    //                         });
-    //                     } else {
-    //                         metabolitesDict[metabolite].subsystems = [{
-    //                             name: reaction.subsystem
-    //                         }];
-    //                     }
-    //             });
-    //         }
-    //     });
-    // });
-
-	req.body.reactions.forEach(function(reaction) {
+	model.reactions.forEach(function(reaction) {
         // Metabolite conversion
 		var tempMetabs = [];
-
 		Object.keys(reaction.metabolites).forEach(function(key) {
 			tempMetabs.push({
 				id: key,
@@ -77,39 +47,44 @@ function saveModel(req, res, next) {
 			});
 		});
 		reaction.metabolites = tempMetabs;
+
         // Species Insertion
         reaction.species = [{
-            name: req.body.id
+            name: model.id
         }];
 	});
 
-    // var metabsArray = [];
-    // Object.keys(metabolitesDict).forEach(function(metabolite) {
-    //     metabsArray.push(metabolitesDict[metabolite]);
-    // });
-    // req.body.metabolites = metabsArray;
-
-
-    // req.body.metabolites.forEach(function(metabolite) {
-    //     console.log(metabolite.subsystems);
-    // });
-
-    req.body.metabolites.forEach(function(metabolite) {
+    model.metabolites.forEach(function(metabolite) {
         metabolite.species = [{
-            name: req.body.id
+            name: model.id
         }];
     });
 
-	var model = new MetabolicModel(req.body);
+    model = new MetabolicModel(model);
 
-	model.save(function(err, savedModel) {
-		if (err) {
-			console.log(err);
-			res.status(500).send('500 Internal Server Error\n');
-		}
+    // Write 'transformed' model to disk
+    model.transform(function(transformedModel) {
+        // TODO Species folder
+        var filePath = App.config().staticStore + '/models/' + model.id + '.json';
 
-		res.send('Saved a MetabolicModel with id ' + savedModel.id + '\n');
-	});
+        fs.writeFile(filePath, JSON.stringify(transformedModel), function(err) {
+            if (err) {
+                res.status(500).send('500 Internal Server Error');
+                return;
+            }
+
+            model.file = filePath;
+
+            model.save(function(err, model){
+                if (err) {
+                    res.status(500).send('500 Internal Server Error');
+                    return;
+                }
+
+                res.send('Created model with id ' + model.id + ', stored at: ' + model.file + '\n');
+            });
+        });
+    });
 }
 
 router.post('/', [
