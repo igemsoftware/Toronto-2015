@@ -28,6 +28,9 @@ nodeMap = (nodes) ->
 
 `
 var stringToColour = function(str) {
+    if (!str) {
+        str = 'foo';
+    }
 
     // str to hash
     for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));

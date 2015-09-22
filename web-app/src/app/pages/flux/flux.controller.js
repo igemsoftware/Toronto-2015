@@ -114,18 +114,46 @@ FluxCtrl.prototype.addSpecie = function() {
 };
 
 FluxCtrl.prototype.optimize = function() {
-    this.receiver = function(res) {
-        this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
-        this.ConsortiaFluxTool.changeSpecie(res.data);
-    };
+    if (this.currentModel === 'community') {
+        this.receiver = function(res) {
+            var optimizedModelUrl = this.UrlProvider.baseUrl + '/' + res.data;
 
-    this.errorCatch = function(err) {
-        console.log(err);
-    };
+            this.receiver = function(res) {
+                console.log(res.data);
+                this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
+                this.ConsortiaFluxTool.changeSpecie(res.data);
+            };
 
-    var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
+            this.errorCatch = function(err) {
+                console.log(err);
+            };
 
-    this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+            var requestUrl = optimizedModelUrl;
+
+            this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+        };
+
+        this.errorCatch = function(err) {
+            console.log(err);
+        };
+
+        var requestUrl = this.UrlProvider.baseUrl + '/community/optimize/' + this.currentModel;
+
+        this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+    } else {
+        this.receiver = function(res) {
+            this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
+            this.ConsortiaFluxTool.changeSpecie(res.data);
+        };
+
+        this.errorCatch = function(err) {
+            console.log(err);
+        };
+
+        var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
+
+        this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+    }
 };
 
 FluxCtrl.prototype.addReaction = function() {

@@ -14,9 +14,15 @@ module.exports =
             # pushedMetabolites = new Array()
 
             for reaction in system.data.reactions
+                if reaction.name is 'Community biomass objective function'
+                    continue
+
                 # Reactions only ever have one specie
                 # TODO modify bare data to accomodate this
+                #
+                # console.log(reaction)
                 specie = reaction.species[0]
+
 
                 if not system.parsedData[specie]?
                     system.parsedData[specie] = {}

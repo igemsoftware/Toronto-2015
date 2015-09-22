@@ -88,7 +88,7 @@ router.get('/:id', function(req, res, next) {
                                     name: 'Periplasm'
                                 }];
 
-                                fs.writeFile('optimized.json', JSON.stringify(model));
+                                // fs.writeFile('optimized.json', JSON.stringify(model));
                                 res.send(model);
 
                                 // var stream = fs.createReadStream(solutionFile + '_solution.json');

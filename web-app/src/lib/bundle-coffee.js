@@ -1330,6 +1330,9 @@ module.exports = {
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         reaction = ref1[j];
+        if (reaction.name === 'Community biomass objective function') {
+          continue;
+        }
         specie = reaction.species[0];
         if (system.parsedData[specie] == null) {
           system.parsedData[specie] = {};
@@ -1688,6 +1691,9 @@ nodeMap = function(nodes) {
 
 
 var stringToColour = function(str) {
+    if (!str) {
+        str = 'foo';
+    }
 
     // str to hash
     for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
