@@ -3,14 +3,23 @@ Node = require "./Node"
 class Metabolite extends Node
     constructor: (attr, @ctx) ->
         super(attr, @ctx)
-
-
-        if "_" in @id and "-" in @id
-            @compartment = @id.slice(@id.lastIndexOf("-") + 1, @id.length)
-        else if "_" in  @id
-            @compartment = @id.split('_')[@id.split('_').length - 1]
+        @compartment = attr.compartment
+        if @compartment? and @compartment isnt "p" and @compartment isnt "c" and @compartment isnt "e"
+            if @compartment.toLowerCase() is "cytosol"
+                @compartment = "c"
+            else if @compartment.toLowerCase is "periplasm"
+                @compartment = "p"
+            else
+                @compartment = "e"
         else
-            @compartment = @id.split('-')[@id.split('-').length - 1]
+            #Anthony case
+            if "_" in @id and "-" in @id
+                @compartment = @id.slice(@id.lastIndexOf("-") + 1, @id.length)
+            else if "_" in  @id
+                @compartment = @id.split('_')[@id.split('_').length - 1]
+            else
+                @compartment = @id.split('-')[@id.split('-').length - 1]
+
 
     draw: ->
         if not @deleted

@@ -26,7 +26,7 @@ class Network
             ctx : @viewController.ctx
         @root = new TreeNode('root', new System(systemAttr))
         @root.system.initializeForce()
-
+        console.log(@root)
 
         # Start the visualization
         if @initalized
@@ -65,7 +65,6 @@ class Network
                     @species[specie].deletedReactions.push(node)
                     system.graph.destroyVertex(node.id)
                     node.deleted = true
-        console.log(@species)
 
 
 

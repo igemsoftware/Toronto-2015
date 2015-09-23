@@ -148,12 +148,23 @@ Metabolite = (function(superClass) {
   function Metabolite(attr, ctx) {
     this.ctx = ctx;
     Metabolite.__super__.constructor.call(this, attr, this.ctx);
-    if (indexOf.call(this.id, "_") >= 0 && indexOf.call(this.id, "-") >= 0) {
-      this.compartment = this.id.slice(this.id.lastIndexOf("-") + 1, this.id.length);
-    } else if (indexOf.call(this.id, "_") >= 0) {
-      this.compartment = this.id.split('_')[this.id.split('_').length - 1];
+    this.compartment = attr.compartment;
+    if ((this.compartment != null) && this.compartment !== "p" && this.compartment !== "c" && this.compartment !== "e") {
+      if (this.compartment.toLowerCase() === "cytosol") {
+        this.compartment = "c";
+      } else if (this.compartment.toLowerCase === "periplasm") {
+        this.compartment = "p";
+      } else {
+        this.compartment = "e";
+      }
     } else {
-      this.compartment = this.id.split('-')[this.id.split('-').length - 1];
+      if (indexOf.call(this.id, "_") >= 0 && indexOf.call(this.id, "-") >= 0) {
+        this.compartment = this.id.slice(this.id.lastIndexOf("-") + 1, this.id.length);
+      } else if (indexOf.call(this.id, "_") >= 0) {
+        this.compartment = this.id.split('_')[this.id.split('_').length - 1];
+      } else {
+        this.compartment = this.id.split('-')[this.id.split('-').length - 1];
+      }
     }
   }
 
@@ -210,6 +221,7 @@ Network = (function() {
     };
     this.root = new TreeNode('root', new System(systemAttr));
     this.root.system.initializeForce();
+    console.log(this.root);
     if (this.initalized) {
       this.viewController.setActiveGraph(this.root.system);
     } else {
@@ -247,21 +259,29 @@ Network = (function() {
   };
 
   Network.prototype.deleteNode = function(id, system) {
-    var i, j, len, len1, node, ref, ref1, specie;
+    var i, len, node, ref, results, specie;
     ref = system.nodes;
+    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       node = ref[i];
       if (node.id === id) {
-        ref1 = node.species;
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          specie = ref1[j];
-          this.species[specie].deletedReactions.push(node);
-          system.graph.destroyVertex(node.id);
-          node.deleted = true;
-        }
+        results.push((function() {
+          var j, len1, ref1, results1;
+          ref1 = node.species;
+          results1 = [];
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            specie = ref1[j];
+            this.species[specie].deletedReactions.push(node);
+            system.graph.destroyVertex(node.id);
+            results1.push(node.deleted = true);
+          }
+          return results1;
+        }).call(this));
+      } else {
+        results.push(void 0);
       }
     }
-    return console.log(this.species);
+    return results;
   };
 
   return Network;
@@ -436,7 +456,15 @@ System = (function() {
     reactions = new Object();
     for (j = 0, len = metaboliteData.length; j < len; j++) {
       metabolite = metaboliteData[j];
-      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius);
+      m = new Metabolite({
+        x: utilities.rand(this.width),
+        y: utilities.rand(this.height),
+        r: this.metaboliteRadius,
+        name: metabolite.name,
+        id: metabolite.id,
+        compartment: metabolite.compartment,
+        type: "m"
+      }, this.ctx);
       m.species = metabolite.species;
       m.subsystems = metabolite.subsystems;
       metabolites[metabolite.id] = m;
@@ -473,20 +501,6 @@ System = (function() {
       }
     }
     return [metabolites, reactions];
-  };
-
-  System.prototype.createNewMetabolite = function(id, name) {
-    var metabolite, metaboliteAttr;
-    metaboliteAttr = {
-      id: id,
-      name: name,
-      x: utilties.rand(this.width),
-      y: utilties.rand(this.height),
-      r: this.metaboliteRadius,
-      type: "m"
-    };
-    metabolite = new Metabolite(metaboliteAttr, this.ctx);
-    return this.added.metabolites[id] = name;
   };
 
   System.prototype.findNode = function(id) {
@@ -601,7 +615,15 @@ System = (function() {
     var j, k, len, len1, m, metabolite, metaboliteId, r, reaction, results, source, target;
     for (j = 0, len = metaboliteData.length; j < len; j++) {
       metabolite = metaboliteData[j];
-      m = creators.createMetabolite(metabolite.name, metabolite.id, this.metaboliteRadius);
+      m = new Metabolite({
+        x: utilities.rand(this.width),
+        y: utilities.rand(this.height),
+        r: this.metaboliteRadius,
+        name: metabolite.name,
+        id: metabolite.id,
+        compartment: metabolite.compartment,
+        type: "m"
+      }, this.ctx);
       m.species = metabolite.species;
       this.fullResGraph.addVertex(metabolite.id, m);
     }

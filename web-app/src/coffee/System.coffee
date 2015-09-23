@@ -79,7 +79,16 @@ class System
         # for metabolite in @data.metabolites
             # Create a new Metabolite
             # TODO params: metabolite, ctx, metaboliteRadius?
-            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius)
+            #m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius)
+            m = new Metabolite({
+                x : utilities.rand(@width)
+                y : utilities.rand(@height)
+                r : @metaboliteRadius
+                name : metabolite.name
+                id : metabolite.id
+                compartment: metabolite.compartment
+                type : "m"
+                }, @ctx)
             m.species = metabolite.species
             m.subsystems = metabolite.subsystems
 
@@ -134,24 +143,12 @@ class System
         return [metabolites, reactions]
 
 
-
-    #create a metabolite on the current running graph
-    createNewMetabolite: (id, name) ->
-        metaboliteAttr =
-            id : id
-            name : name
-            x : utilties.rand(@width)
-            y : utilties.rand(@height)
-            r : @metaboliteRadius
-            type : "m"
-        metabolite = new Metabolite(metaboliteAttr, @ctx)
-        @added.metabolites[id] = name
-
     findNode: (id) ->
         for node in @nodes
             if node.id is id
                 return node
         return null
+
     addReaction: (reactionObject) ->
         reaction = new Reaction({
             x : utilities.rand(@width)
@@ -276,7 +273,16 @@ class System
         # for metabolite in @data.metabolites
             # Create a new Metabolite
             # TODO params: metabolite, ctx, metaboliteRadius?
-            m = creators.createMetabolite(metabolite.name, metabolite.id, @metaboliteRadius)
+
+            m = new Metabolite({
+                x : utilities.rand(@width)
+                y : utilities.rand(@height)
+                r : @metaboliteRadius
+                name : metabolite.name
+                id : metabolite.id
+                compartment: metabolite.compartment
+                type : "m"
+                }, @ctx)
             m.species = metabolite.species
 
             # Create a node (vertex) for this Metabolite in system.graph
