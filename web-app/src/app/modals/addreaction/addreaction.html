@@ -14,8 +14,10 @@
 
     <!-- <div>{{myMetab.id}}</div> -->
     <select ng-model="myMetab" ng-options="metabolite.name for metabolite  in metabolites"></select><br>
-    <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button><br>
+    <!-- <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button><br> -->
     Metabolite coefficient: <input ng-model="metabolite_cofficient"></input><br>
+    <addbuttonsbutton ng-model="metabolite"></addbuttonsbutton>
+    <div id="space-for-buttons"></section>
     <br>
     Reversible: <select ng-model="reversible">
                     <option value="true">true</option>

@@ -8,21 +8,30 @@ angular.module('ConsortiaFlux')
     function($scope, $http, UrlProvider, ConsortiaFluxTool, close) {
         $scope.display = true;
         var metabolites = new Array()
-        var nodes = ConsortiaFluxTool.currentLevel.system.nodes
-        for(var i = 0; i < nodes.length; i++){
-            if(nodes[i].type === "m"){
-                metabolites.push(nodes[i])
-            }
+        var metabDict = ConsortiaFluxTool.currentLevel.system.metabolites
+        var m = Object.keys(ConsortiaFluxTool.currentLevel.system.metabolites)
+        for(var i = 0; i < m.length; i++){
+            metabolites.push(metabDict[m[i]]);
         }
+
         var species = new Array()
 
         for(var specie in ConsortiaFluxTool.species){
             species.push(specie)
         }
-        $scope.metabolites = metabolites
-        $scope.reversible = "false"
-        $scope.outside = "null"
-        $scope.species = species
+        $scope.metabolites = metabolites;
+        $scope.reversible = "false";
+        $scope.outside = "null";
+        $scope.species = species;
+        $scope.name = "Sink needed to allow p-Cresol to leave system";
+        $scope.id = "DM_4CRSOL";
+        $scope.EC_Number = 0;
+        $scope.upper_bound = 1000;
+        $scope.lower_bound = 0;
+        $scope.objective_coefficient = 0;
+
+        $scope.count = 0;
+
 
         $scope.addMetabolite = function(){
 
@@ -38,7 +47,7 @@ angular.module('ConsortiaFlux')
             var reaction = {
                 "EC_Number": $scope.EC_Number || "",
                 "upper_bound": Number($scope.upper_bound),
-                "objective_coefficient": $scope.objective_coefficient,
+                "objective_coefficient": Number($scope.objective_coefficient),
                 "reversible": JSON.parse($scope.reversible),
                 "outside": JSON.parse($scope.outside),
                 "lower_bound": Number($scope.lower_bound),
@@ -47,12 +56,13 @@ angular.module('ConsortiaFlux')
                 "gene association": $scope.gene_association,
                 "name": $scope.name,
                 "species": [
-                    $scope.species
+                    $scope.specie
                 ],
                 "metabolites": {}
             }
-            reaction.metabolites[$scope.myMetab.id] = $scope.metabolite_cofficient
-
+            console.log($scope.species)
+            reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient)
+            console.log(reaction);
             close(reaction);
         };
 

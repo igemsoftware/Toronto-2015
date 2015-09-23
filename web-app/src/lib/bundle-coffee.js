@@ -215,7 +215,6 @@ Network = (function() {
     } else {
       this.viewController.startCanvas(this.root.system);
     }
-    console.log(this.root);
     this.currentLevel = this.root;
     this.species = new Object();
     results = [];
@@ -243,35 +242,26 @@ Network = (function() {
   };
 
   Network.prototype.addReaction = function(reactionObject) {
-    console.log(reactionObject);
     this.species[reactionObject.species[0]].addedReactions.push(reactionObject);
     return this.viewController.activeGraph.addReaction(reactionObject);
   };
 
   Network.prototype.deleteNode = function(id, system) {
-    var i, len, node, ref, results, specie;
+    var i, j, len, len1, node, ref, ref1, specie;
     ref = system.nodes;
-    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       node = ref[i];
       if (node.id === id) {
-        results.push((function() {
-          var j, len1, ref1, results1;
-          ref1 = node.species;
-          results1 = [];
-          for (j = 0, len1 = ref1.length; j < len1; j++) {
-            specie = ref1[j];
-            this.species[specie].deletedReactions.push(node);
-            system.graph.destroyVertex(node.id);
-            results1.push(node.deleted = true);
-          }
-          return results1;
-        }).call(this));
-      } else {
-        results.push(void 0);
+        ref1 = node.species;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          specie = ref1[j];
+          this.species[specie].deletedReactions.push(node);
+          system.graph.destroyVertex(node.id);
+          node.deleted = true;
+        }
       }
     }
-    return results;
+    return console.log(this.species);
   };
 
   return Network;
@@ -392,7 +382,7 @@ module.exports = Reaction;
 
 
 },{"./Node":6,"./utilities":16}],8:[function(require,module,exports){
-var Compartment, Link, Reaction, System, creators, sortors, utilities;
+var Compartment, Link, Metabolite, Reaction, System, creators, sortors, utilities;
 
 Compartment = require('./Compartment');
 
@@ -405,6 +395,8 @@ sortors = require('./sortors');
 Link = require('./Link');
 
 Reaction = require('./Reaction');
+
+Metabolite = require('./Metabolite');
 
 System = (function() {
   function System(attr) {
@@ -510,7 +502,7 @@ System = (function() {
   };
 
   System.prototype.addReaction = function(reactionObject) {
-    var link, metabolite, reaction, source, target;
+    var link, metaboliteid, node, reaction, source, target;
     reaction = new Reaction({
       x: utilities.rand(this.width),
       y: utilities.rand(this.height),
@@ -522,12 +514,16 @@ System = (function() {
       colour: "rgb(" + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ", " + (utilities.rand(255)) + ")"
     }, this.ctx);
     this.nodes.push(reaction);
-    for (metabolite in reactionObject.metabolites) {
-      if (reactionObject.metabolites[metabolite] > 0) {
+    for (metaboliteid in reactionObject.metabolites) {
+      node = this.findNode(metaboliteid);
+      if (node === null) {
+        continue;
+      }
+      if (reactionObject.metabolites[metaboliteid] > 0) {
         source = reaction;
-        target = this.findNode(metabolite);
+        target = node;
       } else {
-        source = this.findNode(metabolite);
+        source = node;
         target = reaction;
       }
       link = new Link({
@@ -665,7 +661,7 @@ System = (function() {
 module.exports = System;
 
 
-},{"./Compartment":1,"./Link":3,"./Reaction":7,"./creators":12,"./sortors":15,"./utilities":16}],9:[function(require,module,exports){
+},{"./Compartment":1,"./Link":3,"./Metabolite":4,"./Reaction":7,"./creators":12,"./sortors":15,"./utilities":16}],9:[function(require,module,exports){
 var System, TreeNode;
 
 System = require('./System');

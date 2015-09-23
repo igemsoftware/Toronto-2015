@@ -33,7 +33,7 @@ class Network
             @viewController.setActiveGraph(@root.system)
         else
             @viewController.startCanvas(@root.system)
-        console.log(@root)
+
         @currentLevel = @root
         @species = new Object()
         for specie of @root.system.parsedData
@@ -42,6 +42,7 @@ class Network
                     addedReactions : new Array()
                     deletedReactions: new Array()
                 }
+
     enterSpecie: (node) ->
         #find node
         @currentLevel = @currentLevel.children[node.id]
@@ -53,7 +54,6 @@ class Network
         @viewController.setActiveGraph(@currentLevel.system)
 
     addReaction: (reactionObject) ->
-        console.log(reactionObject)
         @species[reactionObject.species[0]].addedReactions.push(reactionObject)
         @viewController.activeGraph.addReaction(reactionObject)
 
@@ -65,9 +65,7 @@ class Network
                     @species[specie].deletedReactions.push(node)
                     system.graph.destroyVertex(node.id)
                     node.deleted = true
-
-
-
+        console.log(@species)
 
 
 

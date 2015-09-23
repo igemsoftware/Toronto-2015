@@ -4,6 +4,7 @@ creators = require './creators'
 sortors = require './sortors'
 Link  = require './Link'
 Reaction = require './Reaction'
+Metabolite = require './Metabolite'
 
 
 
@@ -164,12 +165,15 @@ class System
 
         }, @ctx)
         @nodes.push(reaction)
-        for metabolite of reactionObject.metabolites
-            if reactionObject.metabolites[metabolite] > 0
+        for metaboliteid of reactionObject.metabolites
+            node = @findNode(metaboliteid)
+            if node is null
+                continue
+            if reactionObject.metabolites[metaboliteid] > 0
                 source = reaction
-                target = @findNode(metabolite)
+                target = node
             else
-                source = @findNode(metabolite)
+                source = node
                 target = reaction
             link = new Link({
                 id : reaction.id
