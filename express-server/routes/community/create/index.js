@@ -58,6 +58,11 @@ function createCommunity(req, res, next) {
     // Given an array of <valid?> model ids
     var community = {};
     community.name = req.body.name;
+    community.id = req.body.name.replace(' ', '-');
+    while(community.id.indexOf(' ') !== -1) {
+        community.id = community.id.replace(' ', '-');
+    }
+    console.log(community.id);
     community.members = [];
 
     var checkProgress = function(modelId, file) {
@@ -125,7 +130,9 @@ function optimizeCommunity(req, res, next) {
                 return;
             }
 
-            req.ConsortiaFlux.model = JSON.parse(model);
+            model = JSON.parse(model);
+            model.id = req.ConsortiaFlux.community.id;
+            req.ConsortiaFlux.model = model;
             next();
         });
     });
@@ -142,8 +149,6 @@ function saveCommunityModel(req, res, next) {
         }
 
         if (model) {
-            // TODO don't hard code like this
-            req.ConsortiaFlux.community.id = 'community';
             community = new Community(req.ConsortiaFlux.community);
 
             community.save(function(err, community) {

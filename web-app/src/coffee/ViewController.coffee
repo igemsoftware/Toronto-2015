@@ -192,7 +192,6 @@ class ViewController
         factor = zoom
         if factor is 0
             return
-        console.log(factor)
         pt = @transformedPoint(@lastX, @lastY)
 
 

@@ -11,8 +11,6 @@ function stringify(object) {
 
 
 function prepareModel(req, res, next) {
-    console.log(req.ConsortiaFlux.model.id);
-
     stringify(req.body);
 
     model = req.ConsortiaFlux.model;

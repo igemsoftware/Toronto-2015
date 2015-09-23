@@ -1,9 +1,12 @@
 var mongoose = require('mongoose');
 
 var SpeciesSchema = new mongoose.Schema({
-    MODELID : {
-        type: String
-    },
+    models: [{
+        id: String,
+        file: String,
+        solution: String,
+        optimized: String
+    }],
     DOMAIN: {
         type     : String,
         required : true

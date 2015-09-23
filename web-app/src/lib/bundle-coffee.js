@@ -913,7 +913,6 @@ ViewController = (function() {
     if (factor === 0) {
       return;
     }
-    console.log(factor);
     pt = this.transformedPoint(this.lastX, this.lastY);
     this.ctx.translate(pt.x, pt.y);
     this.xform = this.xform.translate(pt.x, pt.y);
