@@ -50,6 +50,25 @@ canvas {
     padding-left: 2rem;
 }
 
+.hr-medium {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.tags-wrapper {
+    margin-bottom: 10px;
+
+    span.tag {
+        margin-right: 5px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+
+
 #header {
     // background-color: rgb(176, 179, 156);
 }

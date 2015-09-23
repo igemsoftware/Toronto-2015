@@ -36,7 +36,7 @@ function checkIfCommunityExists(req, res, next) {
     });
 }
 
-function writeModel(id, cb) {
+function writeModel(id, cb, res) {
     MetabolicModel.findOne({
         id: id
     }, 'id file', function(err, model) {
@@ -75,7 +75,7 @@ function createCommunity(req, res, next) {
     };
 
     req.body.models.forEach(function(model) {
-        writeModel(model, checkProgress);
+        writeModel(model, checkProgress, res);
     });
 }
 

@@ -54,6 +54,17 @@ canvas {
   padding-right: 2rem;
   padding-left: 2rem; }
 
+.hr-medium {
+  margin-top: 5px;
+  margin-bottom: 10px; }
+
+.tags-wrapper {
+  margin-bottom: 10px; }
+  .tags-wrapper span.tag {
+    margin-right: 5px; }
+    .tags-wrapper span.tag:last-child {
+      margin-right: 0; }
+
 #splash #main-title {
   text-align: center;
   font-family: "Dancing Script", cursive; }
