@@ -749,6 +749,7 @@ ViewController = (function() {
     this.ctx = document.getElementById(this.id).getContext("2d");
     this.nodetext = $('#nodetext');
     this.stats = new Stats();
+    this.previousxform = null;
     this.stats.domElement.style.position = 'absolute';
     this.stats.domElement.style.left = '0px';
     this.stats.domElement.style.top = '0px';
@@ -909,6 +910,10 @@ ViewController = (function() {
       }
     }
     factor = zoom;
+    if (factor === 0) {
+      return;
+    }
+    console.log(factor);
     pt = this.transformedPoint(this.lastX, this.lastY);
     this.ctx.translate(pt.x, pt.y);
     this.xform = this.xform.translate(pt.x, pt.y);

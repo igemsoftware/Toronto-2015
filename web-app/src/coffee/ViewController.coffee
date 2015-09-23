@@ -26,6 +26,8 @@ class ViewController
 
         @stats = new Stats()
 
+        @previousxform = null
+
         @stats.domElement.style.position = 'absolute'
         @stats.domElement.style.left = '0px'
         @stats.domElement.style.top = '0px'
@@ -115,6 +117,7 @@ class ViewController
         pt = @svg.createSVGPoint()
         pt.x = x
         pt.y = y
+
         return pt.matrixTransform(@xform.inverse())
 
     mousedownHandler = (e) ->
@@ -187,7 +190,12 @@ class ViewController
                 delta = -e.detail
 
         factor = zoom
+        if factor is 0
+            return
+        console.log(factor)
         pt = @transformedPoint(@lastX, @lastY)
+
+
         # if @xform.a <= @maxZoomIn and factor <= 1
         #     return
         # else if @xform.a >= @maxZoomOut and factor >= 1
