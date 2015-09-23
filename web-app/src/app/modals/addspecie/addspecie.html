@@ -4,14 +4,40 @@
         <i ng-show="loading" class="fa fa-5x fa-spin fa-spinner"></i>
     </div>
     <div ng-show="!loading">
-        <accordion>
-            <accordion-group ng-repeat="specie in species" heading="{{specie}}">
+        <div ng-show="community.length > 1">
+            Current community:
+            <input ng-model="communityName" type="text">
+            <hr class="hr-medium">
+        </div>
+        <div class="tags-wrapper">
+            <span class="tag label label-info" ng-repeat="model in community">
+                {{model}}
+                <span data-role="remove"></span>
+            </span>
+        </div>
+        <accordion close-others="false">
+            <accordion-group ng-repeat="specie in species">
+                <accordion-heading ng-click="isopen=!isopen">
+                    {{specie}}
+                    <input type="checkbox" class="custom-checkbox right" ng-click="checkboxClick(specie, $event)">
+
+                    <!-- <label class="checkbox right">
+                        <input type="checkbox" ng-checked="specie.checked" ng-click="checkboxClick(group, $event)" value="" id="{{specie}}" class="custom-checkbox">
+                        <span class="icons">
+                            <span class="icon-unchecked"></span>
+                            <span class="icon-checked"></span>
+                        </span>
+                    </label> -->
+                </accordion-heading>
                 wheeeee
-                <button ng-click="choose(specie)" type="button" class="btn btn-primary right">Use</button>
+                <!-- <button ng-click="choose(specie)" type="button" class="btn btn-primary right">Use</button> -->
             </accordion-group>
         </accordion>
     </div>
 
-    <a class="closeButton right" href ng-click="close()">Close</a>
+    <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
+    <button ng-click="close()" type="button" class="btn btn-danger right">Close</button>
+    <button ng-click="render()" ng-show="community.length === 1" ng-click="renderModel()" type="button" class="btn btn-primary">Render Model</button>
+    <button ng-click="render()" ng-show="community.length > 1" ng-click="renderCommunity()" type="button" class="btn btn-primary">Render Community</button>
 </div>
 <div class="fade" ng-show="display"></div>

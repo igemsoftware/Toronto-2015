@@ -28,8 +28,11 @@
             <ul>
                 <li>
                     <a href>
-                        <span class="model">
+                        <span class="model" ng-show="fluxCtrl.community.models.length === 1">
                             {{fluxCtrl.currentModel}}
+                        </span>
+                        <span class="model" ng-show="fluxCtrl.community.models.length > 1">
+                            Community ({{fluxCtrl.community.models.length}})
                         </span>
                     </a>
                 </li>

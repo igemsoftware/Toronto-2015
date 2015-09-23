@@ -14,7 +14,10 @@ function FluxCtrl($http, UrlProvider, ModalService) {
     this.UrlProvider = UrlProvider;
     this.ModalService = ModalService;
 
-    this.currentModel = 'iJO1366';
+    this.community = {
+        models: ['iJO1366']
+    };
+    this.currentModel = this.community.models[0];
     this.data = {};
     this.loading = true;
 
@@ -36,8 +39,6 @@ FluxCtrl.prototype.loadNStartModel = function() {
             res.data.everything = true;
             this.startConsortiaFlux(res.data);
         }
-
-
     };
 
     this.errorCatch = function(err) {
@@ -81,29 +82,51 @@ FluxCtrl.prototype.addSpecie = function() {
     };
     //Change species
     this.onModalClose = function(result) {
-        this.currentModel = result;
+        if (!result)
+            return;
 
-        if (this.currentModel === 'community') {
+        if (result.models.length === 0)
+            return;
+
+        if (result.models.length === 1) {
+            this.currentModel = result.models[0];
+
+            if (this.currentModel === 'community') {
+                this.receiver = function(res) {
+                    console.log(res.data);
+                    if (this.ConsortiaFluxTool !== undefined) {
+                        this.ConsortiaFluxTool.attr.everything = true;
+                        this.ConsortiaFluxTool.changeSpecie(res.data);
+                    } else {
+                        this.startConsortiaFlux(res.data);
+                    }
+                };
+
+                this.errorCatch = function(err) {
+                    console.log(err);
+                };
+
+                var requestUrl = this.UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel;
+
+                this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+
+            } else {
+                this.loadNStartModel();
+            }
+        } else {
+            // Create community
             this.receiver = function(res) {
-
-                if (this.ConsortiaFluxTool !== undefined) {
-                    this.ConsortiaFluxTool.attr.everything = true;
-                    this.ConsortiaFluxTool.changeSpecie(res.data);
-                } else {
-                    this.startConsortiaFlux(res.data);
-                }
+                console.log('community created');
+                console.log(res);
             };
 
             this.errorCatch = function(err) {
                 console.log(err);
             };
 
-            var requestUrl = this.UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel;
+            var requestUrl = this.UrlProvider.baseUrl + '/community/create';
 
-            this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-
-        } else {
-            this.loadNStartModel();
+            this._http.post(requestUrl, result).then(this.receiver.bind(this), this.errorCatch.bind(this));
         }
     };
 
