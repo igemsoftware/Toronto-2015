@@ -137,7 +137,7 @@ FluxCtrl.prototype.addSpecie = function() {
 };
 
 FluxCtrl.prototype.optimize = function() {
-    if (this.currentModel === 'community') {
+    if (this.currentModel === 'E.-Coli-K12-and-M.-barkeri') {
         this.receiver = function(res) {
             var optimizedModelUrl = this.UrlProvider.baseUrl + '/' + res.data;
 
