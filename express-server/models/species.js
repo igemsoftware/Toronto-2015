@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 
 var SpeciesSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        require: true
+    },
     models: [{
         // primary key to construct communities
         id: String,
@@ -56,8 +60,7 @@ var SpeciesSchema = new mongoose.Schema({
     },
     SPECIES: {
         type     : String,
-        required : true,
-        index    : {unique : true}
+        required : true
     },
     STRAIN: {
         type: String
@@ -66,9 +69,6 @@ var SpeciesSchema = new mongoose.Schema({
         type: String
     },
     GENOME: {
-        type: String
-    },
-    SMBL: {
         type: String
     }
 });
