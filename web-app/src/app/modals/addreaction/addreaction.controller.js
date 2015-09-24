@@ -38,12 +38,11 @@ angular.module('ConsortiaFlux')
 
             var newMetabolite = {
                 "name": $scope.metabName,
-                "id": "new-m-" + ConsortiaFluxTool.metaboliteLength
+                "id": "new-m-" + ConsortiaFluxTool.metaboliteLength,
                 "compartment": $scope.compartment,
-                "speces": [
+                "species": [
                     $scope.metabSpecie
                 ]
-                "charge": $scope.metabCharge
             }
             ConsortiaFluxTool.metaboliteLength++
             newMetabolites.push(newMetabolite)
@@ -89,7 +88,7 @@ angular.module('ConsortiaFlux')
                 "outside": null,
                 "lower_bound": Number($scope.lower_bound), //default -1000
                 "subsystem": $scope.subsystem || "", //default ""
-                "id":  "new-r-" + ConsortiaFluxTool.reactionLength
+                "id":  "new-r-" + ConsortiaFluxTool.reactionLength,
                 "gene association": $scope.gene_association || "", //not necceasry
                 "name": $scope.name, //ob.
                 "species": [
@@ -99,9 +98,8 @@ angular.module('ConsortiaFlux')
 
                 }
             }
-
-            reaction.metabolites[$scope.myMetab.id] = Number($scope.myMetab.charge)
-
+            //change in angular
+            reaction.metabolites[$scope.myMetab.id] = Number(metabolite_cofficient)
             close(reaction);
         };
 

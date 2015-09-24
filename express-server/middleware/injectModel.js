@@ -23,6 +23,9 @@ module.exports = function(req, res, next) {
                 metabolitesDict[metabolite].subsystems.push(reaction.subsystem);
             }
         });
+
+        // Default flux_value to 0
+        reaction.flux_value = 0;
     });
     // species array into metabolites
     metabolicModel.metabolites.forEach(function(metabolite) {

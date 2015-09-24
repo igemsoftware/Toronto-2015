@@ -13,8 +13,8 @@
 
     <!-- <div>{{myMetab.id}}</div> -->
     <select ng-model="myMetab" ng-options="metabolite.name for metabolite  in metabolites"></select><br>
-    <!-- <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button><br> -->
-    <!-- Metabolite coefficient: <input ng-model="metabolite_cofficient"></input><br> -->
+    Metabolite coefficient: <input ng-model="metabolite_cofficient"></input><br>
+    <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button><br>
     <button ng-click="createNewMetabolite()">Create new metabolite</button>
     <div ng-show="newMetaboliteDisplay">
         Name: <input ng-model="metabName"></input><br>
