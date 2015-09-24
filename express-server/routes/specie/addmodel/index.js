@@ -1,8 +1,17 @@
 var router = require('express').Router();
 var fs = require('fs');
+var path = require('path');
 var mkdirp = require('mkdirp');
 var Species  = App.Model('species');
 var Model = App.Model('model');
+
+function dashify(str) {
+    dashedStr = str;
+    while (dashedStr.indexOf(' ') !== -1) {
+        dashedStr = dashedStr.replace(' ', '-');
+    }
+    return dashedStr;
+}
 
 // next() if req.body.id isnt ''
 function checkIfModelHasId(req, res, next) {
@@ -40,7 +49,6 @@ function checkIfModelExists(req, res, next) {
             res.status(500).send('500 Internal Server Error');
             return;
         }
-
 
         var okay = true;
 
@@ -82,7 +90,7 @@ function addModel(req, res, next) {
 
             // Write metabolicModel to disk
             var metabolicModel = req.ConsortiaFlux.metabolicModel;
-            var fileName = folder + '/' + specie.id + '.json';
+            var fileName = path.resolve(__dirname, '../../../', folder + '/' + specie.id + '.json');
             fs.writeFile(fileName, JSON.stringify(metabolicModel), function(err) {
                 if (err) {
                     console.log(err);
@@ -91,7 +99,7 @@ function addModel(req, res, next) {
                 }
 
                 var model = new Model({
-                    id: metabolicModel.id,
+                    id: dashify(metabolicModel.id),
                     file: fileName
                 });
 
