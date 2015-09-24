@@ -1,4 +1,4 @@
-var router   = require('express').Router();
+var router = require('express').Router();
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var Species  = App.Model('species');
@@ -125,7 +125,7 @@ function addModel(req, res, next) {
                         return;
                     }
 
-                    specie.models.push(model.id);
+                    specie.models.push(model._id);
 
                     specie.save(function(err, specie) {
                         if (err) {
