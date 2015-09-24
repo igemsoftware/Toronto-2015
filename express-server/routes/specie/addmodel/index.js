@@ -2,6 +2,16 @@ var router   = require('express').Router();
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var Species  = App.Model('species');
+var Model = App.Model('model');
+
+// next() if req.body.id isnt ''
+function checkIfModelHasId(req, res, next) {
+    if (req.body.id === '') {
+        res.status(403).send("Won't add model with empty id\n");
+    } else {
+        next();
+    }
+}
 
 // next() if specie exists
 function checkIfSpecieExists(req, res, next) {
@@ -21,7 +31,6 @@ function checkIfSpecieExists(req, res, next) {
         }
     });
 }
-
 
 // next() if modelId not found in specie.models
 function checkIfModelExists(req, res, next) {
@@ -67,19 +76,19 @@ function addModel(req, res, next) {
             }
 
             // the metabolic model
-            var model = req.body;
+            var metabolicModel = req.body;
 
             // metabolite dictionary for ease of access
             var metabolitesDict = {};
-            model.metabolites.forEach(function(metabolite) {
+            metabolicModel.metabolites.forEach(function(metabolite) {
                 metabolite.subsystems = [];
                 metabolitesDict[metabolite.id] = metabolite;
             });
 
-            // Need to append some items into our model first:
-            model.reactions.forEach(function(reaction) {
+            // Need to append some items into our metabolicModel first:
+            metabolicModel.reactions.forEach(function(reaction) {
                 // species array into reactions
-                reaction.species = [model.id];
+                reaction.species = [metabolicModel.id];
 
                 // Subsystems array into metabolites
                 Object.keys(reaction.metabolites).forEach(function(metabolite) {
@@ -92,31 +101,40 @@ function addModel(req, res, next) {
                 });
         	});
             // species array into metabolites
-            model.metabolites.forEach(function(metabolite) {
-                metabolite.species = [model.id];
+            metabolicModel.metabolites.forEach(function(metabolite) {
+                metabolite.species = [metabolicModel.id];
             });
 
-            // Write metabolic model to disk
+            // Write metabolicModel to disk
             var fileName = folder + '/' + specie.id + '.json';
-            fs.writeFile(fileName, JSON.stringify(model), function(err) {
+            fs.writeFile(fileName, JSON.stringify(metabolicModel), function(err) {
                 if (err) {
                     console.log(err);
                     res.status(500).send('500 Internal Server Error');
                     return;
                 }
 
-                specie.models.push({
-                    id: model.id,
+                var model = new Model({
+                    id: metabolicModel.id,
                     file: fileName
                 });
 
-                specie.save(function(err, specie) {
+                model.save(function(err, model) {
                     if (err) {
                         res.status(500).send('500 Internal Server Error');
                         return;
                     }
 
-                    res.send('Updated specie ' + specie.id + ' with model ' + model.id + '\n');
+                    specie.models.push(model.id);
+
+                    specie.save(function(err, specie) {
+                        if (err) {
+                            res.status(500).send('500 Internal Server Error');
+                            return;
+                        }
+
+                        res.send('Updated specie ' + specie.id + ' with model ' + model.id + '\n');
+                    });
                 });
             });
         });
@@ -125,6 +143,7 @@ function addModel(req, res, next) {
 
 
 router.post('/:id', [
+    checkIfModelHasId,
     checkIfSpecieExists,
     checkIfModelExists,
     addModel

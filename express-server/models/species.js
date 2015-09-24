@@ -5,35 +5,8 @@ var SpeciesSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    models: [{
-        // primary key to construct communities
-        id: String,
-        // files
-        file: String,
-        solution: String,
-        optimized: String,
-        // added Reaction objects - will need conversions for metabolites and species
-        addedReactions: [{
-    		subsystem: String,
-    		name: String,
-    		upper_bound: Number,
-    		lower_bound: Number,
-    		objective_coefficient: Number,
-    		variable_kind: String,
-    		id: String,
-    		gene_reaction_rule: String,
-    		// this part is different from key:value in the jsons
-    		metabolites: [{
-    			id: String,
-    			stoichiometric_coefficient: Number
-    		}],
-            species: [{
-                name: String
-            }]
-    	}],
-        // array of deleted Reaction ids
-        deletedReactions: [String]
-    }],
+    // Array of modelIds
+    models: [String],
     DOMAIN: {
         type     : String,
         required : true
