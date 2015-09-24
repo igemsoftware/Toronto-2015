@@ -49,7 +49,7 @@ function checkIfModelExists(req, res, next) {
     });
 }
 
-function addModel(req, res, next){
+function addModel(req, res, next) {
     Species.findOne({id: req.params.id}, function(err, specie) {
         if (err) {
             console.log(err);
@@ -66,10 +66,39 @@ function addModel(req, res, next){
                 return;
             }
 
+            // the metabolic model
+            var model = req.body;
+
+            // metabolite dictionary for ease of access
+            var metabolitesDict = {};
+            model.metabolites.forEach(function(metabolite) {
+                metabolite.subsystems = [];
+                metabolitesDict[metabolite.id] = metabolite;
+            });
+
+            // Need to append some items into our model first:
+            model.reactions.forEach(function(reaction) {
+                // species array into reactions
+                reaction.species = [model.id];
+
+                // Subsystems array into metabolites
+                Object.keys(reaction.metabolites).forEach(function(metabolite) {
+                    if (reaction.subsystem === '') {
+                        reaction.subsystem = 'Undefined';
+                    }
+                    if (metabolitesDict[metabolite].subsystems.indexOf(reaction.subsystem) === -1) {
+                        metabolitesDict[metabolite].subsystems.push(reaction.subsystem);
+                    }
+                });
+        	});
+            // species array into metabolites
+            model.metabolites.forEach(function(metabolite) {
+                metabolite.species = [model.id];
+            });
+
             // Write metabolic model to disk
             var fileName = folder + '/' + specie.id + '.json';
-            var model = JSON.stringify(req.body);
-            fs.writeFile(fileName, model, function(err) {
+            fs.writeFile(fileName, JSON.stringify(model), function(err) {
                 if (err) {
                     console.log(err);
                     res.status(500).send('500 Internal Server Error');
@@ -77,7 +106,7 @@ function addModel(req, res, next){
                 }
 
                 specie.models.push({
-                    id: req.body.id,
+                    id: model.id,
                     file: fileName
                 });
 
@@ -87,7 +116,7 @@ function addModel(req, res, next){
                         return;
                     }
 
-                    res.send('Updated specie ' + specie.id + ' with model ' + req.body.id + '\n');
+                    res.send('Updated specie ' + specie.id + ' with model ' + model.id + '\n');
                 });
             });
         });

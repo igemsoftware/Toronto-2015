@@ -22,8 +22,8 @@ function saveModel(req, res, next) {
     // Metabolites Dictionary
     var metabolitesDict = {};
     model.metabolites.forEach(function(metabolite) {
-        metabolitesDict[metabolite.id] = metabolite;
         metabolite.subsystems = [];
+        metabolitesDict[metabolite.id] = metabolite;
     });
 
     // TODO fix same subsystem pushed twice
