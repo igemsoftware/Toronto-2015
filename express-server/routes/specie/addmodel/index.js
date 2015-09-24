@@ -1,7 +1,9 @@
 var router   = require('express').Router();
-
+var fs = require('fs');
+var mkdirp = require('mkdirp');
 var Species  = App.Model('species');
 
+// next() if specie exists
 function checkIfSpecieExists(req, res, next) {
     id = req.params.id;
 
@@ -20,6 +22,8 @@ function checkIfSpecieExists(req, res, next) {
     });
 }
 
+
+// next() if modelId not found in specie.models
 function checkIfModelExists(req, res, next) {
     Species.findOne({id: req.params.id}).select('id models').lean().exec(function(err, specie) {
         if (err) {
@@ -46,24 +50,46 @@ function checkIfModelExists(req, res, next) {
 }
 
 function addModel(req, res, next){
-    Species.findOne({id: req.params.id}, 'id models', function(err, specie) {
+    Species.findOne({id: req.params.id}, function(err, specie) {
         if (err) {
             console.log(err);
             res.status(500).send('500 Internal Server Error');
             return;
         }
 
-        specie.models.push({
-            id: req.body.id
-        });
+        var folder = App.config().staticStore + '/species/' + specie.id;
 
-        specie.save(function(err, specie) {
+        mkdirp(folder, function(err, made) {
             if (err) {
+                console.log(err);
                 res.status(500).send('500 Internal Server Error');
                 return;
             }
 
-            res.send('Updated specie ' + specie.id + ' with model ' + req.body.id + '\n');
+            // Write metabolic model to disk
+            var fileName = folder + '/' + specie.id + '.json';
+            var model = JSON.stringify(req.body);
+            fs.writeFile(fileName, model, function(err) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('500 Internal Server Error');
+                    return;
+                }
+
+                specie.models.push({
+                    id: req.body.id,
+                    file: fileName
+                });
+
+                specie.save(function(err, specie) {
+                    if (err) {
+                        res.status(500).send('500 Internal Server Error');
+                        return;
+                    }
+
+                    res.send('Updated specie ' + specie.id + ' with model ' + req.body.id + '\n');
+                });
+            });
         });
     });
 }
