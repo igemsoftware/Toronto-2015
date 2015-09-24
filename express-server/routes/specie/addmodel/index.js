@@ -53,10 +53,15 @@ function checkIfModelExists(req, res, next) {
         });
 
         if (okay) {
+            req.ConsortiaFlux = {
+                metabolicModel: req.body
+            };
             next();
         }
     });
 }
+
+// App.MW('injectModel')
 
 function addModel(req, res, next) {
     Species.findOne({id: req.params.id}, function(err, specie) {
@@ -75,37 +80,8 @@ function addModel(req, res, next) {
                 return;
             }
 
-            // the metabolic model
-            var metabolicModel = req.body;
-
-            // metabolite dictionary for ease of access
-            var metabolitesDict = {};
-            metabolicModel.metabolites.forEach(function(metabolite) {
-                metabolite.subsystems = [];
-                metabolitesDict[metabolite.id] = metabolite;
-            });
-
-            // Need to append some items into our metabolicModel first:
-            metabolicModel.reactions.forEach(function(reaction) {
-                // species array into reactions
-                reaction.species = [metabolicModel.id];
-
-                // Subsystems array into metabolites
-                Object.keys(reaction.metabolites).forEach(function(metabolite) {
-                    if (reaction.subsystem === '') {
-                        reaction.subsystem = 'Undefined';
-                    }
-                    if (metabolitesDict[metabolite].subsystems.indexOf(reaction.subsystem) === -1) {
-                        metabolitesDict[metabolite].subsystems.push(reaction.subsystem);
-                    }
-                });
-        	});
-            // species array into metabolites
-            metabolicModel.metabolites.forEach(function(metabolite) {
-                metabolite.species = [metabolicModel.id];
-            });
-
             // Write metabolicModel to disk
+            var metabolicModel = req.ConsortiaFlux.metabolicModel;
             var fileName = folder + '/' + specie.id + '.json';
             fs.writeFile(fileName, JSON.stringify(metabolicModel), function(err) {
                 if (err) {
@@ -121,6 +97,7 @@ function addModel(req, res, next) {
 
                 model.save(function(err, model) {
                     if (err) {
+                        console.log(err);
                         res.status(500).send('500 Internal Server Error');
                         return;
                     }
@@ -146,6 +123,7 @@ router.post('/:id', [
     checkIfModelHasId,
     checkIfSpecieExists,
     checkIfModelExists,
+    App.MW('injectModel'),
     addModel
 ]);
 
