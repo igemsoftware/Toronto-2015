@@ -2,8 +2,16 @@ var router = require('express').Router();
 
 var Species = App.Model('species');
 
+function dashify(str) {
+    dashedStr = str;
+    while (dashedStr.indexOf(' ') !== -1) {
+        dashedStr = dashedStr.replace(' ', '-');
+    }
+    return dashedStr;
+}
+
 function checkIfSpecieExists(req, res, next) {
-    id = req.body.SPECIES + '_' + req.body.STRAIN;
+    id = dashify(req.body.SPECIES )+ '_' + dashify(req.body.STRAIN);
 
     Species.findOne({id: id}).lean().exec(function(err, specie) {
         if (err) {
@@ -20,9 +28,9 @@ function checkIfSpecieExists(req, res, next) {
     });
 }
 
-function createSpecieMeta(req, res, next) {
+function saveSpecieMeta(req, res, next) {
     specie = new Species(req.body);
-    specie.id = specie.SPECIES + '_' + specie.STRAIN;
+    specie.id = dashify(specie.SPECIES) + '_' + dashify(specie.STRAIN);
 
     specie.save(function(err, savedSpecie) {
         if (err) {
@@ -37,7 +45,7 @@ function createSpecieMeta(req, res, next) {
 
 router.post('/', [
     checkIfSpecieExists,
-    createSpecieMeta
+    saveSpecieMeta
 ]);
 
 module.exports = router;

@@ -3,7 +3,7 @@
 
 speciesFolder="JSON-Lit"
 host="localhost:9001"
-route="species/create"
+route="specie/create"
 header="Content-Type:application/json"
 method="POST"
 
