@@ -88,7 +88,9 @@ class System
                 id : metabolite.id
                 compartment: metabolite.compartment
                 type : "m"
+                charge: metabolite.charge
                 }, @ctx)
+
             m.species = metabolite.species
             m.subsystems = metabolite.subsystems
 
@@ -282,7 +284,9 @@ class System
                 id : metabolite.id
                 compartment: metabolite.compartment
                 type : "m"
+                charge: metabolite.charge
                 }, @ctx)
+
             m.species = metabolite.species
 
             # Create a node (vertex) for this Metabolite in system.graph

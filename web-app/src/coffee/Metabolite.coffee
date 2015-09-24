@@ -4,6 +4,7 @@ class Metabolite extends Node
     constructor: (attr, @ctx) ->
         super(attr, @ctx)
         @compartment = attr.compartment
+        @charge = attr.charge
         if @compartment? and @compartment isnt "p" and @compartment isnt "c" and @compartment isnt "e"
             if @compartment.toLowerCase() is "cytosol"
                 @compartment = "c"

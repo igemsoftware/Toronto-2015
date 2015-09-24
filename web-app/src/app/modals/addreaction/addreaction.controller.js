@@ -8,6 +8,7 @@ angular.module('ConsortiaFlux')
     function($scope, $http, UrlProvider, ConsortiaFluxTool, close) {
         $scope.display = true;
         var metabolites = new Array()
+        var newMetabolites = new Array()
         var metabDict = ConsortiaFluxTool.currentLevel.system.metabolites
         var m = Object.keys(ConsortiaFluxTool.currentLevel.system.metabolites)
         for(var i = 0; i < m.length; i++){
@@ -21,19 +22,55 @@ angular.module('ConsortiaFlux')
         }
         $scope.metabolites = metabolites;
         $scope.reversible = "false";
-        $scope.outside = "null";
+
         $scope.species = species;
         $scope.name = "Sink needed to allow p-Cresol to leave system";
         $scope.id = "DM_4CRSOL";
         $scope.EC_Number = 0;
         $scope.upper_bound = 1000;
-        $scope.lower_bound = 0;
+        $scope.lower_bound = -1000;
         $scope.objective_coefficient = 0;
+        $scope.newMetaboliteDisplay = false
 
         $scope.count = 0;
+        $scope.createNewMetabolite = function(){
+            newMetaboliteDisplay = true
 
+            var newMetabolite = {
+                "name": $scope.metabName,
+                "id": "new-m-" + ConsortiaFluxTool.metaboliteLength
+                "compartment": $scope.compartment,
+                "speces": [
+                    $scope.metabSpecie
+                ]
+                "charge": $scope.metabCharge
+            }
+            ConsortiaFluxTool.metaboliteLength++
+            newMetabolites.push(newMetabolite)
 
-        $scope.addMetabolite = function(){
+            //open addReaction.html
+            //             {
+            // "name": "Zinc", #yes
+            // "notes": {}, #no
+            // "annotation": {}, #No
+            // "_constraint_sense": "E", #no
+            // "charge": 2, #no
+            // "_bound": 0, #no
+            // "formula": "Zn", #no
+            // "compartment": "p", #yes
+            // "id": "zn2_p", #autogeneratored
+            // "subsystems": [ #naw
+            // "Inorganic Ion Transport and Metabolism",
+            // "Transport, Outer Membrane Porin"
+            // ],
+            // #yes
+            // "species": [
+            // "iJO1366"
+            // ]
+            // }
+        }
+
+        $scope.addExistingMetabolite = function(){
 
         }
 
@@ -45,24 +82,26 @@ angular.module('ConsortiaFlux')
             //TODO LOW PRIORITY make check for specie for metabolite voided for e
 
             var reaction = {
-                "EC_Number": $scope.EC_Number || "",
-                "upper_bound": Number($scope.upper_bound),
-                "objective_coefficient": Number($scope.objective_coefficient),
-                "reversible": JSON.parse($scope.reversible),
-                "outside": JSON.parse($scope.outside),
-                "lower_bound": Number($scope.lower_bound),
-                "subsystem": $scope.subsystem,
-                "id": $scope.subsystem,
-                "gene association": $scope.gene_association,
-                "name": $scope.name,
+                "EC_Number": Number($scope.EC_Number), //Optional
+                "upper_bound": Number($scope.upper_bound), //optional, default 1000
+                "objective_coefficient": Number($scope.objective_coefficient), //default 0
+                "reversible": JSON.parse($scope.reversible), //defult false
+                "outside": null,
+                "lower_bound": Number($scope.lower_bound), //default -1000
+                "subsystem": $scope.subsystem || "", //default ""
+                "id":  "new-r-" + ConsortiaFluxTool.reactionLength
+                "gene association": $scope.gene_association || "", //not necceasry
+                "name": $scope.name, //ob.
                 "species": [
                     $scope.specie
                 ],
-                "metabolites": {}
+                "metabolites": {
+
+                }
             }
-            console.log($scope.species)
-            reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient)
-            console.log(reaction);
+
+            reaction.metabolites[$scope.myMetab.id] = Number($scope.myMetab.charge)
+
             close(reaction);
         };
 

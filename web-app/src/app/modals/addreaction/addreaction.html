@@ -4,7 +4,6 @@
 
 
     name: <input ng-model="name"></input><br>
-    id:  <input ng-model="id"></input><br>
     Subsystem: <input ng-model="subsystem"></input><br>
     EC Number: <input ng-model="EC_Number"></input> <br>
     Upper bound: <input ng-model="upper_bound"></input><br>
@@ -15,7 +14,18 @@
     <!-- <div>{{myMetab.id}}</div> -->
     <select ng-model="myMetab" ng-options="metabolite.name for metabolite  in metabolites"></select><br>
     <!-- <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button><br> -->
-    Metabolite coefficient: <input ng-model="metabolite_cofficient"></input><br>
+    <!-- Metabolite coefficient: <input ng-model="metabolite_cofficient"></input><br> -->
+    <button ng-click="createNewMetabolite()">Create new metabolite</button>
+    <div ng-show="newMetaboliteDisplay">
+        Name: <input ng-model="metabName"></input><br>
+        Compartment: <select ng-model="compartment">
+                        <option value="c">c</option>
+                        <option value="p" selected="selected">p</option>
+                        <option value="e">e</option>
+                    </select><br>
+        Species: <select ng-model="metabSpecie" ng-options="specie for specie in species"></select><br>
+        Charge: <inpt ng-model="metabCharge"></input>
+    </div>
     <addbuttonsbutton ng-model="metabolite"></addbuttonsbutton>
     <div id="space-for-buttons"></section>
     <br>
@@ -24,7 +34,6 @@
                     <option value="false" selected="selected">false</option>
                 </select>
                 <br>
-    Outside: <input ng-model="outside"></input> <br>
     Species: <select ng-model="specie" ng-options="specie for specie in species"></select><br>
 
     <!-- Work with registry -->

@@ -10,7 +10,9 @@ class Network
         @initalized = false
         @changeSpecie(@attr.data)
         @initalized = true
-
+        @reactionLength = @attr.data.reactions.length
+        @metaboliteLength = @attr.data.metabolites.length
+        
         # Create our root TreeNode
         # Will recursively create children
 
@@ -40,6 +42,7 @@ class Network
             if specie isnt "Community"
                 @species[specie] = {
                     addedReactions : new Array()
+                    addedMetabolites: new Array()
                     deletedReactions: new Array()
                 }
 
@@ -56,6 +59,8 @@ class Network
     addReaction: (reactionObject) ->
         @species[reactionObject.species[0]].addedReactions.push(reactionObject)
         @viewController.activeGraph.addReaction(reactionObject)
+        @reactionsLength++
+
 
     deleteNode: (id, system) ->
         #Making sure to destroy vertex IFF r or m type

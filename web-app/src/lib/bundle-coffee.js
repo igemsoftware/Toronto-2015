@@ -149,6 +149,7 @@ Metabolite = (function(superClass) {
     this.ctx = ctx;
     Metabolite.__super__.constructor.call(this, attr, this.ctx);
     this.compartment = attr.compartment;
+    this.charge = attr.charge;
     if ((this.compartment != null) && this.compartment !== "p" && this.compartment !== "c" && this.compartment !== "e") {
       if (this.compartment.toLowerCase() === "cytosol") {
         this.compartment = "c";
@@ -205,6 +206,8 @@ Network = (function() {
     this.initalized = false;
     this.changeSpecie(this.attr.data);
     this.initalized = true;
+    this.reactionLength = this.attr.data.reactions.length;
+    this.metaboliteLength = this.attr.data.metabolites.length;
   }
 
   Network.prototype.changeSpecie = function(model) {
@@ -234,6 +237,7 @@ Network = (function() {
       if (specie !== "Community") {
         results.push(this.species[specie] = {
           addedReactions: new Array(),
+          addedMetabolites: new Array(),
           deletedReactions: new Array()
         });
       } else {
@@ -255,7 +259,8 @@ Network = (function() {
 
   Network.prototype.addReaction = function(reactionObject) {
     this.species[reactionObject.species[0]].addedReactions.push(reactionObject);
-    return this.viewController.activeGraph.addReaction(reactionObject);
+    this.viewController.activeGraph.addReaction(reactionObject);
+    return this.reactionsLength++;
   };
 
   Network.prototype.deleteNode = function(id, system) {
@@ -463,7 +468,8 @@ System = (function() {
         name: metabolite.name,
         id: metabolite.id,
         compartment: metabolite.compartment,
-        type: "m"
+        type: "m",
+        charge: metabolite.charge
       }, this.ctx);
       m.species = metabolite.species;
       m.subsystems = metabolite.subsystems;
@@ -622,7 +628,8 @@ System = (function() {
         name: metabolite.name,
         id: metabolite.id,
         compartment: metabolite.compartment,
-        type: "m"
+        type: "m",
+        charge: metabolite.charge
       }, this.ctx);
       m.species = metabolite.species;
       this.fullResGraph.addVertex(metabolite.id, m);
