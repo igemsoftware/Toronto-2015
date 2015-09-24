@@ -1,17 +1,27 @@
 var router = require('express').Router();
 var fs = require('fs');
 var cp = require('child_process');
+var mkdirp = require('mkdirp');
+
 var sets = require('simplesets');
 
-var MetabolicModel = App.Model('metabolicmodel');
+var Model = App.Model('model');
 var Community = App.Model('community');
 
+function dashify(str) {
+    dashedStr = str;
+    while (dashedStr.indexOf(' ') !== -1) {
+        dashedStr = dashedStr.replace(' ', '-');
+    }
+    return dashedStr;
+}
 
 function checkIfCommunityExists(req, res, next) {
     var requestSet = new sets.Set(req.body.models);
 
     Community.find('members', function(err, communities) {
         if (err) {
+            console.log(err);
             res.status(500).send('500 Internal Server Error');
             return;
         }
@@ -36,11 +46,12 @@ function checkIfCommunityExists(req, res, next) {
     });
 }
 
-function writeModel(id, cb, res) {
-    MetabolicModel.findOne({
+function getModelIdAndFile(id, cb, res) {
+    Model.findOne({
         id: id
     }, 'id file', function(err, model) {
         if (err) {
+            console.log(err);
             res.status(500).send('500 Internal Server Error');
             return;
         }
@@ -54,15 +65,14 @@ function writeModel(id, cb, res) {
     });
 }
 
+// TODO validate array of modelIds
+
+
 function createCommunity(req, res, next) {
-    // Given an array of <valid?> model ids
+    // Given an array of valid model ids
     var community = {};
     community.name = req.body.name;
-    community.id = req.body.name.replace(' ', '-');
-    while(community.id.indexOf(' ') !== -1) {
-        community.id = community.id.replace(' ', '-');
-    }
-    console.log(community.id);
+    community.id = dashify(community.name);
     community.members = [];
 
     var checkProgress = function(modelId, file) {
@@ -80,7 +90,7 @@ function createCommunity(req, res, next) {
     };
 
     req.body.models.forEach(function(model) {
-        writeModel(model, checkProgress, res);
+        getModelIdAndFile(model, checkProgress, res);
     });
 }
 
@@ -90,76 +100,76 @@ function optimizeCommunity(req, res, next) {
         files.push(member.file);
     });
 
-    var outputFile = App.config().staticStore + '/communities/' + req.ConsortiaFlux.community.name;
+    var outputFile = dashify(req.ConsortiaFlux.community.name);
+    var outputFolder = App.config().staticStore + '/communities/' + outputFile;
+    var output = outputFolder + '/' + outputFile;
 
-    params = {
-        input: files,
-        output: outputFile
-    };
+    mkdirp(outputFolder, function(err, made) {
+        if (err) {
+            res.status(500).send('500 Internal Server Error');
+            return;
+        }
 
-    args = ['cFBA-Pipeline/run.py', JSON.stringify(params)];
+        params = {
+            input: files,
+            output: output
+        };
 
-    var results = {
-        output: '',
-        errorlog: '',
-        exitcode: null
-    };
+        args = ['cFBA-Pipeline/run.py', JSON.stringify(params)];
 
-    var optimizeScript = cp.spawn(App.config().python, args);
+        var results = {
+            output: '',
+            errorlog: '',
+            exitcode: null
+        };
 
-    // get stdout
-    optimizeScript.stdout.on('data', function(stdout) {
-        results.output += stdout.toString();
-    });
+        var optimizeScript = cp.spawn(App.config().python, args);
 
-    // get stderr
-    optimizeScript.stderr.on('data', function(stderr) {
-        results.errorlog += stderr.toString();
-    });
+        // get stdout
+        optimizeScript.stdout.on('data', function(stdout) {
+            results.output += stdout.toString();
+        });
 
-    // script finished
-    optimizeScript.on('close', function(code) {
-        results.exitcode = code;
+        // get stderr
+        optimizeScript.stderr.on('data', function(stderr) {
+            results.errorlog += stderr.toString();
+        });
 
-        req.ConsortiaFlux.community.model = outputFile + '.json';
-        req.ConsortiaFlux.community.solution = outputFile + '_solution.json';
+        // script finished
+        optimizeScript.on('close', function(code) {
+            results.exitcode = code;
 
-        fs.readFile(req.ConsortiaFlux.community.model, function(err, model) {
-            if (err) {
-                res.status(500).send('500 Internal Server Error');
-                return;
-            }
+            req.ConsortiaFlux.community.file = outputFile + '.json';
+            req.ConsortiaFlux.community.solution = outputFile + '_solution.json';
 
-            model = JSON.parse(model);
-            model.id = req.ConsortiaFlux.community.id;
-            req.ConsortiaFlux.model = model;
-            next();
+            fs.readFile(output + '.json', function(err, model) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('500 Internal Server Error');
+                    return;
+                }
+
+                model = JSON.parse(model);
+                model.id = req.ConsortiaFlux.community.id;
+                req.ConsortiaFlux.model = model;
+                next();
+            });
         });
     });
 }
 
-function saveCommunityModel(req, res, next) {
-    model = new MetabolicModel(req.ConsortiaFlux.model);
 
-    model.save(function(err, model) {
+function saveCommunity(req, res, next) {
+    community = new Community(req.ConsortiaFlux.community);
+
+    community.save(function(err, community) {
         if (err) {
             console.log(err);
             res.status(500).send('500 Internal Server Error');
             return;
         }
 
-        if (model) {
-            community = new Community(req.ConsortiaFlux.community);
-
-            community.save(function(err, community) {
-                if (err) {
-                    res.status(500).send('500 Internal Server Error');
-                    return;
-                }
-
-                res.send(community);
-            });
-        }
+        res.send(community);
     });
 }
 
@@ -167,8 +177,7 @@ router.post('/', [
     checkIfCommunityExists,
     createCommunity,
     optimizeCommunity,
-    App.MW('prepareModel'),
-    saveCommunityModel
+    saveCommunity
 ]);
 
 module.exports = router;
