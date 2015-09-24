@@ -90,7 +90,8 @@ function addModel(req, res, next) {
 
             // Write metabolicModel to disk
             var metabolicModel = req.ConsortiaFlux.metabolicModel;
-            var fileName = path.resolve(__dirname, '../../../', folder + '/' + specie.id + '.json');
+            // var fileName = path.resolve(__dirname, '../../../', folder + '/' + specie.id + '.json');
+            var fileName = folder + '/' + specie.id + '.json';
             fs.writeFile(fileName, JSON.stringify(metabolicModel), function(err) {
                 if (err) {
                     console.log(err);

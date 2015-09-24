@@ -4,6 +4,7 @@ var ModelSchema = new mongoose.Schema({
     // primary key to construct communities
     id: {
         type: String,
+        unique: true,
         required: true
     },
     // files
