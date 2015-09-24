@@ -12,6 +12,10 @@ var ModelSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    type: {
+        type: String,
+        required: true
+    },
     solution: String,
     optimized: String,
     // added Reaction objects - will need conversions for metabolites and species

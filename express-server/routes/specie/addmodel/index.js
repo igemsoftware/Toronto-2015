@@ -101,7 +101,8 @@ function addModel(req, res, next) {
 
                 var model = new Model({
                     id: dashify(metabolicModel.id),
-                    file: fileName
+                    file: fileName,
+                    type: 'specie'
                 });
 
                 model.save(function(err, model) {
