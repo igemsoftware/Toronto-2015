@@ -37,7 +37,8 @@ function checkIfCommunityExists(req, res, next) {
                 });
 
                 if (requestSet.equals(currentSet)) {
-                    res.send('Cannot create community ' + req.body.name + ' , a community with the same models already exists\n');
+                    res.send(community);
+                    // res.send('Cannot create community ' + req.body.name + ' , a community with the same models already exists\n');
                 } else {
                     next();
                 }
@@ -76,6 +77,7 @@ function createCommunity(req, res, next) {
     community.members = [];
 
     var checkProgress = function(modelId, file) {
+        console.log(modelId);
         community.members.push({
             model: modelId,
             file: file
@@ -99,6 +101,9 @@ function optimizeCommunity(req, res, next) {
     req.ConsortiaFlux.community.members.forEach(function(member) {
         files.push(member.file);
     });
+
+
+    console.log(files);
 
     var outputFile = dashify(req.ConsortiaFlux.community.name);
     var outputFolder = App.config().staticStore + '/communities/' + outputFile;
@@ -143,7 +148,7 @@ function optimizeCommunity(req, res, next) {
             req.ConsortiaFlux.community.solution = outputFolder + '/' + outputFile + '_solution.json';
 
             fs.readFile(output + '.json', function(err, model) {
-                
+
                 if (err) {
                     console.log(err);
                     res.status(500).send('500 Internal Server Error');

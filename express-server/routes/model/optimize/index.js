@@ -16,7 +16,7 @@ function checkIfModelExists(req, res, next) {
 
         if (model) {
             if (model.solution) {
-                res.send(model);
+                res.send(model.optimized);
                 return;
             }
 

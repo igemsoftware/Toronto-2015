@@ -106,6 +106,9 @@ class System
             # Skip if reaction name contains 'objective function'
             if (@hideObjective and reaction.name.toLowerCase().indexOf('objective function') isnt -1 )
                 continue
+            # Skip if reaction name contains 'biomass'
+            if (@hideObjective and reaction.name.toLowerCase().indexOf('biomass') isnt -1 )
+                continue
 
             # May not need radius here
             reactions[reaction.id] = creators.createReaction(reaction.name, reaction.id, reaction.flux_value, @ctx)

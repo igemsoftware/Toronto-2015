@@ -23,7 +23,8 @@ angular.module('ConsortiaFlux')
             $scope.species.forEach(function(specie) {
                 specie.models.forEach(function(model) {
                     if (model.checked) {
-                        $scope.community.push(model.id);
+                        if ($scope.community.indexOf(model.id) === -1)
+                            $scope.community.push(model.id);
                     }
                 });
             });

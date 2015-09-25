@@ -3,6 +3,26 @@ import json
 import sys
 cmd = json.loads(sys.argv[1])
 outputDir = os.getcwd() + "/cFBA-Pipeline/Output/"
+
+import shutil
+
+def deleteFolderContents(folder):
+    for the_file in os.listdir(folder):
+        file_path = os.path.join(folder, the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+            #elif os.path.isdir(file_path): shutil.rmtree(file_path)
+        except Exception, e:
+            print e
+
+deleteFolderContents(outputDir + "Solution1")
+deleteFolderContents(outputDir + "Solution2")
+deleteFolderContents(outputDir + "Species")
+
+
+
+
 import cobra
 
 model = cobra.io.load_json_model(cmd["output"] + ".json")
