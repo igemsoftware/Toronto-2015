@@ -46,6 +46,7 @@ angular.module('ConsortiaFlux')
             }
             ConsortiaFluxTool.metaboliteLength++
             newMetabolites.push(newMetabolite)
+            ConsortiaFluxTool.addedMetabolites.push(newMetabolite)
 
             //open addReaction.html
             //             {
@@ -70,7 +71,7 @@ angular.module('ConsortiaFlux')
         }
 
         $scope.addExistingMetabolite = function(){
-
+            
         }
 
         $scope.close = function(result) {

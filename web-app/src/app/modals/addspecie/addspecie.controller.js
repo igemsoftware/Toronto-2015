@@ -29,12 +29,10 @@ angular.module('ConsortiaFlux')
 
         $scope.render = function() {
             $scope.display = false;
-
             var community = {
                 name: $scope.communityName,
                 models: $scope.community
             };
-
             close(community);
         };
 

@@ -143,6 +143,7 @@ function optimizeCommunity(req, res, next) {
             req.ConsortiaFlux.community.solution = outputFile + '_solution.json';
 
             fs.readFile(output + '.json', function(err, model) {
+                
                 if (err) {
                     console.log(err);
                     res.status(500).send('500 Internal Server Error');

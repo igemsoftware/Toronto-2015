@@ -12,7 +12,7 @@ class Network
         @initalized = true
         @reactionLength = @attr.data.reactions.length
         @metaboliteLength = @attr.data.metabolites.length
-        
+
         # Create our root TreeNode
         # Will recursively create children
 

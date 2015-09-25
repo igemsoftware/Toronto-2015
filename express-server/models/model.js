@@ -18,6 +18,12 @@ var ModelSchema = new mongoose.Schema({
     },
     solution: String,
     optimized: String,
+    addedMetabolites:[{
+        name: String,
+        id: String,
+        compartment: String,
+        species: [String]
+    }],
     // added Reaction objects - will need conversions for metabolites and species
     addedReactions: [{
         subsystem: String,
@@ -25,7 +31,6 @@ var ModelSchema = new mongoose.Schema({
         upper_bound: Number,
         lower_bound: Number,
         objective_coefficient: Number,
-        variable_kind: String,
         id: String,
         gene_reaction_rule: String,
         // this part is different from key:value in the jsons
