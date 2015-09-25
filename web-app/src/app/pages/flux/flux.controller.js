@@ -61,38 +61,16 @@ FluxCtrl.prototype.addSpecie = function() {
     };
     //Change species
     this.onModalClose = function(result) {
-        if (!result)
-            return;
-
-        if (result.models.length === 0)
+        if (!result || result.models.length === 0)
             return;
 
         if (result.models.length === 1) {
-            this.currentModel = result.models[0];
+            this.MR.modelId = result.models[0];
+            this.MR.getBase((function(model) {
+                this.ConsortiaFluxTool.attr.everything = true;
+                this.ConsortiaFluxTool.changeSpecie(model);
+            }).bind(this));
 
-            if (this.currentModel === 'community') {
-                this.receiver = function(res) {
-                    console.log(res.data);
-                    if (this.ConsortiaFluxTool !== undefined) {
-                        this.ConsortiaFluxTool.attr.everything = true;
-                        this.ConsortiaFluxTool.changeSpecie(res.data);
-                    } else {
-                        console.log(res.data);
-                        this.startConsortiaFlux(res.data);
-                    }
-                };
-
-                this.errorCatch = function(err) {
-                    console.log(err);
-                };
-
-                var requestUrl = this.UrlProvider.baseUrl + '/model/retrieve/' + this.currentModel;
-
-                this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-
-            } else {
-                this.loadNStartModel();
-            }
         } else {
             // Create community
             this.receiver = function(res) {

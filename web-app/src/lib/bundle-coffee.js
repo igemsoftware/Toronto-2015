@@ -472,6 +472,9 @@ System = (function() {
       if (this.hideObjective && reaction.name.toLowerCase().indexOf('objective function') !== -1) {
         continue;
       }
+      if (this.hideObjective && reaction.name.toLowerCase().indexOf('biomass') !== -1) {
+        continue;
+      }
       reactions[reaction.id] = creators.createReaction(reaction.name, reaction.id, reaction.flux_value, this.ctx);
       r = reactions[reaction.id];
       r.species = reaction.species;
