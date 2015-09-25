@@ -37,7 +37,8 @@ function checkIfCommunityExists(req, res, next) {
                 });
 
                 if (requestSet.equals(currentSet)) {
-                    res.send('Cannot create community ' + req.body.name + ' , a community with the same models already exists\n');
+                    res.send(community);
+                    // res.send('Cannot create community ' + req.body.name + ' , a community with the same models already exists\n');
                 } else {
                     next();
                 }
@@ -143,7 +144,7 @@ function optimizeCommunity(req, res, next) {
             req.ConsortiaFlux.community.solution = outputFolder + '/' + outputFile + '_solution.json';
 
             fs.readFile(output + '.json', function(err, model) {
-                
+
                 if (err) {
                     console.log(err);
                     res.status(500).send('500 Internal Server Error');

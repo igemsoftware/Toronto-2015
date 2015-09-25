@@ -34,12 +34,5 @@ angular.module('ConsortiaFlux')
                 console.log(err);
             });
         });
-        // this.getModel(function(res) {
-            // $http.get(UrlProvider.baseUrl + '/' + res.data.optimized).then(function(res) {
-            //     cb(res.data);
-            // }, function(err) {
-            //     console.log(err);
-            // });
-        // });
     };
 }]);

@@ -9,11 +9,12 @@
 
 angular.module('ConsortiaFlux').controller('FluxCtrl', FluxCtrl);
 
-function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever) {
+function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever, CommunityCreator) {
     this._http = $http;
     this.UrlProvider = UrlProvider;
     this.ModalService = ModalService;
     this.MR = ModelRetriever;
+    this.CC = CommunityCreator;
 
 
     this.community = {
@@ -51,47 +52,36 @@ function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever) {
     }).bind(this));
 }
 
-FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService', 'ModelRetriever'];
+FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService', 'ModelRetriever', 'CommunityCreator'];
 
 
-// TODO addSpecie -> addModel, or seperate communities models and specie models
 FluxCtrl.prototype.addSpecie = function() {
-    this.onModal = function(modal) {
-        modal.close.then(this.onModalClose.bind(this));
-    };
-    //Change species
-    this.onModalClose = function(result) {
-        if (!result || result.models.length === 0)
-            return;
-
-        if (result.models.length === 1) {
-            this.MR.modelId = result.models[0];
-            this.MR.getBase((function(model) {
-                this.ConsortiaFluxTool.attr.everything = true;
-                this.ConsortiaFluxTool.changeSpecie(model);
-            }).bind(this));
-
-        } else {
-            // Create community
-            this.receiver = function(res) {
-                console.log('community created');
-                console.log(res);
-            };
-
-            this.errorCatch = function(err) {
-                console.log(err);
-            };
-
-            var requestUrl = this.UrlProvider.baseUrl + '/community/create';
-
-            this._http.post(requestUrl, result).then(this.receiver.bind(this), this.errorCatch.bind(this));
-        }
-    };
-
     this.ModalService.showModal({
         templateUrl: "app/modals/addspecie/addspecie.html",
         controller: "AddSpecieModal"
-    }).then(this.onModal.bind(this));
+    }).then((function(modal) {
+        modal.close.then((function(community) {
+            if (!community || community.models.length === 0)
+                return;
+
+            if (community.models.length === 1) {
+                this.MR.modelId = community.models[0];
+                this.MR.getBase((function(model) {
+                    this.ConsortiaFluxTool.attr.everything = true;
+                    this.ConsortiaFluxTool.changeSpecie(model);
+                }).bind(this));
+            } else {
+                this.CC.create(community, (function(community) {
+                    console.log(community);
+                    // this.MR.modelId = community.id;
+                    // this.MR.getBase((function(community) {
+                    this.ConsortiaFluxTool.attr.everything = true;
+                    this.ConsortiaFluxTool.changeSpecie(community);
+                    // }).bind(this));
+                }).bind(this));
+            }
+        }).bind(this));
+    }).bind(this));
 };
 
 FluxCtrl.prototype.optimize = function() {
