@@ -95,7 +95,7 @@ for filename in cmd["input"]:
         data = json.load(data_file)
     speciesName = filename.split(".")[0]
     speciesName = speciesName.split('/')[len(speciesName.split('/')) - 1]
-    
+
     speciesM[speciesName] = []
     oldMnew = {} #dictionary of old metabolite ids to new metabolite ids
     eMetabolites = [] #a list of all external metabolites
@@ -117,6 +117,7 @@ for filename in cmd["input"]:
             newID = speciesName+"-"+mDict[simplifyName(m["name"].encode("UTF-8"))]+"-"+m["compartment"]
             oldMnew[m["id"]] = newID
             m["id"] = newID
+            m["compartment"] = speciesName + "-" + m["compartment"]
         metabolites[m["id"]] = data["metabolites"][i]
         metaInReacts[m["id"]] = []
         speciesM[speciesName] += [m["id"]]

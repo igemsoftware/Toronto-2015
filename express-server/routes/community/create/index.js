@@ -139,8 +139,8 @@ function optimizeCommunity(req, res, next) {
         optimizeScript.on('close', function(code) {
             results.exitcode = code;
 
-            req.ConsortiaFlux.community.file = outputFile + '.json';
-            req.ConsortiaFlux.community.solution = outputFile + '_solution.json';
+            req.ConsortiaFlux.community.file = outputFolder + '/' + outputFile + '.json';
+            req.ConsortiaFlux.community.solution = outputFolder + '/' + outputFile + '_solution.json';
 
             fs.readFile(output + '.json', function(err, model) {
                 if (err) {
@@ -151,13 +151,12 @@ function optimizeCommunity(req, res, next) {
 
                 model = JSON.parse(model);
                 model.id = req.ConsortiaFlux.community.id;
-                req.ConsortiaFlux.model = model;
+                model.type = 'community';
                 next();
             });
         });
     });
 }
-
 
 function saveCommunity(req, res, next) {
     community = new Community(req.ConsortiaFlux.community);
