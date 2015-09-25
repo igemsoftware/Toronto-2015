@@ -40,11 +40,12 @@ class Network
         for specie of @root.system.parsedData
             if specie isnt "Community"
                 @species.push(specie)
-        @modelChanges = {
-                    addedReactions : new Array()
-                    addedMetabolites: new Array()
-                    deletedReactions: new Array()
-                }
+        # #We can get rid of soon
+        # @modelChanges = {
+        #             addedReactions : new Array()
+        #             addedMetabolites: new Array()
+        #             deletedReactions: new Array()
+        #         }
 
     enterSpecie: (node) ->
         #find node
@@ -55,10 +56,11 @@ class Network
         @currentLevel = @currentLevel.parent
         @viewController.setActiveGraph(@currentLevel.system)
 
-    addReaction: (reactionObject) ->
-        @modelChanges.addedReactions.push(reactionObject)
-        @viewController.activeGraph.addReaction(reactionObject)
-        @reactionsLength++
+    # probably remove
+    # addReaction: (reactionObject) ->
+    #     @modelChanges.addedReactions.push(reactionObject)
+    #     @viewController.activeGraph.addReaction(reactionObject)
+    #     # @reactionsLength++
 
 
     deleteNode: (id, system) ->
