@@ -23,9 +23,12 @@ router.post('/:id', function(req,res, next) {
 						return res.send(err)
 					data.metabolites = data.metabolites.concat(req.body.addedMetabolites);
 					data.reactions = data.reactions.concat(req.body.addedReactions);
-
+					for(var i = 0; i < data.reactions.length; i++){
+						if(req.body.deletedReactions.indexOf(data.reactions[i].id) >= 0){
+							data.reactions.splice(i, 1);
+						}
+					}
 					file = model.file.split(".json")
-
 					fs.writeFile(file + "-" + specie.models.length + ".json", JSON.stringify(data), function(err, data){
 						if(err)
 							return res.send(err)
