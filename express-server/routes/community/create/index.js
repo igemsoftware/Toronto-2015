@@ -77,6 +77,7 @@ function createCommunity(req, res, next) {
     community.members = [];
 
     var checkProgress = function(modelId, file) {
+        console.log(modelId);
         community.members.push({
             model: modelId,
             file: file
