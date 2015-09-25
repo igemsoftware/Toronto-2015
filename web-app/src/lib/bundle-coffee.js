@@ -211,7 +211,7 @@ Network = (function() {
   }
 
   Network.prototype.changeSpecie = function(model) {
-    var specie, systemAttr;
+    var results, specie, systemAttr;
     this.attr.sortables.index = -1;
     systemAttr = {
       data: model,
@@ -231,16 +231,15 @@ Network = (function() {
     }
     this.currentLevel = this.root;
     this.species = new Array();
+    results = [];
     for (specie in this.root.system.parsedData) {
       if (specie !== "Community") {
-        this.species.push(specie);
+        results.push(this.species.push(specie));
+      } else {
+        results.push(void 0);
       }
     }
-    return this.modelChanges = {
-      addedReactions: new Array(),
-      addedMetabolites: new Array(),
-      deletedReactions: new Array()
-    };
+    return results;
   };
 
   Network.prototype.enterSpecie = function(node) {
@@ -251,12 +250,6 @@ Network = (function() {
   Network.prototype.exitSpecie = function(node) {
     this.currentLevel = this.currentLevel.parent;
     return this.viewController.setActiveGraph(this.currentLevel.system);
-  };
-
-  Network.prototype.addReaction = function(reactionObject) {
-    this.modelChanges.addedReactions.push(reactionObject);
-    this.viewController.activeGraph.addReaction(reactionObject);
-    return this.reactionsLength++;
   };
 
   Network.prototype.deleteNode = function(id, system) {
