@@ -36,10 +36,11 @@ class Network
             @viewController.startCanvas(@root.system)
 
         @currentLevel = @root
-        @species = new Object()
+        @species = new Array()
         for specie of @root.system.parsedData
             if specie isnt "Community"
-                @species[specie] = {
+                @species.push(specie)
+        @modelChanges = {
                     addedReactions : new Array()
                     addedMetabolites: new Array()
                     deletedReactions: new Array()
@@ -48,7 +49,6 @@ class Network
     enterSpecie: (node) ->
         #find node
         @currentLevel = @currentLevel.children[node.id]
-
         @viewController.setActiveGraph(@currentLevel.system)
         #@viewController.setActiveGraph(@currentLevel.system)
     exitSpecie: (node) ->
@@ -56,7 +56,7 @@ class Network
         @viewController.setActiveGraph(@currentLevel.system)
 
     addReaction: (reactionObject) ->
-        @species[reactionObject.species[0]].addedReactions.push(reactionObject)
+        @modelChanges.addedReactions.push(reactionObject)
         @viewController.activeGraph.addReaction(reactionObject)
         @reactionsLength++
 
@@ -66,7 +66,7 @@ class Network
         for node in system.nodes
             if node.id is id
                 for specie in node.species
-                    @species[specie].deletedReactions.push(node)
+                    [specie].deletedReactions.push(node)
                     system.graph.destroyVertex(node.id)
                     node.deleted = true
 

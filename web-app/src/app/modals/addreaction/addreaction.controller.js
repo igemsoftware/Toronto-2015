@@ -17,13 +17,16 @@ angular.module('ConsortiaFlux')
 
         var species = new Array()
 
-        for(var specie in ConsortiaFluxTool.species){
-            species.push(specie)
+        for(var i = 0; i < ConsortiaFluxTool.species.length; i++){
+            species.push(ConsortiaFluxTool.species[i])
         }
+
         $scope.metabolites = metabolites;
         $scope.reversible = "false";
 
         $scope.species = species;
+        //console.log($scope.species)
+        //$scope.preSelectedSpecie = $scope.species[0];
         $scope.name = "Sink needed to allow p-Cresol to leave system";
         $scope.id = "DM_4CRSOL";
         $scope.EC_Number = 0;
@@ -41,7 +44,6 @@ angular.module('ConsortiaFlux')
                 }else{
                     $scope.registry = res.data;
                     $scope.registryfound = true;
-
                 }
             }
 
@@ -98,7 +100,7 @@ angular.module('ConsortiaFlux')
                 }
             }
             //change in angular
-            reaction.metabolites[$scope.myMetab.id] = Number(metabolite_cofficient)
+            reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient)
             close(reaction);
         };
 
