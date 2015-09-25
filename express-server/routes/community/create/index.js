@@ -102,6 +102,9 @@ function optimizeCommunity(req, res, next) {
         files.push(member.file);
     });
 
+
+    console.log(files);
+
     var outputFile = dashify(req.ConsortiaFlux.community.name);
     var outputFolder = App.config().staticStore + '/communities/' + outputFile;
     var output = outputFolder + '/' + outputFile;
