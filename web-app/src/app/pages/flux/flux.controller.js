@@ -21,6 +21,7 @@ function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever, CommunityCre
         models: ['iJO1366']
     };
     this.currentModel = this.community.models[0];
+    this.type = 'specie';
     this.data = {};
     this.loading = true;
 
@@ -72,6 +73,7 @@ FluxCtrl.prototype.addSpecie = function() {
                 }).bind(this));
             } else {
                 this.CC.create(community, (function(community) {
+                    this.type = 'community';
                     console.log(community);
                     // this.MR.modelId = community.id;
                     // this.MR.getBase((function(community) {
@@ -85,10 +87,17 @@ FluxCtrl.prototype.addSpecie = function() {
 };
 
 FluxCtrl.prototype.optimize = function() {
-    this.MR.getOptimized((function(model) {
-        this.ConsortiaFluxTool.attr.everything = false;
-        this.ConsortiaFluxTool.changeSpecie(model);
-    }).bind(this));
+    if (this.type === 'community') {
+        this.CC.optimize((function(model) {
+            this.ConsortiaFluxTool.attr.everything = false;
+            this.ConsortiaFluxTool.changeSpecie(model);
+        }).bind(this));
+    } else if (this.type === 'specie') {
+        this.MR.getOptimized((function(model) {
+            this.ConsortiaFluxTool.attr.everything = false;
+            this.ConsortiaFluxTool.changeSpecie(model);
+        }).bind(this));
+    }
 };
 
 FluxCtrl.prototype.addReaction = function() {
