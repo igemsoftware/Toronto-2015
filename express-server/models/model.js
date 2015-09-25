@@ -7,6 +7,10 @@ var ModelSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
+    specie: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'species'
+    },
     // files
     file: {
         type: String,
