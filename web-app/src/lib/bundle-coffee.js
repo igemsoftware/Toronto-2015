@@ -211,7 +211,7 @@ Network = (function() {
   }
 
   Network.prototype.changeSpecie = function(model) {
-    var results, specie, systemAttr;
+    var specie, systemAttr;
     this.attr.sortables.index = -1;
     systemAttr = {
       data: model,
@@ -230,20 +230,17 @@ Network = (function() {
       this.viewController.startCanvas(this.root.system);
     }
     this.currentLevel = this.root;
-    this.species = new Object();
-    results = [];
+    this.species = new Array();
     for (specie in this.root.system.parsedData) {
       if (specie !== "Community") {
-        results.push(this.species[specie] = {
-          addedReactions: new Array(),
-          addedMetabolites: new Array(),
-          deletedReactions: new Array()
-        });
-      } else {
-        results.push(void 0);
+        this.species.push(specie);
       }
     }
-    return results;
+    return this.modelChanges = {
+      addedReactions: new Array(),
+      addedMetabolites: new Array(),
+      deletedReactions: new Array()
+    };
   };
 
   Network.prototype.enterSpecie = function(node) {
@@ -257,7 +254,7 @@ Network = (function() {
   };
 
   Network.prototype.addReaction = function(reactionObject) {
-    this.species[reactionObject.species[0]].addedReactions.push(reactionObject);
+    this.modelChanges.addedReactions.push(reactionObject);
     this.viewController.activeGraph.addReaction(reactionObject);
     return this.reactionsLength++;
   };
@@ -275,12 +272,12 @@ Network = (function() {
           results1 = [];
           for (j = 0, len1 = ref1.length; j < len1; j++) {
             specie = ref1[j];
-            this.species[specie].deletedReactions.push(node);
+            [specie].deletedReactions.push(node);
             system.graph.destroyVertex(node.id);
             results1.push(node.deleted = true);
           }
           return results1;
-        }).call(this));
+        })());
       } else {
         results.push(void 0);
       }

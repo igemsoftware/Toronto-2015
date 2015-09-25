@@ -23,7 +23,7 @@
                         <option value="p" selected="selected">p</option>
                         <option value="e">e</option>
                     </select><br>
-        Species: <select ng-model="metabSpecie" ng-options="specie for specie in species"></select><br>
+        Species: <select data-ng-options="specie for specie in species" data-ng-model="preSelectedSpecie"></select><br>
         Charge: <inpt ng-model="metabCharge"></input>
     </div>
     <addbuttonsbutton ng-model="metabolite"></addbuttonsbutton>
@@ -37,9 +37,12 @@
     Species: <select ng-model="specie" ng-options="specie for specie in species"></select><br>
 
     <!-- Work with registry -->
-    Gene Aassociation: <input ng-model="gene_association"></input><br>
 
-    <a class="closeButton right" href ng-click="close()">Close</a>
+    Gene Aassociation: <input ng-model="gene_association"></input><button ng-click="queryRegistry()">Search registry</button><br>
+    <div ng-show="registryfound">
+        Select BBA: <select ng-model="bba" ng-options="reg for reg in registry"></select><br>
+    </div>
+    <a class="closeButton right" href ng-click="close()">Add Reaction</a>
 </div>
 
 <!-- <div class="fade" ng-show="display"></div> -->
