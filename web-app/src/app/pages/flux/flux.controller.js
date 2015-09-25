@@ -25,7 +25,7 @@ function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever) {
 
 
     this.MR.modelId = 'iJO1366';
-    this.MR.getOptimized((function(model) {
+    this.MR.getBase((function(model) {
         var sortables = {
             index: -1,
             identifiers: ['species', 'compartments', 'subsystems']
@@ -40,7 +40,7 @@ function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever) {
             backgroundColour: 'white',
             metaboliteRadius: 10,
             useStatic: false,
-            everything: false,
+            everything: true,
             hideObjective: true,
             data: model,
             sortables: sortables,
@@ -117,55 +117,10 @@ FluxCtrl.prototype.addSpecie = function() {
 };
 
 FluxCtrl.prototype.optimize = function() {
-    if (this.currentModel === 'E.-Coli-K12-and-M.-barkeri') {
-        this.receiver = function(res) {
-            this.receiver = function(res) {
-                console.log(res.data);
-                this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
-                this.ConsortiaFluxTool.changeSpecie(res.data);
-            };
-
-            this.errorCatch = function(err) {
-                console.log(err);
-            };
-
-            requestUrl = this.UrlProvider.baseUrl + '/' + res.data;
-
-            this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-        };
-
-        this.errorCatch = function(err) {
-            console.log(err);
-        };
-
-        var requestUrl = this.UrlProvider.baseUrl + '/community/optimize/' + this.currentModel;
-
-        this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-    } else {
-        this.receiver = function(res) {
-            this.receiver = function(res) {
-                console.log(res.data);
-                this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
-                this.ConsortiaFluxTool.changeSpecie(res.data);
-            };
-
-            this.errorCatch = function(err) {
-                console.log(err);
-            };
-
-            requestUrl = this.UrlProvider.baseUrl + '/' + res.data.optimized;
-
-            this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-        };
-
-        this.errorCatch = function(err) {
-            console.log(err);
-        };
-
-        var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
-
-        this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-    }
+    this.MR.getOptimized((function(model) {
+        this.ConsortiaFluxTool.attr.everything = false;
+        this.ConsortiaFluxTool.changeSpecie(model);
+    }).bind(this));
 };
 
 FluxCtrl.prototype.addReaction = function() {
