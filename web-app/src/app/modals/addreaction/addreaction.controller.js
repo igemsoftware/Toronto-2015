@@ -108,7 +108,7 @@ angular.module('ConsortiaFlux')
         $scope.close = function(result) {
             $scope.display = false;
             this.receiver = function(res) {
-
+                console.log(res)
             }
 
             this.errorCatch = function(err) {
@@ -117,7 +117,7 @@ angular.module('ConsortiaFlux')
             var requestUrl = UrlProvider.baseUrl + '/model/update/' + $scope.specie;
             $http.post(requestUrl, modifiedData).then(this.receiver.bind(this), this.errorCatch.bind(this));
 
-            close(reaction);
+            close(modifiedData);
         };
         // var ReactionSchema = {
         //     "EC_Number": 'String',

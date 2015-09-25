@@ -106,8 +106,8 @@ FluxCtrl.prototype.addReaction = function() {
     };
 
     this.onModalClose = function(result) {
-        this.ConsortiaFluxTool.addReaction(result);
-    };
+        console.log(result)
+    }
     this.ModalService.showModal({
         templateUrl: "app/modals/addreaction/addreaction.html",
         controller: "AddReactionModal",
