@@ -60,10 +60,31 @@ canvas {
 
 .tags-wrapper {
   margin-bottom: 10px; }
-  .tags-wrapper span.tag {
+  .tags-wrapper span span.tag {
     margin-right: 5px; }
-    .tags-wrapper span.tag:last-child {
-      margin-right: 0; }
+  .tags-wrapper span:last-child span.tag {
+    margin-right: 0; }
+
+.species-name {
+  text-transform: capitalize; }
+
+.species-strain {
+  font-style: italic; }
+
+.panel {
+  -webkit-box-shadow: 0;
+  -moz-box-shadow: 0;
+  box-shadow: 0;
+  border: 2px solid #1abc9c; }
+
+.panel-heading {
+  padding: 0; }
+  .panel-heading a {
+    padding: 10px 15px;
+    display: block; }
+    .panel-heading a:hover {
+      background-color: #1abc9c;
+      color: white; }
 
 #splash #main-title {
   text-align: center;

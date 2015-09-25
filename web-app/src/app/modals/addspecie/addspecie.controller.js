@@ -9,22 +9,24 @@ angular.module('ConsortiaFlux')
         $scope.display = true;
         $scope.community = [];
 
-        $http.get(UrlProvider.baseUrl + '/model/retrieve').then(function(data) {
+        $http.get(UrlProvider.baseUrl + '/specie/retrieve/all').then(function(res) {
             $scope.loading = false;
-            $scope.species = data.data;
+            $scope.species = res.data;
         }, function(err) {
             console.log(err);
         });
 
         $scope.checkboxClick = function(model, $event) {
             $event.stopPropagation();
-            // alert(JSON.stringify($scope.models));
 
-            if ($scope.community.indexOf(model) === -1) {
-                $scope.community.push(model);
-            } else {
-                $scope.community.pop(model);
-            }
+            $scope.community = [];
+            $scope.species.forEach(function(specie) {
+                specie.models.forEach(function(model) {
+                    if (model.checked) {
+                        $scope.community.push(model.id);
+                    }
+                });
+            });
         };
 
         $scope.render = function() {

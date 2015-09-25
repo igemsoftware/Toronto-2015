@@ -10,26 +10,30 @@
             <hr class="hr-medium">
         </div>
         <div class="tags-wrapper">
-            <span class="tag label label-info" ng-repeat="model in community">
-                {{model}}
-                <span data-role="remove"></span>
+            <span ng-repeat="specie in species">
+                <span class="tag label label-info" ng-repeat="model in specie.models" ng-show="model.checked">
+                    {{model.id}}
+                    <span data-role="remove"></span>
+                </span>
             </span>
         </div>
         <accordion close-others="false">
             <accordion-group ng-repeat="specie in species">
-                <accordion-heading ng-click="isopen=!isopen">
-                    {{specie}}
-                    <input type="checkbox" class="custom-checkbox right" ng-click="checkboxClick(specie, $event)">
-
-                    <!-- <label class="checkbox right">
-                        <input type="checkbox" ng-checked="specie.checked" ng-click="checkboxClick(group, $event)" value="" id="{{specie}}" class="custom-checkbox">
-                        <span class="icons">
-                            <span class="icon-unchecked"></span>
-                            <span class="icon-checked"></span>
-                        </span>
-                    </label> -->
+                <accordion-heading ng-click="isopen=!isopen" data-toggle="collapse">
+                    <span class="species-name">{{specie.SPECIES}}</span>
+                    <span class="species-strain">{{specie.STRAIN}}</span>
                 </accordion-heading>
-                wheeeee
+
+                <label class="checkbox" ng-repeat="model in specie.models">
+                    <input type="checkbox" ng-click="checkboxClick(model, $event)" ng-model="model.checked" class="custom-checkbox">
+                    <span class="icons">
+                        <span class="icon-unchecked"></span>
+                        <span class="icon-checked"></span>
+                    </span>
+                    {{model.id}}
+                </label>
+
+
                 <!-- <button ng-click="choose(specie)" type="button" class="btn btn-primary right">Use</button> -->
             </accordion-group>
         </accordion>

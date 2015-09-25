@@ -8,37 +8,30 @@ var SpeciesSchema = new mongoose.Schema({
     // Array of model._ids
     models: {
         type: [{
-            type: mongoose.Schema.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'model'
         }]
     },
     DOMAIN: {
-        type: String,
-        required: true
+        type: String
     },
     PHYLUM: {
-        type: String,
-        required: true
+        type: String
     },
     CLASS: {
-        type: String,
-        required: true
+        type: String
     },
     ORDER: {
-        type: String,
-        required: true
+        type: String
     },
     FAMILY: {
-        type: String,
-        required: true
+        type: String
     },
     GENUS: {
-        type: String,
-        required: true
+        type: String
     },
     SPECIES: {
-        type: String,
-        required: true
+        type: String
     },
     STRAIN: {
         type: String
