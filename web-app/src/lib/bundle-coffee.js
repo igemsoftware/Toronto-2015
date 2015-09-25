@@ -224,7 +224,6 @@ Network = (function() {
     };
     this.root = new TreeNode('root', new System(systemAttr));
     this.root.system.initializeForce();
-    console.log(this.root);
     if (this.initalized) {
       this.viewController.setActiveGraph(this.root.system);
     } else {

@@ -148,8 +148,6 @@ FluxCtrl.prototype.addSpecie = function() {
 FluxCtrl.prototype.optimize = function() {
     if (this.currentModel === 'E.-Coli-K12-and-M.-barkeri') {
         this.receiver = function(res) {
-            var optimizedModelUrl = this.UrlProvider.baseUrl + '/' + res.data;
-
             this.receiver = function(res) {
                 console.log(res.data);
                 this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
@@ -160,7 +158,7 @@ FluxCtrl.prototype.optimize = function() {
                 console.log(err);
             };
 
-            var requestUrl = optimizedModelUrl;
+            requestUrl = this.UrlProvider.baseUrl + '/' + res.data.optimized;
 
             this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
         };
@@ -174,17 +172,28 @@ FluxCtrl.prototype.optimize = function() {
         this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
     } else {
         this.receiver = function(res) {
-            this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
-            this.ConsortiaFluxTool.changeSpecie(res.data);
+            this.receiver = function(res) {
+                console.log(res.data);
+                this.ConsortiaFluxTool.attr.everything = false; //sets the default to false
+                this.ConsortiaFluxTool.changeSpecie(res.data);
+            };
+
+            this.errorCatch = function(err) {
+                console.log(err);
+            };
+
+            requestUrl = this.UrlProvider.baseUrl + '/' + res.data.optimized;
+
+            this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
         };
 
         this.errorCatch = function(err) {
             console.log(err);
         };
 
-        this.requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
+        var requestUrl = this.UrlProvider.baseUrl + '/model/optimize/' + this.currentModel;
 
-        this._http.get(this.requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+        this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
     }
 };
 
