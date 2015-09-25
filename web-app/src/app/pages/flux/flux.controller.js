@@ -9,7 +9,7 @@
 
 angular.module('ConsortiaFlux').controller('FluxCtrl', FluxCtrl);
 
-function FluxCtrl($http, UrlProvider, ModalService) {
+function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever) {
     this._http = $http;
     this.UrlProvider = UrlProvider;
     this.ModalService = ModalService;
@@ -21,11 +21,17 @@ function FluxCtrl($http, UrlProvider, ModalService) {
     this.data = {};
     this.loading = true;
 
+    this.MR = ModelRetriever;
+    this.MR.modelId = 'iJO1366';
+    this.MR.getOptimized(function(model) {
+        console.log(model);
+    });
+
     //this.startConsortiaFlux(data);
     this.loadNStartModel();
 }
 
-FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
+FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService', 'ModelRetriever'];
 
 
 //retrieve UNOPTIMIZED data
@@ -107,6 +113,7 @@ FluxCtrl.prototype.addSpecie = function() {
                         this.ConsortiaFluxTool.attr.everything = true;
                         this.ConsortiaFluxTool.changeSpecie(res.data);
                     } else {
+                        console.log(res.data);
                         this.startConsortiaFlux(res.data);
                     }
                 };
@@ -158,7 +165,7 @@ FluxCtrl.prototype.optimize = function() {
                 console.log(err);
             };
 
-            requestUrl = this.UrlProvider.baseUrl + '/' + res.data.optimized;
+            requestUrl = this.UrlProvider.baseUrl + '/' + res.data;
 
             this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
         };
