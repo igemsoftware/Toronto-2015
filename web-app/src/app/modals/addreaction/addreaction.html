@@ -37,8 +37,11 @@
     Species: <select ng-model="specie" ng-options="specie for specie in species"></select><br>
 
     <!-- Work with registry -->
-    Gene Aassociation: <input ng-model="gene_association"></input><br>
 
+    Gene Aassociation: <input ng-model="gene_association"></input><button ng-click="queryRegistry()">Search registry</button><br>
+    <div ng-show="registryfound">
+        Select BBA: <select ng-model="bba" ng-options="reg for reg in registry"></select><br>
+    </div>
     <a class="closeButton right" href ng-click="close()">Close</a>
 </div>
 

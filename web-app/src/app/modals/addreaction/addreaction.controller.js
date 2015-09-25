@@ -31,8 +31,26 @@ angular.module('ConsortiaFlux')
         $scope.lower_bound = -1000;
         $scope.objective_coefficient = 0;
         $scope.newMetaboliteDisplay = false
+        $scope.registryfound = false;
 
         $scope.count = 0;
+        $scope.queryRegistry = function(){
+            this.receiver = function(res) {
+                if(res.data.length === 0){
+                    $scope.gene_association = "Not a valid registry";
+                }else{
+                    $scope.registry = res.data;
+                    $scope.registryfound = true;
+
+                }
+            }
+
+            this.errorCatch = function(err) {
+                console.log(err);
+            }
+            var requestUrl = UrlProvider.baseUrl + '/model/retrieve/bba/' + $scope.gene_association;
+            $http.post(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
+        }
         $scope.createNewMetabolite = function(){
             newMetaboliteDisplay = true
 
@@ -48,30 +66,10 @@ angular.module('ConsortiaFlux')
             newMetabolites.push(newMetabolite)
             ConsortiaFluxTool.addedMetabolites.push(newMetabolite)
 
-            //open addReaction.html
-            //             {
-            // "name": "Zinc", #yes
-            // "notes": {}, #no
-            // "annotation": {}, #No
-            // "_constraint_sense": "E", #no
-            // "charge": 2, #no
-            // "_bound": 0, #no
-            // "formula": "Zn", #no
-            // "compartment": "p", #yes
-            // "id": "zn2_p", #autogeneratored
-            // "subsystems": [ #naw
-            // "Inorganic Ion Transport and Metabolism",
-            // "Transport, Outer Membrane Porin"
-            // ],
-            // #yes
-            // "species": [
-            // "iJO1366"
-            // ]
-            // }
         }
 
         $scope.addExistingMetabolite = function(){
-            
+
         }
 
         $scope.close = function(result) {
@@ -82,7 +80,7 @@ angular.module('ConsortiaFlux')
             //TODO LOW PRIORITY make check for specie for metabolite voided for e
 
             var reaction = {
-                "EC_Number": Number($scope.EC_Number), //Optional
+                "EC_Number": $scope.EC_Number || "", //Optional
                 "upper_bound": Number($scope.upper_bound), //optional, default 1000
                 "objective_coefficient": Number($scope.objective_coefficient), //default 0
                 "reversible": JSON.parse($scope.reversible), //defult false
