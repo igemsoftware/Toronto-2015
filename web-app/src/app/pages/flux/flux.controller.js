@@ -31,7 +31,7 @@ FluxCtrl.$inject = ['$http', 'UrlProvider', 'ModalService'];
 //retrieve UNOPTIMIZED data
 FluxCtrl.prototype.loadNStartModel = function() {
     this.receiver = function(res) {
-        // console.log(data);
+        console.log(data);
         if (this.ConsortiaFluxTool !== undefined) {
             this.ConsortiaFluxTool.attr.everything = true;
             this.ConsortiaFluxTool.changeSpecie(res.data);
@@ -51,28 +51,37 @@ FluxCtrl.prototype.loadNStartModel = function() {
 };
 
 FluxCtrl.prototype.startConsortiaFlux = function(data) {
-    var sortables = {
-        index: -1,
-        identifiers: ['species', 'compartments', 'subsystems']
+    this.receiver = function(res) {
+        var sortables = {
+            index: -1,
+            identifiers: ['species', 'compartments', 'subsystems']
+        };
+
+        var networkAttributes = {
+            wrapperId: 'canvas-wrapper',
+            id: 'root',
+            name: 'root',
+            width: window.innerWidth,
+            height: window.innerHeight,
+            backgroundColour: 'white',
+            metaboliteRadius: 10,
+            useStatic: false,
+            everything: data.everything,
+            hideObjective: true,
+            data: res.data,
+            sortables: sortables,
+            showStats: false
+        };
+
+        this.ConsortiaFluxTool = new ConsortiaFluxVisualization(networkAttributes);
     };
 
-    var networkAttributes = {
-        wrapperId: 'canvas-wrapper',
-        id: 'root',
-        name: 'root',
-        width: window.innerWidth,
-        height: window.innerHeight,
-        backgroundColour: 'white',
-        metaboliteRadius: 10,
-        useStatic: false,
-        everything: data.everything,
-        hideObjective: true,
-        data: data,
-        sortables: sortables,
-        showStats: false
+    this.errorCatch = function(err) {
+        console.log(err);
     };
 
-    this.ConsortiaFluxTool = new ConsortiaFluxVisualization(networkAttributes);
+    var requestUrl = this.UrlProvider.baseUrl + '/' + data.file;
+    this._http.get(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
 };
 
 // TODO addSpecie -> addModel, or seperate communities models and specie models

@@ -10,7 +10,7 @@ module.exports =
         reactionAttributes =
             x : utilities.rand(@width)
             y : utilities.rand(@height)
-            r : @radiusScale(flux_value)
+            r : @radiusScale(flux_value) #This line
             name : name
             id : id
             type : "r"

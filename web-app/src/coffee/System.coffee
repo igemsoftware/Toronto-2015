@@ -32,7 +32,6 @@ class System
 
         # Used by createReactionNode
         # TODO get parameters from elsewhere
-
         @radiusScale = utilities.scaleRadius(@data, 5, 15)
         @thicknesScale = utilities.scaleRadius(@data, 5, 15)
         @colourScale = utilities.scaleRadius(@data, 144, 255)
@@ -163,6 +162,7 @@ class System
             colour : "rgb(#{utilities.rand(255)}, #{utilities.rand(255)}, #{utilities.rand(255)})"
 
         }, @ctx)
+
         @nodes.push(reaction)
         for metaboliteid of reactionObject.metabolites
             node = @findNode(metaboliteid)
