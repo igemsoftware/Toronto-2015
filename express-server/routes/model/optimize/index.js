@@ -123,7 +123,7 @@ function optimizeModel(req, res, next) {
                             return;
                         }
 
-                        res.send(model);
+                        res.send(model.optimized);
                     });
                 });
             });

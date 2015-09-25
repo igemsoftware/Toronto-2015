@@ -58,16 +58,46 @@ canvas {
 .tags-wrapper {
     margin-bottom: 10px;
 
-    span.tag {
-        margin-right: 5px;
+    span {
+
+        span.tag {
+            margin-right: 5px;
+        }
 
         &:last-child {
-            margin-right: 0;
+            span.tag {
+                margin-right: 0;
+            }
         }
     }
 }
 
+.species-name {
+    text-transform: capitalize;
+}
+.species-strain {
+    font-style: italic;
+    // color: $strain-colour;
+}
 
+.panel {
+    @include box-shadow(0);
+    border: 2px solid $turqoise;
+}
+
+.panel-heading {
+    padding: 0;
+
+    a {
+        padding: 10px 15px;
+        display: block;
+
+        &:hover {
+            background-color: $turqoise;
+            color: white;
+        }
+    }
+}
 
 #header {
     // background-color: rgb(176, 179, 156);

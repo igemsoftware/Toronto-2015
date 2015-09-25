@@ -3,10 +3,7 @@ var router = require('express').Router();
 var Species = App.Model('species');
 
 function retrieveSpecie(req, res, next) {
-    Species.findOne({id: req.params.id}).populate({
-        path: 'models',
-        model: 'model'
-    }).select('-_id').exec(function(err, specie) {
+    Species.findOne({id: req.params.id}).populate('models').select('-_id').exec(function(err, specie) {
         if (err) {
             res.status(500).send('500 Internal Server Error');
             return;
