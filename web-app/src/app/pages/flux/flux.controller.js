@@ -122,12 +122,8 @@ FluxCtrl.prototype.changeCommunity = function() {
 
             this.CC.get(community.id, (function(community) {
                 this.type = 'community';
-                console.log(community);
-                // this.MR.modelId = community.id;
-                // this.MR.getBase((function(community) {
                 this.ConsortiaFluxTool.attr.everything = true;
                 this.ConsortiaFluxTool.changeSpecie(community);
-                // }).bind(this));
             }).bind(this));
         }).bind(this));
     }).bind(this));

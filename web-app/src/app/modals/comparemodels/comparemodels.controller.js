@@ -6,41 +6,89 @@ angular.module('ConsortiaFlux')
 .controller('CompareModelsModal', ['$scope', '$http', 'UrlProvider', 'close',
 
     function($scope, $http, UrlProvider, close) {
-
-        $scope.loading = true;
         $scope.display = true;
-        $scope.communities = [];
+        $scope.choosing = true;
+        $scope.loading = false;
+        $scope.ready = false;
+        $scope.models = [];
 
-        $http.get(UrlProvider.baseUrl + '/community/all').then(function(res) {
-            $scope.loading = false;
-            $scope.communities = res.data;
-            console.log(res.data)
-        }, function(err) {
-            console.log(err);
-        });
+        $scope.limit = 2;
+        $scope.checked = 0;
 
-        $scope.checkboxClick = function(model, $event) {
-            $event.stopPropagation();
+        $scope.chosenModels = [];
+        $scope.disabled = false;
 
-            $scope.community = [];
-            $scope.communities.forEach(function(specie) {
-                specie.models.forEach(function(model) {
-                    if (model.checked) {
-                        if ($scope.community.indexOf(model.id) === -1)
-                            $scope.community.push(model.id);
-                    }
+        $scope.sended = {
+            type: '',
+            models: []
+        }
+
+        var load = function(choosable) {
+            if (choosable === 'community') {
+                $scope.sended.type = 'communities';
+
+                $http.get(UrlProvider.baseUrl + '/community/retrieve/all').then(function(res) {
+                    console.log(res.data);
+                    res.data.forEach(function(community) {
+                        if ($scope.models.indexOf(community.id) === -1)
+                            $scope.models.push(community.id);
+                    });
+                    $scope.ready = true;
+                }, function(err) {
+                    console.log(err);
                 });
+            } else if (choosable === 'specie') {
+                $scope.sended.type = 'models';
+
+                $http.get(UrlProvider.baseUrl + '/specie/retrieve/all').then(function(res) {
+                    res.data.forEach(function(specie) {
+                        specie.models.forEach(function(model) {
+                            if ($scope.models.indexOf(model.id) === -1)
+                                $scope.models.push(model.id);
+                        });
+                    });
+                    $scope.ready = true;
+                }, function(err) {
+                    console.log(err);
+                });
+            }
+        };
+
+        $scope.go = function() {
+            console.log($scope.choosables);
+            Object.keys($scope.choosables).forEach(function(choosable) {
+                if ($scope.choosables[choosable] === 'true') {
+                    $scope.choosing = false;
+                    load(choosable);
+                }
             });
         };
 
-        $scope.render = function() {
-            $scope.display = false;
-            var community = {
-                name: $scope.communityName,
-                models: $scope.community
-            };
-            close(community);
+        $scope.disabled = function(model) {
+            if ($scope.chosenModels.indexOf(model) !== -1) {
+                return false;
+            } else {
+                if ($scope.limit == $scope.chosenModels.length) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         };
+
+        $scope.checkBoxHandler = function(model) {
+            if ($scope.chosenModels.indexOf(model) === -1) {
+                $scope.chosenModels.push(model);
+            } else {
+                $scope.chosenModels.pop(model);
+            }
+        };
+
+        $scope.send = function() {
+            $scope.sended.models = $scope.chosenModels;
+
+            alert(JSON.stringify($scope.sended));
+        }
 
         $scope.close = function() {
             $scope.display = false;

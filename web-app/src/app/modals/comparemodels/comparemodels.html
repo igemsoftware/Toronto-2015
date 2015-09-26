@@ -1,46 +1,44 @@
 <div ng-show="display" class="mymodal">
-    <div ng-show="loading">
-        Retrieving communities list...
-        <i ng-show="loading" class="fa fa-5x fa-spin fa-spinner"></i>
-    </div>
-    <div ng-show="!loading">
-        <!-- <div ng-show="community.length > 1">
-            Current community:
-            <input ng-model="communityName" type="text">
-            <hr class="hr-medium">
-        </div> -->
-        <!-- <div class="tags-wrapper">
-            <span ng-repeat="community in communities">
-                <span class="tag label label-info" ng-repeat="model in specie.models" ng-show="model.checked">
-                    {{model.id}}
-                    <span data-role="remove"></span>
-                </span>
+    <div ng-show="choosing">
+        <label class="radio">
+            <input type="radio" ng-model="choosables.community" name="optionsRadios" value="true" data-toggle="radio" class="custom-radio">
+            <span class="icons">
+                <span class="icon-unchecked"></span>
+                <span class="icon-checked"></span>
             </span>
-        </div> -->
-        <accordion close-others="false">
-            <accordion-group ng-repeat="communty in communities">
-                <accordion-heading ng-click="isopen=!isopen" data-toggle="collapse">
-                    <span class="communities-name">{{community.name}}</span>
-                </accordion-heading>
-
-                <!-- <label class="checkbox" ng-repeat="model in specie.models">
-                    <input type="checkbox" ng-click="checkboxClick(model, $event)" ng-model="model.checked" class="custom-checkbox">
-                    <span class="icons">
-                        <span class="icon-unchecked"></span>
-                        <span class="icon-checked"></span>
-                    </span>
-                    {{model.id}}
-                </label> -->
-
-
-                <!-- <button ng-click="choose(specie)" type="button" class="btn btn-primary right">Use</button> -->
-            </accordion-group>
-        </accordion>
+            Compare communities
+        </label>
+        <label class="radio">
+            <input type="radio" ng-model="choosables.specie" name="optionsRadios" value="true" data-toggle="radio" class="custom-radio">
+            <span class="icons">
+                <span class="icon-unchecked"></span>
+                <span class="icon-checked"></span>
+            </span>
+            Compare species
+        </label>
+        <button ng-click="go()" type="button" class="btn btn-primary left">Go</button>
+    </div>
+    <div ng-show="loading">
+        <div ng-show="loading">
+            Retrieving models...
+            <i ng-show="loading" class="fa fa-5x fa-spin fa-spinner"></i>
+        </div>
+    </div>
+    <div ng-show="ready">
+        <ul>
+            <label class="checkbox" ng-repeat="model in models">
+                <input type="checkbox" ng-disabled="disabled(model)" ng-click="checkBoxHandler(model)" value="true" data-toggle="checkbox" class="custom-checkbox">
+                <span class="icons">
+                    <span class="icon-unchecked"></span>
+                    <span class="icon-checked"></span>
+                </span>
+                {{model}}
+            </label>
+        </ul>
+        <button ng-click="send()" type="button" class="btn btn-primary left">Compare</button>
     </div>
 
     <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
     <button ng-click="close()" type="button" class="btn btn-danger right">Close</button>
-    <button ng-click="render()" ng-show="community.length === 1" ng-click="renderModel()" type="button" class="btn btn-primary">Render Model</button>
-    <button ng-click="render()" ng-show="community.length > 1" ng-click="renderCommunity()" type="button" class="btn btn-primary">Render Community</button>
 </div>
 <!-- <div class="fade" ng-show="display"></div> -->
