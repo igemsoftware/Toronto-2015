@@ -137,8 +137,7 @@ module.exports = Link;
 },{}],4:[function(require,module,exports){
 var Metabolite, Node,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty,
-  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+  hasProp = {}.hasOwnProperty;
 
 Node = require("./Node");
 
@@ -148,25 +147,7 @@ Metabolite = (function(superClass) {
   function Metabolite(attr, ctx) {
     this.ctx = ctx;
     Metabolite.__super__.constructor.call(this, attr, this.ctx);
-    this.compartment = attr.compartment;
-    this.charge = attr.charge;
-    if ((this.compartment != null) && this.compartment !== "p" && this.compartment !== "c" && this.compartment !== "e") {
-      if (this.compartment.toLowerCase() === "cytosol") {
-        this.compartment = "c";
-      } else if (this.compartment.toLowerCase === "periplasm") {
-        this.compartment = "p";
-      } else {
-        this.compartment = "e";
-      }
-    } else {
-      if (indexOf.call(this.id, "_") >= 0 && indexOf.call(this.id, "-") >= 0) {
-        this.compartment = this.id.slice(this.id.lastIndexOf("-") + 1, this.id.length);
-      } else if (indexOf.call(this.id, "_") >= 0) {
-        this.compartment = this.id.split('_')[this.id.split('_').length - 1];
-      } else {
-        this.compartment = this.id.split('-')[this.id.split('-').length - 1];
-      }
-    }
+    this.compartment = this.id.charAt(this.id.length - 1);
   }
 
   Metabolite.prototype.draw = function() {
@@ -224,6 +205,7 @@ Network = (function() {
     };
     this.root = new TreeNode('root', new System(systemAttr));
     this.root.system.initializeForce();
+    console.log(this.root);
     if (this.initalized) {
       this.viewController.setActiveGraph(this.root.system);
     } else {
@@ -466,6 +448,13 @@ System = (function() {
     }
     for (k = 0, len1 = reactionData.length; k < len1; k++) {
       reaction = reactionData[k];
+      for (metabolite in reaction.metabolites) {
+        if (metabolites[metabolite].name === 'Thiamin') {
+          if (this.data.id === 'community') {
+            console.log(metabolites[metabolite].species);
+          }
+        }
+      }
       if (!this.everything && reaction.flux_value === 0) {
         continue;
       }
