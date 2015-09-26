@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
-var Species = App.Model('species');
+var Community = App.Model('community');
 var Model = App.Model('model');
 var fs = require('fs');
 
@@ -13,12 +13,16 @@ function compareFlux(req, res, next){
     var id1 = req.body.id1
     var id2 = req.body.id2
 
-    Model.findOne({id: id1}, function(err, model1){
+    var type = {
+        "community": Community,
+        "model": Model
+    }
+    var TypeSchema = type[req.body.type.toLowerCase()]
+    TypeSchema.findOne({id: id1}, function(err, model1){
         if(err)
             return console.log(err)
 
-
-        Model.findOne({id: id2}, function(err, model2){
+        TypeSchema.findOne({id: id2}, function(err, model2){
             if(err)
                 return console.log(err)
 
