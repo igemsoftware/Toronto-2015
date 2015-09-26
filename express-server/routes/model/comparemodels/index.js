@@ -4,19 +4,17 @@ var Community = App.Model('community');
 var Model = App.Model('model');
 var fs = require('fs');
 
-String.prototype.toObjectId = function() {
-  var ObjectId = (require('mongoose').Types.ObjectId);
-  return new ObjectId(this.toString());
-};
 
 function compareFlux(req, res, next){
+
     var id1 = req.body.id1
     var id2 = req.body.id2
 
     var type = {
         "community": Community,
-        "model": Model
+        "models": Model
     }
+
     var TypeSchema = type[req.body.type.toLowerCase()]
     TypeSchema.findOne({id: id1}, function(err, model1){
         if(err)
@@ -30,6 +28,7 @@ function compareFlux(req, res, next){
             fs.readFile(model1.solution, function(err, model1data){
                 if(err)
                     return console.log(err)
+                
                 fs.readFile(model2.solution, function(err, model2data){
                     if(err)
                         return console.log(err)

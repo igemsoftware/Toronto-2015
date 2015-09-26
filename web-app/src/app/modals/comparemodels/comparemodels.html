@@ -1,4 +1,5 @@
 <div ng-show="display" class="mymodal">
+    <div ng-show="selectedScreen">
     <div ng-show="choosing">
         <label class="radio">
             <input type="radio" ng-model="choosables.community" name="optionsRadios" value="true" data-toggle="radio" class="custom-radio">
@@ -37,8 +38,19 @@
         </ul>
         <button ng-click="send()" type="button" class="btn btn-primary left">Compare</button>
     </div>
-
+</div>
+<div ng-show="!selectedScreen">
+    <table ng-table="vm.tableParams" class="table" show-filter="true">
+    <tr ng-repeat="reaction in $data">
+        <td title="'reaction_name'" filter="{ name: 'text'}" sortable="'name'">
+            {{reaction.name}}</td>
+        <td title="'flux'" filter="{ flux: 'number'}" sortable="'age'">
+            {{reaction.flux}}</td>
+    </tr>
+</table>
+</div>
     <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
     <button ng-click="close()" type="button" class="btn btn-danger right">Close</button>
+
 </div>
 <!-- <div class="fade" ng-show="display"></div> -->
