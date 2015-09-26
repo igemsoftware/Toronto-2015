@@ -1,18 +1,42 @@
 <div ng-show="display" class="mymodal">
     <div ng-show="loading">
-        Retrieving communities list...
+        Retrieving species list...
         <i ng-show="loading" class="fa fa-5x fa-spin fa-spinner"></i>
     </div>
     <div ng-show="!loading">
-        <h3> Choose a community </h3>
-        <label class="radio" ng-repeat="community in communities">
-            <input type="radio" name="optionsRadios" value="option1" data-toggle="radio" class="custom-radio">
-            <span class="icons">
-                <span class="icon-unchecked"></span>
-                <span class="icon-checked"></span>
+        <div ng-show="community.length > 1">
+            Current community:
+            <input ng-model="communityName" type="text">
+            <hr class="hr-medium">
+        </div>
+        <div class="tags-wrapper">
+            <span ng-repeat="specie in species">
+                <span class="tag label label-info" ng-repeat="model in specie.models" ng-show="model.checked">
+                    {{model.id}}
+                    <span data-role="remove"></span>
+                </span>
             </span>
-            {{community.name}}
-        </label>
+        </div>
+        <accordion close-others="false">
+            <accordion-group ng-repeat="specie in species">
+                <accordion-heading ng-click="isopen=!isopen" data-toggle="collapse">
+                    <span class="species-name">{{specie.SPECIES}}</span>
+                    <span class="species-strain">{{specie.STRAIN}}</span>
+                </accordion-heading>
+
+                <label class="checkbox" ng-repeat="model in specie.models">
+                    <input type="checkbox" ng-click="checkboxClick(model, $event)" ng-model="model.checked" class="custom-checkbox">
+                    <span class="icons">
+                        <span class="icon-unchecked"></span>
+                        <span class="icon-checked"></span>
+                    </span>
+                    {{model.id}}
+                </label>
+
+
+                <!-- <button ng-click="choose(specie)" type="button" class="btn btn-primary right">Use</button> -->
+            </accordion-group>
+        </accordion>
     </div>
 
     <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
