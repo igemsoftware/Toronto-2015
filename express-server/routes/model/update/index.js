@@ -4,9 +4,7 @@ var Species = App.Model('species');
 var fs = require('fs');
 
 
-
-router.post('/:id', function(req, res, next) {
-
+function updateModel(req, res, next) {
     Model.findOne({
         id: req.params.id
     }, function(err, model) {
@@ -24,7 +22,7 @@ router.post('/:id', function(req, res, next) {
 
                 fs.readFile(model.file, function(err, data) {
                     data = JSON.parse(data)
-                    //console.log(data.metabolites)
+                        //console.log(data.metabolites)
                     if (err)
                         return res.send(err)
                     data.metabolites = data.metabolites.concat(req.body.addedMetabolites);
@@ -35,43 +33,37 @@ router.post('/:id', function(req, res, next) {
                         }
                     }
                     file = model.file.split(".json")
-                        // console.log(file)
-                        // console.log(file[0] + "-" + model.models.length + ".json")
+                        //add subsytem to metabolites
+
+                    // console.log(file)
+                    // console.log(file[0] + "-" + model.models.length + ".json")
                     fs.writeFile(file[0] + "-" + specie.models.length + ".json", JSON.stringify(data), function(err, data) {
                         if (err)
                             return res.send(err)
                                 //TODO save new model and push _id to specie
-						m = new Model({
-							file: file[0] + "-" + specie.models.length + ".json",
-							id: req.body.id + "-" + specie.models.length,
-							type: model.type,
-							addedMetabolites: req.body.addedMetabolites,
-							addedReactions: req.body.addedReactions
-						})
-						//sketchy as hell
+                        m = new Model({
+                                file: file[0] + "-" + specie.models.length + ".json",
+                                id: req.body.id + "-" + specie.models.length,
+                                type: model.type,
+                                addedMetabolites: req.body.addedMetabolites,
+                                addedReactions: req.body.addedReactions
+                            })
+                            //sketchy as hell
 
-						for(var i = 0; i < req.body.addedReactions.length; i++){
-							for(var element in req.body.addedReactions[i].metabolites){
-								var temp = {}
-								temp.stoichiometric_coefficient = req.body.addedReactions[i].metabolites[element]
-								temp.id = element
-								m.addedReactions[i].metabolites.push(temp)
-							}
-						}
+                        for (var i = 0; i < req.body.addedReactions.length; i++) {
+                            for (var element in req.body.addedReactions[i].metabolites) {
+                                var temp = {}
+                                temp.stoichiometric_coefficient = req.body.addedReactions[i].metabolites[element]
+                                temp.id = element
+                                m.addedReactions[i].metabolites.push(temp)
+                            }
+                        }
 
-
-						m.save(function(err, modelSchema){
-							specie.models.push(modelSchema._id);
-	                        specie.save(function(err, data) {
-	                            if (err)
-	                                return res.send(err)
-								// console.log(data)
-								console.log(modelSchema.addedReactions)
-								res.send("Sent")
-	                        });
-						})
-
-
+                        req.ConsortiaFlux = {
+                            metabolidModel: m,
+                            specie: specie
+                        };
+                        next();
                     })
                 });
                 // var modelSchema = {
@@ -82,7 +74,30 @@ router.post('/:id', function(req, res, next) {
             })
         }
     });
-});
+}
+
+function saveModel(req, res, next) {
+    console.log(req)
+    req.ConsortiaFlux.metabolidModel.save(function(err, modelSchema) {
+        req.ConsortiaFlux.specie.models.push(modelSchema._id);
+        req.ConsortiaFlux.specie.save(function(err, data) {
+            if (err) {
+                res.status(500).send('500 Internal Server Error');
+                return;
+            }
+                    // console.log(data)
+            console.log(modelSchema.addedReactions)
+            res.send(specie)
+        });
+    })
+}
+
+router.post('/:id', [
+    updateModel,
+    App.MW('injectmodel'),
+    saveModel
+]);
+
 
 
 
