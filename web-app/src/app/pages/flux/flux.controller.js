@@ -110,6 +110,42 @@ FluxCtrl.prototype.addReaction = function() {
     }).then(this.onModal.bind(this));
 };
 
+FluxCtrl.prototype.changeCommunity = function() {
+    this.onModal = function(modal) {
+        modal.close.then(this.onModalClose.bind(this));
+    };
+
+    this.onModalClose = function(result) {
+        console.log(result);
+    };
+
+    this.ModalService.showModal({
+        templateUrl: "app/modals/changecommunity/changecommunity.html",
+        controller: "ChangeCommunityModal",
+        inputs: {
+            ConsortiaFluxTool: this.ConsortiaFluxTool
+        }
+    }).then(this.onModal.bind(this));
+};
+
+FluxCtrl.prototype.compareModels = function() {
+    this.onModal = function(modal) {
+        modal.close.then(this.onModalClose.bind(this));
+    };
+
+    this.onModalClose = function(result) {
+        console.log(result);
+    };
+
+    this.ModalService.showModal({
+        templateUrl: "app/modals/comparemodels/comparemodels.html",
+        controller: "CompareModelsModal",
+        inputs: {
+            ConsortiaFluxTool: this.ConsortiaFluxTool
+        }
+    }).then(this.onModal.bind(this));
+};
+
 
 FluxCtrl.prototype.statusModal = function() {
     this.onModal = function(modal) {
