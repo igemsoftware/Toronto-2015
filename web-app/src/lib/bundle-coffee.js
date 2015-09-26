@@ -448,13 +448,6 @@ System = (function() {
     }
     for (k = 0, len1 = reactionData.length; k < len1; k++) {
       reaction = reactionData[k];
-      for (metabolite in reaction.metabolites) {
-        if (metabolites[metabolite].name === 'Thiamin') {
-          if (this.data.id === 'community') {
-            console.log(metabolites[metabolite].species);
-          }
-        }
-      }
       if (!this.everything && reaction.flux_value === 0) {
         continue;
       }

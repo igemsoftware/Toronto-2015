@@ -99,11 +99,11 @@ class System
         # Loop through each reaction in the metabolic model provided
         for reaction in reactionData
 
-            for metabolite of reaction.metabolites
-                if metabolites[metabolite].name is 'Thiamin'
-                    if @data.id is 'community'
-                        # console.log(reaction)
-                        console.log(metabolites[metabolite].species)
+            # for metabolite of reaction.metabolites
+            #     if metabolites[metabolite].name is 'Thiamin'
+            #         if @data.id is 'community'
+            #             # console.log(reaction)
+            #             console.log(metabolites[metabolite].species)
 
             # TODO Create 'filters'
             # Skip if flux is 0

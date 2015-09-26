@@ -24,7 +24,7 @@ for filename in os.listdir(outputDir + "Species"):
     speciesName = filename.split(".")[0]
 
     # Load JSON model
-    print filename
+    # print 'wheeeeeeee: ' + outputDir + "Species/" + filename
     model = cobra.io.load_json_model(outputDir + "Species/" + filename)
 
     # Optimize for biomass
@@ -48,6 +48,7 @@ reactionFluxes = {}
 for filename in os.listdir(outputDir + "Solution1/"):
     # Opens the JSON
 
+    print 'hella: ' + filename
     with open(outputDir + "Solution1/" + filename) as data_file:
         data = json.load(data_file)
 

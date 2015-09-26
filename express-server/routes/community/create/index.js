@@ -70,7 +70,6 @@ function getModelIdAndFile(id, cb, res) {
 
 
 function createCommunity(req, res, next) {
-    console.log(req.body);
     // Given an array of valid model ids
     var community = {};
     community.name = req.body.name;
