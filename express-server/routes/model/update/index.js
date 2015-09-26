@@ -43,7 +43,7 @@ router.post('/:id', function(req, res, next) {
                                 //TODO save new model and push _id to specie
 						m = new Model({
 							file: file[0] + "-" + specie.models.length + ".json",
-							id: file[0] + "-" + specie.models.length,
+							id: req.body.id + "-" + specie.models.length,
 							type: model.type,
 							addedMetabolites: req.body.addedMetabolites,
 							addedReactions: req.body.addedReactions
@@ -58,14 +58,8 @@ router.post('/:id', function(req, res, next) {
 								m.addedReactions[i].metabolites.push(temp)
 							}
 						}
-						// for(var element of  req.body.addedReactions.metabolites){
-						// 	console.log(element);
-							// for(var j = 0; j < keys.length; j++){
-							// 	if(keys[j] === 'id')
-							// 		m.addedReactions[i].id = keys[j]
-							// 	else if(keys[j] === )
-							// }
-						//}
+
+
 						m.save(function(err, modelSchema){
 							specie.models.push(modelSchema._id);
 	                        specie.save(function(err, data) {
