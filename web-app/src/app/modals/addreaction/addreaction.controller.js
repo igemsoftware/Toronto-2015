@@ -35,10 +35,12 @@ angular.module('ConsortiaFlux')
         $scope.registryfound = false;
         $scope.count = 0;
 
+        console.log($scope.speces)
+        console.log(ConsortiaFluxTool.root.system.parsedData)
         $scope.selectSpecie = function(){
             $scope.specieSelected = true;
-            $scope.reactions = ConsortiaFluxTool.root.system.parsedData[$scope.species].reactions
-            $scope.metabolites = ConsortiaFluxTool.root.system.parsedData[$scope.species].metabolites
+            $scope.reactions = ConsortiaFluxTool.root.system.parsedData[$scope.specie].reactions
+            $scope.metabolites = ConsortiaFluxTool.root.system.parsedData[$scope.specie].metabolites
         }
         $scope.queryRegistry = function() {
             this.receiver = function(res) {
@@ -71,6 +73,7 @@ angular.module('ConsortiaFlux')
             }
             ConsortiaFluxTool.metaboliteLength++
             modifiedData.addedMetabolites.push(newMetabolite);
+            $scope.metabolites.push(newMetabolite);
             console.log(modifiedData)
 
 
@@ -114,7 +117,15 @@ angular.module('ConsortiaFlux')
             this.errorCatch = function(err) {
                 console.log(err);
             }
-            var requestUrl = UrlProvider.baseUrl + '/model/update/' + $scope.specie;
+            //implies communtiy
+            var requestUrl;
+            if($scope.species.length > 1)
+                requestUrl = UrlProvider.baseUrl + '/model/update/' ;
+            else {
+                requestUrl = UrlProvider.baseUrl + '/model/update/' + $scope.id;
+            }
+            console.log(ConsortiaFluxTool);
+            return;
             $http.post(requestUrl, modifiedData).then(this.receiver.bind(this), this.errorCatch.bind(this));
 
             close(modifiedData);
