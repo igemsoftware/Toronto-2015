@@ -92,6 +92,7 @@ FluxCtrl.prototype.optimize = function() {
     }
 };
 
+
 FluxCtrl.prototype.addReaction = function() {
     this.onModal = function(modal) {
         modal.close.then(this.onModalClose.bind(this));
@@ -111,21 +112,25 @@ FluxCtrl.prototype.addReaction = function() {
 };
 
 FluxCtrl.prototype.changeCommunity = function() {
-    this.onModal = function(modal) {
-        modal.close.then(this.onModalClose.bind(this));
-    };
-
-    this.onModalClose = function(result) {
-        console.log(result);
-    };
-
     this.ModalService.showModal({
         templateUrl: "app/modals/changecommunity/changecommunity.html",
         controller: "ChangeCommunityModal",
-        inputs: {
-            ConsortiaFluxTool: this.ConsortiaFluxTool
-        }
-    }).then(this.onModal.bind(this));
+    }).then((function(modal) {
+        modal.close.then((function(community) {
+            if (!community || community.models.length === 0)
+                return;
+
+            this.CC.get(community.id, (function(community) {
+                this.type = 'community';
+                console.log(community);
+                // this.MR.modelId = community.id;
+                // this.MR.getBase((function(community) {
+                this.ConsortiaFluxTool.attr.everything = true;
+                this.ConsortiaFluxTool.changeSpecie(community);
+                // }).bind(this));
+            }).bind(this));
+        }).bind(this));
+    }).bind(this));
 };
 
 FluxCtrl.prototype.compareModels = function() {
