@@ -24,6 +24,7 @@ for filename in os.listdir(outputDir + "Species"):
     speciesName = filename.split(".")[0]
 
     # Load JSON model
+    print filename
     model = cobra.io.load_json_model(outputDir + "Species/" + filename)
 
     # Optimize for biomass

@@ -119,7 +119,6 @@ for k in cBiomassObjectiveFunc:
             OF["metabolites"][m] = bc[counter] * ms[m]
             counter += 1
 community["reactions"] += [OF]
-community["type"] = "community"
 
 with open(cmd["output"] + ".json", 'w') as outfile:
     json.dump(community, outfile)

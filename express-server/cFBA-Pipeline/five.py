@@ -4,6 +4,7 @@ import sys
 cmd = json.loads(sys.argv[1])
 outputDir = os.getcwd() + "/cFBA-Pipeline/Output/"
 
+
 import shutil
 
 def deleteFolderContents(folder):
@@ -19,7 +20,6 @@ def deleteFolderContents(folder):
 deleteFolderContents(outputDir + "Solution1")
 deleteFolderContents(outputDir + "Solution2")
 deleteFolderContents(outputDir + "Species")
-
 
 
 

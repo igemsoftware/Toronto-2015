@@ -117,7 +117,9 @@ for filename in cmd["input"]:
             newID = speciesName+"-"+mDict[simplifyName(m["name"].encode("UTF-8"))]+"-"+m["compartment"]
             oldMnew[m["id"]] = newID
             m["id"] = newID
+            # The new line
             m["compartment"] = speciesName + "-" + m["compartment"]
+            #######
         metabolites[m["id"]] = data["metabolites"][i]
         metaInReacts[m["id"]] = []
         speciesM[speciesName] += [m["id"]]

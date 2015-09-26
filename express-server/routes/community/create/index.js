@@ -70,6 +70,7 @@ function getModelIdAndFile(id, cb, res) {
 
 
 function createCommunity(req, res, next) {
+    console.log(req.body);
     // Given an array of valid model ids
     var community = {};
     community.name = req.body.name;
@@ -119,7 +120,10 @@ function optimizeCommunity(req, res, next) {
             input: files,
             output: output
         };
-
+        // console.log(params.input[0])
+        // fs.readFile(params.input[0], function(err, data){
+        //     console.log(data)
+        // })
         args = ['cFBA-Pipeline/run.py', JSON.stringify(params)];
 
         var results = {
@@ -144,11 +148,12 @@ function optimizeCommunity(req, res, next) {
         optimizeScript.on('close', function(code) {
             results.exitcode = code;
 
+            console.log(results);
+
             req.ConsortiaFlux.community.file = outputFolder + '/' + outputFile + '.json';
             req.ConsortiaFlux.community.solution = outputFolder + '/' + outputFile + '_solution.json';
 
             fs.readFile(output + '.json', function(err, model) {
-
                 if (err) {
                     console.log(err);
                     res.status(500).send('500 Internal Server Error');
