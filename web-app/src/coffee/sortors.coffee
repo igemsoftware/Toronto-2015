@@ -91,6 +91,7 @@ module.exports =
                     # a. `-> e`
                     # b. `e -> e`
                     # c. `specie -> e`
+
                     for product in r.products
                         if product.compartment is 'e'
                             # Construct `-> e`
@@ -113,6 +114,7 @@ module.exports =
                                     if not system.graph.hasEdge(specie, r.id)
                                         system.graph.addEdge(specie, r.id, "#{specie} -> #{r.id}")
 
+
     compartments:
         parser: (system)->
             # Give back data for `c` and `p`
@@ -125,6 +127,7 @@ module.exports =
 
             # Loop through reaction objects
             for reaction in system.data.reactions
+
                 # Determine compartments involved with this reaction
                 compartments = new Array()
                 for metabolite of reaction.metabolites
@@ -209,9 +212,12 @@ module.exports =
                 # Consider reactions which have substrates or products which
                 # belong to more than one subsystem. These are the reactions
                 # using/producing metabolites which are shared between subsystems.
+
                 for substrate in r.substrates
+
                     if substrate.subsystems.length > 1
                         # Safe to append Reaction now
+
                         if not system.graph.hasVertex(r.id)
                             system.graph.addVertex(r.id, r)
 
@@ -220,8 +226,10 @@ module.exports =
                             system.graph.addVertex(substrate.id, substrate)
 
                         # Create the edges for M -> R -> SS
+
                         system.graph.addEdge(substrate.id, r.id, "#{substrate.id} -> #{r.id}")
                         system.graph.addEdge(r.id, r.subsystem, "#{r.id} -> #{r.subsystem}")
+
 
                 for product in r.products
                     if product.subsystems.length > 1

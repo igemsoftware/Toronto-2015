@@ -1,82 +1,79 @@
 <div ng-show="display" class="mymodal">
-    <h1>Select a Specie</h1>
-    <select ng-model="specie" ng-options="specie for specie in species"></select>
-    <button ng-click="selectSpecie()">Select</button>
-        <div ng-show="specieSelected">
-            <br>
-            <h1>Add Reaction</h1>
-            name:
-            <input ng-model="name"></input>
-            <br> Subsystem:
-            <input ng-model="subsystem"></input>
-            <br> EC Number:
-            <input ng-model="EC_Number"></input>
-            <br> Upper bound:
-            <input ng-model="upper_bound"></input>
-            <br> Lower bound:
-            <input ng-model="lower_bound"></input>
-            <br> Objective Coefficient
-            <input ng-model="objective_coefficient"></input>
-            <br> Metabolites:
 
-            <!-- <div>{{myMetab.id}}</div> -->
-            <select ng-model="myMetab" ng-options="metabolite.name for metabolite  in metabolites"></select>
-            <br> Metabolite coefficient:
-            <input ng-model="metabolite_cofficient"></input>
+        <br>
+        <h1>Add Reaction</h1>
+        name:
+        <input ng-model="name"></input>
+        <br> Subsystem:
+        <input ng-model="subsystem"></input>
+        <br> EC Number:
+        <input ng-model="EC_Number"></input>
+        <br> Upper bound:
+        <input ng-model="upper_bound"></input>
+        <br> Lower bound:
+        <input ng-model="lower_bound"></input>
+        <br> Objective Coefficient
+        <input ng-model="objective_coefficient"></input>
+        <br> Metabolites:
+
+        <!-- <div>{{myMetab.id}}</div> -->
+        <select ng-model="myMetab" ng-options="metabolite.name for metabolite  in metabolites"></select>
+        <br> Metabolite coefficient:
+        <input ng-model="metabolite_cofficient"></input>
+        <br>
+        <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button>
+        <br>
+        <!-- <addbuttonsbutton ng-model="metabolite"></addbuttonsbutton> -->
+        <!-- <div id="space-for-buttons"> -->
+            </section>
+            <br> Reversible:
+            <select ng-model="reversible">
+                <option value="true">true</option>
+                <option value="false" selected="selected">false</option>
+            </select>
             <br>
-            <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button>
+
+            <!-- Work with registry -->
+
+            Gene Aassociation:
+            <input ng-model="gene_association"></input><br>
+            <button ng-click="queryRegistry()">Search registry</button>
             <br>
-            <!-- <addbuttonsbutton ng-model="metabolite"></addbuttonsbutton> -->
-            <!-- <div id="space-for-buttons"> -->
-                </section>
-                <br> Reversible:
-                <select ng-model="reversible">
-                    <option value="true">true</option>
-                    <option value="false" selected="selected">false</option>
+            <div ng-show="registryfound">
+                Select BBA:
+                <select ng-model="bba" ng-options="reg for reg in registry"></select>
+                <br>
+            </div>
+            <button ng-click="addReaction()">Add Reaction</button>
+            <br>
+            <br>
+
+            <button ng-show="!newMetaboliteDisplay" ng-click="showCreateNewMetabolite()">Create new metabolite</button>
+            <br>
+
+            <div ng-show="newMetaboliteDisplay">
+                Name:
+                <input ng-model="metabName"></input>
+                <br> Compartment:
+                <select ng-model="compartment">
+                    <option value="c">c</option>
+                    <option value="p" selected="selected">p</option>
+                    <option value="e">e</option>
                 </select>
                 <br>
-
-                <!-- Work with registry -->
-
-                Gene Aassociation:
-                <input ng-model="gene_association"></input><br>
-                <button ng-click="queryRegistry()">Search registry</button>
+                <button ng-click="createNewMetabolite()">Create metabolite</button>
                 <br>
-                <div ng-show="registryfound">
-                    Select BBA:
-                    <select ng-model="bba" ng-options="reg for reg in registry"></select>
-                    <br>
-                </div>
-                <button ng-click="addReaction()">Add Reaction</button>
-                <br>
-                <br>
-
-                <button ng-show="!newMetaboliteDisplay" ng-click="showCreateNewMetabolite()">Create new metabolite</button>
-                <br>
-
-                <div ng-show="newMetaboliteDisplay">
-                    Name:
-                    <input ng-model="metabName"></input>
-                    <br> Compartment:
-                    <select ng-model="compartment">
-                        <option value="c">c</option>
-                        <option value="p" selected="selected">p</option>
-                        <option value="e">e</option>
-                    </select>
-                    <br>
-                    <button ng-click="createNewMetabolite()">Create metabolite</button>
-                    <br>
-                </div>
-
-                Delete Reaction:
-                <select ng-model="selectedReaction" ng-options="reaction.name for reaction in reactions"></select>
-                <br>
-                <button ng-click="deleteReaction()">Delete Reaction</button>
-                <br>
-
-
-                <a class="closeButton right" href ng-click="close()">Finish modifications</a>
             </div>
-        </div>
+
+            Delete Reaction:
+            <select ng-model="selectedReaction" ng-options="reaction.name for reaction in reactions"></select>
+            <br>
+            <button ng-click="deleteReaction()">Delete Reaction</button>
+            <br>
+
+
+            <a class="closeButton right" href ng-click="close()">Finish modifications</a>
+</div>
+
 
         <!-- <div class="fade" ng-show="display"></div> -->

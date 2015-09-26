@@ -6,24 +6,20 @@ angular.module('ConsortiaFlux')
 .controller('AddReactionModal', ['$scope', '$http', 'UrlProvider', 'ConsortiaFluxTool', 'close',
 
     function($scope, $http, UrlProvider, ConsortiaFluxTool, close) {
-
+        var model = ConsortiaFluxTool.models[0];
         var modifiedData = {
             addedReactions: new Array(),
             addedMetabolites: new Array(),
-            deletedReactions: new Array()
+            deletedReactions: new Array(),
+            id: model,
+            updatedMetabolites: new Array()
         }
         $scope.display = true;
-        $scope.specieSelected = false;
 
 
-        var species = new Array()
 
-        for (var i = 0; i < ConsortiaFluxTool.species.length; i++) {
-            species.push(ConsortiaFluxTool.species[i])
-        }
         $scope.reversible = "false";
 
-        $scope.species = species;
 
         $scope.name = "Sink needed to allow p-Cresol to leave system";
         $scope.id = "DM_4CRSOL";
@@ -34,14 +30,9 @@ angular.module('ConsortiaFlux')
         $scope.newMetaboliteDisplay = false
         $scope.registryfound = false;
         $scope.count = 0;
+        $scope.reactions = ConsortiaFluxTool.root.system.parsedData[model].reactions
+        $scope.metabolites = ConsortiaFluxTool.root.system.parsedData[model].metabolites
 
-        console.log($scope.speces)
-        console.log(ConsortiaFluxTool.root.system.parsedData)
-        $scope.selectSpecie = function(){
-            $scope.specieSelected = true;
-            $scope.reactions = ConsortiaFluxTool.root.system.parsedData[$scope.specie].reactions
-            $scope.metabolites = ConsortiaFluxTool.root.system.parsedData[$scope.specie].metabolites
-        }
         $scope.queryRegistry = function() {
             this.receiver = function(res) {
                 if (res.data.length === 0) {
@@ -68,7 +59,7 @@ angular.module('ConsortiaFlux')
                 "id": "new-m-" + ConsortiaFluxTool.metaboliteLength,
                 "compartment": $scope.compartment,
                 "species": [
-                    $scope.specie
+                    model
                 ]
             }
             ConsortiaFluxTool.metaboliteLength++
@@ -93,18 +84,23 @@ angular.module('ConsortiaFlux')
                     "lower_bound": Number($scope.lower_bound), //default -1000
                     "subsystem": $scope.subsystem || "", //default ""
                     "id": "new-r-" + ConsortiaFluxTool.reactionLength,
-                    "gene association": $scope.bba || "", //not necceasry
+                    "gene association": $scope.bba || $scope.gene_association || "", //not necceasry
                     "name": $scope.name, //ob.
                     "species": [
-                        $scope.specie
+                        model
                     ],
                     "metabolites": {
 
                     }
                 }
-                //change in angular
+            //change in angular
             reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient)
+            modifiedData.updatedMetabolites.push({
+                id: $scope.myMetab.id,
+                subsystem: $scope.subsystem || ""
+            });
             modifiedData.addedReactions.push(reaction)
+
             console.log(modifiedData);
         }
 
@@ -118,14 +114,8 @@ angular.module('ConsortiaFlux')
                 console.log(err);
             }
             //implies communtiy
-            var requestUrl;
-            if($scope.species.length > 1)
-                requestUrl = UrlProvider.baseUrl + '/model/update/' ;
-            else {
-                requestUrl = UrlProvider.baseUrl + '/model/update/' + $scope.id;
-            }
-            console.log(ConsortiaFluxTool);
-            return;
+            console.log(model)
+            var requestUrl = UrlProvider.baseUrl + '/model/update/' + model;
             $http.post(requestUrl, modifiedData).then(this.receiver.bind(this), this.errorCatch.bind(this));
 
             close(modifiedData);

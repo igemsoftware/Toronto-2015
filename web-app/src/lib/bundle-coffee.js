@@ -212,11 +212,11 @@ Network = (function() {
       this.viewController.startCanvas(this.root.system);
     }
     this.currentLevel = this.root;
-    this.species = new Array();
+    this.models = new Array();
     results = [];
     for (specie in this.root.system.parsedData) {
       if (specie !== "Community") {
-        results.push(this.species.push(specie));
+        results.push(this.models.push(specie));
       } else {
         results.push(void 0);
       }

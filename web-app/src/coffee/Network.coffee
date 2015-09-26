@@ -37,10 +37,10 @@ class Network
             @viewController.startCanvas(@root.system)
 
         @currentLevel = @root
-        @species = new Array()
+        @models = new Array()
         for specie of @root.system.parsedData
             if specie isnt "Community"
-                @species.push(specie)
+                @models.push(specie)
         # #We can get rid of soon
         # @modelChanges = {
         #             addedReactions : new Array()
