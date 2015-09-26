@@ -20,27 +20,19 @@ module.exports = {
             username : '',
             password : '',
             port     : '',
-            database : 'fba'
+            database : 'ConsortiaFlux'
         }
     },
     dev: {
         port: 9001,
         python: 'python',
         staticStore: 'static',
-
         mongodb: {
             hostname : 'localhost',
             username : '',
             password : '',
             port     : '',
-            database : 'fba'
-        },
-
-        mysql: {
-            host     : 'localhost',
-            user     : 'root',
-            password : '',
-            database : 'fba'
+            database : 'ConsortiaFlux'
         }
     }
 };
