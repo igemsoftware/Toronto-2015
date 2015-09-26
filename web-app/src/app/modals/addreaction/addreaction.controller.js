@@ -8,12 +8,12 @@ angular.module('ConsortiaFlux')
     function($scope, $http, UrlProvider, ConsortiaFluxTool, close) {
         var model = ConsortiaFluxTool.models[0];
         var modifiedData = {
-            addedReactions: new Array(),
-            addedMetabolites: new Array(),
-            deletedReactions: new Array(),
+            addedReactions: [],
+            addedMetabolites: [],
+            deletedReactions: [],
             id: model,
-            updatedMetabolites: new Array()
-        }
+            updatedMetabolites: []
+        };
         $scope.display = true;
 
 
@@ -27,11 +27,11 @@ angular.module('ConsortiaFlux')
         $scope.upper_bound = 1000;
         $scope.lower_bound = -1000;
         $scope.objective_coefficient = 0;
-        $scope.newMetaboliteDisplay = false
+        $scope.newMetaboliteDisplay = false;
         $scope.registryfound = false;
         $scope.count = 0;
-        $scope.reactions = ConsortiaFluxTool.root.system.parsedData[model].reactions
-        $scope.metabolites = ConsortiaFluxTool.root.system.parsedData[model].metabolites
+        $scope.reactions = ConsortiaFluxTool.root.system.parsedData[model].reactions;
+        $scope.metabolites = ConsortiaFluxTool.root.system.parsedData[model].metabolites;
 
         $scope.queryRegistry = function() {
             this.receiver = function(res) {
@@ -41,17 +41,17 @@ angular.module('ConsortiaFlux')
                     $scope.registry = res.data;
                     $scope.registryfound = true;
                 }
-            }
+            };
 
             this.errorCatch = function(err) {
                 console.log(err);
-            }
+            };
             var requestUrl = UrlProvider.baseUrl + '/model/retrieve/bba/' + $scope.gene_association;
             $http.post(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
-        }
+        };
         $scope.showCreateNewMetabolite = function(){
             $scope.newMetaboliteDisplay = true;
-        }
+        };
         $scope.createNewMetabolite = function() {
             $scope.newMetaboliteDisplay = true;
             var newMetabolite = {
@@ -61,19 +61,19 @@ angular.module('ConsortiaFlux')
                 "species": [
                     model
                 ]
-            }
-            ConsortiaFluxTool.metaboliteLength++
+            };
+            ConsortiaFluxTool.metaboliteLength++;
             modifiedData.addedMetabolites.push(newMetabolite);
             $scope.metabolites.push(newMetabolite);
-            console.log(modifiedData)
+            console.log(modifiedData);
 
 
-        }
+        };
         $scope.deleteReaction = function(){
             modifiedData.deletedReactions.push($scope.selectedReaction.id);
-            console.log($scope.selectedReaction)
-            console.log(modifiedData)
-        }
+            console.log($scope.selectedReaction);
+            console.log(modifiedData);
+        };
         $scope.addReaction = function() {
             var reaction = {
                     "EC_Number": $scope.EC_Number || "", //Optional
@@ -92,33 +92,35 @@ angular.module('ConsortiaFlux')
                     "metabolites": {
 
                     }
-                }
+                };
             //change in angular
-            reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient)
+            reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient);
             modifiedData.updatedMetabolites.push({
                 id: $scope.myMetab.id,
                 subsystem: $scope.subsystem || ""
             });
-            modifiedData.addedReactions.push(reaction)
+            modifiedData.addedReactions.push(reaction);
 
             console.log(modifiedData);
-        }
+        };
 
         $scope.close = function(result) {
-            $scope.display = false;
             this.receiver = function(res) {
-                console.log(res)
-            }
+                $scope.display = false;
+                console.log(res);
+                close(modifiedData);
+            };
 
             this.errorCatch = function(err) {
                 console.log(err);
-            }
+            };
             //implies communtiy
-            console.log(model)
+
             var requestUrl = UrlProvider.baseUrl + '/model/update/' + model;
+            // console.log(requestUrl);
+            // console.log(modifiedData);
             $http.post(requestUrl, modifiedData).then(this.receiver.bind(this), this.errorCatch.bind(this));
 
-            close(modifiedData);
         };
         // var ReactionSchema = {
         //     "EC_Number": 'String',
