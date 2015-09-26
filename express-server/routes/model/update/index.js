@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var Model = App.Model('model');
 var Species = App.Model('species');
+var cp = require('child_process');
 var fs = require('fs');
 
 
@@ -21,10 +22,10 @@ function updateModel(req, res, next) {
             }, function(err, specie) {
 
                 fs.readFile(model.file, function(err, data) {
-                    data = JSON.parse(data)
+                    data = JSON.parse(data);
                         //console.log(data.metabolites)
                     if (err)
-                        return res.send(err)
+                        return res.send(err);
                     data.metabolites = data.metabolites.concat(req.body.addedMetabolites);
                     data.reactions = data.reactions.concat(req.body.addedReactions);
                     for (var i = 0; i < data.reactions.length; i++) {
@@ -32,7 +33,7 @@ function updateModel(req, res, next) {
                             data.reactions.splice(i, 1);
                         }
                     }
-                    file = model.file.split(".json")
+                    file = model.file.split(".json");
                         //add subsytem to metabolites
 
                     req.ConsortiaFlux = {
@@ -41,15 +42,13 @@ function updateModel(req, res, next) {
                         file: file
                     };
                     next();
-
-
                 });
                 // var modelSchema = {
                 //     id: req.params.id + "-" + model.models.length
                 // }
                 //console.log(modelSchema)
                 // res.send(model);
-            })
+            });
         }
     });
 }
@@ -59,32 +58,62 @@ function writeFile(req, res, next) {
     // console.log(file[0] + "-" + model.models.length + ".json")
     var specie = req.ConsortiaFlux.specie;
     var file = req.ConsortiaFlux.file;
-    var fileName = file[0] + "-" + specie.models.length + ".json"
+    var fileName = file[0] + "-" + specie.models.length + ".json";
     var model = req.ConsortiaFlux.metabolicModel;
     fs.writeFile(fileName, JSON.stringify(model), function(err, data) {
         if (err)
-            return res.send(err)
+            return res.send(err);
                 //TODO save new model and push _id to specie
         m = new Model({
             file: file[0] + "-" + specie.models.length + ".json",
             id: req.body.id + "-" + specie.models.length,
-            type: model.type,
+            type: 'specie',
             addedMetabolites: req.body.addedMetabolites,
-            addedReactions: req.body.addedReactions,
-            type: 'specie'
-        })
+            addedReactions: req.body.addedReactions
+        });
             //sketchy as hell
 
         for (var i = 0; i < req.body.addedReactions.length; i++) {
             for (var element in req.body.addedReactions[i].metabolites) {
-                var temp = {}
-                temp.stoichiometric_coefficient = req.body.addedReactions[i].metabolites[element]
-                temp.id = element
-                m.addedReactions[i].metabolites.push(temp)
+                var temp = {};
+                temp.stoichiometric_coefficient = req.body.addedReactions[i].metabolites[element];
+                temp.id = element;
+                m.addedReactions[i].metabolites.push(temp);
             }
         }
 
         req.ConsortiaFlux.metabolicModel = m;
+        next();
+    });
+}
+
+function modifyDictionary(req, res, next) {
+    args = ['cFBA-Pipeline/load-to-dictionaries.py', req.ConsortiaFlux.metabolicModel.file];
+
+    var results = {
+        output: '',
+        errorlog: '',
+        exitcode: null
+    };
+
+    var optimizeScript = cp.spawn(App.config().python, args);
+
+    // get stdout
+    optimizeScript.stdout.on('data', function(stdout) {
+        results.output += stdout.toString();
+    });
+
+    // get stderr
+    optimizeScript.stderr.on('data', function(stderr) {
+        results.errorlog += stderr.toString();
+    });
+
+    // script finished
+    optimizeScript.on('close', function(code) {
+        results.exitcode = code;
+
+        console.log(results);
+
         next();
     });
 }
@@ -100,7 +129,7 @@ function saveModel(req, res, next) {
 
         req.ConsortiaFlux.specie.models.push(model._id);
 
-        console.log(req.ConsortiaFlux)
+        console.log(req.ConsortiaFlux);
 
         req.ConsortiaFlux.specie.save(function(err, data) {
             if (err) {
@@ -117,15 +146,16 @@ function saveModel(req, res, next) {
             // console.log(data)
             // console.log(model.addedReactions);
             // console.log(req.ConsortiaFlux.specie);
-            res.send('sent')
+            res.send('sent');
         });
-    })
+    });
 }
 
 router.post('/:id', [
     updateModel,
     App.MW('injectmodel'),
     writeFile,
+    modifyDictionary,
     saveModel
 ]);
 

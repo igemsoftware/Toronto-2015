@@ -11,6 +11,7 @@ angular.module('ConsortiaFlux')
             addedReactions: [],
             addedMetabolites: [],
             deletedReactions: [],
+            //dw
             id: model,
             updatedMetabolites: []
         };
@@ -97,7 +98,7 @@ angular.module('ConsortiaFlux')
             reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient);
             modifiedData.updatedMetabolites.push({
                 id: $scope.myMetab.id,
-                subsystem: $scope.subsystem || ""
+                subsystem: [$scope.subsystem] || [""]
             });
             modifiedData.addedReactions.push(reaction);
 
@@ -107,7 +108,7 @@ angular.module('ConsortiaFlux')
         $scope.close = function(result) {
             this.receiver = function(res) {
                 $scope.display = false;
-                console.log(res);
+                //console.log(res);
                 close(modifiedData);
             };
 
