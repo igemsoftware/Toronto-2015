@@ -160,7 +160,7 @@ canvas {
     font-size: 2em; }
     #topbar h3:hover {
       color: #CE93D8; }
-  #topbar .model {
+  #topbar .status {
     color: white;
     background-color: #42A5F5;
     display: block;

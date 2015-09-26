@@ -18,8 +18,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href ng-click="fluxCtrl.addReaction()" tooltips title="Add Reaction" tooltip-side="bottom">
-                        <i class="fa fa-plus"></i>
+                    <a href ng-click="fluxCtrl.addReaction()" tooltips title="Modify Model" tooltip-side="bottom">
+                        <i class="fa fa-pencil"></i>
                     </a>
                 </li>
                 <li>
@@ -32,12 +32,12 @@
         <div class="right take-remaining-width">
             <ul>
                 <li>
-                    <a href>
-                        <span class="model" ng-show="fluxCtrl.community.models.length === 1">
-                            {{fluxCtrl.currentModel}}
+                    <a href ng-click="fluxCtrl.statusModal()">
+                        <span class="status" ng-show="fluxCtrl.type === 'specie'">
+                            {{fluxCtrl.MR.modelId}}
                         </span>
-                        <span class="model" ng-show="fluxCtrl.community.models.length > 1">
-                            Community ({{fluxCtrl.community.models.length}})
+                        <span class="status" ng-show="fluxCtrl.type === 'community'">
+                            Community ({{fluxCtrl.CC.models.length}})
                         </span>
                     </a>
                 </li>

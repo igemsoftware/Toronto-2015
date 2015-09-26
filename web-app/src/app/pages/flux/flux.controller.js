@@ -10,22 +10,14 @@
 angular.module('ConsortiaFlux').controller('FluxCtrl', FluxCtrl);
 
 function FluxCtrl($http, UrlProvider, ModalService, ModelRetriever, CommunityCreator) {
+    // Save services into FluxCtrl
     this._http = $http;
     this.UrlProvider = UrlProvider;
     this.ModalService = ModalService;
     this.MR = ModelRetriever;
     this.CC = CommunityCreator;
 
-
-    this.community = {
-        models: ['iJO1366']
-    };
-    this.currentModel = this.community.models[0];
     this.type = 'specie';
-    this.data = {};
-    this.loading = true;
-
-
     this.MR.modelId = 'iJO1366';
     this.MR.getBase((function(model) {
         var sortables = {
@@ -106,13 +98,40 @@ FluxCtrl.prototype.addReaction = function() {
     };
 
     this.onModalClose = function(result) {
-        console.log(result)
-    }
+        console.log(result);
+    };
+
     this.ModalService.showModal({
         templateUrl: "app/modals/addreaction/addreaction.html",
         controller: "AddReactionModal",
         inputs: {
             ConsortiaFluxTool: this.ConsortiaFluxTool
+        }
+    }).then(this.onModal.bind(this));
+};
+
+
+FluxCtrl.prototype.statusModal = function() {
+    this.onModal = function(modal) {
+        modal.close.then(this.onModalClose.bind(this));
+    };
+
+    this.onModalClose = function(result) {
+        console.log(result);
+    };
+
+    var models = [];
+    if (this.type === 'specie') {
+        models = [this.MR.modelId];
+    } else if (this.type === 'community') {
+        models = this.CC.models;
+    }
+
+    this.ModalService.showModal({
+        templateUrl: "app/modals/status/status.html",
+        controller: "StatusModal",
+        inputs: {
+            models: models
         }
     }).then(this.onModal.bind(this));
 };

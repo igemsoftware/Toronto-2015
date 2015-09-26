@@ -4,7 +4,6 @@
 angular.module('ConsortiaFlux')
 
 .service('ModelRetriever', ['$http', 'UrlProvider', function($http, UrlProvider) {
-    this.type = null;
     this.modelId = null;
 
     this.getModel = function(cb) {

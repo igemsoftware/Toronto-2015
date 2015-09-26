@@ -5,12 +5,15 @@ angular.module('ConsortiaFlux')
 
 .service('CommunityCreator', ['$http', 'UrlProvider', function($http, UrlProvider) {
     this.modelId = null;
+    this.models = []
 
     this.create = function(models, cb) {
 
         // turn ['iJO1366', 'Mb_iUPDATE'] into ['Mb_iUPDATE', 'iJO1366']
         var tModels = [models.models[1], models.models[0]];
         models.models = tModels;
+
+        this.models = tModels;
 
         $http.post(UrlProvider.baseUrl + '/community/create', models).then((function(res){
 

@@ -1,0 +1,13 @@
+<div ng-show="display" class="mymodal">
+    <h3> Status </h3>
+
+    <ul>
+        <li ng-repeat="model in models">
+            {{model}}
+        </li>
+    </ul>
+
+    <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
+    <button ng-click="close()" type="button" class="btn btn-danger right">Close</button>
+</div>
+<!-- <div class="fade" ng-show="display"></div> -->
