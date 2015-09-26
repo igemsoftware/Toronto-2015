@@ -1,0 +1,23 @@
+<div ng-show="display" class="mymodal">
+    <div ng-show="loading">
+        Retrieving communities list...
+        <i ng-show="loading" class="fa fa-5x fa-spin fa-spinner"></i>
+    </div>
+    <div ng-show="!loading">
+        <h3> Choose a community </h3>
+        <label class="radio" ng-repeat="community in communities">
+            <input type="radio" name="optionsRadios" value="option1" data-toggle="radio" class="custom-radio">
+            <span class="icons">
+                <span class="icon-unchecked"></span>
+                <span class="icon-checked"></span>
+            </span>
+            {{community.name}}
+        </label>
+    </div>
+
+    <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
+    <button ng-click="close()" type="button" class="btn btn-danger right">Close</button>
+    <button ng-click="render()" ng-show="community.length === 1" ng-click="renderModel()" type="button" class="btn btn-primary">Render Model</button>
+    <button ng-click="render()" ng-show="community.length > 1" ng-click="renderCommunity()" type="button" class="btn btn-primary">Render Community</button>
+</div>
+<!-- <div class="fade" ng-show="display"></div> -->
