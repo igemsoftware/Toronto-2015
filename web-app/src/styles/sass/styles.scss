@@ -237,10 +237,17 @@ canvas {
                     padding: 10px;
                 }
 
+
+
                 &:hover {
-                    color: $blue-400;
+
 
                     i {
+                        &.faded {
+                            color: $grey-400;
+                        }
+
+                        color: $blue-400;
                         background-color: $grey-700;
                     }
 

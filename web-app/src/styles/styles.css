@@ -185,12 +185,13 @@ canvas {
           font-size: 30px;
           width: 50px;
           padding: 10px; }
-        #topbar ul li a:hover {
-          color: #42A5F5; }
-          #topbar ul li a:hover i {
-            background-color: #616161; }
-          #topbar ul li a:hover ul {
-            left: 0; }
+        #topbar ul li a:hover i {
+          color: #42A5F5;
+          background-color: #616161; }
+          #topbar ul li a:hover i.faded {
+            color: #BDBDBD; }
+        #topbar ul li a:hover ul {
+          left: 0; }
 
 a {
   text-decoration: none; }
