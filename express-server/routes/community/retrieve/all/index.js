@@ -8,12 +8,12 @@ function sendAllCommunities(req, res, next) {
             res.status(500).send('500 Internal Server Error');
             return;
         }
-        console.log(communities)
         if (communities.length === 0) {
             res.status(403).send('No communities\n');
             return;
         } else {
-            res.send(communities.members);
+            console.log(communities)
+            res.send(communities);
         }
     });
 }
