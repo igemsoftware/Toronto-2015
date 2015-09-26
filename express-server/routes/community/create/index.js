@@ -17,6 +17,8 @@ function dashify(str) {
 }
 
 function checkIfCommunityExists(req, res, next) {
+
+
     var requestSet = new sets.Set(req.body.models);
 
     Community.find('members', function(err, communities) {
@@ -77,7 +79,6 @@ function createCommunity(req, res, next) {
     community.members = [];
 
     var checkProgress = function(modelId, file) {
-        console.log(modelId);
         community.members.push({
             model: modelId,
             file: file
@@ -87,9 +88,12 @@ function createCommunity(req, res, next) {
             req.ConsortiaFlux = {
                 community: community
             };
+            console.log('going next with');
+            console.log(req.ConsortiaFlux);
             next();
         }
     };
+
 
     req.body.models.forEach(function(model) {
         getModelIdAndFile(model, checkProgress, res);
@@ -97,13 +101,15 @@ function createCommunity(req, res, next) {
 }
 
 function optimizeCommunity(req, res, next) {
+    console.log('then optimizing');
     var files = [];
+    // console.log(req.ConsortiaFlux)
     req.ConsortiaFlux.community.members.forEach(function(member) {
         files.push(member.file);
     });
 
 
-    console.log(files);
+    // console.log(files);
 
     var outputFile = dashify(req.ConsortiaFlux.community.name);
     var outputFolder = App.config().staticStore + '/communities/' + outputFile;
