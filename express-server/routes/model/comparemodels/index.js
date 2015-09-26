@@ -32,18 +32,36 @@ function compareFlux(req, res, next){
                     model1data = JSON.parse(model1data);
                     model2data = JSON.parse(model2data);
 
-                    var compared = {}
-                    for(var model1key in model1data.x_dict){
-                        for(var model2key in model2data.x_dict){
-                            if(model1data.x_dict[model2key]){
-                                compared[model2key] = model2data.x_dict[model2key] - model1data.x_dict[model2key]
+                    map(model1.file, function(err, map){
+                        if(err)
+                            return console.log(err)
+                        var compared = {}
+                        for(var model1key in model1data.x_dict){
+                            for(var model2key in model2data.x_dict){
+                                if(model1data.x_dict[model2key]){
+                                    compared[map[model2key]] = model2data.x_dict[model2key] - model1data.x_dict[model2key]
+                                }
                             }
                         }
-                    }
-                    res.send(compared)
+                        res.send(compared)
+                    })
+
                 })
             })
         })
+    })
+}
+function map(file, callback){
+    fs.readFile(file.toString(), function(err, data){
+        if(err)
+            return callback(err)
+        data = JSON.parse(data);
+        var reactions = data.reactions
+        var map = {}
+        for(var i = 0; i < reactions.length; i++){
+            map[reactions[i].id] = reactions[i].name
+        }
+        callback(null, map)
     })
 }
 
