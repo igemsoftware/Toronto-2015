@@ -17,9 +17,14 @@
                         <i class="fa fa-crosshairs"></i>
                     </a>
                 </li>
-                <li>
+                <li ng-show="fluxCtrl.type === 'specie'">
                     <a href ng-click="fluxCtrl.addReaction()" tooltips title="Modify Model" tooltip-side="bottom">
                         <i class="fa fa-pencil"></i>
+                    </a>
+                </li>
+                <li ng-show="fluxCtrl.type === 'community'">
+                    <a tooltips title="Cannot modify community model" tooltip-side="bottom">
+                        <i class="faded fa fa-pencil"></i>
                     </a>
                 </li>
                 <li>
