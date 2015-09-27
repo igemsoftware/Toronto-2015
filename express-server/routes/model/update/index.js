@@ -61,6 +61,7 @@ function writeFile(req, res, next) {
     var fileName = file[0] + "-" + specie.models.length + ".json";
     var model = req.ConsortiaFlux.metabolicModel;
     fs.writeFile(fileName, JSON.stringify(model), function(err, data) {
+
         if (err)
             return res.send(err);
                 //TODO save new model and push _id to specie
@@ -72,11 +73,12 @@ function writeFile(req, res, next) {
             addedReactions: req.body.addedReactions
         });
             //sketchy as hell
-
         for (var i = 0; i < req.body.addedReactions.length; i++) {
             for (var element in req.body.addedReactions[i].metabolites) {
                 var temp = {};
-                temp.stoichiometric_coefficient = req.body.addedReactions[i].metabolites[element];
+                //console.log(req.body.addedReactions[i])
+
+                temp.stoichiometric_coefficient = req.body.addedReactions[i].metabolites[element].coefficient;
                 temp.id = element;
                 m.addedReactions[i].metabolites.push(temp);
             }

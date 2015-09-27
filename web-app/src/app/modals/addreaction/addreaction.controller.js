@@ -11,7 +11,7 @@ angular.module('ConsortiaFlux')
         $scope.modifiedData = {
             addedReactions: [],
             addedMetabolites: [],
-            deletedReactions: [],
+            deletedReactions: []
             //dw
             // id: model,
             // updatedMetabolites: []
@@ -148,7 +148,7 @@ angular.module('ConsortiaFlux')
             console.log($scope.modifiedData);
             var url = UrlProvider.baseUrl + '/model/update/' + model;
             $http.post(url, $scope.modifiedData).then(function(res) {
-                console.log(res.data);
+                //console.log(res.data);
             }, function(err) {
                 console.log(err);
             });

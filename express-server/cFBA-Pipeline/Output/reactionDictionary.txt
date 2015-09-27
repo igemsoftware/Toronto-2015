@@ -3705,3 +3705,6 @@ R3705	K+ exchange
 R3706	Mn2+ exchange
 R3707	Ni2+ exchange
 R3707	Co2+ exchange
+R3708	sadf
+R3709	asdf
+R3710	asdfa
