@@ -1,79 +1,112 @@
 <div ng-show="display" class="mymodal">
+    <form class="form-horizontal">
+        <h4>Add Reaction</h4>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">Name</label>
+            <div class="col-xs-10">
+                <input ng-model="name" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">Subsystem</label>
+            <div class="col-xs-10">
+                <input ng-model="subsystem" class="form-control" id="inputEmail" placeholder="wicked subsystem">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">EC Number</label>
+            <div class="col-xs-10">
+                <input ng-model="EC_Number" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">Upper Bound</label>
+            <div class="col-xs-10">
+                <input ng-model="upper_bound" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">Lower Bound</label>
+            <div class="col-xs-10">
+                <input ng-model="lower_bound" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-3">Objective Coefficient</label>
+            <div class="col-xs-9">
+                <input ng-model="objective_coefficient" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">Reversible</label>
+            <div class="col-xs-10">
+                <select ng-model="reversible">
+                    <option value="true">true</option>
+                    <option value="false" selected="selected">false</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-3">Gene Association</label>
+            <div class="col-xs-6">
+                <input class="form-control" ng-model="gene_association"></input>
 
-        <br>
-        <h1>Add Reaction</h1>
-        name:
-        <input ng-model="name"></input>
-        <br> Subsystem:
-        <input ng-model="subsystem"></input>
-        <br> EC Number:
-        <input ng-model="EC_Number"></input>
-        <br> Upper bound:
-        <input ng-model="upper_bound"></input>
-        <br> Lower bound:
-        <input ng-model="lower_bound"></input>
-        <br> Objective Coefficient
-        <input ng-model="objective_coefficient"></input>
-        <br> Metabolites:
+            </div>
+            <div class="col-xs-3">
+                <button ng-click="queryRegistry()">Search registry</button>
+            </div>
+                <div ng-show="registryfound">
+                    Select BBA:
+                    <select ng-model="bba" ng-options="reg for reg in registry"></select>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">Metabolite</label>
+            <div class="col-xs-6">
+                <select ng-model="myMetab" ng-options="metabolite.name for metabolite in metabolites"></select>
+            </div>
+            <label class="control-label col-xs-2">Coefficient</label>
+            <div class="col-xs-2">
+                <input class="form-control" ng-model="metabolite_cofficient"></input>
+            </div>
+        </div>
 
-        <!-- <div>{{myMetab.id}}</div> -->
-        <select ng-model="myMetab" ng-options="metabolite.name for metabolite  in metabolites"></select>
-        <br> Metabolite coefficient:
-        <input ng-model="metabolite_cofficient"></input>
-        <br>
         <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button>
+
+
+        <!-- Work with registry -->
+        <button ng-click="addReaction()">Add Reaction</button>
         <br>
-        <!-- <addbuttonsbutton ng-model="metabolite"></addbuttonsbutton> -->
-        <!-- <div id="space-for-buttons"> -->
-            </section>
-            <br> Reversible:
-            <select ng-model="reversible">
-                <option value="true">true</option>
-                <option value="false" selected="selected">false</option>
+        <br>
+
+        <button ng-show="!newMetaboliteDisplay" ng-click="showCreateNewMetabolite()">Create new metabolite</button>
+        <br>
+
+        <div ng-show="newMetaboliteDisplay">
+            Name:
+            <input ng-model="metabName"></input>
+            <br> Compartment:
+            <select ng-model="compartment">
+                <option value="c">c</option>
+                <option value="p" selected="selected">p</option>
+                <option value="e">e</option>
             </select>
             <br>
-
-            <!-- Work with registry -->
-
-            Gene Aassociation:
-            <input ng-model="gene_association"></input><br>
-            <button ng-click="queryRegistry()">Search registry</button>
+            <button ng-click="createNewMetabolite()">Create metabolite</button>
             <br>
-            <div ng-show="registryfound">
-                Select BBA:
-                <select ng-model="bba" ng-options="reg for reg in registry"></select>
-                <br>
-            </div>
-            <button ng-click="addReaction()">Add Reaction</button>
-            <br>
-            <br>
+        </div>
 
-            <button ng-show="!newMetaboliteDisplay" ng-click="showCreateNewMetabolite()">Create new metabolite</button>
-            <br>
-
-            <div ng-show="newMetaboliteDisplay">
-                Name:
-                <input ng-model="metabName"></input>
-                <br> Compartment:
-                <select ng-model="compartment">
-                    <option value="c">c</option>
-                    <option value="p" selected="selected">p</option>
-                    <option value="e">e</option>
-                </select>
-                <br>
-                <button ng-click="createNewMetabolite()">Create metabolite</button>
-                <br>
-            </div>
-
-            Delete Reaction:
-            <select ng-model="selectedReaction" ng-options="reaction.name for reaction in reactions"></select>
-            <br>
-            <button ng-click="deleteReaction()">Delete Reaction</button>
-            <br>
+        Delete Reaction:
+        <select ng-model="selectedReaction" ng-options="reaction.name for reaction in reactions"></select>
+        <br>
+        <button ng-click="deleteReaction()">Delete Reaction</button>
+        <br>
 
 
-            <a class="closeButton right" href ng-click="close()">Finish modifications</a>
+        <a class="closeButton right" href ng-click="close()">Finish modifications</a>
 </div>
 
 
-        <!-- <div class="fade" ng-show="display"></div> -->
+<!-- <div class="fade" ng-show="display"></div> -->
