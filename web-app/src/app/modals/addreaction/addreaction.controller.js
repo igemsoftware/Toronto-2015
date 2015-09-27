@@ -7,20 +7,18 @@ angular.module('ConsortiaFlux')
 
     function($scope, $http, UrlProvider, ConsortiaFluxTool, close) {
         var model = ConsortiaFluxTool.models[0];
-        var modifiedData = {
+
+        $scope.modifiedData = {
             addedReactions: [],
             addedMetabolites: [],
             deletedReactions: [],
             //dw
-            id: model,
-            updatedMetabolites: []
+            // id: model,
+            // updatedMetabolites: []
         };
         $scope.display = true;
 
-
-
         $scope.reversible = "false";
-
 
         $scope.name = "Sink needed to allow p-Cresol to leave system";
         $scope.id = "DM_4CRSOL";
@@ -32,7 +30,7 @@ angular.module('ConsortiaFlux')
         $scope.registryfound = false;
         $scope.count = 0;
         $scope.reactions = ConsortiaFluxTool.root.system.parsedData[model].reactions;
-        $scope.metabolites = ConsortiaFluxTool.root.system.parsedData[model].metabolites;
+        $scope.allMetabolites = ConsortiaFluxTool.root.system.parsedData[model].metabolites;
 
         $scope.queryRegistry = function() {
             this.receiver = function(res) {
@@ -40,6 +38,7 @@ angular.module('ConsortiaFlux')
                     $scope.gene_association = "Not a valid registry";
                 } else {
                     $scope.registry = res.data;
+                    console.log($scope.registry);
                     $scope.registryfound = true;
                 }
             };
@@ -50,79 +49,111 @@ angular.module('ConsortiaFlux')
             var requestUrl = UrlProvider.baseUrl + '/model/retrieve/bba/' + $scope.gene_association;
             $http.post(requestUrl).then(this.receiver.bind(this), this.errorCatch.bind(this));
         };
-        $scope.showCreateNewMetabolite = function(){
-            $scope.newMetaboliteDisplay = true;
+
+        $scope.addReaction = function() {
+            $scope.modifiedData.addedReactions.push({
+                name: '',
+                EC_Number: '',
+                upper_bound: '',
+                lower_bound: '',
+                objective_coefficient_coefficient: '',
+                reversibility: null,
+                metabolites: [{
+                    name: '',
+                    coefficient: ''
+                }]
+            });
         };
-        $scope.createNewMetabolite = function() {
-            $scope.newMetaboliteDisplay = true;
+
+        $scope.addMetabolite = function() {
+            $scope.modifiedData.addedMetabolites.push({
+                name: '',
+                compartment: ''
+            });
+        };
+
+        $scope.addDeletableableReaction = function() {
+            $scope.modifiedData.deletedReactions.push({
+                name: ''
+            });
+        };
+
+        $scope.addMetaboliteToReaction = function(reaction) {
+            reaction.metabolites.push({
+                name: '',
+                coefficient: ''
+            });
+        };
+
+        $scope.close = function(result) {
+            $scope.display = false;
+            close(null);
+        };
+
+        $scope.makeMetaboliteAvailable = function(metabolite) {
             var newMetabolite = {
-                "name": $scope.metabName,
-                "id": "new-m-" + ConsortiaFluxTool.metaboliteLength,
-                "compartment": $scope.compartment,
+                "name": metabolite.name,
+                "id": "new-m-" + metabolite.compartment + '-' + ConsortiaFluxTool.metaboliteLength,
+                "compartment": metabolite.compartment,
                 "species": [
                     model
                 ]
             };
             ConsortiaFluxTool.metaboliteLength++;
-            modifiedData.addedMetabolites.push(newMetabolite);
-            $scope.metabolites.push(newMetabolite);
-            console.log(modifiedData);
+            // $scope.modifiedData.addedMetabolites.push(newMetabolite);
+            $scope.allMetabolites.push(newMetabolite);
+        };
+
+        $scope.apply = function(result) {
+            var tempReactions = [];
+            $scope.modifiedData.addedReactions.forEach(function(reaction) {
+                var r = {};
+                r.name = reaction.name;
+                r['EC_Number'] = reaction['EC_Number'];
+                r.upper_bound = Number(reaction.upper_bound);
+                r.lower_bound = Number(reaction.lower_bound);
+                r.objective_coefficient = Number(reaction.objective_coefficient);
+                r.reversible = reaction.reversible;
+                r.gene_association = reaction.gene_assocation;
+                r.metabolites = reaction.metabolites;
+
+                tempReactions.push(r);
+            });
+
+            $scope.modifiedData.addedReactions = tempReactions;
 
 
-        };
-        $scope.deleteReaction = function(){
-            modifiedData.deletedReactions.push($scope.selectedReaction.id);
-            console.log($scope.selectedReaction);
-            console.log(modifiedData);
-        };
-        $scope.addReaction = function() {
-            var reaction = {
-                    "EC_Number": $scope.EC_Number || "", //Optional
-                    "upper_bound": Number($scope.upper_bound), //optional, default 1000
-                    "objective_coefficient": Number($scope.objective_coefficient), //default 0
-                    "reversible": JSON.parse($scope.reversible), //defult false
-                    "outside": null,
-                    "lower_bound": Number($scope.lower_bound), //default -1000
-                    "subsystem": $scope.subsystem || "", //default ""
-                    "id": "new-r-" + ConsortiaFluxTool.reactionLength,
-                    "gene association": $scope.bba || $scope.gene_association || "", //not necceasry
-                    "name": $scope.name, //ob.
+            var tempMetabs = [];
+            $scope.modifiedData.addedMetabolites.forEach(function(metabolite) {
+                var newMetabolite = {
+                    "name": metabolite.name,
+                    "id": "new-m-" + ConsortiaFluxTool.metaboliteLength + '-' + metabolite.compartment,
+                    "compartment": metabolite.compartment,
                     "species": [
                         model
-                    ],
-                    "metabolites": {
-
-                    }
+                    ]
                 };
-            //change in angular
-            reaction.metabolites[$scope.myMetab.id] = Number($scope.metabolite_cofficient);
-            modifiedData.updatedMetabolites.push({
-                id: $scope.myMetab.id,
-                subsystem: [$scope.subsystem] || [""]
+                tempMetabs.push(newMetabolite);
             });
-            modifiedData.addedReactions.push(reaction);
 
-            console.log(modifiedData);
-        };
+            $scope.modifiedData.addedMetabolites = tempMetabs;
 
-        $scope.close = function(result) {
-            this.receiver = function(res) {
-                $scope.display = false;
-                //console.log(res);
-                close(modifiedData);
-            };
+            var tempDeletables = [];
+            $scope.modifiedData.deletedReactions.forEach(function(reaction) {
+                tempDeletables.push(reaction.name);
+            });
 
-            this.errorCatch = function(err) {
+            $scope.modifiedData.deletedReactions = tempDeletables;
+
+            console.log($scope.modifiedData);
+            var url = UrlProvider.baseUrl + '/model/update/' + model;
+            $http.post(url, $scope.modifiedData).then(function(res) {
+                console.log(res.data);
+            }, function(err) {
                 console.log(err);
-            };
-            //implies communtiy
-
-            var requestUrl = UrlProvider.baseUrl + '/model/update/' + model;
-            // console.log(requestUrl);
-            // console.log(modifiedData);
-            $http.post(requestUrl, modifiedData).then(this.receiver.bind(this), this.errorCatch.bind(this));
-
+            });
         };
+
         // var ReactionSchema = {
         //     "EC_Number": 'String',
         //     "upper_bound": 'Number',

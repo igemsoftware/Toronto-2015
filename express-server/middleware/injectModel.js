@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
     metabolicModel.reactions.forEach(function(reaction) {
         // species array into reactions
         reaction.species = [metabolicModel.id];
-
+        console.log(reaction)
         // Subsystems array into metabolites
         Object.keys(reaction.metabolites).forEach(function(metabolite) {
             if (reaction.subsystem === '') {
