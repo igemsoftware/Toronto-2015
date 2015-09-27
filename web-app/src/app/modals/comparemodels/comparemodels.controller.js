@@ -85,28 +85,24 @@ angular.module('ConsortiaFlux')
         };
 
         $scope.send = function() {
+
             $scope.sended.models = $scope.chosenModels;
 
             this.receiver = function(res) {
+                var data = []
                 $scope.selectedScreen = false
-                var self = this;
-                var data = [];
                 for(var key in res.data){
                     data.push({
-                        name: res.data[key],
-                        flux: key
+                        name: key,
+                        flux: res.data[key]
                     })
                 }
-
-                self.tableParams = new NgTableParams({}, { data: data});
-
-
+                $scope.data = data
             }
 
             this.errorCatch = function(err) {
                 console.log(err);
             };
-
             var send = {
                 id1: $scope.sended.models[0],
                 id2: $scope.sended.models[1],

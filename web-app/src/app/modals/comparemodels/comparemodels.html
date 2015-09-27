@@ -39,14 +39,27 @@
         <button ng-click="send()" type="button" class="btn btn-primary left">Compare</button>
     </div>
 </div>
+<style>
+th, td {
+    padding: 15px;
+}
+.left{
+    text-align: left;
+    max-width: 300px;
+}
+.right{
+    text-align: right;
+    max-width: 300px;
+
+}
+</style>
 <div ng-show="!selectedScreen">
-    <table ng-table="vm.tableParams" class="table" show-filter="true">
-    <tr ng-repeat="reaction in $data">
-        <td title="'reaction_name'" filter="{ name: 'text'}" sortable="'name'">
-            {{reaction.name}}</td>
-        <td title="'flux'" filter="{ flux: 'number'}" sortable="'age'">
-            {{reaction.flux}}</td>
-    </tr>
+    <table  ng-repeat="datum in data">
+  <td>
+    <th class="left">{{datum.name}}</th>
+    <th class="right">{{datum.flux}}</th>
+</td>
+</table>
 </table>
 </div>
     <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->

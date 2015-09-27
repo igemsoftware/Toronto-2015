@@ -11,7 +11,7 @@ function compareFlux(req, res, next){
     var id2 = req.body.id2
 
     var type = {
-        "community": Community,
+        "communities": Community,
         "models": Model
     }
 
@@ -28,7 +28,7 @@ function compareFlux(req, res, next){
             fs.readFile(model1.solution, function(err, model1data){
                 if(err)
                     return console.log(err)
-                
+
                 fs.readFile(model2.solution, function(err, model2data){
                     if(err)
                         return console.log(err)
