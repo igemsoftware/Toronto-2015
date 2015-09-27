@@ -11,7 +11,7 @@ angular.module('ConsortiaFlux')
         $scope.loading = false;
         $scope.ready = false;
         $scope.models = [];
-
+        $scope.selectedScreen = true;
         $scope.limit = 2;
         $scope.checked = 0;
 
@@ -85,9 +85,40 @@ angular.module('ConsortiaFlux')
         };
 
         $scope.send = function() {
+
             $scope.sended.models = $scope.chosenModels;
 
-            alert(JSON.stringify($scope.sended));
+            this.receiver = function(res) {
+                var data = []
+                $scope.selectedScreen = false
+                for(var key in res.data){
+                    data.push({
+                        name: key,
+                        flux: res.data[key]
+                    })
+                }
+                $scope.data = data
+            }
+
+            this.errorCatch = function(err) {
+                console.log(err);
+            };
+            var send = {
+                id1: $scope.sended.models[0],
+                id2: $scope.sended.models[1],
+                type: $scope.sended.type
+            }
+
+            var requestUrl = UrlProvider.baseUrl + '/model/comparemodels/';
+            console.log(requestUrl)
+
+            // $http.post(requestUrl, send).then(function(res) {
+            //     console.log(res.data);
+            // }, function(err) {
+            //     console.log(err);
+            // })
+
+            $http.post(requestUrl, send).then(this.receiver.bind(this), this.errorCatch.bind(this));
         }
 
         $scope.close = function() {

@@ -1,4 +1,5 @@
 <div ng-show="display" class="mymodal">
+    <div ng-show="selectedScreen">
     <div ng-show="choosing">
         <label class="radio">
             <input type="radio" ng-model="choosables.community" name="optionsRadios" value="true" data-toggle="radio" class="custom-radio">
@@ -37,8 +38,32 @@
         </ul>
         <button ng-click="send()" type="button" class="btn btn-primary left">Compare</button>
     </div>
+</div>
+<style>
+th, td {
+    padding: 15px;
+}
+.left{
+    text-align: left;
+    max-width: 300px;
+}
+.right{
+    text-align: right;
+    max-width: 300px;
 
+}
+</style>
+<div ng-show="!selectedScreen">
+    <table  ng-repeat="datum in data">
+  <td>
+    <th class="left">{{datum.name}}</th>
+    <th class="right">{{datum.flux}}</th>
+</td>
+</table>
+</table>
+</div>
     <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
     <button ng-click="close()" type="button" class="btn btn-danger right">Close</button>
+
 </div>
 <!-- <div class="fade" ng-show="display"></div> -->
