@@ -1,111 +1,150 @@
 <div ng-show="display" class="mymodal">
     <form class="form-horizontal">
-        <h4>Add Reaction</h4>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-2">Name</label>
-            <div class="col-xs-10">
-                <input ng-model="name" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-2">Subsystem</label>
-            <div class="col-xs-10">
-                <input ng-model="subsystem" class="form-control" id="inputEmail" placeholder="wicked subsystem">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-2">EC Number</label>
-            <div class="col-xs-10">
-                <input ng-model="EC_Number" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-2">Upper Bound</label>
-            <div class="col-xs-10">
-                <input ng-model="upper_bound" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-2">Lower Bound</label>
-            <div class="col-xs-10">
-                <input ng-model="lower_bound" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-3">Objective Coefficient</label>
-            <div class="col-xs-9">
-                <input ng-model="objective_coefficient" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-2">Reversible</label>
-            <div class="col-xs-10">
-                <select ng-model="reversible">
-                    <option value="true">true</option>
-                    <option value="false" selected="selected">false</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-3">Gene Association</label>
-            <div class="col-xs-6">
-                <input class="form-control" ng-model="gene_association"></input>
-
-            </div>
-            <div class="col-xs-3">
-                <button ng-click="queryRegistry()">Search registry</button>
-            </div>
-                <div ng-show="registryfound">
-                    Select BBA:
-                    <select ng-model="bba" ng-options="reg for reg in registry"></select>
-                    <br>
+        <h4>Modify Model</h4>
+        <accordion close-others="false">
+            <accordion-group ng-repeat="reaction in modifiedData.addedReactions">
+                <accordion-heading data-toggle="collapse">
+                    Reaction
+                    <span ng-show="reaction.name !== ''">- {{reaction.name}}</span>
+                </accordion-heading>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Name</label>
+                    <div class="col-xs-10">
+                        <input ng-model="reaction.name" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Subsystem</label>
+                    <div class="col-xs-10">
+                        <input ng-model="reaction.subsystem" class="form-control" id="inputEmail" placeholder="wicked subsystem">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-4">EC Number</label>
+                    <div class="col-xs-8">
+                        <input ng-model="reaction.EC_Number" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-4">Upper Bound</label>
+                    <div class="col-xs-8">
+                        <input ng-model="reaction.upper_bound" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-4">Lower Bound</label>
+                    <div class="col-xs-8">
+                        <input ng-model="reaction.lower_bound" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-4">Objective Coefficient</label>
+                    <div class="col-xs-8">
+                        <input ng-model="reaction.objective_coefficient" class="form-control" id="inputEmail" placeholder="wicked dehydrogenase">
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label class="control-label col-xs-2">Reversible</label>
+                    <div class="col-xs-10">
+                        <select ng-model="reaction.reversible">
+                            <option value="true">true</option>
+                            <option value="false" selected="selected">false</option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="control-label col-xs-3">Gene Association</label>
+                    <div class="col-xs-6">
+                        <input class="form-control" ng-model="reaction.gene_association"></input>
+                    </div>
+                    <div class="col-xs-3">
+                        <button class="btn btn-primary" ng-click="queryRegistry()">Search registry</button>
+                    </div>
+                </div>
+                <div ng-show="registryfound" class="form-group" style="position:relative;">
+                    <div class="col-xs-4">
+                        Select BBA:
+                    </div>
+                    <div class="col-xs-8">
+                        <select ng-model="reaction.gene_association" ng-options="reg for reg in registry"></select>
+                    </div>
+                </div>
+                <div class="form-group" ng-repeat="metabolite in reaction.metabolites">
+                    <label class="control-label col-xs-2">Metabolite</label>
+                    <div class="col-xs-6">
+                        <select ng-model="metabolite.name" ng-options="m.name for m in allMetabolites"></select>
+                    </div>
+                    <label class="control-label col-xs-2">Coefficient</label>
+                    <div class="col-xs-2">
+                        <input class="form-control" ng-model="metabolite.coefficient"></input>
+                    </div>
+                </div>
+
+                <center>
+                    <button class="btn btn-primary" ng-model="add" ng-click="addMetaboliteToReaction(reaction)">Add Another Metabolite</button>
+                </center>
+            </accordion-group>
+        </accordion>
+
+        <center style="padding-bottom: 10px;">
+            <button ng-show="modifiedData.addedReactions.length > 0" class="btn btn-info" ng-click="addReaction()">Add Another Reaction</button>
+            <button ng-show="modifiedData.addedReactions.length === 0" class="btn btn-info" ng-click="addReaction()">Add Reaction</button>
+        </center>
+
+        <accordion close-others="false">
+            <accordion-group ng-repeat="metabolite in modifiedData.addedMetabolites">
+                <accordion-heading ng-click="isopen=!isopen" data-toggle="collapse">
+                    Metabolite
+                    <span ng-show="metabolite.name !== ''">- {{metabolite.name}}</span>
+                </accordion-heading>
+
+                <div class="form-group">
+                    <div class="col-xs-3">
+                        Name
+                    </div>
+                    <div class="col-xs-9">
+                        <input class="form-control" ng-model="metabolite.name"></input>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-3">
+                        Compartment
+                    </div>
+                    <div class="col-xs-9">
+                        <select ng-model="metabolite.compartment">
+                            <option value="c">c</option>
+                            <option value="p" selected="selected">p</option>
+                            <option value="e">e</option>
+                        </select>
+                    </div>
+                </div>
+
+                <center>
+                    <button class="btn btn-info" ng-click="makeMetaboliteAvailable(metabolite)">Append to metabolite list</button>
+                </center>
+            </accordion-group>
+        </accordion>
+
+        <center style="padding-bottom: 10px;">
+            <button ng-show="modifiedData.addedMetabolites.length > 0" ng-click="addMetabolite()" type="button" class="btn btn-info">Add Another Metabolite</button>
+            <button ng-show="modifiedData.addedMetabolites.length === 0" ng-click="addMetabolite()" type="button" class="btn btn-info">Add a Metabolite</button>
+        </center>
+
+        <div class="form-group" ng-repeat="reaction in modifiedData.deletedReactions">
+            <label class="control-label col-xs-3">Delete Reaction</label>
+            <div class="col-xs-9">
+                <select ng-model="reaction.id" ng-options="rxn.id for rxn in reactions"></select>
             </div>
         </div>
-        <div class="form-group">
-            <label for="inputPassword" class="control-label col-xs-2">Metabolite</label>
-            <div class="col-xs-6">
-                <select ng-model="myMetab" ng-options="metabolite.name for metabolite in metabolites"></select>
-            </div>
-            <label class="control-label col-xs-2">Coefficient</label>
-            <div class="col-xs-2">
-                <input class="form-control" ng-model="metabolite_cofficient"></input>
-            </div>
-        </div>
 
-        <button ng-model="add" ng-click="addMetabolite()">Add Another Metabolite</button>
+        <center>
+            <button ng-show="modifiedData.deletedReactions.length > 0" ng-click="addDeletableableReaction()" class="btn btn-danger">Delete Another Reaction</button>
+            <button ng-show="modifiedData.deletedReactions.length === 0"ng-click="addDeletableableReaction()" class="btn btn-danger">Delete a Reaction</button>
+        </center>
 
-
-        <!-- Work with registry -->
-        <button ng-click="addReaction()">Add Reaction</button>
-        <br>
-        <br>
-
-        <button ng-show="!newMetaboliteDisplay" ng-click="showCreateNewMetabolite()">Create new metabolite</button>
-        <br>
-
-        <div ng-show="newMetaboliteDisplay">
-            Name:
-            <input ng-model="metabName"></input>
-            <br> Compartment:
-            <select ng-model="compartment">
-                <option value="c">c</option>
-                <option value="p" selected="selected">p</option>
-                <option value="e">e</option>
-            </select>
-            <br>
-            <button ng-click="createNewMetabolite()">Create metabolite</button>
-            <br>
-        </div>
-
-        Delete Reaction:
-        <select ng-model="selectedReaction" ng-options="reaction.name for reaction in reactions"></select>
-        <br>
-        <button ng-click="deleteReaction()">Delete Reaction</button>
-        <br>
-
-
-        <a class="closeButton right" href ng-click="close()">Finish modifications</a>
+        <a class="btn btn-success left" href ng-click="apply()">Apply Modifications</a>
+        <a class="btn btn-danger right" href ng-click="close()">Close</a>
 </div>
 
 

@@ -28,7 +28,9 @@ html, body {
   width: 100%; }
 
 select {
-  width: 100%; }
+  width: 95%;
+  position: absolute;
+  top: 10px; }
 
 .fill {
   width: 100%;
