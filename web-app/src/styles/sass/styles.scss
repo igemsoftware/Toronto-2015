@@ -105,6 +105,13 @@ canvas {
     }
 }
 
+
+.flux-compare {
+    .row:nth-child(odd) {
+        background-color: $grey-300;
+    }
+}
+
 #header {
     // background-color: rgb(176, 179, 156);
 }

@@ -1,4 +1,3 @@
-<!-- <div ng-controller="" -->
 <div ng-show="display" class="mymodal">
     <div ng-show="selectedScreen">
     <div ng-show="choosing">
@@ -54,14 +53,32 @@ th, td {
 
 }
 </style>
-<div ng-show="!selectedScreen">
-    <table  ng-repeat="datum in data">
+<div ng-show="!selectedScreen" style="with:80%" class="flux-compare">
+    <div class="row">
+        <div class="col-xs-4">
+            Filter by:
+        </div>
+        <div class="col-xs-8">
+            <input ng-model="filterer"></input>
+        </div>
+    </div>
+    <div class="row" ng-repeat="datum in data | filter:filterer ">
+        <div class="col-xs-8">
+            {{datum.name}}
+        </div>
+        <div class="col-xs-4" style="text-overflow: ellipsis; overflow-x: hidden">
+            {{datum.flux}}
+        </div>
+    </div>
+<!--
+
+    <table ng-repeat="datum in data">
   <td>
     <th class="left">{{datum.name}}</th>
     <th class="right">{{datum.flux}}</th>
 </td>
 </table>
-</table>
+</table> -->
 </div>
     <!-- <a class="closeButton right" href ng-click="close()">Close</a> -->
     <button ng-click="close()" type="button" class="btn btn-danger right">Close</button>

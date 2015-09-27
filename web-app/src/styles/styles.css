@@ -91,6 +91,9 @@ canvas {
       background-color: #1abc9c;
       color: white; }
 
+.flux-compare .row:nth-child(odd) {
+  background-color: #E0E0E0; }
+
 #splash #main-title {
   text-align: center;
   font-family: "Dancing Script", cursive; }
