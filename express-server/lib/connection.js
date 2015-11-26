@@ -6,6 +6,10 @@ var mongodb = function() {
 
     var dbUrl = 'mongodb://' + config.username + ':' + config.password + '@' + config.hostname + ':' + config.port + '/' + config.database;
 
+    if (config.username === '' && config.password === '' && config.port === '') {
+        dbUrl = 'mongodb://' + config.hostname + '/' + config.database;
+    }
+
     mongoose.connect(dbUrl);
 
     mongoose.connection.on('open', function(conn) {
