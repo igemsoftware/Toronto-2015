@@ -155,7 +155,7 @@ function saveModel(req, res, next) {
 
 router.post('/:id', [
     updateModel,
-    App.MW('injectmodel'),
+    App.MW('injectModel'),
     writeFile,
     modifyDictionary,
     saveModel
