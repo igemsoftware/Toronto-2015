@@ -14,7 +14,8 @@
  */
 module.exports = {
     prod: {
-        port: 10000, // do not change this
+        port: 9001, // do not change this
+        staticStore: '/home/igemuoft/Toronto-2015/express-server/static',
         mongodb: {
             hostname : 'localhost',
             username : '',
