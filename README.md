@@ -1,4 +1,4 @@
-![logo](http://45.55.193.224/logo_grey.png)
+![logo](http://45.55.193.224:1234/logo_grey.png)
 
 # ConsortiaFlux
 
